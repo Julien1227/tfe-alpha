@@ -1,0 +1,48 @@
+body {
+    &[data-page="color"] {
+        .main {
+            transform: translateX(0);
+            transition: $t-slider;
+        }
+
+        .menu-btn {
+            &[id="color"] {
+                
+            }
+            &[id="image"] {
+                background-color: $light-grey;
+                transition: $t-slow;
+                cursor: pointer;
+                svg {
+                    opacity: .5;
+                }
+            }
+        }
+    }
+    
+    &[data-page="image"] {
+        .main {
+            transform: translateX(-100vw);
+            transition: $t-slider;
+        }
+
+        .menu-btn {
+            &[id="color"] {
+                background-color: $light-grey;
+                transition: $t-slow;
+                cursor: pointer;
+                svg {
+                    opacity: .5;
+                }
+            }
+            &[id="image"] {
+                
+            }
+        }
+
+    }
+}
+
+.menu-btn {
+    transition: $t-slow;
+}

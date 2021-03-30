@@ -1,0 +1,309 @@
+.use-svg, #uploadInput {display: none;}
+
+body {
+    position: fixed;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+.btn {
+    cursor: pointer;
+    background-color: $lightBtn;
+    padding: 1rem;
+    border-radius: $round;
+    backdrop-filter: blur(20px);
+    font-weight: 600;
+
+    transition: $t-fast;
+    &-dark {
+        background-color: $darkBtn;
+    }
+    &:hover {
+        opacity: .6;
+        transition: $t-fast;
+    }
+}
+
+.main {
+    display: flex;
+}
+
+.menu {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    display: flex;
+    &-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        padding: 1rem;
+
+        background-color: $white;
+        color: #353535;
+        & svg {
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    min-width: 100%;
+    height: calc(100vh - 4rem);
+    
+    &-intro {
+        position: absolute;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 150;
+        background-color: $black;
+
+        overflow-y: scroll;
+        box-sizing: border-box;
+        padding: 5rem 0;
+        
+        color: $white;
+        justify-content: center;
+        align-items: center;
+    
+        .text-block {
+            padding: 2rem;
+            max-width: 450px;
+            & h2 {
+                margin-top: -2rem;
+            }
+        }
+
+        &-btn {
+            cursor: pointer;
+
+            margin-top: 2rem;
+            font-size: $h3;
+            font-weight: 700;
+
+            transition: $t-fast;
+            &::before {
+                content: "Appuyez pour commencer";
+            }
+            &:hover {
+                opacity: .2;
+                transition: $t-fast;
+            }
+        }
+
+        &-title {
+            color: $white;
+            position: absolute;
+        }
+
+    }
+    
+    
+    .container-tolisten {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+                
+        height: 600px;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        box-sizing: content-box;
+
+        height: 400px;
+        padding: 2rem;
+        padding-top: 5rem;
+
+        &-el {
+            margin: 0.5rem 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            label {
+                margin-bottom: 0.5rem;
+            }
+
+        }
+
+        .btn {
+            text-align: center;
+            margin: 1rem auto;
+        }
+    }
+
+
+    &-color {
+        .container-tolisten {    
+            &-frequency {
+                position: relative;
+                z-index: 100;
+                margin-bottom: -10.5vw;
+                font-size: 25vw;
+                font-weight: 800;
+                letter-spacing: -0.3rem;
+                color: $white;
+                pointer-events: none;
+            }
+
+            &-shadow {
+                position: absolute;
+                display: block;
+                width: 100%;
+                height: 20%;
+    
+                background: linear-gradient(to top, #00000033, #00000000);
+            }
+        }
+    }
+
+    &-image {
+        .container-tolisten {
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: column;
+            align-items: center;
+    
+            box-sizing: border-box;
+            .color-list {
+                position: absolute;
+                z-index: 1000;
+                bottom: -10vw;
+                display: flex;
+    
+                padding: 0.5rem;
+                margin: 0;
+                box-shadow: $shadow;
+    
+                background-color: $white;
+                border-radius: $round;
+                &-el {
+                    width: 15vw;
+                    height: 15vw;
+                    margin: 0.3rem;
+    
+                    border-radius: $round;
+                }
+            }
+            
+            .background-container {
+                display: none;
+            }
+
+            .img {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+
+                object-fit: cover;
+
+                z-index: 10;
+            }
+    
+            .btn {
+                margin-top: 2rem;
+                z-index: 20;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+// https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
+/* Css 100% responsiv des input range */
+input[type=range]{
+    &::-webkit{
+        &-slider-runnable-track {
+            width: $input-width;
+            height: $input-thumb-size;
+            cursor: pointer;
+            background: $input-track;
+            border-radius: $round;
+        }
+
+        &-slider-thumb {
+            border: $input-thumb-border;
+            height: $input-thumb-size;
+            width: $input-thumb-size;
+            background: $input-thumb-color;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: 0px;
+            border-radius: $round;
+        }
+    }
+
+
+    &::-moz {
+        &-range-track {
+            width: $input-width;
+            height: $input-thumb-size;
+            cursor: pointer;
+            background: $input-track;
+            border-radius: $round;
+        }
+
+        &-range-thumb {
+            border: $input-thumb-border;
+            height: $input-thumb-size;
+            width: $input-thumb-size;
+            background: $input-thumb-color;
+            cursor: pointer;
+            border-radius: $round;
+            box-sizing: border-box;
+        }
+    }
+
+    &::-ms{
+        &-track {
+            width: $input-width;
+            height: $input-thumb-size;
+            cursor: pointer;
+            background: $input-track;
+            border-color: transparent;
+            border-width: 16px 0;
+            color: transparent;
+        }
+
+        &-thumb {
+            border: $input-thumb-border;
+            height: $input-thumb-size;
+            width: $input-thumb-size;
+            border-radius: 3px;
+            background: $input-thumb-color;
+            cursor: pointer;
+            border-radius: $round;
+        }
+    }
+
+    &:focus::-ms-fill{
+        &-lower {
+            background: transparent;
+        }
+        &-upper {
+            background: transparent;
+        }
+    }
+}
+
+
+

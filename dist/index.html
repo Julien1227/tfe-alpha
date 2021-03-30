@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- Meta Partage -->
+  <!-- Primary Meta Tags -->
+  <title>Color'sounds - Présentation MVP</title>
+  <meta name="title" content="Color'sounds - Présentation MVP">
+  <meta name="description" content="Vous allez découvrir ce à quoi ont mené mes recherches concernant l'écoute d'une couleur.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://julienscheen.be/projets/tfe/mvp/">
+  <meta property="og:title" content="Color'sounds - Présentation MVP">
+  <meta property="og:description" content="Vous allez découvrir ce à quoi ont mené mes recherches concernant l'écoute d'une couleur.">
+  <meta property="og:image" content="meta.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://julienscheen.be/projets/tfe/mvp/">
+  <meta property="twitter:title" content="Color'sounds - Présentation MVP">
+  <meta property="twitter:description" content="Vous allez découvrir ce à quoi ont mené mes recherches concernant l'écoute d'une couleur.">
+  <meta property="twitter:image" content="meta.jpg">
+
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+<body data-page="color">
+
+  <section class="section section-intro">
+    <div class="text-block">
+      <h1>Color'sounds</h1>
+      <h2>Bienvenue dans cette présentation MVP.</h2>
+      <p>Vous allez découvrir ce à quoi ont mené <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab">mes recherches concernant l'écoute d'une couleur.</a></p>
+      <p>Des difficultés ont précédement été rencontrées sur Firefox, <b>Google Chrome</b> en revanche vous assurera le <b>fonctionnement complet des prototypes.</b></p>
+      <p>Si vous n'avez pas d'images sur votre machine, je vous à ouvrir ce <a target="_blank" href="https://drive.google.com/drive/folders/1h9fidY39zpodXP9oHNTvucFwoKYcIvyw?usp=sharing">ce lien</a> pour en avoir à disposition.</p>
+      <p>Dans un futur proche, il vous sera possible de comprendre commment fonctionne le code de ces prototypes par un bouton "?" menant <a target="_blank" href="https://julien19991227.medium.com/tfe-contenu-b96d2148af64">au contenu de cette page.</a></p>
+      <p>Je compte sur vos feedbacks quels qu'ils soient et j'espère que ces expérimentations vous amuseront autant que moi, bien qu'elles soient encore à améliorer !</p>
+    </div>
+    <button class="section-intro-btn"></button>
+  </section>
+
+  <main class="main">
+
+      <section class="section section-color">
+        <div id="toListenColor" style="background: linear-gradient(to top, #265973, #40bfbf);" class="container-tolisten">
+          <span class="container-tolisten-frequency" id="playedColor">446 Hz</span>
+          <div class="container-tolisten-shadow"></div>
+        </div>
+
+        <div class="form">
+          <div class="form-el">
+            <label>Teinte: <span data-p="color" class="colorSpan">180</span>°</label>
+            <input class="colorInput" type="range" name="volume" min="0" max="359">
+          </div>
+      
+          <div class="form-el">
+            <label>Saturation: <span data-p="sat" class="colorSpan">50</span>%</label>
+            <input class="colorInput" type="range" name="volume" min="0" max="100">
+          </div>
+      
+          <div class="form-el">
+            <label>Luminiosité: <span data-p="lum" class="colorSpan">50</span>%</label>
+            <input class="colorInput" type="range" name="volume" min="0" max="100">
+          </div>
+        </div>
+      </section>
+      
+      
+      
+      <section class="section section-image">
+        <div class="container-tolisten container-tolisten-image">
+
+          <button id="uploadBtn" class="btn">Choisir une autre image</button>
+
+          <img class="img" src="assets/images/noPicture.jpg" alt="L'image n'a pas pu charger">
+          <div class="background-container">
+            <img class="container-img" src="assets/images/noPicture.jpg" alt="L'image n'a pas pu charger">
+          </div>
+
+          <input id="uploadInput" type="file" accept=".jpeg, .jpg, .png">
+
+          <div class="container-tolisten-shadow"></div>
+
+          <ul class="color-list"></ul>
+        </div>
+
+        <div class="form">
+          <div class="form-el">
+            <label>Vitesse de lecture: <span id="playRateSpan">150</span>ms</label>
+            <input id="playRate" type="range" value="150" min="-500" max="-50">
+          </div>
+          <button id="getColors" class="btn btn-dark">Jouer la mélodie</button>
+        </div>
+      </section>
+  </main>
+
+
+
+  <div class="menu">
+    <button id="color" class="menu-btn"><svg><use xlink:href="#colorSvg"/></svg></button>
+    <button id="image" class="menu-btn"><svg><use xlink:href="#pictureSvg"/></svg></button>
+  </div>
+
+  <div class="use-svg">
+    <svg id="colorSvg" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+      <path d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8zm-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7z"/>
+    </svg>
+
+    <svg id="pictureSvg" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+      <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+    </svg>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
+  <script src="scripts/app.js"></script>
+</body>
+</html>
