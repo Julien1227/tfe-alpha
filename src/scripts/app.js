@@ -1,10 +1,6 @@
 "use strict";
 
-
-require('../scripts/vibrant.js');
-require("node-vibrant");
-
-//Web audio api
+// Création d'un oscillateur et gain avec la web audio API
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
 var myBuffer;
@@ -19,51 +15,24 @@ o.type = "triangle";
 g.connect(context.destination);
 o.connect(g);
 
+o.start(0);
+
 var gainValue = 0.5;
 var frq = 0;
 
 
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////// GESTION DU SLIDER ///////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
 // VARIABLES
 const body = document.querySelector('body'),
+      sliderBtn = document.querySelectorAll('.menu-btn');
 
-// Slider
-sliderBtn = document.querySelectorAll('.menu-btn');
-
-// écoute d'une couleur
-var colorInput = document.querySelectorAll('.colorInput'),
-    colorSpan = document.querySelectorAll('.colorSpan'),
-    actualColor = document.getElementById('toListenColor'),
-    actualNote = document.getElementById('playedColor'),
-    input = document.querySelectorAll('.colorIpnut');
-const color = document.querySelector('.container-tolisten');
-var colorInputs = [],
-    colorSpans = [];
-
-
-
-
-
-    //Démarre l'API - là interviendra l'animation d'introduction
-const sectionIntro = document.querySelector('.section-intro'),
-      introBtn = document.querySelector('.section-intro-btn');
-
-introBtn.addEventListener('click', (e) => {
-    o.start(0);
-    // ANIMATION GSAP
-    gsap.to(sectionIntro, {
-        duration: 0.6,
-        scale: 2,
-        opacity: 0,
-        onComplete: deleteElement,
-        onCompleteParams: [sectionIntro]
-    })
-});
-
-
-
-
-
-// SLIDER
 sliderBtn.forEach(element => {
     element.addEventListener('click', (e) => {
         let target = e.currentTarget;
@@ -76,7 +45,21 @@ sliderBtn.forEach(element => {
 
 
 
-// COULEUR
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////// ECOUTE D'UNE COULEUR ////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+// VARIABLES
+var colorInput = document.querySelectorAll('.colorInput'),
+    colorSpan = document.querySelectorAll('.colorSpan'),
+    actualNote = document.getElementById('playedColor');
+
+const color = document.querySelector('.container-tolisten-color');
+
+var colorInputs = [],
+    colorSpans = [];
 
 colorInput.forEach((input) => {
     colorInputs.push(input);
@@ -128,8 +111,18 @@ for (let i = 0; i < colorInputs.length; i++) {
 
 
 
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
-// écoute d'une image
+// Require de vibrant
+require('../scripts/vibrant.js');
+require("node-vibrant");
+
+
+// VARIABLES
 var speed = 150;
 const playRate = document.getElementById('playRate'),
       playRateSpan = document.getElementById('playRateSpan');
@@ -141,11 +134,8 @@ const playImageBtn = document.getElementById('getColors'),
       colorList = document.querySelector('.color-list'),
       backgroundImg = document.querySelector('.container-img');
 
-      
 
 
-
-//ECOUTE D'UNE IMAGE
 // Réglage de la vitesse de lecture
 
 playRate.addEventListener('input', (e) => {
@@ -163,8 +153,6 @@ btnUpload.addEventListener('click', (e) => {
          imgToListen.src = imgLink;
      });
 });
-
-
 
 //Récupère les couleurs de l'image et les joue
 playImageBtn.addEventListener('click', (e) => {
@@ -207,7 +195,7 @@ playImageBtn.addEventListener('click', (e) => {
         play(i);
     }
     
-    //Les rejoue à l'envers pour deux fois plus de plaisir  
+    //Les rejoue à l'envers pour deux fois plus de plaisir ( ͡° ͜ʖ ͡°)
     setTimeout(function() {
         frqs.reverse();
         gains.reverse();
@@ -215,13 +203,6 @@ playImageBtn.addEventListener('click', (e) => {
             play(i);
         }
     }, (frqs.length - 1)*speed);
-
-    
-    //Arrête le son après que les couleurs aient joué deux fois
-    setTimeout(function() {
-        o.frequency.value = 0;
-        g.gain.value = 0;
-    }, ((frqs.length*2)-1)*speed);
 
 
     function play(i) {
@@ -248,8 +229,11 @@ playImageBtn.addEventListener('click', (e) => {
 
 
 
-// FUNCTIONS ______________________
-
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////// FUNCTIONS ///////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 //source: https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d
 function randomMinMax(min,max){
@@ -301,9 +285,11 @@ function setGain(lum, sat) {
 }
 
 // Calcule la fréquence
-function setFrequency(h, s, l) {
-    let rgbColor = HSLtoRGB(h, s, l);
+function setFrequency(h, s) {
+    let rgbColor = HSLtoRGB(h, 50, 50);
+
     frq = Math.round((rgbColor[0]*0.9 + rgbColor[1]*1.7 + rgbColor[2]*0.4) * 1) / 1;
+    frq = Number(frq) + Number(s);
     return frq;
 }
 

@@ -9174,12 +9174,7 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-__webpack_require__(/*! ../scripts/vibrant.js */ "./src/scripts/vibrant.js");
-
-__webpack_require__(/*! node-vibrant */ "./node_modules/node-vibrant/lib/browser.js"); //Web audio api
-
+ // Création d'un oscillateur et gain avec la web audio API
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
@@ -9192,44 +9187,36 @@ o.frequency.value = 0;
 o.type = "triangle";
 g.connect(context.destination);
 o.connect(g);
+o.start(0);
 var gainValue = 0.5;
-var frq = 0; // VARIABLES
+var frq = 0; ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////// GESTION DU SLIDER ///////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// VARIABLES
 
 var body = document.querySelector('body'),
-    // Slider
-sliderBtn = document.querySelectorAll('.menu-btn'); // écoute d'une couleur
-
-var colorInput = document.querySelectorAll('.colorInput'),
-    colorSpan = document.querySelectorAll('.colorSpan'),
-    actualColor = document.getElementById('toListenColor'),
-    actualNote = document.getElementById('playedColor'),
-    input = document.querySelectorAll('.colorIpnut');
-var color = document.querySelector('.container-tolisten');
-var colorInputs = [],
-    colorSpans = []; //Démarre l'API - là interviendra l'animation d'introduction
-
-var sectionIntro = document.querySelector('.section-intro'),
-    introBtn = document.querySelector('.section-intro-btn');
-introBtn.addEventListener('click', function (e) {
-  o.start(0); // ANIMATION GSAP
-
-  gsap.to(sectionIntro, {
-    duration: 0.6,
-    scale: 2,
-    opacity: 0,
-    onComplete: deleteElement,
-    onCompleteParams: [sectionIntro]
-  });
-}); // SLIDER
-
+    sliderBtn = document.querySelectorAll('.menu-btn');
 sliderBtn.forEach(function (element) {
   element.addEventListener('click', function (e) {
     var target = e.currentTarget;
     var page = target.getAttribute('id');
     body.setAttribute('data-page', page);
   });
-}); // COULEUR
+}); ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////// ECOUTE D'UNE COULEUR ////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// VARIABLES
 
+var colorInput = document.querySelectorAll('.colorInput'),
+    colorSpan = document.querySelectorAll('.colorSpan'),
+    actualNote = document.getElementById('playedColor');
+var color = document.querySelector('.container-tolisten-color');
+var colorInputs = [],
+    colorSpans = [];
 colorInput.forEach(function (input) {
   colorInputs.push(input);
 });
@@ -9271,7 +9258,17 @@ for (var i = 0; i < colorInputs.length; i++) {
   _loop(i);
 }
 
-; // écoute d'une image
+; ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Require de vibrant
+
+__webpack_require__(/*! ../scripts/vibrant.js */ "./src/scripts/vibrant.js");
+
+__webpack_require__(/*! node-vibrant */ "./node_modules/node-vibrant/lib/browser.js"); // VARIABLES
+
 
 var speed = 150;
 var playRate = document.getElementById('playRate'),
@@ -9281,8 +9278,7 @@ var playImageBtn = document.getElementById('getColors'),
     btnUpload = document.getElementById('uploadBtn'),
     inputUpload = document.getElementById('uploadInput'),
     colorList = document.querySelector('.color-list'),
-    backgroundImg = document.querySelector('.container-img'); //ECOUTE D'UNE IMAGE
-// Réglage de la vitesse de lecture
+    backgroundImg = document.querySelector('.container-img'); // Réglage de la vitesse de lecture
 
 playRate.addEventListener('input', function (e) {
   speed = playRate.value * -1;
@@ -9330,7 +9326,7 @@ playImageBtn.addEventListener('click', function (e) {
 
   for (var i = 0; i < frqs.length; i++) {
     play(i);
-  } //Les rejoue à l'envers pour deux fois plus de plaisir  
+  } //Les rejoue à l'envers pour deux fois plus de plaisir ( ͡° ͜ʖ ͡°)
 
 
   setTimeout(function () {
@@ -9340,12 +9336,7 @@ playImageBtn.addEventListener('click', function (e) {
     for (var i = 1; i < frqs.length; i++) {
       play(i);
     }
-  }, (frqs.length - 1) * speed); //Arrête le son après que les couleurs aient joué deux fois
-
-  setTimeout(function () {
-    o.frequency.value = 0;
-    g.gain.value = 0;
-  }, (frqs.length * 2 - 1) * speed);
+  }, (frqs.length - 1) * speed);
 
   function play(i) {
     setTimeout(function () {
@@ -9354,7 +9345,11 @@ playImageBtn.addEventListener('click', function (e) {
       g.gain.setTargetAtTime(0, context.currentTime, speed / 1550);
     }, i * speed);
   }
-}); // FUNCTIONS ______________________
+}); ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////// FUNCTIONS ///////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 //source: https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d
 
 function randomMinMax(min, max) {
@@ -9396,9 +9391,10 @@ function setGain(lum, sat) {
 } // Calcule la fréquence
 
 
-function setFrequency(h, s, l) {
-  var rgbColor = HSLtoRGB(h, s, l);
+function setFrequency(h, s) {
+  var rgbColor = HSLtoRGB(h, 50, 50);
   frq = Math.round((rgbColor[0] * 0.9 + rgbColor[1] * 1.7 + rgbColor[2] * 0.4) * 1) / 1;
+  frq = Number(frq) + Number(s);
   return frq;
 } //source: https://css-tricks.com/converting-color-spaces-in-javascript/
 //Convertit ma valeur HSL vers RGB
@@ -10504,8 +10500,8 @@ var require;var require;(function e(t, n, r) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\TFE-mvp\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\TFE-mvp\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })
