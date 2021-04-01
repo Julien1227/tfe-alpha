@@ -216,19 +216,6 @@ playImageBtn.addEventListener('click', (e) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////// FUNCTIONS ///////////////////////////////
@@ -285,11 +272,17 @@ function setGain(lum, sat) {
 }
 
 // Calcule la fréquence
-function setFrequency(h, s) {
+function setFrequency(h, s, l) {
     let rgbColor = HSLtoRGB(h, 50, 50);
 
+    h = Number(h);
+    s = Number(s);
+    l = Number(l);
+
     frq = Math.round((rgbColor[0]*0.9 + rgbColor[1]*1.7 + rgbColor[2]*0.4) * 1) / 1;
-    frq = Number(frq) + Number(s);
+
+    frq = frq + Math.round(s/2) + Math.round(l/4) - 100;
+
     return frq;
 }
 
@@ -415,3 +408,5 @@ function HSLToHex(h,s,l) {
 
     return [h, s, l];
   }
+
+
