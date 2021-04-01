@@ -75,45 +75,6 @@ body {
   min-width: 100%;
   height: calc(100vh - 4rem);
 }
-.section-intro {
-  position: absolute;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 150;
-  background-color: #000000;
-  overflow-y: scroll;
-  box-sizing: border-box;
-  padding: 5rem 0;
-  color: #fff;
-  justify-content: center;
-  align-items: center;
-}
-.section-intro .text-block {
-  padding: 2rem;
-  max-width: 450px;
-}
-.section-intro .text-block h2 {
-  margin-top: -2rem;
-}
-.section-intro-btn {
-  cursor: pointer;
-  margin-top: 2rem;
-  font-size: 24px;
-  font-weight: 700;
-  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-}
-.section-intro-btn::before {
-  content: "Appuyez pour commencer";
-}
-.section-intro-btn:hover {
-  opacity: 0.2;
-  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-}
-.section-intro-title {
-  color: #fff;
-  position: absolute;
-}
 .section .container-tolisten {
   position: relative;
   display: flex;

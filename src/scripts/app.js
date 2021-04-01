@@ -273,13 +273,13 @@ function setGain(lum, sat) {
 
 // Calcule la fréquence
 function setFrequency(h, s, l) {
-    let rgbColor = HSLtoRGB(h, 50, 50);
+    let rgbColor = HSLtoRGB(h, 60, 60);
 
     h = Number(h);
     s = Number(s);
     l = Number(l);
 
-    frq = Math.round((rgbColor[0]*0.9 + rgbColor[1]*1.7 + rgbColor[2]*0.4) * 1) / 1;
+    frq = Math.round(rgbColor[0]*0.9 + rgbColor[1]*1.7 + rgbColor[2]*0.4);
 
     frq = frq + Math.round(s/2) + Math.round(l/4) - 100;
 

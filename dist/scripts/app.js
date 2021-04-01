@@ -9392,11 +9392,11 @@ function setGain(lum, sat) {
 
 
 function setFrequency(h, s, l) {
-  var rgbColor = HSLtoRGB(h, 50, 50);
+  var rgbColor = HSLtoRGB(h, 60, 60);
   h = Number(h);
   s = Number(s);
   l = Number(l);
-  frq = Math.round((rgbColor[0] * 0.9 + rgbColor[1] * 1.7 + rgbColor[2] * 0.4) * 1) / 1;
+  frq = Math.round(rgbColor[0] * 0.9 + rgbColor[1] * 1.7 + rgbColor[2] * 0.4);
   frq = frq + Math.round(s / 2) + Math.round(l / 4) - 100;
   return frq;
 } //source: https://css-tricks.com/converting-color-spaces-in-javascript/
@@ -10503,8 +10503,8 @@ var require;var require;(function e(t, n, r) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })
