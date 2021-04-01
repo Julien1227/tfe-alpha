@@ -69,11 +69,29 @@ body {
 }
 
 .section {
+  overflow: hidden;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   min-width: 100%;
   height: calc(100vh - 4rem);
+}
+.section .blured-color {
+  position: absolute;
+  bottom: 0;
+  width: 50vw;
+  height: 50vh;
+  background-color: #265973;
+  filter: blur(150px);
+}
+.section .blured-color-1 {
+  transform: rotate(-30deg) scale(1.2) translateY(10vh) translateX(-13vw);
+  left: -35vw;
+}
+.section .blured-color-2 {
+  transform: rotate(30deg) scale(1.2) translateY(10vh) translateX(13vw);
+  right: -35vw;
 }
 .section .container-tolisten {
   position: relative;

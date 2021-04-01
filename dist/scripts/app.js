@@ -9214,7 +9214,9 @@ sliderBtn.forEach(function (element) {
 var colorInput = document.querySelectorAll('.colorInput'),
     colorSpan = document.querySelectorAll('.colorSpan'),
     actualNote = document.getElementById('playedColor');
-var color = document.querySelector('.container-tolisten-color');
+var color = document.querySelector('.container-tolisten-color'),
+    colorB1 = document.querySelector('.blured-color-1'),
+    colorB2 = document.querySelector('.blured-color-2');
 var colorInputs = [],
     colorSpans = [];
 colorInput.forEach(function (input) {
@@ -9371,6 +9373,8 @@ function setColors(h, s, l) {
       color2 = HSLToHex(h2, s, l2); //if(h2 > 360) {h2 = 360}
 
   color.setAttribute('style', "background: linear-gradient(" + color1 + ", " + color2 + ")");
+  colorB1.style.backgroundColor = color2;
+  colorB2.style.backgroundColor = color2;
 } // Calcule le gain
 
 

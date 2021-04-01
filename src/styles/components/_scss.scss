@@ -52,12 +52,32 @@ body {
 }
 
 .section {
+    overflow: hidden;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 
     min-width: 100%;
     height: calc(100vh - 4rem);
+
+    .blured-color {
+        position: absolute;
+        bottom: 0;
+        width: 50vw;
+        height: 50vh;
+
+        background-color: #265973;
+        filter: blur(150px);
+        &-1 {
+            transform: rotate(-30deg) scale(1.2) translateY(10vh) translateX(-13vw);
+            left: -35vw;
+        }
+        &-2 {
+            transform: rotate(30deg) scale(1.2) translateY(10vh) translateX(13vw);
+            right: -35vw;
+        }
+    }
     
     
     .container-tolisten {
