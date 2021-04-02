@@ -9239,18 +9239,9 @@ var _loop = function _loop(i) {
 
     setColors(colorInputs[0].value, colorInputs[1].value, colorInputs[2].value); //Applique le bon event listenner (mouse ou touch)
 
-    if (window.matchMedia("(min-width: 900px)").matches) {
-      // Desktop
-      colorInputs[i].addEventListener('mouseup', function (e) {
-        g.gain.setTargetAtTime(0, context.currentTime, 0.3);
-      });
-    } else {
-      // Tablet - mobile
-      colorInputs[i].addEventListener('touchend', function (e) {
-        g.gain.setTargetAtTime(0, context.currentTime, 0.3);
-      });
-    } // Fait un fondu du son lorsqu'on lâche le slider
-
+    colorInputs[i].addEventListener(event('end'), function (e) {
+      g.gain.setTargetAtTime(0, context.currentTime, 0.3);
+    });
   });
 };
 
@@ -9259,6 +9250,28 @@ for (var i = 0; i < colorInputs.length; i++) {
 }
 
 ; ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+////////////////////////////// PIANO //////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Variables
+
+var pianoBtn = document.querySelectorAll('.piano-btn'),
+    bgColors = document.querySelectorAll('.bg-color');
+var pianoBtnColors = [];
+pianoBtn.forEach(function (button) {
+  var buttonColor = [randomMinMax(0, 360), randomMinMax(40, 100), randomMinMax(40, 60)];
+  button.style.backgroundColor = 'hsl(' + buttonColor[0] + ', ' + buttonColor[1] + '%, ' + buttonColor[2] + '%)';
+  button.addEventListener(event('start'), function (e) {
+    var frq = setFrequency(buttonColor[0], buttonColor[1], buttonColor[2]);
+    var gain = setGain(buttonColor[1], buttonColor[2]);
+    g.gain.setValueAtTime(gain, context.currentTime);
+    o.frequency.setValueAtTime(frq, context.currentTime);
+  });
+  button.addEventListener(event('end'), function (e) {
+    g.gain.setTargetAtTime(0, context.currentTime, 0.3);
+  });
+}); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -9347,7 +9360,7 @@ playImageBtn.addEventListener('click', function (e) {
   }
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-///////////////////////// FUNCTIONS ///////////////////////////////
+///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 //source: https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d
@@ -9399,7 +9412,36 @@ function setFrequency(h, s, l) {
   frq = Math.round(rgbColor[0] * 0.9 + rgbColor[1] * 1.7 + rgbColor[2] * 0.4);
   frq = frq + Math.round(s / 2) + Math.round(l / 4) - 100;
   return frq;
-} //source: https://css-tricks.com/converting-color-spaces-in-javascript/
+} // Calcule la fréquence
+
+
+function event(param) {
+  var event;
+
+  if (window.matchMedia("(min-width: 900px)").matches) {
+    // Desktop - mouse
+    if (param = 'end') {
+      event = 'mouseup';
+    } else {
+      event = 'mousedown';
+    }
+  } else {
+    // Tablet - touch
+    if (param = 'end') {
+      event = 'touchend';
+    } else {
+      event = 'touchstart';
+    }
+  }
+
+  console.log(event);
+  return event;
+} ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////// OTHERS FUNCTIONS ////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+//source: https://css-tricks.com/converting-color-spaces-in-javascript/
 //Convertit ma valeur HSL vers RGB
 
 

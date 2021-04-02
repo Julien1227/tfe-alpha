@@ -55,23 +55,25 @@ body {
   display: flex;
 }
 .menu-btn {
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 50%;
   padding: 1rem;
-  background-color: #fff;
+  background-color: #eeeeee;
   color: #353535;
 }
 .menu-btn svg {
+  opacity: 0.5;
   width: 2rem;
   height: 2rem;
 }
 
 .section {
+  display: none;
   overflow: hidden;
   position: relative;
-  display: flex;
   flex-direction: column;
   justify-content: flex-end;
   min-width: 100%;
@@ -161,6 +163,24 @@ body {
 .section-image .container-tolisten .btn {
   margin-top: 2rem;
   z-index: 20;
+}
+.section-piano .piano {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  justify-content: center;
+  grid-gap: 1rem;
+  width: 100%;
+  box-sizing: content-box;
+}
+.section-piano .piano-btn {
+  border-radius: 30px;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.section-piano .form {
+  display: none;
 }
 
 /* Css 100% responsiv des input range */
@@ -278,30 +298,43 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 
-body[data-page=color] .main {
-  transform: translateX(0);
-  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+body[data-page=color] .section-color {
+  display: flex;
 }
-body[data-page=color] .menu-btn[id=image] {
+body[data-page=color] .menu-btn[id=color] {
   background-color: #eeeeee;
-  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
-  cursor: pointer;
 }
-body[data-page=color] .menu-btn[id=image] svg {
-  opacity: 0.5;
+body[data-page=color] .menu-btn[id=color] svg {
+  opacity: 1;
 }
-body[data-page=image] .main {
-  transform: translateX(-100vw);
-  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+body[data-page=color] .menu-btn[id=color] {
+  background-color: #fff;
 }
-body[data-page=image] .menu-btn[id=color] {
+body[data-page=piano] .section-piano {
+  display: flex;
+}
+body[data-page=piano] .menu-btn[id=piano] {
   background-color: #eeeeee;
-  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
-  cursor: pointer;
 }
-body[data-page=image] .menu-btn[id=color] svg {
-  opacity: 0.5;
+body[data-page=piano] .menu-btn[id=piano] svg {
+  opacity: 1;
 }
+body[data-page=piano] .menu-btn[id=piano] {
+  background-color: #fff;
+}
+body[data-page=image] .section-image {
+  display: flex;
+}
+body[data-page=image] .menu-btn[id=image] {
+  background-color: #eeeeee;
+}
+body[data-page=image] .menu-btn[id=image] svg {
+  opacity: 1;
+}
+body[data-page=image] .menu-btn[id=image] {
+  background-color: #fff;
+}
+
 .menu-btn {
   transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
 }
@@ -375,7 +408,7 @@ body[data-page=image] .menu-btn[id=color] svg {
     top: 3.5rem;
     width: 500px;
     height: 300px;
-    border-radius: 15px;
+    border-radius: 30px;
     object-fit: cover;
     z-index: 10;
   }
@@ -390,7 +423,7 @@ body[data-page=image] .menu-btn[id=color] svg {
   .menu-btn {
     width: 5rem;
     height: 5rem;
-    border-radius: 15px;
+    border-radius: 30px;
     margin: 1rem;
   }
 }

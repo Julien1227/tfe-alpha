@@ -93,20 +93,44 @@ for (let i = 0; i < colorInputs.length; i++) {
 
 
         //Applique le bon event listenner (mouse ou touch)
-        if (window.matchMedia("(min-width: 900px)").matches) {
-            // Desktop
-            colorInputs[i].addEventListener('mouseup', (e) => {
-                g.gain.setTargetAtTime(0, context.currentTime, 0.3);
-            });
-        } else {
-            // Tablet - mobile
-            colorInputs[i].addEventListener('touchend', (e) => {
-                g.gain.setTargetAtTime(0, context.currentTime, 0.3);
-            });
-        }
-        // Fait un fondu du son lorsqu'on lâche le slider
+
+        colorInputs[i].addEventListener(event('end'), (e) => {
+            g.gain.setTargetAtTime(0, context.currentTime, 0.3);
+        });
     });
 };
+
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+////////////////////////////// PIANO //////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+// Variables
+const pianoBtn = document.querySelectorAll('.piano-btn'),
+      bgColors = document.querySelectorAll('.bg-color');
+
+var pianoBtnColors = [];
+
+pianoBtn.forEach(button => {
+    let buttonColor = [randomMinMax(0, 360), randomMinMax(40, 100), randomMinMax(40, 60)];
+    button.style.backgroundColor = 'hsl('+buttonColor[0]+', '+buttonColor[1]+'%, '+buttonColor[2]+'%)';
+
+    button.addEventListener(event('start'), (e) => {
+        let frq = setFrequency(buttonColor[0], buttonColor[1], buttonColor[2]);
+        let gain = setGain(buttonColor[1], buttonColor[2]);
+
+        g.gain.setValueAtTime(gain, context.currentTime);
+        o.frequency.setValueAtTime(frq, context.currentTime);
+
+
+    })
+    button.addEventListener(event('end'), (e) => {
+        g.gain.setTargetAtTime(0, context.currentTime, 0.3);
+    });
+});
 
 
 
@@ -218,7 +242,7 @@ playImageBtn.addEventListener('click', (e) => {
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-///////////////////////// FUNCTIONS ///////////////////////////////
+///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
@@ -285,6 +309,37 @@ function setFrequency(h, s, l) {
 
     return frq;
 }
+
+// Calcule la fréquence
+function event(param) {
+    let event;
+    if (window.matchMedia("(min-width: 900px)").matches) {
+        // Desktop - mouse
+        if(param = 'end') {
+            event = 'mouseup';
+        }else{
+            event = 'mousedown';
+        }
+    } else {
+        // Tablet - touch
+        if(param = 'end') {
+            event = 'touchend';
+        }else{
+            event = 'touchstart';
+        }
+    }
+    console.log(event);
+    return event;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////// OTHERS FUNCTIONS ////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 
 

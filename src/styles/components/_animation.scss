@@ -1,45 +1,47 @@
 body {
     &[data-page="color"] {
-        .main {
-            transform: translateX(0);
-            transition: $t-slider;
-        }
-
+        .section-color {display: flex;}
         .menu-btn {
             &[id="color"] {
-                
-            }
-            &[id="image"] {
                 background-color: $light-grey;
-                transition: $t-slow;
-                cursor: pointer;
                 svg {
-                    opacity: .5;
+                    opacity: 1;
                 }
+            }
+            &[id="color"] {
+                background-color: $white;
             }
         }
     }
     
-    &[data-page="image"] {
-        .main {
-            transform: translateX(-100vw);
-            transition: $t-slider;
-        }
-
+    &[data-page="piano"] {
+        .section-piano {display: flex;}
         .menu-btn {
-            &[id="color"] {
+            &[id="piano"] {
                 background-color: $light-grey;
-                transition: $t-slow;
-                cursor: pointer;
                 svg {
-                    opacity: .5;
+                    opacity: 1;
+                }
+            }
+            &[id="piano"] {
+                background-color: $white;
+            }
+        }
+    }
+
+    &[data-page="image"] {
+        .section-image {display: flex;}
+        .menu-btn {
+            &[id="image"] {
+                background-color: $light-grey;
+                svg {
+                    opacity: 1;
                 }
             }
             &[id="image"] {
-                
+                background-color: $white;
             }
         }
-
     }
 }
 
