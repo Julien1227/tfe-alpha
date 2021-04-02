@@ -56,9 +56,7 @@ var colorInput = document.querySelectorAll('.colorInput'),
     colorSpan = document.querySelectorAll('.colorSpan'),
     actualNote = document.getElementById('playedColor');
 
-const color = document.querySelector('.container-tolisten-color'),
-      colorB1 = document.querySelector('.blured-color-1'),
-      colorB2 = document.querySelector('.blured-color-2');
+const color = document.querySelector('.container-tolisten-color');
 
 var colorInputs = [],
     colorSpans = [];
@@ -253,9 +251,6 @@ function setColors(h, s, l) {
         +color1+", "
         +color2+")"
     );
-
-    colorB1.style.backgroundColor = color2;
-    colorB2.style.backgroundColor = color2;
 }
 
 // Calcule le gain
