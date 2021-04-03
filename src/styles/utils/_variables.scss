@@ -10,6 +10,9 @@ $darkBtn: #0000002f;
 $t-slider: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 $t-slow: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
 $t-fast: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+$t-superfast: all 0.1s cubic-bezier(0.33, 1, 0.68, 1);
+$t-tfast: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+$t-tslow: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
 
 
 // INPUT RANGE
@@ -21,7 +24,7 @@ $input-width: 102%;
 
 // border-radius
 $round: 1000px;
-$rounded: 30px;
+$rounded: 25px;
 
 // shadows
 $shadow: 0px 0px 25px -10px #00000038;

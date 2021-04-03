@@ -111,3 +111,14 @@
         }
     }
 }
+
+@media(max-height: 750px) {
+    .section-piano.piano-modify {
+        .piano {
+            grid-template-rows: repeat(3, 5vh);
+            &-btn {
+                width: 100%;
+            }
+        }
+    }
+}

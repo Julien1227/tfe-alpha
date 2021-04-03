@@ -43,36 +43,41 @@
         </div>
       </section>
 
-
-
-      <section class="section section-piano">
+      <section class="section section-piano mobile">
         <div class="container-tolisten container-tolisten-piano">
           <ul class="bg">
-            <li class="bg-color"></li>
-            <li class="bg-color"></li>
-            <li class="bg-color"></li>
-            <li class="bg-color"></li>
-            <li class="bg-color"></li>
-            <li class="bg-color"></li>
-            <li class="bg-color"></li>
-            <li class="bg-color"></li>
-            <li class="bg-color"></li>
+            <li id="bg-0" class="bg-color"></li>
+            <li id="bg-1" class="bg-color"></li>
+            <li id="bg-2" class="bg-color"></li>
+            <li id="bg-3" class="bg-color"></li>
+            <li id="bg-4" class="bg-color"></li>
+            <li id="bg-5" class="bg-color"></li>
+            <li id="bg-6" class="bg-color"></li>
+            <li id="bg-7" class="bg-color"></li>
+            <li id="bg-8" class="bg-color"></li>
           </ul>
         </div>
-
-        <ul class="piano">
-          <li><button class="piano-btn"></button></li>
-          <li><button class="piano-btn"></button></li>
-          <li><button class="piano-btn"></button></li>
-          <li><button class="piano-btn"></button></li>
-          <li><button class="piano-btn"></button></li>
-          <li><button class="piano-btn"></button></li>
-          <li><button class="piano-btn"></button></li>
-          <li><button class="piano-btn"></button></li>
-          <li><button class="piano-btn"></button></li>
-        </ul>
+        
+        <div class="piano-container">
+          <button class="btn btn-edit">Modifier</button>
+          
+          <ul class="piano">
+            <li><button id="btn-0" class="piano-btn"></button></li>
+            <li><button id="btn-1" class="piano-btn"></button></li>
+            <li><button id="btn-2" class="piano-btn"></button></li>
+            <li><button id="btn-3" class="piano-btn"></button></li>
+            <li><button id="btn-4" class="piano-btn"></button></li>
+            <li><button id="btn-5" class="piano-btn"></button></li>
+            <li><button id="btn-6" class="piano-btn"></button></li>
+            <li><button id="btn-7" class="piano-btn"></button></li>
+            <li><button id="btn-8" class="piano-btn"></button></li>
+          </ul>
+          <button class="btn btn-save">Enregistrer</button>
+        </div>
 
         <div class="form form-piano">
+
+
           <div class="form-el">
             <label>Teinte: <span data-p="color" class="pianoSpan">180</span>°</label>
             <input class="pianoInput" type="range" name="volume" min="0" max="359">

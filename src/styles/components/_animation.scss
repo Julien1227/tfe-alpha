@@ -45,6 +45,85 @@ body {
     }
 }
 
-.menu-btn {
-    transition: $t-slow;
+
+
+.section-piano {
+    .btn-save {
+        opacity: 0;
+        margin-top: -4rem;
+        pointer-events: none;
+        transition: $t-fast;
+    }
+
+    .btn-edit {
+        margin-bottom: 0rem;
+        transition: $t-fast;
+    }
+
+    .piano {
+        &-btn {
+            transform: scale(1)!important;
+            transition: $t-fast;
+            &:active {
+                transform: scale(.8)!important;
+                transition: $t-superfast;
+            }
+        }
+    }
+    .form {
+        margin-bottom: -400px;
+        transition: $t-fast;
+        &-el {
+            opacity: 0;
+            transition: $t-tfast;
+        }
+    }
+
+    .bg-color {
+        transition: $t-tfast;
+    }
+
+    .bg-color-active {
+        transform: scale(2.5);
+        transition: $t-fast;
+    }
+    
+    &.piano-modify {
+        overflow-y: scroll;
+
+        .piano {
+            &-btn {
+                transition: $t-tfast;
+                opacity: .2!important;
+                transform: scale(.8)!important;
+                &-active {
+                    opacity: 1!important;
+                    transform: scale(1)!important;
+                }
+            }
+        }
+
+        .btn-edit {
+            opacity: 0;
+            pointer-events: none;
+            margin-bottom: -2rem;
+            transition: $t-fast;
+        }
+
+        .btn-save {
+            margin-top: 0;
+            opacity: 1;
+            pointer-events: inherit;
+            transition: $t-fast;
+        }
+
+        .form {
+            margin-bottom: 0;
+            transition: $t-slow;
+            &-el {
+                opacity: 1;
+                transition: $t-fast;
+            }
+        }
+    }
 }

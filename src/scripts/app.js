@@ -93,7 +93,6 @@ for (let i = 0; i < colorInputs.length; i++) {
 
 
         //Applique le bon event listenner (mouse ou touch)
-
         colorInputs[i].addEventListener(event('end'), (e) => {
             g.gain.setTargetAtTime(0, context.currentTime, 0.3);
         });
@@ -110,27 +109,143 @@ for (let i = 0; i < colorInputs.length; i++) {
 
 // Variables
 const pianoBtn = document.querySelectorAll('.piano-btn'),
-      bgColors = document.querySelectorAll('.bg-color');
+      bgColors = document.querySelectorAll('.bg-color'),
+  
+      sectionPiano = document.querySelector('.section-piano'),
+      pianoFormInput = document.querySelectorAll('.pianoInput'),
+      pianoFormSpan = document.querySelectorAll('.pianoSpan'),
+      editBtn = document.querySelector('.btn-edit'),
+      saveBtn = document.querySelector('.btn-save');
 
-var pianoBtnColors = [];
+var btnColors = [];
 
-pianoBtn.forEach(button => {
-    let buttonColor = [randomMinMax(0, 360), randomMinMax(40, 100), randomMinMax(40, 60)];
-    button.style.backgroundColor = 'hsl('+buttonColor[0]+', '+buttonColor[1]+'%, '+buttonColor[2]+'%)';
+// Assigne une couleur aléatoire à chaque touche
+pianoBtn.forEach(btn => {
+    let btnColor = [randomMinMax(50, 360), randomMinMax(20, 90), randomMinMax(20, 90)];
+    btn.style.backgroundColor = 'hsl('+btnColor[0]+', '+btnColor[1]+'%, '+btnColor[2]+'%)';
+});
 
-    button.addEventListener(event('start'), (e) => {
-        let frq = setFrequency(buttonColor[0], buttonColor[1], buttonColor[2]);
-        let gain = setGain(buttonColor[1], buttonColor[2]);
+// Reporte les couleurs aléatoires au bg
+for (let i = 0; i < pianoBtn.length; i++) {
+    let color = getHslFromAttribute(pianoBtn[i]);
+    bgColors[i].style.backgroundColor = 'hsl('+color[0]+', '+color[1]+'%, '+color[2]+'%)';
+}
 
-        g.gain.setValueAtTime(gain, context.currentTime);
-        o.frequency.setValueAtTime(frq, context.currentTime);
+// Permets de rentrer en mode "modification" des boutons 
+editBtn.addEventListener('click', (e) => {
+    // Sélectionne la première touche par défaut
+    sectionPiano.classList.add('piano-modify');   
+    pianoBtn[0].classList.add('piano-btn-active');
+    let hslColor = getHslFromAttribute(pianoBtn[0]);
+    for (let i = 0; i < pianoFormInput.length; i++) {
+        pianoFormInput[i].value = hslColor[i];
+        pianoFormSpan[i].innerHTML = hslColor[i];
+    }
+});
 
-
-    })
-    button.addEventListener(event('end'), (e) => {
-        g.gain.setTargetAtTime(0, context.currentTime, 0.3);
+saveBtn.addEventListener('click', (e) => {
+    sectionPiano.classList.remove('piano-modify');
+    pianoBtn.forEach(btn => {
+        btn.classList.remove('piano-btn-active');
     });
 });
+
+// Pour chaque touches du piano
+pianoBtn.forEach(btn => {
+    btn.addEventListener(event('start'), (e) => {
+        if (sectionPiano.classList.contains('piano-modify') == false) {
+            
+            let targetBtn = e.currentTarget;
+            gsap.to(targetBtn, {duration: 0.01, scale: .8});
+
+            // Applique la couleur sur le BG
+            let bgNum = targetBtn.getAttribute('id').slice(4);
+            let bgToEdit = document.getElementById('bg-'+bgNum);
+            bgToEdit.classList.add('bg-color-active');
+                
+            // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
+            let hslColor = getHslFromAttribute(targetBtn);
+            
+            // jouer les sons des couleuirs
+            let frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
+            let gain = setGain(hslColor[2], hslColor[1]);
+            
+            g.gain.setValueAtTime(gain, context.currentTime);
+            o.frequency.setValueAtTime(frq, context.currentTime);
+            btn.addEventListener(event('end'), (e) => {
+                g.gain.setTargetAtTime(0, context.currentTime, 0.1);
+                bgToEdit.classList.remove('bg-color-active');
+            });
+        }
+    });
+});
+
+//Si le piano est en mode "modification"
+pianoBtn.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        if (sectionPiano.classList.contains('piano-modify') == true) {
+            //Récupère la couleur appuyée
+            let targetBtn = e.currentTarget;
+            
+            // Dans le cas ou l'utilisateur re sélectionne la couleur active
+            if (targetBtn.classList.contains('piano-btn-active') == true) {
+                console.log('pas de double sélection possible');
+            // Si il sélectionne une autre couleur
+            }else{
+                let pastTarget = document.querySelector('.piano-btn-active');
+
+                // Actualise le bouton actif
+                targetBtn.classList.add('piano-btn-active');
+                pastTarget.classList.remove('piano-btn-active');
+                
+                // Récupère les couleurs tsl depuis l'attibut style du boutton
+                let hslColor = getHslFromAttribute(targetBtn);
+                btnColors.push(hslColor);
+                
+                // Actualise les valeurs du slider avec la couleur actuelle du bouton
+                for (let i = 0; i < pianoFormInput.length; i++) {
+                    pianoFormInput[i].value = hslColor[i];
+                    pianoFormSpan[i].innerHTML = hslColor[i];
+                }
+            }
+            
+        
+        }
+    });
+});
+
+// L'orsqu'un slider bouge - modifie la couleur active
+for (let i = 0; i < pianoFormInput.length; i++) {
+    pianoFormInput[i].addEventListener('input', (e) => {
+        let t = pianoFormInput[0].value,
+            s = pianoFormInput[1].value,
+            l = pianoFormInput[2].value;
+
+        pianoFormSpan[i].innerHTML = pianoFormInput[i].value;
+        
+        let actualBtn = document.querySelector('.piano-btn-active');
+        actualBtn.style.backgroundColor = 'hsl('+t+', '+s+'%, '+l+'%)';
+        
+        // Applique la couleur sur le BG
+        let bgNum = actualBtn.getAttribute('id').slice(4);
+        let bgToEdit = document.getElementById('bg-'+bgNum);
+        bgToEdit.style.backgroundColor = 'hsl('+t+', '+s+'%, '+l+'%)';
+        
+        // Donne un aperçu du son de la couleur
+        let frq = setFrequency(t, s, l);
+        let gain = setGain(l, s);
+        // Défini la fréquence
+        o.frequency.setValueAtTime(frq, context.currentTime);
+        // Défini l'intensité
+        g.gain.setValueAtTime(gain, context.currentTime);
+
+
+        pianoFormInput[i].addEventListener(event('end'), (e) => {
+            g.gain.setTargetAtTime(0, context.currentTime, 0.1);
+        });
+    })
+}
+
 
 
 
@@ -246,6 +361,14 @@ playImageBtn.addEventListener('click', (e) => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+function getHslFromAttribute(element) {
+    //récupère les nombres (t, s et l) de l'attribu background-color
+    let rgbColor = element.getAttribute('style').match(/\d+/g).map(Number);
+                
+    // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
+    return RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
+}
+
 //source: https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d
 function randomMinMax(min,max){
     return Math.floor(Math.random()*(max-min+1)+min);
@@ -310,25 +433,24 @@ function setFrequency(h, s, l) {
     return frq;
 }
 
-// Calcule la fréquence
+// Défini la bon event à écouter
 function event(param) {
     let event;
     if (window.matchMedia("(min-width: 900px)").matches) {
-        // Desktop - mouse
-        if(param = 'end') {
-            event = 'mouseup';
-        }else{
+        // Desktop - mouseevent
+        if(param == 'start') {
             event = 'mousedown';
+        }else if(param == 'end'){
+            event = 'mouseup';
         }
     } else {
-        // Tablet - touch
-        if(param = 'end') {
-            event = 'touchend';
-        }else{
+        // Tablet - touchevent
+        if(param == 'start') {
             event = 'touchstart';
+        }else if(param == 'end'){
+            event = 'touchend';
         }
     }
-    console.log(event);
     return event;
 }
 
