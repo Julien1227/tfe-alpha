@@ -62,16 +62,16 @@ body {
 
     .piano {
         &-btn {
-            transform: scale(1)!important;
+            opacity: 1;
             transition: $t-fast;
             &:active {
-                transform: scale(.8)!important;
+                opacity: .2;
                 transition: $t-superfast;
             }
         }
     }
     .form {
-        margin-bottom: -400px;
+        margin-bottom: calc(-100vh - 4rem);
         transition: $t-fast;
         &-el {
             opacity: 0;
@@ -95,10 +95,8 @@ body {
             &-btn {
                 transition: $t-tfast;
                 opacity: .2!important;
-                transform: scale(.8)!important;
                 &-active {
                     opacity: 1!important;
-                    transform: scale(1)!important;
                 }
             }
         }

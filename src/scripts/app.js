@@ -121,7 +121,7 @@ var btnColors = [];
 
 // Assigne une couleur aléatoire à chaque touche
 pianoBtn.forEach(btn => {
-    let btnColor = [randomMinMax(50, 360), randomMinMax(20, 90), randomMinMax(20, 90)];
+    let btnColor = [randomMinMax(150, 250), randomMinMax(80, 90), randomMinMax(50, 60)];
     btn.style.backgroundColor = 'hsl('+btnColor[0]+', '+btnColor[1]+'%, '+btnColor[2]+'%)';
 });
 
@@ -156,7 +156,6 @@ pianoBtn.forEach(btn => {
         if (sectionPiano.classList.contains('piano-modify') == false) {
             
             let targetBtn = e.currentTarget;
-            gsap.to(targetBtn, {duration: 0.01, scale: .8});
 
             // Applique la couleur sur le BG
             let bgNum = targetBtn.getAttribute('id').slice(4);

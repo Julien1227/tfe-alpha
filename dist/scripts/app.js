@@ -9266,7 +9266,7 @@ var pianoBtn = document.querySelectorAll('.piano-btn'),
 var btnColors = []; // Assigne une couleur aléatoire à chaque touche
 
 pianoBtn.forEach(function (btn) {
-  var btnColor = [randomMinMax(50, 360), randomMinMax(20, 90), randomMinMax(20, 90)];
+  var btnColor = [randomMinMax(150, 250), randomMinMax(80, 90), randomMinMax(50, 60)];
   btn.style.backgroundColor = 'hsl(' + btnColor[0] + ', ' + btnColor[1] + '%, ' + btnColor[2] + '%)';
 }); // Reporte les couleurs aléatoires au bg
 
@@ -9298,11 +9298,7 @@ saveBtn.addEventListener('click', function (e) {
 pianoBtn.forEach(function (btn) {
   btn.addEventListener(event('start'), function (e) {
     if (sectionPiano.classList.contains('piano-modify') == false) {
-      var targetBtn = e.currentTarget;
-      gsap.to(targetBtn, {
-        duration: 0.01,
-        scale: .8
-      }); // Applique la couleur sur le BG
+      var targetBtn = e.currentTarget; // Applique la couleur sur le BG
 
       var bgNum = targetBtn.getAttribute('id').slice(4);
       var bgToEdit = document.getElementById('bg-' + bgNum);
