@@ -47,6 +47,8 @@ body {
 
 
 
+
+// Animations du piano
 .section-piano {
     .btn-save {
         opacity: 0;
@@ -75,25 +77,25 @@ body {
         transition: $t-fast;
         &-el {
             opacity: 0;
-            transition: $t-tfast;
+            transition: $t-fast;
         }
     }
 
-    .bg-color {
-        transition: $t-tfast;
+    .bg {
+        transition: $t-fast;
+        &-color {
+            transition: $t-fast;
+        }
     }
 
     .bg-color-active {
-        transform: scale(2.5);
+        transform: scale(2);
         transition: $t-fast;
     }
     
     &.piano-modify {
-        overflow-y: scroll;
-
         .piano {
             &-btn {
-                transition: $t-tfast;
                 opacity: .2!important;
                 &-active {
                     opacity: 1!important;
@@ -105,22 +107,19 @@ body {
             opacity: 0;
             pointer-events: none;
             margin-bottom: -2rem;
-            transition: $t-fast;
         }
 
         .btn-save {
             margin-top: 0;
             opacity: 1;
             pointer-events: inherit;
-            transition: $t-fast;
         }
 
         .form {
             margin-bottom: 0;
-            transition: $t-slow;
             &-el {
                 opacity: 1;
-                transition: $t-fast;
+                transition-delay: 0.2s;
             }
         }
     }

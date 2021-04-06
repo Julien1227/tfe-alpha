@@ -9187,14 +9187,33 @@ o.frequency.value = 0;
 o.type = "triangle";
 g.connect(context.destination);
 o.connect(g);
-o.start(0);
-var gainValue = 0.5;
-var frq = 0; ///////////////////////////////////////////////////////////////////
+var frq = 0,
+    gain = 0; ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////// START API ///////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Variables
+
+var beginBtn = document.querySelector('.section-intro');
+beginBtn.addEventListener('click', function (e) {
+  o.start(0);
+  gsap.to(beginBtn, {
+    opacity: 0,
+    onComplete: hide,
+    onCompleteParams: [beginBtn]
+  });
+});
+
+function hide(element) {
+  element.style.display = "none";
+} ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////// GESTION DU SLIDER ///////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 // VARIABLES
+
 
 var body = document.querySelector('body'),
     sliderBtn = document.querySelectorAll('.menu-btn');
@@ -9263,10 +9282,10 @@ var pianoBtn = document.querySelectorAll('.piano-btn'),
     pianoFormSpan = document.querySelectorAll('.pianoSpan'),
     editBtn = document.querySelector('.btn-edit'),
     saveBtn = document.querySelector('.btn-save');
-var btnColors = []; // Assigne une couleur aléatoire à chaque touche
+var btnColors = []; // Assigne une couleur aléatoire à chaque touche (tons bleu)
 
 pianoBtn.forEach(function (btn) {
-  var btnColor = [randomMinMax(150, 250), randomMinMax(80, 90), randomMinMax(50, 60)];
+  var btnColor = [randomMinMax(120, 250), randomMinMax(80, 90), randomMinMax(50, 70)];
   btn.style.backgroundColor = 'hsl(' + btnColor[0] + ', ' + btnColor[1] + '%, ' + btnColor[2] + '%)';
 }); // Reporte les couleurs aléatoires au bg
 
@@ -9297,24 +9316,26 @@ saveBtn.addEventListener('click', function (e) {
 
 pianoBtn.forEach(function (btn) {
   btn.addEventListener(event('start'), function (e) {
+    var targetBtn = e.currentTarget; // Applique la couleur sur le BG
+
+    var bgNum = targetBtn.getAttribute('id').slice(4);
+    var bgToEdit = document.getElementById('bg-' + bgNum); // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
+
+    var hslColor = getHslFromAttribute(targetBtn); // jouer les sons des couleuirs
+
+    var frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
+    var gain = setGain(hslColor[2], hslColor[1]);
+    g.gain.setValueAtTime(gain, context.currentTime);
+    o.frequency.setValueAtTime(frq, context.currentTime); // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
+
     if (sectionPiano.classList.contains('piano-modify') == false) {
-      var targetBtn = e.currentTarget; // Applique la couleur sur le BG
-
-      var bgNum = targetBtn.getAttribute('id').slice(4);
-      var bgToEdit = document.getElementById('bg-' + bgNum);
-      bgToEdit.classList.add('bg-color-active'); // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
-
-      var hslColor = getHslFromAttribute(targetBtn); // jouer les sons des couleuirs
-
-      var _frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
-
-      var gain = setGain(hslColor[2], hslColor[1]);
-      g.gain.setValueAtTime(gain, context.currentTime);
-      o.frequency.setValueAtTime(_frq, context.currentTime);
+      bgToEdit.classList.add('bg-color-active');
       btn.addEventListener(event('end'), function (e) {
         g.gain.setTargetAtTime(0, context.currentTime, 0.1);
         bgToEdit.classList.remove('bg-color-active');
       });
+    } else {
+      g.gain.setTargetAtTime(0, context.currentTime + 0.1, 0.3);
     }
   });
 }); //Si le piano est en mode "modification"
@@ -9331,9 +9352,10 @@ pianoBtn.forEach(function (btn) {
         var pastTarget = document.querySelector('.piano-btn-active'); // Actualise le bouton actif
 
         targetBtn.classList.add('piano-btn-active');
-        pastTarget.classList.remove('piano-btn-active'); // Récupère les couleurs tsl depuis l'attibut style du boutton
+        pastTarget.classList.remove('piano-btn-active');
+        var hslColor = getHslFromAttribute(targetBtn); // Récupère les couleurs tsl depuis l'attibut style du boutton
 
-        var hslColor = getHslFromAttribute(targetBtn);
+        hslColor = getHslFromAttribute(targetBtn);
         btnColors.push(hslColor); // Actualise les valeurs du slider avec la couleur actuelle du bouton
 
         for (var _i3 = 0; _i3 < pianoFormInput.length; _i3++) {
@@ -9354,12 +9376,12 @@ var _loop2 = function _loop2(_i4) {
     var actualBtn = document.querySelector('.piano-btn-active');
     actualBtn.style.backgroundColor = 'hsl(' + t + ', ' + s + '%, ' + l + '%)'; // Applique la couleur sur le BG
 
-    var bgNum = actualBtn.getAttribute('id').slice(4);
-    var bgToEdit = document.getElementById('bg-' + bgNum);
+    var bgNum = actualBtn.getAttribute('id').slice(4),
+        bgToEdit = document.getElementById('bg-' + bgNum);
     bgToEdit.style.backgroundColor = 'hsl(' + t + ', ' + s + '%, ' + l + '%)'; // Donne un aperçu du son de la couleur
 
-    var frq = setFrequency(t, s, l);
-    var gain = setGain(l, s); // Défini la fréquence
+    var frq = setFrequency(t, s, l),
+        gain = setGain(l, s); // Défini la fréquence
 
     o.frequency.setValueAtTime(frq, context.currentTime); // Défini l'intensité
 
@@ -9430,12 +9452,13 @@ playImageBtn.addEventListener('click', function (e) {
 
       var hslColor = RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]); //Récupère une fréquence pour chaque couleurs
 
-      var _frq2 = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
+      var _frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
 
-      frqs.push(_frq2); //crée et récupère un gain
+      frqs.push(_frq); //crée et récupère un gain
 
-      var gain = setGain(hslColor[1], hslColor[2]);
-      gains.push(gain);
+      var _gain = setGain(hslColor[1], hslColor[2]);
+
+      gains.push(_gain);
     }
   } //Joue chaque paramètre les uns après les autres
 
@@ -9503,7 +9526,7 @@ function setGain(lum, sat) {
     lum = 100 - lum;
   }
 
-  gainValue = sat / 100 * (lum / 100);
+  var gainValue = sat / 100 * (lum / 100);
   gainValue = Math.round(gainValue * 100) / 100 * 2; //Si couleur invisible -> son 0
 
   if (lum == 0 || lum == 100 || sat == 0) {
@@ -10654,8 +10677,8 @@ var require;var require;(function e(t, n, r) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })
