@@ -233,6 +233,7 @@ pianoBtn.forEach(btn => {
     });
 });
 
+body.
 // L'orsqu'un slider bouge - modifie la couleur active
 for (let i = 0; i < pianoFormInput.length; i++) {
     pianoFormInput[i].addEventListener('input', (e) => {
@@ -273,15 +274,55 @@ for (let i = 0; i < pianoFormInput.length; i++) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-// Il faudrait looper sur chaque touche et reprendre les valeurs qui lui sont assignées dans un tableau
+// Variables
+var pianoGain = 1;
+// Assiciation d'une fréquence à chaque touches
+var notes = {
+    "a": "100",
+    "z": "125",
+    "e": "150",
+    "r": "200",
+    "t": "225",
+    "y": "250",
+    "u": "275",
+    "i": "300",
+    "o": "325",
+    "p": "350",
+    "q": "375",
+    "s": "400",
+    "d": "425",
+    "f": "450",
+    "g": "475",
+    "h": "500",
+    "j": "525",
+    "k": "550",
+    "l": "575",
+    "m": "600",
+    "w": "625",
+    "x": "650",
+    "c": "675",
+    "v": "700",
+    "b": "725",
+    "n": "750"};
 
+// Récupère la touche jouée et joue la fréquence qui lui est associée
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'p') {
-        o.frequency.setValueAtTime(400, context.currentTime);
-        g.gain.setValueAtTime(1, context.currentTime);
-        g.gain.setTargetAtTime(0, context.currentTime+1, 0.1);
+    let key = event.key;
+    // Si un son est assigné
+    if (notes[key] != null) {
+        let frq = notes[key];
+        
+        o.frequency.setValueAtTime(frq, context.currentTime);
+        g.gain.setValueAtTime(pianoGain, context.currentTime);
     }
 });
+
+// Lorsqu'on lâche la touche, le son s'arrête
+document.addEventListener('keyup', (event) => {
+    g.gain.setTargetAtTime(0, context.currentTime, 0.1);
+});
+
+
 
 
 ///////////////////////////////////////////////////////////////////

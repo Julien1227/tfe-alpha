@@ -9400,15 +9400,52 @@ for (var _i4 = 0; _i4 < pianoFormInput.length; _i4++) {
 /////////////////////////// PianoBig //////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-// Il faudrait looper sur chaque touche et reprendre les valeurs qui lui sont assignées dans un tableau
+// Variables
 
+
+var pianoGain = 1; // Assiciation d'une fréquence à chaque touches
+
+var notes = {
+  "a": "100",
+  "z": "125",
+  "e": "150",
+  "r": "200",
+  "t": "225",
+  "y": "250",
+  "u": "275",
+  "i": "300",
+  "o": "325",
+  "p": "350",
+  "q": "375",
+  "s": "400",
+  "d": "425",
+  "f": "450",
+  "g": "475",
+  "h": "500",
+  "j": "525",
+  "k": "550",
+  "l": "575",
+  "m": "600",
+  "w": "625",
+  "x": "650",
+  "c": "675",
+  "v": "700",
+  "b": "725",
+  "n": "750"
+}; // Récupère la touche jouée et joue la fréquence qui lui est associée
 
 document.addEventListener('keydown', function (event) {
-  if (event.key === 'p') {
-    o.frequency.setValueAtTime(400, context.currentTime);
-    g.gain.setValueAtTime(1, context.currentTime);
-    g.gain.setTargetAtTime(0, context.currentTime + 1, 0.1);
+  var key = event.key; // Si un son est assigné
+
+  if (notes[key] != null) {
+    var _frq = notes[key];
+    o.frequency.setValueAtTime(_frq, context.currentTime);
+    g.gain.setValueAtTime(pianoGain, context.currentTime);
   }
+}); // Lorsqu'on lâche la touche, le son s'arrête
+
+document.addEventListener('keyup', function (event) {
+  g.gain.setTargetAtTime(0, context.currentTime, 0.1);
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
@@ -9465,9 +9502,9 @@ playImageBtn.addEventListener('click', function (e) {
 
       var hslColor = RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]); //Récupère une fréquence pour chaque couleurs
 
-      var _frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
+      var _frq2 = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
 
-      frqs.push(_frq); //crée et récupère un gain
+      frqs.push(_frq2); //crée et récupère un gain
 
       var _gain = setGain(hslColor[1], hslColor[2]);
 
