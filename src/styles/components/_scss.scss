@@ -44,7 +44,7 @@ body {
         padding: 1rem;
 
         background-color: $light-grey;
-        color: #353535;
+        color: $grey;
         & svg {
             opacity: .5;
             width: 2rem;
@@ -76,9 +76,10 @@ body {
 }
 
 .section {
-    display: none;
     overflow: hidden;
     position: relative;
+
+    display: flex;
     flex-direction: column;
     justify-content: flex-end;
 
@@ -269,6 +270,11 @@ body {
             margin-top: 1rem;
             padding-top: 2rem;
         }
+    }
+
+    &-pianoBig {
+        height: 100vh;
+        justify-content: center;
     }
 }
 

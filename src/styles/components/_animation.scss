@@ -1,45 +1,49 @@
+.section {display: none;}
 body {
     &[data-page="color"] {
-        .section-color {display: flex;}
+        .section-color {display: inherit;}
         .menu-btn {
             &[id="color"] {
-                background-color: $light-grey;
+                background-color: $white;
                 svg {
                     opacity: 1;
                 }
-            }
-            &[id="color"] {
-                background-color: $white;
             }
         }
     }
     
     &[data-page="piano"] {
-        .section-piano {display: flex;}
+        .section-piano {display: inherit;}
         .menu-btn {
             &[id="piano"] {
-                background-color: $light-grey;
+                background-color: $white;
                 svg {
                     opacity: 1;
                 }
             }
-            &[id="piano"] {
+        }
+    }
+    
+    &[data-page="image"] {
+        .section-image {display: inherit;}
+        .menu-btn {
+            &[id="image"] {
                 background-color: $white;
+                svg {
+                    opacity: 1;
+                }
             }
         }
     }
 
-    &[data-page="image"] {
-        .section-image {display: flex;}
+    &[data-page="pianoBig"] {
+        .section-pianoBig {display: inherit;}
         .menu-btn {
-            &[id="image"] {
-                background-color: $light-grey;
+            &[id="pianoBig"] {
+                background-color: $white;
                 svg {
                     opacity: 1;
                 }
-            }
-            &[id="image"] {
-                background-color: $white;
             }
         }
     }

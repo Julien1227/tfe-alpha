@@ -1,3 +1,5 @@
+.desktop {display: none;}
+
 @media(max-width: 340px) {
     .section-intro .text-block {
         padding: inherit;
@@ -16,6 +18,10 @@
 }
 
 @media(min-width: 900px) {
+
+    .desktop {display: inherit;}
+    .mobile {display: none;}
+
     .section {
         height: 100%;
         align-items: center;
@@ -123,8 +129,11 @@
                 margin-top: 6rem;
             }
         }
+        
+        &-pianoBig {
+            height: 100vh;
+        }
     }
-
 
     .menu {
         margin-bottom: 1rem;

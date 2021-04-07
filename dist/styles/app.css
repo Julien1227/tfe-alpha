@@ -92,9 +92,9 @@ body {
   }
 }
 .section {
-  display: none;
   overflow: hidden;
   position: relative;
+  display: flex;
   flex-direction: column;
   justify-content: flex-end;
   min-width: 100%;
@@ -243,6 +243,10 @@ body {
   margin-top: 1rem;
   padding-top: 2rem;
 }
+.section-pianoBig {
+  height: 100vh;
+  justify-content: center;
+}
 
 /* Css 100% responsiv des input range */
 input[type=range]::-webkit-slider-runnable-track {
@@ -360,41 +364,45 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 
+.section {
+  display: none;
+}
+
 body[data-page=color] .section-color {
-  display: flex;
+  display: inherit;
 }
 body[data-page=color] .menu-btn[id=color] {
-  background-color: #eeeeee;
+  background-color: #fff;
 }
 body[data-page=color] .menu-btn[id=color] svg {
   opacity: 1;
 }
-body[data-page=color] .menu-btn[id=color] {
-  background-color: #fff;
-}
 body[data-page=piano] .section-piano {
-  display: flex;
+  display: inherit;
 }
 body[data-page=piano] .menu-btn[id=piano] {
-  background-color: #eeeeee;
+  background-color: #fff;
 }
 body[data-page=piano] .menu-btn[id=piano] svg {
   opacity: 1;
 }
-body[data-page=piano] .menu-btn[id=piano] {
-  background-color: #fff;
-}
 body[data-page=image] .section-image {
-  display: flex;
+  display: inherit;
 }
 body[data-page=image] .menu-btn[id=image] {
-  background-color: #eeeeee;
+  background-color: #fff;
 }
 body[data-page=image] .menu-btn[id=image] svg {
   opacity: 1;
 }
-body[data-page=image] .menu-btn[id=image] {
+body[data-page=pianoBig] .section-pianoBig {
+  display: inherit;
+}
+body[data-page=pianoBig] .menu-btn[id=pianoBig] {
   background-color: #fff;
+}
+body[data-page=pianoBig] .menu-btn[id=pianoBig] svg {
+  opacity: 1;
 }
 
 .section-piano .btn-save {
@@ -457,6 +465,10 @@ body[data-page=image] .menu-btn[id=image] {
   transition-delay: 0.2s;
 }
 
+.desktop {
+  display: none;
+}
+
 @media (max-width: 340px) {
   .section-intro .text-block {
     padding: inherit;
@@ -473,6 +485,14 @@ body[data-page=image] .menu-btn[id=image] {
   }
 }
 @media (min-width: 900px) {
+  .desktop {
+    display: inherit;
+  }
+
+  .mobile {
+    display: none;
+  }
+
   .section {
     height: 100%;
     align-items: center;
@@ -554,6 +574,9 @@ body[data-page=image] .menu-btn[id=image] {
   }
   .section-image .form {
     margin-top: 6rem;
+  }
+  .section-pianoBig {
+    height: 100vh;
   }
 
   .menu {

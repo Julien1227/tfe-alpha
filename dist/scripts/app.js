@@ -9397,11 +9397,24 @@ for (var _i4 = 0; _i4 < pianoFormInput.length; _i4++) {
   _loop2(_i4);
 } ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+/////////////////////////// PianoBig //////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// Il faudrait looper sur chaque touche et reprendre les valeurs qui lui sont assignées dans un tableau
+
+
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'p') {
+    o.frequency.setValueAtTime(400, context.currentTime);
+    g.gain.setValueAtTime(1, context.currentTime);
+    g.gain.setTargetAtTime(0, context.currentTime + 1, 0.1);
+  }
+}); ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 ///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 // Require de vibrant
-
 
 __webpack_require__(/*! ../scripts/vibrant.js */ "./src/scripts/vibrant.js");
 
@@ -10677,8 +10690,8 @@ var require;var require;(function e(t, n, r) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })
