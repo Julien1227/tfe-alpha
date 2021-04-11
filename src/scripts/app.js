@@ -282,13 +282,17 @@ for (let i = 0; i < pianoFormInput.length; i++) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-// Variables
 
+// Empêche le "keydown" event de se répéter lorsqu'on maintiens la touche
+// https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
+
+// Variables
 const pianoColor = document.querySelector('.piano-color');
 
 var t = 0,
     s = 0,
-    l = 0;
+    l = 0,
+    down = false;
     
 // Assiciation d'une fréquence à chaque touches
 var notes = {
@@ -331,6 +335,9 @@ document.addEventListener('keydown', (event) => {
     // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
     if(body.getAttribute('data-page') == "piano") {
 
+        if(down) return;
+        down = true;
+
         // Si une fréquence est assigné à la touche, on la joue
         if (notes[key] != null) {
             let frq = notes[key],
@@ -359,14 +366,16 @@ document.addEventListener('keydown', (event) => {
             gsap.to(pianoMsg, {duration: 0.3, opacity: 0, onComplete: hide, onCompleteParams: [pianoMsg]});
         }
     }
-});
+}, false);
 
 // Lorsqu'on lâche la touche, le son s'arrête et la couleur passe au blanc
 document.addEventListener('keyup', (event) => {
     pianoColor.classList.remove('piano-color-active');
     pianoColor.style.backgroundColor = "#fff";
     g.gain.setTargetAtTime(0, context.currentTime, 0.1);
-});
+
+    down = false;
+}, false);
 
 
 

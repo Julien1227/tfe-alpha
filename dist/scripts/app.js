@@ -9406,13 +9406,16 @@ for (var _i4 = 0; _i4 < pianoFormInput.length; _i4++) {
 /////////////////////////// PianoBig //////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+// Empêche le "keydown" event de se répéter lorsqu'on maintiens la touche
+// https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
 // Variables
 
 
 var pianoColor = document.querySelector('.piano-color');
 var t = 0,
     s = 0,
-    l = 0; // Assiciation d'une fréquence à chaque touches
+    l = 0,
+    down = false; // Assiciation d'une fréquence à chaque touches
 
 var notes = {
   "a": "150",
@@ -9452,7 +9455,9 @@ document.addEventListener('keydown', function (event) {
   var key = event.key; // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
 
   if (body.getAttribute('data-page') == "piano") {
-    // Si une fréquence est assigné à la touche, on la joue
+    if (down) return;
+    down = true; // Si une fréquence est assigné à la touche, on la joue
+
     if (notes[key] != null) {
       var _frq = notes[key],
           _color2 = 0; // Assigne la valeur de gain et fréquence
@@ -9481,13 +9486,14 @@ document.addEventListener('keydown', function (event) {
       });
     }
   }
-}); // Lorsqu'on lâche la touche, le son s'arrête et la couleur passe au blanc
+}, false); // Lorsqu'on lâche la touche, le son s'arrête et la couleur passe au blanc
 
 document.addEventListener('keyup', function (event) {
   pianoColor.classList.remove('piano-color-active');
   pianoColor.style.backgroundColor = "#fff";
   g.gain.setTargetAtTime(0, context.currentTime, 0.1);
-}); ///////////////////////////////////////////////////////////////////
+  down = false;
+}, false); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
 ///////////////////////////////////////////////////////////////////
