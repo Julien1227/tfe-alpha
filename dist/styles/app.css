@@ -257,10 +257,10 @@ body {
   border-radius: 1000px;
   transform: translateY(50%);
   filter: blur(200px);
-  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
 .section-piano .piano-color-active {
-  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: all 0.1s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 /* Css 100% responsiv des input range */

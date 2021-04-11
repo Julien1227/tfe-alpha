@@ -284,9 +284,9 @@ body {
             transform: translateY(50%);
             filter: blur(200px);
 
-            transition: $t-slow;
+            transition: $t-fast;
             &-active {
-                transition: $t-fast;
+                transition: $t-superfast;
             }
         }
     }
