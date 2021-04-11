@@ -53,24 +53,18 @@
             }
         }
 
-        &-piano {
+        &-pad {
             height: 100vh;
             .container-tolisten {
                 height: 100vh;
-                align-items: center;
-                justify-content: center;
-                .bg {
-                    width: 350px;
-                    height: 350px;
-                }
             }
 
-            &.piano-modify {
+            &.pad-modify {
                 .container-tolisten {
                     height: 50vh;
                 }
 
-                .piano-container {
+                .pad-container {
                     height: 50vh;
                 }
 
@@ -130,7 +124,7 @@
             }
         }
         
-        &-pianoBig {
+        &-piano {
             height: 100vh;
         }
     }
@@ -151,7 +145,7 @@
 @media(max-height: 750px) {
     .section-piano.piano-modify {
         .piano {
-            grid-template-rows: repeat(3, 5vh);
+            grid-template-rows: repeat(3, 60px);
             &-btn {
                 width: 100%;
             }

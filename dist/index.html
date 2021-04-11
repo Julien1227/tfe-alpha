@@ -15,7 +15,7 @@
   
   <link rel="stylesheet" href="styles/app.css">
 </head>
-<body data-page="piano">
+<body data-page="color">
 
   <main class="main">
 
@@ -24,8 +24,8 @@
       </section>
 
       <section class="section section-color">
-        <div style="background: linear-gradient(to bottom, #00ffff, #0099e6);" class="container-tolisten container-tolisten-color">
-          <span class="container-tolisten-frequency" id="playedColor">446 Hz</span>
+        <div style="background: linear-gradient(#40bfbf, #3986ac);" class="container-tolisten container-tolisten-color">
+          <span class="container-tolisten-frequency" id="playedColor">514 Hz</span>
           <div class="container-tolisten-shadow"></div>
         </div>
 
@@ -37,7 +37,7 @@
       
           <div class="form-el">
             <label>Saturation: <span data-p="sat" class="colorSpan">50</span>%</label>
-            <input class="colorInput" value="100" type="range" name="volume" min="0" max="100">
+            <input class="colorInput" value="50" type="range" name="volume" min="0" max="100">
           </div>
       
           <div class="form-el">
@@ -47,8 +47,8 @@
         </div>
       </section>
 
-      <section class="section section-piano">
-        <div class="container-tolisten container-tolisten-piano">
+      <section class="section section-pad">
+        <div class="container-tolisten container-tolisten-pad">
           <ul class="bg">
             <li id="bg-0" class="bg-color"></li>
             <li id="bg-1" class="bg-color"></li>
@@ -62,44 +62,47 @@
           </ul>
         </div>
         
-        <div class="piano-container">
-          <button class="btn btn-edit">Modifier</button>
+        <div class="pad-container">
           
-          <ul class="piano">
-            <li><button id="btn-0" class="piano-btn"></button></li>
-            <li><button id="btn-1" class="piano-btn"></button></li>
-            <li><button id="btn-2" class="piano-btn"></button></li>
-            <li><button id="btn-3" class="piano-btn"></button></li>
-            <li><button id="btn-4" class="piano-btn"></button></li>
-            <li><button id="btn-5" class="piano-btn"></button></li>
-            <li><button id="btn-6" class="piano-btn"></button></li>
-            <li><button id="btn-7" class="piano-btn"></button></li>
-            <li><button id="btn-8" class="piano-btn"></button></li>
+          <ul class="pad">
+            <li><button id="btn-0" class="pad-btn"></button></li>
+            <li><button id="btn-1" class="pad-btn"></button></li>
+            <li><button id="btn-2" class="pad-btn"></button></li>
+            <li><button id="btn-3" class="pad-btn"></button></li>
+            <li><button id="btn-4" class="pad-btn"></button></li>
+            <li><button id="btn-5" class="pad-btn"></button></li>
+            <li><button id="btn-6" class="pad-btn"></button></li>
+            <li><button id="btn-7" class="pad-btn"></button></li>
+            <li><button id="btn-8" class="pad-btn"></button></li>
           </ul>
-
-          <button class="btn btn-save">Enregistrer</button>
+          
+          <button class="btn btn-edit">Modifier</button>
         </div>
-
-        <div class="form form-piano">
+        
+        <div class="form form-pad">
           <div class="form-el">
-            <label>Teinte: <span data-p="color" class="pianoSpan">180</span>°</label>
-            <input class="pianoInput" type="range" name="volume" min="0" max="359">
+            <button class="btn btn-big btn-save">Enregistrer</button>
+          </div>
+          <div class="form-el">
+            <label>Teinte: <span data-p="color" class="padSpan">180</span>°</label>
+            <input class="padInput" type="range" name="volume" min="0" max="359">
           </div>
       
           <div class="form-el">
-            <label>Saturation: <span data-p="sat" class="pianoSpan">50</span>%</label>
-            <input class="pianoInput" type="range" name="volume" min="0" max="100">
+            <label>Saturation: <span data-p="sat" class="padSpan">50</span>%</label>
+            <input class="padInput" type="range" name="volume" min="0" max="100">
           </div>
       
           <div class="form-el">
-            <label>Luminiosité: <span data-p="lum" class="pianoSpan">50</span>%</label>
-            <input class="pianoInput" type="range" name="volume" min="0" max="100">
+            <label>Luminiosité: <span data-p="lum" class="padSpan">50</span>%</label>
+            <input class="padInput" type="range" name="volume" min="0" max="100">
           </div>
         </div>
       </section>
       
-      <section class="section section-pianoBig">
-        <span>Appuyez sur une touche.</span>
+      <section class="section section-piano">
+        <div class="piano-color"></div>
+        <span class="piano-msg">Appuyez sur une touche.</span>
       </section>
       
       <section class="section section-image">
@@ -125,7 +128,7 @@
             <label>Vitesse de lecture: <span id="playRateSpan">150</span>ms</label>
             <input id="playRate" type="range" value="150" min="-500" max="-50">
           </div>
-          <button id="getColors" class="btn btn-dark">Jouer la mélodie</button>
+          <button id="getColors" class="btn">Jouer la mélodie</button>
         </div>
       </section>
   </main>
@@ -134,8 +137,8 @@
 
   <div class="menu">
     <button id="color" class="menu-btn"><svg><use xlink:href="#colorSvg"/></svg></button>
-    <button id="piano" class="menu-btn"><svg><use xlink:href="#gridSvg"/></svg></button>
-    <button id="pianoBig" class="menu-btn desktop"><svg><use xlink:href="#pianoSvg"/></svg></button>
+    <button id="pad" class="menu-btn"><svg><use xlink:href="#gridSvg"/></svg></button>
+    <button id="piano" class="menu-btn desktop"><svg><use xlink:href="#pianoSvg"/></svg></button>
     <button id="image" class="menu-btn"><svg><use xlink:href="#pictureSvg"/></svg></button>
   </div>
 

@@ -13,12 +13,17 @@ body {
     padding: 1rem;
     border-radius: $round;
     backdrop-filter: blur(20px);
-    font-weight: 600;
+    font-weight: 700;
+
+    font-size: 20px;
+
+    box-shadow: $shadow;
 
     transition: $t-fast;
-    &-dark {
-        background-color: $darkBtn;
+    &-big {
+        font-size: 20px;
     }
+    
     &:hover {
         opacity: .6;
         transition: $t-fast;
@@ -47,8 +52,8 @@ body {
         color: $grey;
         & svg {
             opacity: .5;
-            width: 2rem;
-            height: 2rem;
+            width: 1.5rem;
+            height: 1.5rem;
         }
     }
 }
@@ -64,15 +69,6 @@ body {
     background-color: $white;
     text-align: center;
     cursor: pointer;
-    & .intro-message::before {
-        content: "Appuyez ";
-    }
-}
-
-@media(min-width: 900px) {
-    .section-intro .intro-message::before {
-        content: "Cliquez ";
-    }
 }
 
 .section {
@@ -102,7 +98,6 @@ body {
         justify-content: center;
         align-items: center;
         box-sizing: content-box;
-        height: 400px;
         padding: 2rem;
 
         background-color: #fff;
@@ -121,16 +116,16 @@ body {
 
         .btn {
             text-align: center;
-            margin: 1rem auto;
+            margin: 1rem 0;
         }
     }
 
 
     &-color {
-        .container-tolisten {    
+        .container-tolisten {  
             &-frequency {
                 position: relative;
-                z-index: 100;
+                z-index: 50;
                 margin-bottom: -10.5vw;
                 font-size: 25vw;
                 font-weight: 800;
@@ -201,11 +196,8 @@ body {
     }
 
 
-    &-piano {
+    &-pad {
         justify-content: flex-start;
-        .mobile {
-            width: 100%;
-        }
 
         .container-tolisten {
             position: absolute;
@@ -213,14 +205,14 @@ body {
             top: 0;
             width: 100%;
             height: 100%;
-            align-items: flex-start;
+            align-items: center;
             .bg {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 grid-template-rows: repeat(3, 1fr);
                 
-                width: 100%;
-                height: 60vh;
+                width: 350px;
+                height: 350px;
                 filter: blur(50px);
                 &-color {
                     border-radius: $rounded;
@@ -228,11 +220,7 @@ body {
             }
         }
 
-        .btn-save {
-            align-items: center;
-        }
-
-        .piano-container {
+        .pad-container {
             height: 100%;
             display: flex;
             justify-content: center;
@@ -240,7 +228,7 @@ body {
             flex-direction: column;
         }
 
-        .piano {
+        .pad {
             display: grid;
             grid-template-columns: repeat(3, 100px);
             grid-template-rows: repeat(3, 100px);
@@ -270,11 +258,35 @@ body {
             margin-top: 1rem;
             padding-top: 2rem;
         }
+
+        .btn-edit {
+            margin-top: 1rem;
+        }
+
+        .btn-save {
+            align-self: flex-end;
+            margin-top: -4rem!important;
+            margin-bottom: 0!important;
+        }
     }
 
-    &-pianoBig {
+    &-piano {
         height: 100vh;
         justify-content: center;
+        .piano- {
+            &color {
+                width: 100%;
+                height: 100%;
+                border-radius: $round;
+                transform: translateY(50%);
+                filter: blur(200px);
+
+                transition: $t-slow;
+                &-active {
+                    transition: $t-fast;
+                }
+            }
+        }
     }
 }
 

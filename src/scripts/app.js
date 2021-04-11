@@ -55,10 +55,9 @@ sliderBtn.forEach(element => {
         
         let page = target.getAttribute('id');
         body.setAttribute('data-page', page);
+
     });
 });
-
-
 
 
 ///////////////////////////////////////////////////////////////////
@@ -124,12 +123,12 @@ for (let i = 0; i < colorInputs.length; i++) {
 ///////////////////////////////////////////////////////////////////
 
 // Variables
-const pianoBtn = document.querySelectorAll('.piano-btn'),
+const pianoBtn = document.querySelectorAll('.pad-btn'),
       bgColors = document.querySelectorAll('.bg-color'),
   
-      sectionPiano = document.querySelector('.section-piano'),
-      pianoFormInput = document.querySelectorAll('.pianoInput'),
-      pianoFormSpan = document.querySelectorAll('.pianoSpan'),
+      sectionPiano = document.querySelector('.section-pad'),
+      pianoFormInput = document.querySelectorAll('.padInput'),
+      pianoFormSpan = document.querySelectorAll('.padSpan'),
       editBtn = document.querySelector('.btn-edit'),
       saveBtn = document.querySelector('.btn-save');
 
@@ -150,8 +149,8 @@ for (let i = 0; i < pianoBtn.length; i++) {
 // Permets de rentrer en mode "modification" des boutons 
 editBtn.addEventListener('click', (e) => {
     // Sélectionne la première touche par défaut
-    sectionPiano.classList.add('piano-modify');   
-    pianoBtn[0].classList.add('piano-btn-active');
+    sectionPiano.classList.add('pad-modify');   
+    pianoBtn[0].classList.add('pad-btn-active');
     let hslColor = getHslFromAttribute(pianoBtn[0]);
     for (let i = 0; i < pianoFormInput.length; i++) {
         pianoFormInput[i].value = hslColor[i];
@@ -160,9 +159,9 @@ editBtn.addEventListener('click', (e) => {
 });
 
 saveBtn.addEventListener('click', (e) => {
-    sectionPiano.classList.remove('piano-modify');
+    sectionPiano.classList.remove('pad-modify');
     pianoBtn.forEach(btn => {
-        btn.classList.remove('piano-btn-active');
+        btn.classList.remove('pad-btn-active');
     });
 });
 
@@ -186,7 +185,7 @@ pianoBtn.forEach(btn => {
         o.frequency.setValueAtTime(frq, context.currentTime);
         
         // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
-        if (sectionPiano.classList.contains('piano-modify') == false) {
+        if (sectionPiano.classList.contains('pad-modify') == false) {
             bgToEdit.classList.add('bg-color-active');
             btn.addEventListener(event('end'), (e) => {
                 g.gain.setTargetAtTime(0, context.currentTime, 0.1);
@@ -201,20 +200,20 @@ pianoBtn.forEach(btn => {
 //Si le piano est en mode "modification"
 pianoBtn.forEach(btn => {
     btn.addEventListener('click', (e) => {
-        if (sectionPiano.classList.contains('piano-modify') == true) {
+        if (sectionPiano.classList.contains('pad-modify') == true) {
             //Récupère la couleur appuyée
             let targetBtn = e.currentTarget;
             
             // Dans le cas ou l'utilisateur re sélectionne la couleur active
-            if (targetBtn.classList.contains('piano-btn-active') == true) {
+            if (targetBtn.classList.contains('pad-btn-active') == true) {
                 console.log('pas de double sélection possible');
             // Si il sélectionne une autre couleur
             }else{
-                let pastTarget = document.querySelector('.piano-btn-active');
+                let pastTarget = document.querySelector('.pad-btn-active');
 
                 // Actualise le bouton actif
-                targetBtn.classList.add('piano-btn-active');
-                pastTarget.classList.remove('piano-btn-active');
+                targetBtn.classList.add('pad-btn-active');
+                pastTarget.classList.remove('pad-btn-active');
 
                 let hslColor = getHslFromAttribute(targetBtn);
                 
@@ -233,7 +232,7 @@ pianoBtn.forEach(btn => {
     });
 });
 
-body.
+
 // L'orsqu'un slider bouge - modifie la couleur active
 for (let i = 0; i < pianoFormInput.length; i++) {
     pianoFormInput[i].addEventListener('input', (e) => {
@@ -243,7 +242,7 @@ for (let i = 0; i < pianoFormInput.length; i++) {
 
         pianoFormSpan[i].innerHTML = pianoFormInput[i].value;
         
-        let actualBtn = document.querySelector('.piano-btn-active');
+        let actualBtn = document.querySelector('.pad-btn-active');
         actualBtn.style.backgroundColor = 'hsl('+t+', '+s+'%, '+l+'%)';
         
         // Applique la couleur sur le BG
@@ -275,53 +274,88 @@ for (let i = 0; i < pianoFormInput.length; i++) {
 ///////////////////////////////////////////////////////////////////
 
 // Variables
-var pianoGain = 1;
+
+const pianoColor = document.querySelector('.piano-color'),
+      pianoMsg = document.querySelector('.piano-msg');
+var pianoGain = 1,
+    t = 0,
+    s = 0,
+    l = 0;
 // Assiciation d'une fréquence à chaque touches
 var notes = {
-    "a": "100",
-    "z": "125",
-    "e": "150",
-    "r": "200",
-    "t": "225",
+    "a": "150",
+    "z": "170",
+    "e": "190",
+    "r": "210",
+    "t": "230",
     "y": "250",
-    "u": "275",
-    "i": "300",
-    "o": "325",
-    "p": "350",
-    "q": "375",
-    "s": "400",
-    "d": "425",
-    "f": "450",
-    "g": "475",
-    "h": "500",
-    "j": "525",
-    "k": "550",
-    "l": "575",
-    "m": "600",
-    "w": "625",
-    "x": "650",
-    "c": "675",
-    "v": "700",
-    "b": "725",
-    "n": "750"};
+    "u": "270",
+    "i": "290",
+    "o": "310",
+    "p": "330",
+    "q": "350",
+    "s": "370",
+    "d": "390",
+    "f": "410",
+    "g": "430",
+    "h": "450",
+    "j": "470",
+    "k": "490",
+    "l": "510",
+    "m": "530",
+    "w": "550",
+    "x": "570",
+    "c": "590",
+    "v": "610",
+    "b": "630",
+    "n": "650",
+    ",": "670",
+    ";": "690"};
 
 // Récupère la touche jouée et joue la fréquence qui lui est associée
 document.addEventListener('keydown', (event) => {
     let key = event.key;
-    // Si un son est assigné
-    if (notes[key] != null) {
-        let frq = notes[key];
-        
-        o.frequency.setValueAtTime(frq, context.currentTime);
-        g.gain.setValueAtTime(pianoGain, context.currentTime);
+
+    // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
+    if(body.getAttribute('data-page') == "piano") {
+
+        // Si une fréquence est assigné à la touche, on la joue
+        if (notes[key] != null) {
+            let frq = notes[key],
+                color = 0;
+
+                
+            // Cherche une couleur correspondant à la fréquence
+            do {
+                t = randomMinMax(0, 360);
+                s = 100;
+                l = randomMinMax(50, 60);
+                color = setFrequency(t, s, l);
+            } while (frq != color);
+
+            // Convertis la couleur en hexadécimal pour l'assigner
+            let hexColor = HSLToHex(t, s, l);
+
+            // Assignation de la couleur et d'un class de transition
+            pianoColor.style.backgroundColor = hexColor;
+            pianoColor.classList.add('piano-color-active');
+
+            // Cache le message
+            gsap.to(pianoMsg, {duration: 0.3, opacity: 0});
+
+            // Assigne la valeur de gain et fréquence
+            o.frequency.setValueAtTime(frq, context.currentTime);
+            g.gain.setValueAtTime(pianoGain, context.currentTime);
+        }
     }
 });
 
-// Lorsqu'on lâche la touche, le son s'arrête
+// Lorsqu'on lâche la touche, le son s'arrête et la couleur passe au blanc
 document.addEventListener('keyup', (event) => {
+    pianoColor.classList.remove('piano-color-active');
+    pianoColor.style.backgroundColor = "#fff";
     g.gain.setTargetAtTime(0, context.currentTime, 0.1);
 });
-
 
 
 
@@ -496,20 +530,31 @@ function setGain(lum, sat) {
 
 // Calcule la fréquence
 function setFrequency(h, s, l) {
-    let rgbColor = HSLtoRGB(h, 60, 60);
-
+    
     h = Number(h);
     s = Number(s);
     l = Number(l);
+    
+    // Convertis la couleur HSL en RGB sans tenir compte de la saturation - celle-ci est gérée apprès
+    let rgbColor = HSLtoRGB(h, 80, l);
+    
+    // Donne une ordre d'importance au R G et B
+    frq = Math.round(rgbColor[0]*0.9 + rgbColor[1]*2 + rgbColor[2]*0.3);
 
-    frq = Math.round(rgbColor[0]*0.9 + rgbColor[1]*1.7 + rgbColor[2]*0.4);
+    // Prise en compte de la saturation - elle influe sur le gain et s'ajoute à la valeur de la fréquence
+    frq = frq - 100 + s;
 
-    frq = frq + Math.round(s/2) + Math.round(l/4) - 100;
+    frq = Math.round(frq);
+
+    // Empêche de descendre dans des valeurs négatives
+    if (frq < 0) {
+        frq = 0;
+    }
 
     return frq;
 }
 
-// Défini la bon event à écouter
+// Défini la bon event à écouter - touch ou mouse
 function event(param) {
     let event;
     if (window.matchMedia("(min-width: 900px)").matches) {
@@ -538,8 +583,6 @@ function event(param) {
 ///////////////////// OTHERS FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-
-
 
 
 //source: https://css-tricks.com/converting-color-spaces-in-javascript/
