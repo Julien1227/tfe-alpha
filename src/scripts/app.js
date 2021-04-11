@@ -27,16 +27,18 @@ var frq = 0,
 
 // Variables
 
-const beginBtn = document.querySelector('.section-intro');
+const beginBtn = document.querySelector('.section-intro'),
+      message = document.querySelector('.section-intro-msg');
+  
+// Affiche le bon message en fonction du device
+let deviceAction = window.matchMedia("(min-width: 900px)").matches ? "Cliquez" : "Appuyez";
+message.innerHTML = deviceAction + " pour commencer.";
 
+// Lance l'API et fade out la section d'introdution
 beginBtn.addEventListener('click', (e) => {
     o.start(0);
     gsap.to(beginBtn, {opacity: 0, onComplete: hide, onCompleteParams: [beginBtn]});
 });
-
-function hide(element) {
-    element.style.display = "none";
-}
 
 
 ///////////////////////////////////////////////////////////////////
@@ -47,7 +49,9 @@ function hide(element) {
 
 // VARIABLES
 const body = document.querySelector('body'),
-      sliderBtn = document.querySelectorAll('.menu-btn');
+      sliderBtn = document.querySelectorAll('.menu-btn'),
+      pianoMsg = document.querySelector('.piano-msg');
+
 
 sliderBtn.forEach(element => {
     element.addEventListener('click', (e) => {
@@ -56,6 +60,11 @@ sliderBtn.forEach(element => {
         let page = target.getAttribute('id');
         body.setAttribute('data-page', page);
 
+        // Refais apparaître le message du piano
+        if (page != "piano") {
+            pianoMsg.style.opacity = "1";
+            pianoMsg.style.display = "inherit";
+        }
     });
 });
 
@@ -275,12 +284,12 @@ for (let i = 0; i < pianoFormInput.length; i++) {
 
 // Variables
 
-const pianoColor = document.querySelector('.piano-color'),
-      pianoMsg = document.querySelector('.piano-msg');
-var pianoGain = 1,
-    t = 0,
+const pianoColor = document.querySelector('.piano-color');
+
+var t = 0,
     s = 0,
     l = 0;
+    
 // Assiciation d'une fréquence à chaque touches
 var notes = {
     "a": "150",
@@ -310,7 +319,10 @@ var notes = {
     "b": "630",
     "n": "650",
     ",": "670",
-    ";": "690"};
+    ";": "690", 
+    // De plus hautes fréquences ne sont pas associable avec les paramètres de couleur actuels
+    ":": "690",
+    "=": "690"};
 
 // Récupère la touche jouée et joue la fréquence qui lui est associée
 document.addEventListener('keydown', (event) => {
@@ -324,6 +336,9 @@ document.addEventListener('keydown', (event) => {
             let frq = notes[key],
                 color = 0;
 
+            // Assigne la valeur de gain et fréquence
+            o.frequency.setValueAtTime(frq, context.currentTime);
+            g.gain.setValueAtTime(1, context.currentTime);
                 
             // Cherche une couleur correspondant à la fréquence
             do {
@@ -341,11 +356,7 @@ document.addEventListener('keydown', (event) => {
             pianoColor.classList.add('piano-color-active');
 
             // Cache le message
-            gsap.to(pianoMsg, {duration: 0.3, opacity: 0});
-
-            // Assigne la valeur de gain et fréquence
-            o.frequency.setValueAtTime(frq, context.currentTime);
-            g.gain.setValueAtTime(pianoGain, context.currentTime);
+            gsap.to(pianoMsg, {duration: 0.3, opacity: 0, onComplete: hide, onCompleteParams: [pianoMsg]});
         }
     }
 });
@@ -485,6 +496,10 @@ function randomMinMax(min,max){
 
 function deleteElement(element) {
     element.remove();
+}
+
+function hide(element) {
+    element.style.display = "none";
 }
 
 function setColors(h, s, l) {

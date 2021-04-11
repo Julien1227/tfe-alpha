@@ -273,18 +273,20 @@ body {
     &-piano {
         height: 100vh;
         justify-content: center;
-        .piano- {
-            &color {
-                width: 100%;
-                height: 100%;
-                border-radius: $round;
-                transform: translateY(50%);
-                filter: blur(200px);
+        align-items: center;
+        .piano-color {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: $round;
+            transform: translateY(50%);
+            filter: blur(200px);
 
-                transition: $t-slow;
-                &-active {
-                    transition: $t-fast;
-                }
+            transition: $t-slow;
+            &-active {
+                transition: $t-fast;
             }
         }
     }

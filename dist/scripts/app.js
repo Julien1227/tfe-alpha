@@ -9195,7 +9195,12 @@ var frq = 0,
 ///////////////////////////////////////////////////////////////////
 // Variables
 
-var beginBtn = document.querySelector('.section-intro');
+var beginBtn = document.querySelector('.section-intro'),
+    message = document.querySelector('.section-intro-msg'); // Affiche le bon message en fonction du device
+
+var deviceAction = window.matchMedia("(min-width: 900px)").matches ? "Cliquez" : "Appuyez";
+message.innerHTML = deviceAction + " pour commencer."; // Lance l'API et fade out la section d'introdution
+
 beginBtn.addEventListener('click', function (e) {
   o.start(0);
   gsap.to(beginBtn, {
@@ -9203,25 +9208,26 @@ beginBtn.addEventListener('click', function (e) {
     onComplete: hide,
     onCompleteParams: [beginBtn]
   });
-});
-
-function hide(element) {
-  element.style.display = "none";
-} ///////////////////////////////////////////////////////////////////
+}); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////// GESTION DU SLIDER ///////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 // VARIABLES
 
-
 var body = document.querySelector('body'),
-    sliderBtn = document.querySelectorAll('.menu-btn');
+    sliderBtn = document.querySelectorAll('.menu-btn'),
+    pianoMsg = document.querySelector('.piano-msg');
 sliderBtn.forEach(function (element) {
   element.addEventListener('click', function (e) {
     var target = e.currentTarget;
     var page = target.getAttribute('id');
-    body.setAttribute('data-page', page);
+    body.setAttribute('data-page', page); // Refais apparaître le message du piano
+
+    if (page != "piano") {
+      pianoMsg.style.opacity = "1";
+      pianoMsg.style.display = "inherit";
+    }
   });
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -9403,10 +9409,8 @@ for (var _i4 = 0; _i4 < pianoFormInput.length; _i4++) {
 // Variables
 
 
-var pianoColor = document.querySelector('.piano-color'),
-    pianoMsg = document.querySelector('.piano-msg');
-var pianoGain = 1,
-    t = 0,
+var pianoColor = document.querySelector('.piano-color');
+var t = 0,
     s = 0,
     l = 0; // Assiciation d'une fréquence à chaque touches
 
@@ -9438,7 +9442,10 @@ var notes = {
   "b": "630",
   "n": "650",
   ",": "670",
-  ";": "690"
+  ";": "690",
+  // De plus hautes fréquences ne sont pas associable avec les paramètres de couleur actuels
+  ":": "690",
+  "=": "690"
 }; // Récupère la touche jouée et joue la fréquence qui lui est associée
 
 document.addEventListener('keydown', function (event) {
@@ -9448,7 +9455,10 @@ document.addEventListener('keydown', function (event) {
     // Si une fréquence est assigné à la touche, on la joue
     if (notes[key] != null) {
       var _frq = notes[key],
-          _color2 = 0; // Cherche une couleur correspondant à la fréquence
+          _color2 = 0; // Assigne la valeur de gain et fréquence
+
+      o.frequency.setValueAtTime(_frq, context.currentTime);
+      g.gain.setValueAtTime(1, context.currentTime); // Cherche une couleur correspondant à la fréquence
 
       do {
         t = randomMinMax(0, 360);
@@ -9465,11 +9475,10 @@ document.addEventListener('keydown', function (event) {
 
       gsap.to(pianoMsg, {
         duration: 0.3,
-        opacity: 0
-      }); // Assigne la valeur de gain et fréquence
-
-      o.frequency.setValueAtTime(_frq, context.currentTime);
-      g.gain.setValueAtTime(pianoGain, context.currentTime);
+        opacity: 0,
+        onComplete: hide,
+        onCompleteParams: [pianoMsg]
+      });
     }
   }
 }); // Lorsqu'on lâche la touche, le son s'arrête et la couleur passe au blanc
@@ -9586,6 +9595,10 @@ function randomMinMax(min, max) {
 
 function deleteElement(element) {
   element.remove();
+}
+
+function hide(element) {
+  element.style.display = "none";
 }
 
 function setColors(h, s, l) {
