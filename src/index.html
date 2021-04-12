@@ -15,7 +15,7 @@
   
   <link rel="stylesheet" href="styles/app.css">
 </head>
-<body data-page="color">
+<body data-page="image">
 
   <main class="main">
 
@@ -109,11 +109,19 @@
 
         <div class="container-tolisten container-tolisten-image">
 
-          <button id="uploadBtn" class="btn">Choisir une autre image</button>
+          <div id="btnOpenSelection" class="btn selection">
+            <span>Choisir une autre image</span>
+            <ul class="selection-image">
+              <li><img class="selection-image-el" src="assets/images/toListen1.jpg" alt="Image 1"></li>
+              <li><img class="selection-image-el" src="assets/images/toListen2.jpg" alt="Image 2"></li>
+              <li><img class="selection-image-el" src="assets/images/toListen3.jpg" alt="Image 3"></li>
+            </ul>
+            <button id="uploadBtn" class="btn btn-upload">Ouvrir mon répertoire</button>
+          </div>
 
-          <img class="img" src="assets/images/noPicture.jpg" alt="L'image n'a pas pu charger">
+          <img class="img" src="assets/images/toListen1.jpg" alt="L'image n'a pas pu charger">
           <div class="background-container">
-            <img class="container-img" src="assets/images/noPicture.jpg" alt="L'image n'a pas pu charger">
+            <img class="container-img" src="assets/images/toListen1.jpg" alt="L'image n'a pas pu charger">
           </div>
 
           <input id="uploadInput" type="file" accept=".jpeg, .jpg, .png">

@@ -37,8 +37,8 @@ body {
   background-color: #ffffff88;
   padding: 1rem;
   border-radius: 1000px;
-  backdrop-filter: blur(20px);
   font-weight: 700;
+  backdrop-filter: blur(20px);
   font-size: 20px;
   box-shadow: 0px 0px 25px -10px #00000038;
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
@@ -147,9 +147,10 @@ body {
 }
 .section-image .container-tolisten {
   display: flex;
-  justify-content: flex-start;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  height: 100%;
   box-sizing: border-box;
 }
 .section-image .container-tolisten .color-list {
@@ -182,6 +183,39 @@ body {
 .section-image .container-tolisten .btn {
   margin-top: 2rem;
   z-index: 20;
+}
+.section-image .container-tolisten .selection {
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 2rem;
+  height: 3.75rem;
+  width: 300px;
+  max-width: 450px;
+}
+.section-image .container-tolisten .selection span {
+  margin-bottom: 1rem;
+}
+.section-image .container-tolisten .selection-image {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  width: 100%;
+  height: 27vw;
+  max-height: 130px;
+}
+.section-image .container-tolisten .selection-image-el {
+  border: 0px solid #fff;
+  width: 100%;
+  max-width: 130px;
+  height: 100%;
+  border-radius: 10px;
+}
+.section-image .container-tolisten .selection .btn-upload {
+  margin-top: 1rem;
+  margin-bottom: -2.5rem;
 }
 .section-pad {
   justify-content: flex-start;
@@ -432,6 +466,7 @@ body[data-page=piano] .menu-btn[id=piano] svg {
 .section-pad .pad-btn {
   opacity: 1;
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  transition-property: opacity;
 }
 .section-pad .pad-btn:active {
   opacity: 0.2;
@@ -450,6 +485,7 @@ body[data-page=piano] .menu-btn[id=piano] svg {
 }
 .section-pad .bg-color {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  transition-property: opacity;
 }
 .section-pad .bg-color-active {
   transform: scale(2);
@@ -477,6 +513,49 @@ body[data-page=piano] .menu-btn[id=piano] svg {
 .section-pad.pad-modify .form-el {
   opacity: 1;
   transition-delay: 0.2s;
+}
+
+.selection-image {
+  transition: all 0.1s cubic-bezier(0.33, 1, 0.68, 1);
+  transform: translateY(-20px);
+  opacity: 0;
+}
+.selection-image-el {
+  transition: all 0.1s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.selection .btn-upload {
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  transition-delay: 0.2s;
+}
+
+.section-image .container-tolisten .selection.selection-open {
+  overflow: visible;
+  height: 15rem;
+  width: calc(100vw - 2rem);
+  transition: width 0.3s, height 0.3s 0s;
+}
+.section-image .container-tolisten .selection.selection-open .selection-image {
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  transition-delay: 0.1s;
+  transform: translateY(0);
+  opacity: 1;
+}
+.section-image .container-tolisten .selection.selection-open .selection-image-el {
+  box-sizing: border-box;
+}
+.section-image .container-tolisten .selection.selection-open .selection-image-el:hover {
+  cursor: pointer;
+}
+.section-image .container-tolisten .selection.selection-open:hover {
+  opacity: 1;
+  cursor: inherit;
+}
+.section-image .container-tolisten .selection.selection-open .btn-upload {
+  opacity: 1;
+}
+.section-image .selection-image-el.selected {
+  border: 5px solid #fff;
 }
 
 .desktop {

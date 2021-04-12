@@ -127,7 +127,7 @@ for (let i = 0; i < colorInputs.length; i++) {
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-////////////////////////////// PIANO //////////////////////////////
+////////////////////////////// Pad ////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
@@ -278,7 +278,7 @@ for (let i = 0; i < pianoFormInput.length; i++) {
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-/////////////////////////// PianoBig //////////////////////////////
+/////////////////////////// Piano/// //////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
@@ -398,18 +398,43 @@ const playRate = document.getElementById('playRate'),
 const playImageBtn = document.getElementById('getColors'),
       imgToListen = document.querySelector('.img'),
       btnUpload = document.getElementById('uploadBtn'),
+      btnOpenSelection = document.getElementById('btnOpenSelection'),
+      imageSelection = document.querySelectorAll('.selection-image-el'),
       inputUpload = document.getElementById('uploadInput'),
       colorList = document.querySelector('.color-list'),
       backgroundImg = document.querySelector('.container-img');
 
 
-
 // Réglage de la vitesse de lecture
-
 playRate.addEventListener('input', (e) => {
     speed = playRate.value * -1;
     playRateSpan.innerHTML = playRate.value * -1;
 });
+
+// Présélectionne une image
+imageSelection[0].classList.add('selected');
+
+// Ouvre la sélection
+btnOpenSelection.addEventListener('click', (e) => {
+    btnOpenSelection.classList.toggle('selection-open');
+
+    // Change l'image avec l'image sélectionnée
+    imageSelection.forEach(image => {
+        image.addEventListener('click', (e) => {
+            let pastTarget = document.querySelector('.selected')
+            pastTarget.classList.remove('selected');
+    
+            let currentTarget = e.currentTarget;
+            currentTarget.classList.add('selected');
+
+            let imgLink = currentTarget.src;
+            backgroundImg.src = imgLink;
+            imgToListen.src = imgLink;
+        });
+    });
+});
+
+
 
 // Upload d'une image
 btnUpload.addEventListener('click', (e) => {
