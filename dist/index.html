@@ -15,17 +15,17 @@
   
   <link rel="stylesheet" href="styles/app.css">
 </head>
-<body data-page="piano">
+<body data-page="color">
 
   <main class="main">
 
       <section class="section-intro">
-        <h2 class="intro-message">pour commencer.</h2>
+        <h2 class="section-intro-msg"></h2>
       </section>
 
       <section class="section section-color">
-        <div style="background: linear-gradient(to bottom, #00ffff, #0099e6);" class="container-tolisten container-tolisten-color">
-          <span class="container-tolisten-frequency" id="playedColor">446 Hz</span>
+        <div style="background: linear-gradient(#40bfbf, #3986ac);" class="container-tolisten container-tolisten-color">
+          <span class="container-tolisten-frequency" id="playedColor">514 Hz</span>
           <div class="container-tolisten-shadow"></div>
         </div>
 
@@ -37,7 +37,7 @@
       
           <div class="form-el">
             <label>Saturation: <span data-p="sat" class="colorSpan">50</span>%</label>
-            <input class="colorInput" value="100" type="range" name="volume" min="0" max="100">
+            <input class="colorInput" value="50" type="range" name="volume" min="0" max="100">
           </div>
       
           <div class="form-el">
@@ -47,8 +47,8 @@
         </div>
       </section>
 
-      <section class="section section-piano mobile">
-        <div class="container-tolisten container-tolisten-piano">
+      <section class="section section-pad">
+        <div class="container-tolisten container-tolisten-pad">
           <ul class="bg">
             <li id="bg-0" class="bg-color"></li>
             <li id="bg-1" class="bg-color"></li>
@@ -62,44 +62,48 @@
           </ul>
         </div>
         
-        <div class="piano-container">
-          <button class="btn btn-edit">Modifier</button>
+        <div class="pad-container">
           
-          <ul class="piano">
-            <li><button id="btn-0" class="piano-btn"></button></li>
-            <li><button id="btn-1" class="piano-btn"></button></li>
-            <li><button id="btn-2" class="piano-btn"></button></li>
-            <li><button id="btn-3" class="piano-btn"></button></li>
-            <li><button id="btn-4" class="piano-btn"></button></li>
-            <li><button id="btn-5" class="piano-btn"></button></li>
-            <li><button id="btn-6" class="piano-btn"></button></li>
-            <li><button id="btn-7" class="piano-btn"></button></li>
-            <li><button id="btn-8" class="piano-btn"></button></li>
+          <ul class="pad">
+            <li><button id="btn-0" class="pad-btn"></button></li>
+            <li><button id="btn-1" class="pad-btn"></button></li>
+            <li><button id="btn-2" class="pad-btn"></button></li>
+            <li><button id="btn-3" class="pad-btn"></button></li>
+            <li><button id="btn-4" class="pad-btn"></button></li>
+            <li><button id="btn-5" class="pad-btn"></button></li>
+            <li><button id="btn-6" class="pad-btn"></button></li>
+            <li><button id="btn-7" class="pad-btn"></button></li>
+            <li><button id="btn-8" class="pad-btn"></button></li>
           </ul>
-          <button class="btn btn-save">Enregistrer</button>
+          
+          <button class="btn btn-edit">Modifier</button>
         </div>
-
-        <div class="form form-piano">
-
-
+        
+        <div class="form form-pad">
           <div class="form-el">
-            <label>Teinte: <span data-p="color" class="pianoSpan">180</span>°</label>
-            <input class="pianoInput" type="range" name="volume" min="0" max="359">
+            <button class="btn btn-big btn-save">Enregistrer</button>
+          </div>
+          <div class="form-el">
+            <label>Teinte: <span data-p="color" class="padSpan">180</span>°</label>
+            <input class="padInput" type="range" name="volume" min="0" max="359">
           </div>
       
           <div class="form-el">
-            <label>Saturation: <span data-p="sat" class="pianoSpan">50</span>%</label>
-            <input class="pianoInput" type="range" name="volume" min="0" max="100">
+            <label>Saturation: <span data-p="sat" class="padSpan">50</span>%</label>
+            <input class="padInput" type="range" name="volume" min="0" max="100">
           </div>
       
           <div class="form-el">
-            <label>Luminiosité: <span data-p="lum" class="pianoSpan">50</span>%</label>
-            <input class="pianoInput" type="range" name="volume" min="0" max="100">
+            <label>Luminiosité: <span data-p="lum" class="padSpan">50</span>%</label>
+            <input class="padInput" type="range" name="volume" min="0" max="100">
           </div>
         </div>
       </section>
       
-      
+      <section class="section section-piano">
+        <div class="piano-color"></div>
+        <h2 class="piano-msg">Appuyez sur une touche.</h2>
+      </section>
       
       <section class="section section-image">
 
@@ -124,7 +128,7 @@
             <label>Vitesse de lecture: <span id="playRateSpan">150</span>ms</label>
             <input id="playRate" type="range" value="150" min="-500" max="-50">
           </div>
-          <button id="getColors" class="btn btn-dark">Jouer la mélodie</button>
+          <button id="getColors" class="btn">Jouer la mélodie</button>
         </div>
       </section>
   </main>
@@ -133,7 +137,8 @@
 
   <div class="menu">
     <button id="color" class="menu-btn"><svg><use xlink:href="#colorSvg"/></svg></button>
-    <button id="piano" class="menu-btn"><svg><use xlink:href="#gridSvg"/></svg></button>
+    <button id="pad" class="menu-btn"><svg><use xlink:href="#gridSvg"/></svg></button>
+    <button id="piano" class="menu-btn desktop"><svg><use xlink:href="#pianoSvg"/></svg></button>
     <button id="image" class="menu-btn"><svg><use xlink:href="#pictureSvg"/></svg></button>
   </div>
 
@@ -150,6 +155,11 @@
 
     <svg id="gridSvg" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
       <path d="M4 2v2H2V2h2zm1 12v-2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm5 10v-2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V7a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zM9 2v2H7V2h2zm5 0v2h-2V2h2zM4 7v2H2V7h2zm5 0v2H7V7h2zm5 0h-2v2h2V7zM4 12v2H2v-2h2zm5 0v2H7v-2h2zm5 0v2h-2v-2h2zM12 1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zm-1 6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7zm1 4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2z"/>
+    </svg>
+
+    <svg id="pianoSvg" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M14 5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h12zM2 4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H2z"/>
+      <path d="M13 10.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5zm0-2a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5zm-5 0A.25.25 0 0 1 8.25 8h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5A.25.25 0 0 1 8 8.75v-.5zm2 0a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25v-.5zm1 2a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5zm-5-2A.25.25 0 0 1 6.25 8h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5A.25.25 0 0 1 6 8.75v-.5zm-2 0A.25.25 0 0 1 4.25 8h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5A.25.25 0 0 1 4 8.75v-.5zm-2 0A.25.25 0 0 1 2.25 8h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5A.25.25 0 0 1 2 8.75v-.5zm11-2a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5zm-2 0a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5zm-2 0A.25.25 0 0 1 9.25 6h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5A.25.25 0 0 1 9 6.75v-.5zm-2 0A.25.25 0 0 1 7.25 6h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5A.25.25 0 0 1 7 6.75v-.5zm-2 0A.25.25 0 0 1 5.25 6h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5A.25.25 0 0 1 5 6.75v-.5zm-3 0A.25.25 0 0 1 2.25 6h1.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-1.5A.25.25 0 0 1 2 6.75v-.5zm0 4a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5zm2 0a.25.25 0 0 1 .25-.25h5.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-5.5a.25.25 0 0 1-.25-.25v-.5z"/>
     </svg>
   </div>
 

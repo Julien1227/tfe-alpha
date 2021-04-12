@@ -1,45 +1,49 @@
+.section {display: none;}
 body {
     &[data-page="color"] {
-        .section-color {display: flex;}
+        .section-color {display: inherit;}
         .menu-btn {
             &[id="color"] {
-                background-color: $light-grey;
+                background-color: $white;
                 svg {
                     opacity: 1;
                 }
-            }
-            &[id="color"] {
-                background-color: $white;
             }
         }
     }
     
-    &[data-page="piano"] {
-        .section-piano {display: flex;}
+    &[data-page="pad"] {
+        .section-pad {display: inherit;}
         .menu-btn {
-            &[id="piano"] {
-                background-color: $light-grey;
+            &[id="pad"] {
+                background-color: $white;
                 svg {
                     opacity: 1;
                 }
             }
-            &[id="piano"] {
+        }
+    }
+    
+    &[data-page="image"] {
+        .section-image {display: inherit;}
+        .menu-btn {
+            &[id="image"] {
                 background-color: $white;
+                svg {
+                    opacity: 1;
+                }
             }
         }
     }
 
-    &[data-page="image"] {
-        .section-image {display: flex;}
+    &[data-page="piano"] {
+        .section-piano {display: inherit;}
         .menu-btn {
-            &[id="image"] {
-                background-color: $light-grey;
+            &[id="piano"] {
+                background-color: $white;
                 svg {
                     opacity: 1;
                 }
-            }
-            &[id="image"] {
-                background-color: $white;
             }
         }
     }
@@ -49,20 +53,19 @@ body {
 
 
 // Animations du piano
-.section-piano {
+.section-pad {
     .btn-save {
-        opacity: 0;
-        margin-top: -4rem;
+        transform: translateX(60vw);
         pointer-events: none;
         transition: $t-fast;
+        transition-delay: 0.3s;
     }
 
     .btn-edit {
-        margin-bottom: 0rem;
         transition: $t-fast;
     }
 
-    .piano {
+    .pad {
         &-btn {
             opacity: 1;
             transition: $t-fast;
@@ -93,8 +96,9 @@ body {
         transition: $t-fast;
     }
     
-    &.piano-modify {
-        .piano {
+    &.pad-modify {
+
+        .pad {
             &-btn {
                 opacity: .2!important;
                 &-active {
@@ -104,14 +108,14 @@ body {
         }
 
         .btn-edit {
+            margin-top: -4rem;
             opacity: 0;
             pointer-events: none;
-            margin-bottom: -2rem;
         }
 
         .btn-save {
-            margin-top: 0;
-            opacity: 1;
+            transition-delay: 0.1s;
+            transform: translateX(0);
             pointer-events: inherit;
         }
 

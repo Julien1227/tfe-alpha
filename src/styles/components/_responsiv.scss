@@ -1,3 +1,5 @@
+.desktop {display: none;}
+
 @media(max-width: 340px) {
     .section-intro .text-block {
         padding: inherit;
@@ -16,6 +18,10 @@
 }
 
 @media(min-width: 900px) {
+
+    .desktop {display: inherit;}
+    .mobile {display: none;}
+
     .section {
         height: 100%;
         align-items: center;
@@ -47,24 +53,18 @@
             }
         }
 
-        &-piano {
+        &-pad {
             height: 100vh;
             .container-tolisten {
                 height: 100vh;
-                align-items: center;
-                justify-content: center;
-                .bg {
-                    width: 350px;
-                    height: 350px;
-                }
             }
 
-            &.piano-modify {
+            &.pad-modify {
                 .container-tolisten {
                     height: 50vh;
                 }
 
-                .piano-container {
+                .pad-container {
                     height: 50vh;
                 }
 
@@ -123,8 +123,11 @@
                 margin-top: 6rem;
             }
         }
+        
+        &-piano {
+            height: 100vh;
+        }
     }
-
 
     .menu {
         margin-bottom: 1rem;
@@ -142,7 +145,7 @@
 @media(max-height: 750px) {
     .section-piano.piano-modify {
         .piano {
-            grid-template-rows: repeat(3, 5vh);
+            grid-template-rows: repeat(3, 60px);
             &-btn {
                 width: 100%;
             }
