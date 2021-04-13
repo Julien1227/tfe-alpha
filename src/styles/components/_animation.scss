@@ -147,7 +147,7 @@ body {
     .btn-upload {
         opacity: 0;
         transition: $t-fast;
-        transition-delay: 0.2s;
+        transition-delay: 0s;
     }
 }
 
@@ -156,10 +156,10 @@ body {
         .selection.selection-open {
             overflow: visible;
             
-            height: 15rem;
+            height: calc(36vw + 4rem);
             width: calc(100vw - 2rem);
             
-            // transition en étapes
+            // transition en "étapes"
             transition: 
             width      0.3s,
             height 0.3s 0s;
@@ -184,12 +184,14 @@ body {
             }
 
             .btn-upload {
+                transition-delay: 0.2s;
                 opacity: 1;
+                margin-top: 1.25rem;
             }
         }
     }
 
-    .selection-image-el.selected {
+    .selection-image-el.selected img{
         border: 5px solid #fff;
     }
 }

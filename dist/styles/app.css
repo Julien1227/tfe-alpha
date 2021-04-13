@@ -122,6 +122,7 @@ body {
   flex-direction: column;
 }
 .section .form-el label {
+  margin-left: 3px;
   margin-bottom: 0.5rem;
 }
 .section .form .btn {
@@ -199,23 +200,32 @@ body {
   margin-bottom: 1rem;
 }
 .section-image .container-tolisten .selection-image {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
+  display: flex;
   width: 100%;
-  height: 27vw;
-  max-height: 130px;
 }
 .section-image .container-tolisten .selection-image-el {
-  border: 0px solid #fff;
+  margin-right: 1rem;
   width: 100%;
   max-width: 130px;
   height: 100%;
+  max-height: 130px;
+}
+.section-image .container-tolisten .selection-image-el:last-child {
+  margin-right: inherit;
+}
+.section-image .container-tolisten .selection-image-el img {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  object-fit: cover;
+  object-position: center;
+  border: 0px solid #fff;
   border-radius: 10px;
+  margin-right: 1rem;
 }
 .section-image .container-tolisten .selection .btn-upload {
-  margin-top: 1rem;
-  margin-bottom: -2.5rem;
+  background-color: #ffffffc5;
+  margin-top: 2rem;
 }
 .section-pad {
   justify-content: flex-start;
@@ -526,12 +536,12 @@ body[data-page=piano] .menu-btn[id=piano] svg {
 .selection .btn-upload {
   opacity: 0;
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-  transition-delay: 0.2s;
+  transition-delay: 0s;
 }
 
 .section-image .container-tolisten .selection.selection-open {
   overflow: visible;
-  height: 15rem;
+  height: calc(36vw + 4rem);
   width: calc(100vw - 2rem);
   transition: width 0.3s, height 0.3s 0s;
 }
@@ -552,9 +562,11 @@ body[data-page=piano] .menu-btn[id=piano] svg {
   cursor: inherit;
 }
 .section-image .container-tolisten .selection.selection-open .btn-upload {
+  transition-delay: 0.2s;
   opacity: 1;
+  margin-top: 1.25rem;
 }
-.section-image .selection-image-el.selected {
+.section-image .selection-image-el.selected img {
   border: 5px solid #fff;
 }
 
@@ -565,6 +577,11 @@ body[data-page=piano] .menu-btn[id=piano] svg {
 @media (max-width: 340px) {
   .section-intro .text-block {
     padding: inherit;
+  }
+}
+@media (min-width: 480px) {
+  .section-image .container-tolisten .selection.selection-open {
+    height: 15rem;
   }
 }
 @media (min-width: 500px) {
@@ -649,6 +666,9 @@ body[data-page=piano] .menu-btn[id=piano] svg {
     transform: scale(1.2) translateY(-10%);
     background-size: cover;
     background-position: center;
+  }
+  .section-image .container-tolisten .selection {
+    max-width: 730px;
   }
   .section-image .container-tolisten .img {
     position: absolute;

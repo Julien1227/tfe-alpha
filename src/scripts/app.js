@@ -417,20 +417,21 @@ imageSelection[0].classList.add('selected');
 // Ouvre la sélection
 btnOpenSelection.addEventListener('click', (e) => {
     btnOpenSelection.classList.toggle('selection-open');
+});
 
-    // Change l'image avec l'image sélectionnée
-    imageSelection.forEach(image => {
-        image.addEventListener('click', (e) => {
-            let pastTarget = document.querySelector('.selected')
-            pastTarget.classList.remove('selected');
-    
-            let currentTarget = e.currentTarget;
-            currentTarget.classList.add('selected');
+// Change l'image avec l'image sélectionnée
+imageSelection.forEach(image => {
+    image.addEventListener('click', (e) => {
+        let pastTarget = document.querySelector('.selected');
+        pastTarget.classList.remove('selected');
 
-            let imgLink = currentTarget.src;
-            backgroundImg.src = imgLink;
-            imgToListen.src = imgLink;
-        });
+        let currentTarget = e.currentTarget;
+        currentTarget.classList.add('selected');
+
+        let imgLink = currentTarget.children[0].currentSrc;
+                
+        backgroundImg.src = imgLink;
+        imgToListen.src = imgLink;
     });
 });
 
@@ -441,9 +442,12 @@ btnUpload.addEventListener('click', (e) => {
      inputUpload.click();
      //Actualise l'image uploadée
      inputUpload.addEventListener('change', (e) => {
-         let imgLink = URL.createObjectURL(e.target.files[0]);
-         backgroundImg.src = imgLink;
-         imgToListen.src = imgLink;
+        let pastTarget = document.querySelector('.selected')
+        pastTarget.classList.remove('selected');
+
+        let imgLink = URL.createObjectURL(e.target.files[0]);
+        backgroundImg.src = imgLink;
+        imgToListen.src = imgLink;
      });
 });
 

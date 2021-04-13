@@ -9525,18 +9525,18 @@ playRate.addEventListener('input', function (e) {
 imageSelection[0].classList.add('selected'); // Ouvre la sélection
 
 btnOpenSelection.addEventListener('click', function (e) {
-  btnOpenSelection.classList.toggle('selection-open'); // Change l'image avec l'image sélectionnée
+  btnOpenSelection.classList.toggle('selection-open');
+}); // Change l'image avec l'image sélectionnée
 
-  imageSelection.forEach(function (image) {
-    image.addEventListener('click', function (e) {
-      var pastTarget = document.querySelector('.selected');
-      pastTarget.classList.remove('selected');
-      var currentTarget = e.currentTarget;
-      currentTarget.classList.add('selected');
-      var imgLink = currentTarget.src;
-      backgroundImg.src = imgLink;
-      imgToListen.src = imgLink;
-    });
+imageSelection.forEach(function (image) {
+  image.addEventListener('click', function (e) {
+    var pastTarget = document.querySelector('.selected');
+    pastTarget.classList.remove('selected');
+    var currentTarget = e.currentTarget;
+    currentTarget.classList.add('selected');
+    var imgLink = currentTarget.children[0].currentSrc;
+    backgroundImg.src = imgLink;
+    imgToListen.src = imgLink;
   });
 }); // Upload d'une image
 
@@ -9544,6 +9544,8 @@ btnUpload.addEventListener('click', function (e) {
   inputUpload.click(); //Actualise l'image uploadée
 
   inputUpload.addEventListener('change', function (e) {
+    var pastTarget = document.querySelector('.selected');
+    pastTarget.classList.remove('selected');
     var imgLink = URL.createObjectURL(e.target.files[0]);
     backgroundImg.src = imgLink;
     imgToListen.src = imgLink;

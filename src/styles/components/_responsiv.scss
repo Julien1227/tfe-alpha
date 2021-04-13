@@ -6,6 +6,12 @@
     }
 }
 
+@media(min-width:480px) {
+    .section-image .container-tolisten .selection.selection-open {
+        height: 15rem;
+    }
+}
+
 @media(min-width: 500px) {
     .section-image .container-tolisten .color-list {
         bottom: -3rem;
@@ -104,6 +110,10 @@
                         background-size: cover;
                         background-position: center;
                     }
+                }
+
+                .selection {
+                    max-width: 730px;
                 }
     
                 .img {
