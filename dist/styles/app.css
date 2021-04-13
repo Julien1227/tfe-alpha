@@ -205,13 +205,12 @@ body {
 }
 .section-image .container-tolisten .selection-image-el {
   margin-right: 1rem;
-  width: 100%;
   max-width: 130px;
-  height: 100%;
+  height: 25vw;
   max-height: 130px;
 }
-.section-image .container-tolisten .selection-image-el:last-child {
-  margin-right: inherit;
+.section-image .container-tolisten .selection-image-el:nth-child(3) {
+  margin-right: 0;
 }
 .section-image .container-tolisten .selection-image-el img {
   width: 100%;
@@ -221,9 +220,10 @@ body {
   object-position: center;
   border: 0px solid #fff;
   border-radius: 10px;
-  margin-right: 1rem;
 }
 .section-image .container-tolisten .selection .btn-upload {
+  position: relative;
+  display: block;
   background-color: #ffffffc5;
   margin-top: 2rem;
 }
@@ -541,8 +541,9 @@ body[data-page=piano] .menu-btn[id=piano] svg {
 
 .section-image .container-tolisten .selection.selection-open {
   overflow: visible;
-  height: calc(36vw + 4rem);
+  height: calc(29vw + 6rem);
   width: calc(100vw - 2rem);
+  max-height: 15rem;
   transition: width 0.3s, height 0.3s 0s;
 }
 .section-image .container-tolisten .selection.selection-open .selection-image {
@@ -669,6 +670,12 @@ body[data-page=piano] .menu-btn[id=piano] svg {
   }
   .section-image .container-tolisten .selection {
     max-width: 730px;
+  }
+  .section-image .container-tolisten .selection-image-el:nth-child(3) {
+    margin-right: 1rem;
+  }
+  .section-image .container-tolisten .selection-image-el:last-child {
+    margin-right: 0;
   }
   .section-image .container-tolisten .img {
     position: absolute;

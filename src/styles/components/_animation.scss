@@ -156,9 +156,11 @@ body {
         .selection.selection-open {
             overflow: visible;
             
-            height: calc(36vw + 4rem);
+            height: calc(29vw + 6rem);
             width: calc(100vw - 2rem);
             
+            max-height: 15rem;
+
             // transition en "étapes"
             transition: 
             width      0.3s,

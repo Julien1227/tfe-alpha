@@ -405,6 +405,10 @@ const playImageBtn = document.getElementById('getColors'),
       backgroundImg = document.querySelector('.container-img');
 
 
+// Affiche le bon message en fonction du device
+let deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "mon explorateur de fichiers" : "ma galerie";
+btnUpload.innerHTML = "Ouvrir " + deviceAction2;
+
 // Réglage de la vitesse de lecture
 playRate.addEventListener('input', (e) => {
     speed = playRate.value * -1;

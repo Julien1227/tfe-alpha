@@ -9515,7 +9515,10 @@ var playImageBtn = document.getElementById('getColors'),
     imageSelection = document.querySelectorAll('.selection-image-el'),
     inputUpload = document.getElementById('uploadInput'),
     colorList = document.querySelector('.color-list'),
-    backgroundImg = document.querySelector('.container-img'); // Réglage de la vitesse de lecture
+    backgroundImg = document.querySelector('.container-img'); // Affiche le bon message en fonction du device
+
+var deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "mon explorateur de fichiers" : "ma galerie";
+btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Réglage de la vitesse de lecture
 
 playRate.addEventListener('input', function (e) {
   speed = playRate.value * -1;
@@ -10809,8 +10812,8 @@ var require;var require;(function e(t, n, r) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })
