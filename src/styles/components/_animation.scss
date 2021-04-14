@@ -69,6 +69,7 @@ body {
         &-btn {
             opacity: 1;
             transition: $t-fast;
+            transition-property: opacity;
             &:active {
                 opacity: .2;
                 transition: $t-superfast;
@@ -88,6 +89,7 @@ body {
         transition: $t-fast;
         &-color {
             transition: $t-fast;
+            transition-property: opacity;
         }
     }
 
@@ -97,7 +99,6 @@ body {
     }
     
     &.pad-modify {
-
         .pad {
             &-btn {
                 opacity: .2!important;
@@ -126,5 +127,73 @@ body {
                 transition-delay: 0.2s;
             }
         }
+    }
+}
+
+
+// Bouton d'upload images
+
+.selection {
+    &-image {
+        transition: $t-superfast;
+        transform: translateY(-20px);
+        opacity: 0;
+
+        &-el {
+            transition: $t-superfast;
+        }
+    }
+    
+    .btn-upload {
+        opacity: 0;
+        transition: $t-fast;
+        transition-delay: 0s;
+    }
+}
+
+.section-image {
+    .container-tolisten {
+        .selection.selection-open {
+            overflow: visible;
+            
+            height: calc(29vw + 6rem);
+            width: calc(100vw - 2rem);
+            
+            max-height: 15rem;
+
+            // transition en "étapes"
+            transition: 
+            width      0.3s,
+            height 0.3s 0s;
+            
+            
+            .selection-image {
+                transition: $t-fast;
+                transition-delay: 0.1s;
+                transform: translateY(0);
+                opacity: 1;
+                &-el {
+                    box-sizing: border-box;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            &:hover {
+                opacity: 1;
+                cursor: inherit;
+            }
+
+            .btn-upload {
+                transition-delay: 0.2s;
+                opacity: 1;
+                margin-top: 1.25rem;
+            }
+        }
+    }
+
+    .selection-image-el.selected img{
+        border: 5px solid #fff;
     }
 }
