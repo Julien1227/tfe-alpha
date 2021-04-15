@@ -19,6 +19,11 @@
 
 @media(min-width: 900px) {
 
+    body {
+        position: relative;
+        bottom: 0;
+    }
+
     .desktop {display: inherit;}
     .mobile {display: none;}
 

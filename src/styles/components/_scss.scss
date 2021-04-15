@@ -1,71 +1,6 @@
 .use-svg, #uploadInput {display: none;}
 
-body {
-    position: fixed;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-}
-
-.btn {
-    cursor: pointer;
-    background-color: $lightBtn;
-    padding: 1rem;
-    border-radius: $round;
-    backdrop-filter: blur(20px);
-    font-weight: 700;
-
-    font-size: 20px;
-
-    box-shadow: $shadow;
-
-    transition: $t-fast;
-    &-big {
-        font-size: 20px;
-    }
-    
-    &:hover {
-        opacity: .6;
-        transition: $t-fast;
-    }
-}
-
-.main {
-    display: flex;
-}
-
-.menu {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-
-    display: flex;
-    &-btn{
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50%;
-        padding: 1rem;
-
-        background-color: $light-grey;
-        color: $grey;
-        & svg {
-            opacity: .5;
-            width: 1.5rem;
-            height: 1.5rem;
-        }
-    }
-}
-
 .section-intro {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-    position: absolute;
-    width: 100%;
-    height: 100%;
     background-color: $white;
     text-align: center;
     cursor: pointer;
@@ -82,14 +17,13 @@ body {
     min-width: 100%;
     height: calc(100vh - 4rem);
     
-    
     .container-tolisten {
         position: relative;
         display: flex;
         justify-content: center;
         align-items: flex-end;
                 
-        height: 600px;
+        height: 100%;
     }
 
     .form {
@@ -120,7 +54,6 @@ body {
         }
     }
 
-
     &-color {
         .container-tolisten {  
             &-frequency {
@@ -148,9 +81,9 @@ body {
     &-image {
         .container-tolisten {
             display: flex;
-            justify-content: flex-start;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
     
             box-sizing: border-box;
             .color-list {
@@ -198,6 +131,50 @@ body {
 
     &-pad {
         justify-content: flex-start;
+
+        &.show-tuto {
+            .pad-tuto {
+                opacity: 1;
+                transition: $t-slow;
+            }
+        }
+
+        .pad-tuto {
+            
+            transition: $t-fast;
+            position: absolute;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 200;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            background-color: $black02;
+            
+            
+            .tuto-container {
+                display: flex;
+                flex-direction: column;
+
+                max-width: 500px;
+                padding: 2rem;
+                padding-bottom: 0;
+                margin: 1rem;
+                border-radius: $rounded;
+                
+                background-color: $white;
+                box-shadow: $light-shadow;
+                & .btn {
+                    align-self: center;
+                    margin-top: 1.5rem;
+                    margin-bottom: -1.75rem;
+                }
+            }
+        }
 
         .container-tolisten {
             position: absolute;

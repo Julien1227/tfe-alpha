@@ -6,6 +6,10 @@
   color: #353535;
 }
 
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
 h1 {
   font-size: 36px;
   font-weight: 900;
@@ -25,66 +29,7 @@ label {
   display: none;
 }
 
-body {
-  position: fixed;
-  overflow: hidden;
-  width: 100vw;
-  height: 100vh;
-}
-
-.btn {
-  cursor: pointer;
-  background-color: #ffffff88;
-  padding: 1rem;
-  border-radius: 1000px;
-  backdrop-filter: blur(20px);
-  font-weight: 700;
-  font-size: 20px;
-  box-shadow: 0px 0px 25px -10px #00000038;
-  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-}
-.btn-big {
-  font-size: 20px;
-}
-.btn:hover {
-  opacity: 0.6;
-  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-}
-
-.main {
-  display: flex;
-}
-
-.menu {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-}
-.menu-btn {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  padding: 1rem;
-  background-color: #eeeeee;
-  color: #353535;
-}
-.menu-btn svg {
-  opacity: 0.5;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
 .section-intro {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-  position: absolute;
-  width: 100%;
-  height: 100%;
   background-color: #fff;
   text-align: center;
   cursor: pointer;
@@ -104,7 +49,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  height: 600px;
+  height: 100%;
 }
 .section .form {
   display: flex;
@@ -147,9 +92,9 @@ body {
 }
 .section-image .container-tolisten {
   display: flex;
-  justify-content: flex-start;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   box-sizing: border-box;
 }
 .section-image .container-tolisten .color-list {
@@ -185,6 +130,39 @@ body {
 }
 .section-pad {
   justify-content: flex-start;
+}
+.section-pad.show-tuto .pad-tuto {
+  opacity: 1;
+  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.section-pad .pad-tuto {
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #00000056;
+}
+.section-pad .pad-tuto .tuto-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  padding: 2rem;
+  padding-bottom: 0;
+  margin: 1rem;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0px 0px 25px -15px #00000038;
+}
+.section-pad .pad-tuto .tuto-container .btn {
+  align-self: center;
+  margin-top: 1.5rem;
+  margin-bottom: -1.75rem;
 }
 .section-pad .container-tolisten {
   position: absolute;
@@ -323,6 +301,86 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 body {
+  position: fixed;
+  bottom: 4rem;
+  overflow: hidden;
+  width: 100vw;
+  height: calc(100%-4rem);
+}
+
+.fs-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.main {
+  display: flex;
+}
+
+.menu {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 4rem;
+  display: flex;
+}
+.menu-btn {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  padding: 1rem;
+  background-color: #eeeeee;
+  color: #353535;
+}
+.menu-btn svg {
+  opacity: 0.5;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.btn {
+  cursor: pointer;
+  background-color: #ffffff88;
+  padding: 1rem;
+  border-radius: 1000px;
+  font-weight: 700;
+  font-size: 20px;
+  box-shadow: 0px 0px 25px -10px #00000038;
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.btn:active {
+  opacity: 0.6;
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.btn-big {
+  font-size: 20px;
+}
+
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+  .btn {
+    backdrop-filter: blur(20px);
+  }
+}
+/* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
+@supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .btn {
+    background-color: #ffffffda;
+  }
+}
+@media (min-width: 900px) {
+  .btn:hover {
+    opacity: 0.6;
+    transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+}
+body {
   margin: 0;
 }
 
@@ -421,10 +479,9 @@ body[data-page=piano] .menu-btn[id=piano] svg {
 }
 
 .section-pad .btn-save {
-  transform: translateX(60vw);
   pointer-events: none;
+  opacity: 0;
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-  transition-delay: 0.3s;
 }
 .section-pad .btn-edit {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
@@ -432,6 +489,7 @@ body[data-page=piano] .menu-btn[id=piano] svg {
 .section-pad .pad-btn {
   opacity: 1;
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  transition-property: opacity;
 }
 .section-pad .pad-btn:active {
   opacity: 0.2;
@@ -449,6 +507,7 @@ body[data-page=piano] .menu-btn[id=piano] svg {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
 .section-pad .bg-color {
+  transition-property: opacity;
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
 .section-pad .bg-color-active {
@@ -467,8 +526,9 @@ body[data-page=piano] .menu-btn[id=piano] svg {
   pointer-events: none;
 }
 .section-pad.pad-modify .btn-save {
-  transition-delay: 0.1s;
-  transform: translateX(0);
+  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+  opacity: 1;
+  transition-delay: 0.2s;
   pointer-events: inherit;
 }
 .section-pad.pad-modify .form {
@@ -477,6 +537,15 @@ body[data-page=piano] .menu-btn[id=piano] svg {
 .section-pad.pad-modify .form-el {
   opacity: 1;
   transition-delay: 0.2s;
+}
+.section-pad .pad-tuto {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.section-pad .pad-tuto.show-tuto {
+  transition: transform 0.001s, opacity 0.3s 0.001s;
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .desktop {
@@ -499,6 +568,11 @@ body[data-page=piano] .menu-btn[id=piano] svg {
   }
 }
 @media (min-width: 900px) {
+  body {
+    position: relative;
+    bottom: 0;
+  }
+
   .desktop {
     display: inherit;
   }

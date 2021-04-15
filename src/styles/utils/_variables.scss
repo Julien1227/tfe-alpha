@@ -1,7 +1,10 @@
 $white: #fff;
+$white09: #ffffffda;
+$black02: #00000056;
 $black: #000000;
 
 $light-grey: #eeeeee;
+$medium-grey: #d4d4d4;
 $grey: #353535;
 $grey-text: #6b6b6b;
 
@@ -29,3 +32,7 @@ $rounded: 10px;
 
 // shadows
 $shadow: 0px 0px 25px -10px #00000038;  
+$light-shadow: 0px 0px 25px -15px #00000038;
+
+// layout
+$menu-height: 4rem;
