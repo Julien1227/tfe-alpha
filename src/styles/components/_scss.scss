@@ -1,61 +1,7 @@
 .use-svg, #uploadInput {display: none;}
 
-body {
-    position: fixed;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-}
-
-.btn {
-    cursor: pointer;
-    background-color: $lightBtn;
-    padding: 1rem;
-    border-radius: $round;
-    font-weight: 700;
-    backdrop-filter: blur(20px);
-
-    font-size: 20px;
-
-    box-shadow: $shadow;
-
-    transition: $t-fast;
-    &-big {
-        font-size: 20px;
-    }
-    
-    &:hover {
-        opacity: .6;
-        transition: $t-fast;
-    }
-}
-
 .main {
     display: flex;
-}
-
-.menu {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-
-    display: flex;
-    &-btn{
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50%;
-        padding: 1rem;
-
-        background-color: $light-grey;
-        color: $grey;
-        & svg {
-            opacity: .5;
-            width: 1.5rem;
-            height: 1.5rem;
-        }
-    }
 }
 
 .section-intro {
@@ -68,13 +14,12 @@ body {
     overflow: hidden;
     position: relative;
 
-    display: flex;
     flex-direction: column;
     justify-content: flex-end;
 
     min-width: 100%;
-    height: calc(100vh - 4rem);
-    
+    height: calc(100vh - #{$menu-height});
+
     .container-tolisten {
         position: relative;
         display: flex;
@@ -181,15 +126,12 @@ body {
 
                 z-index: 10;
             }
-    
-            .btn {
-                margin-top: 2rem;
-                z-index: 20;
-            }
             
             .selection {
                 overflow: hidden;
-
+                
+                margin-top: 2rem;
+                z-index: 20;
                 box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
@@ -197,7 +139,7 @@ body {
                 border-radius: 2rem;
 
                 height: 3.75rem;
-                width: 300px;
+                width: 19rem;
                 max-width: 450px;
                 & span {
                     margin-bottom: 1rem;
@@ -244,7 +186,7 @@ body {
 
 
     &-pad {
-        justify-content: flex-start;
+        justify-content: flex-start!important;
 
         &.show-tuto {
             .pad-tuto {
@@ -256,10 +198,7 @@ body {
         .pad-tuto {
             
             transition: $t-fast;
-            position: absolute;
             top: 0;
-            width: 100vw;
-            height: 100vh;
             z-index: 200;
             
             display: flex;

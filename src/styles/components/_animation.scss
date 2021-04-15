@@ -151,7 +151,7 @@ body {
 .selection {
     &-image {
         transition: $t-superfast;
-        transform: translateY(-20px);
+        transform: translateY(20px);
         opacity: 0;
 
         &-el {

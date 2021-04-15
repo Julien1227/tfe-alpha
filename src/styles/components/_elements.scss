@@ -1,11 +1,3 @@
-body {
-    position: fixed;
-    bottom: $menu-height;
-    overflow: hidden;
-    width: 100vw;
-    height: calc(100%-4rem);
-}
-
 .fs-center {
     display: flex;
     justify-content: center;
@@ -14,10 +6,6 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-}
-
-.main {
-    display: flex;
 }
 
 .menu {
@@ -51,11 +39,8 @@ body {
     padding: 1rem;
     border-radius: $round;
     font-weight: 700;
-
     font-size: 20px;
-
     box-shadow: $shadow;
-
     transition: $t-fast;
     
     &:active {
