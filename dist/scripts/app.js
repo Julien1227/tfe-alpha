@@ -9418,7 +9418,7 @@ for (var _i4 = 0; _i4 < pianoFormInput.length; _i4++) {
   _loop2(_i4);
 } ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-/////////////////////////// PianoBig //////////////////////////////
+/////////////////////////// Piano/// //////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 // Empêche le "keydown" event de se répéter lorsqu'on maintiens la touche
@@ -9526,19 +9526,44 @@ var playRate = document.getElementById('playRate'),
 var playImageBtn = document.getElementById('getColors'),
     imgToListen = document.querySelector('.img'),
     btnUpload = document.getElementById('uploadBtn'),
+    btnOpenSelection = document.getElementById('btnOpenSelection'),
+    imageSelection = document.querySelectorAll('.selection-image-el'),
     inputUpload = document.getElementById('uploadInput'),
     colorList = document.querySelector('.color-list'),
-    backgroundImg = document.querySelector('.container-img'); // Réglage de la vitesse de lecture
+    backgroundImg = document.querySelector('.container-img'); // Affiche le bon message en fonction du device
+
+var deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "mon explorateur de fichiers" : "ma galerie";
+btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Réglage de la vitesse de lecture
 
 playRate.addEventListener('input', function (e) {
   speed = playRate.value * -1;
   playRateSpan.innerHTML = playRate.value * -1;
+}); // Présélectionne une image
+
+imageSelection[0].classList.add('selected'); // Ouvre la sélection
+
+btnOpenSelection.addEventListener('click', function (e) {
+  btnOpenSelection.classList.toggle('selection-open');
+}); // Change l'image avec l'image sélectionnée
+
+imageSelection.forEach(function (image) {
+  image.addEventListener('click', function (e) {
+    var pastTarget = document.querySelector('.selected');
+    pastTarget.classList.remove('selected');
+    var currentTarget = e.currentTarget;
+    currentTarget.classList.add('selected');
+    var imgLink = currentTarget.children[0].currentSrc;
+    backgroundImg.src = imgLink;
+    imgToListen.src = imgLink;
+  });
 }); // Upload d'une image
 
 btnUpload.addEventListener('click', function (e) {
   inputUpload.click(); //Actualise l'image uploadée
 
   inputUpload.addEventListener('change', function (e) {
+    var pastTarget = document.querySelector('.selected');
+    pastTarget.classList.remove('selected');
     var imgLink = URL.createObjectURL(e.target.files[0]);
     backgroundImg.src = imgLink;
     imgToListen.src = imgLink;
@@ -10802,8 +10827,8 @@ var require;var require;(function e(t, n, r) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })
