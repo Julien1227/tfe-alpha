@@ -127,13 +127,16 @@ for (let i = 0; i < colorInputs.length; i++) {
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-////////////////////////////// Pad ////////////////////////////////
+////////////////////////////// PAD ////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
 // Variables
 const pianoBtn = document.querySelectorAll('.pad-btn'),
       bgColors = document.querySelectorAll('.bg-color'),
+
+      tuto = document.querySelector('.pad-tuto'),
+      closeTuto = document.getElementById('closeTuto'),
   
       sectionPiano = document.querySelector('.section-pad'),
       pianoFormInput = document.querySelectorAll('.padInput'),
@@ -143,9 +146,11 @@ const pianoBtn = document.querySelectorAll('.pad-btn'),
 
 var btnColors = [];
 
-// Assigne une couleur aléatoire à chaque touche (tons bleu)
+// Assigne une couleur légèrement aléatoire à chaque touche (chacune compris dans une transche de 40 deg)
+var h = 0;
 pianoBtn.forEach(btn => {
-    let btnColor = [randomMinMax(120, 250), randomMinMax(80, 90), randomMinMax(50, 70)];
+    h = h + 40;
+    let btnColor = [randomMinMax(h, h - 40), 100, 50];
     btn.style.backgroundColor = 'hsl('+btnColor[0]+', '+btnColor[1]+'%, '+btnColor[2]+'%)';
 });
 
@@ -157,6 +162,14 @@ for (let i = 0; i < pianoBtn.length; i++) {
 
 // Permets de rentrer en mode "modification" des boutons 
 editBtn.addEventListener('click', (e) => {
+
+    // Montre le tuto
+    tuto.classList.add('show-tuto');
+    // Cache le tuto à jamais   
+    closeTuto.addEventListener('click', (e) => {
+        gsap.to(tuto, {duration: 0.3, opacity: 0, onComplete: hide, onCompleteParams: [tuto]});
+    });
+
     // Sélectionne la première touche par défaut
     sectionPiano.classList.add('pad-modify');   
     pianoBtn[0].classList.add('pad-btn-active');

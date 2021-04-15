@@ -55,10 +55,9 @@ body {
 // Animations du piano
 .section-pad {
     .btn-save {
-        transform: translateX(60vw);
         pointer-events: none;
+        opacity: 0;
         transition: $t-fast;
-        transition-delay: 0.3s;
     }
 
     .btn-edit {
@@ -88,6 +87,7 @@ body {
     .bg {
         transition: $t-fast;
         &-color {
+            transition-property: opacity;
             transition: $t-fast;
             transition-property: opacity;
         }
@@ -115,8 +115,9 @@ body {
         }
 
         .btn-save {
-            transition-delay: 0.1s;
-            transform: translateX(0);
+            transition: $t-slow;
+            opacity: 1;
+            transition-delay: 0.2s;
             pointer-events: inherit;
         }
 
@@ -126,6 +127,20 @@ body {
                 opacity: 1;
                 transition-delay: 0.2s;
             }
+        }
+    }
+
+    .pad-tuto {
+        transform: translateY(-100%);
+        opacity: 0;
+
+        &.show-tuto {
+            transition: 
+            transform       0.001s,
+            opacity     0.3s 0.001s;
+
+            transform: translateY(0);
+            opacity: 1;
         }
     }
 }

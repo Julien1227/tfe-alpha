@@ -9276,22 +9276,26 @@ for (var i = 0; i < colorInputs.length; i++) {
 
 ; ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-////////////////////////////// Pad ////////////////////////////////
+////////////////////////////// PAD ////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 // Variables
 
 var pianoBtn = document.querySelectorAll('.pad-btn'),
     bgColors = document.querySelectorAll('.bg-color'),
+    tuto = document.querySelector('.pad-tuto'),
+    closeTuto = document.getElementById('closeTuto'),
     sectionPiano = document.querySelector('.section-pad'),
     pianoFormInput = document.querySelectorAll('.padInput'),
     pianoFormSpan = document.querySelectorAll('.padSpan'),
     editBtn = document.querySelector('.btn-edit'),
     saveBtn = document.querySelector('.btn-save');
-var btnColors = []; // Assigne une couleur aléatoire à chaque touche (tons bleu)
+var btnColors = []; // Assigne une couleur légèrement aléatoire à chaque touche (chacune compris dans une transche de 40 deg)
 
+var h = 0;
 pianoBtn.forEach(function (btn) {
-  var btnColor = [randomMinMax(120, 250), randomMinMax(80, 90), randomMinMax(50, 70)];
+  h = h + 40;
+  var btnColor = [randomMinMax(h, h - 40), 100, 50];
   btn.style.backgroundColor = 'hsl(' + btnColor[0] + ', ' + btnColor[1] + '%, ' + btnColor[2] + '%)';
 }); // Reporte les couleurs aléatoires au bg
 
@@ -9303,7 +9307,18 @@ for (var _i = 0; _i < pianoBtn.length; _i++) {
 
 
 editBtn.addEventListener('click', function (e) {
-  // Sélectionne la première touche par défaut
+  // Montre le tuto
+  tuto.classList.add('show-tuto'); // Cache le tuto à jamais   
+
+  closeTuto.addEventListener('click', function (e) {
+    gsap.to(tuto, {
+      duration: 0.3,
+      opacity: 0,
+      onComplete: hide,
+      onCompleteParams: [tuto]
+    });
+  }); // Sélectionne la première touche par défaut
+
   sectionPiano.classList.add('pad-modify');
   pianoBtn[0].classList.add('pad-btn-active');
   var hslColor = getHslFromAttribute(pianoBtn[0]);
