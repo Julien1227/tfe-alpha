@@ -9178,8 +9178,6 @@ module.exports = function(module) {
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
-var myBuffer;
-var request = new XMLHttpRequest();
 var o = context.createOscillator();
 var g = context.createGain();
 g.gain.value = 0;
@@ -9394,8 +9392,8 @@ var _loop2 = function _loop2(_i4) {
         s = pianoFormInput[1].value,
         l = pianoFormInput[2].value;
     pianoFormSpan[_i4].innerHTML = pianoFormInput[_i4].value;
-    var actualBtn = document.querySelector('.pad-btn-active');
-    actualBtn.style.backgroundColor = 'hsl(' + t + ', ' + s + '%, ' + l + '%)'; // Applique la couleur sur le BG
+    var hexColor = HSLToHex(t, s, l);
+    var actualBtn = document.querySelector('.pad-btn-active'); // Applique la couleur sur le BG
 
     var bgNum = actualBtn.getAttribute('id').slice(4),
         bgToEdit = document.getElementById('bg-' + bgNum);
@@ -10827,8 +10825,8 @@ var require;var require;(function e(t, n, r) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

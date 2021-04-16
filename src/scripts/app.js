@@ -3,9 +3,7 @@
 // Création d'un oscillateur et gain avec la web audio API
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
-var myBuffer;
 
-var request = new XMLHttpRequest();
 var o = context.createOscillator();
 var g = context.createGain();
 g.gain.value = 0;
@@ -264,8 +262,8 @@ for (let i = 0; i < pianoFormInput.length; i++) {
 
         pianoFormSpan[i].innerHTML = pianoFormInput[i].value;
         
+        let hexColor = HSLToHex(t, s, l);
         let actualBtn = document.querySelector('.pad-btn-active');
-        actualBtn.style.backgroundColor = 'hsl('+t+', '+s+'%, '+l+'%)';
         
         // Applique la couleur sur le BG
         let bgNum = actualBtn.getAttribute('id').slice(4),

@@ -151,7 +151,8 @@
     }
 
     .menu {
-        margin-bottom: 1rem;
+        height: inherit;
+        bottom: 1rem;
         justify-content: center;
         &-btn {
             width: 5rem;
