@@ -402,9 +402,11 @@ require("node-vibrant");
 
 
 // VARIABLES
-var speed = 150;
+var speed = 120;
 const playRate = document.getElementById('playRate'),
-      playRateSpan = document.getElementById('playRateSpan');
+      playRateSpan = document.getElementById('playRateSpan'),
+      colorNumberSpan = document.getElementById('colorNumberSpan'),
+      colorNumber = document.getElementById('colorNumber');
 
 const playImageBtn = document.getElementById('getColors'),
       imgToListen = document.querySelector('.img'),
@@ -415,6 +417,7 @@ const playImageBtn = document.getElementById('getColors'),
       colorList = document.querySelector('.color-list'),
       backgroundImg = document.querySelector('.container-img');
 
+const colorThief = new ColorThief();
 
 // Affiche le bon message en fonction du device
 let deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "mon explorateur de fichiers" : "ma galerie";
@@ -425,6 +428,12 @@ playRate.addEventListener('input', (e) => {
     speed = playRate.value * -1;
     playRateSpan.innerHTML = playRate.value * -1;
 });
+
+// Réglage du nombre de couleurs
+colorNumber.addEventListener('input', (e) => {
+    colorNumberSpan.innerHTML = colorNumber.value;
+});
+
 
 // Présélectionne une image
 imageSelection[0].classList.add('selected');
@@ -469,60 +478,45 @@ btnUpload.addEventListener('click', (e) => {
 //Récupère les couleurs de l'image et les joue
 playImageBtn.addEventListener('click', (e) => {
     colorList.innerHTML = "";
-
-    let vibrant = new Vibrant(imgToListen);
-    let colors = vibrant.swatches();
-
     let gains = [],
         frqs = [];
+    
+    let palette = colorThief.getPalette(imgToListen, Number(colorNumber.value));
 
-    for (var color in colors){
-        if (colors.hasOwnProperty(color) && colors[color]){
-            
-            //Affiche la couleur dans le html
-            var li = document.createElement('li');
-            li.classList.add('color-list-el');
-            li.style.backgroundColor = colors[color].getHex();
-            colorList.appendChild(li);
-            
-            //Récupère les couleurs RGB (getHsl donne des valeurs inutilisable) - pour la fréquence
-            let rgbColor = colors[color].getRgb();
+    for (let i = 0; i < palette.length; i++) {
+
+        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);
+
+        let h = hslColor[0],
+            s = hslColor[1],
+            l = hslColor[2];           
         
-            //Récupère les couleurs HSL - pour le gain
-            let hslColor = RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
-            
-            //Récupère une fréquence pour chaque couleurs
-            let frq = setFrequency(hslColor[0], hslColor[1], hslColor[2])
-            frqs.push(frq);
-            
-            //crée et récupère un gain
-            let gain = setGain(hslColor[1], hslColor[2]);
-            gains.push(gain);
-        }
-    }
+        // Crée un élement HTML auquel il assigne la couleur
+        let color = document.createElement('li');
+        color.classList.add('color-list-el');
+        color.style.backgroundColor = "hsl("+ h +", "+ s +"%, "+ l +"%)";
+        
+        colorList.appendChild(color);
 
+        // Génère un gain et une fréquence pour chaque couleur
+        let gain = setGain(l, s);
+        let frq = setFrequency(h, s, l);
+
+        gains.push(gain);
+        frqs.push(frq);
+    }
     
     //Joue chaque paramètre les uns après les autres
     for(var i = 0; i < frqs.length; i++) {
         play(i);
     }
-    
-    //Les rejoue à l'envers pour deux fois plus de plaisir ( ͡° ͜ʖ ͡°)
-    setTimeout(function() {
-        frqs.reverse();
-        gains.reverse();
-        for(var i = 1; i < frqs.length; i++) {
-            play(i);
-        }
-    }, (frqs.length - 1)*speed);
-
 
     function play(i) {
         setTimeout(function() {
             g.gain.setValueAtTime(gains[i], context.currentTime);
             o.frequency.setValueAtTime(frqs[i], context.currentTime);
 
-            g.gain.setTargetAtTime(0, context.currentTime, speed/1550);
+            g.gain.setTargetAtTime(0, context.currentTime, speed/1500);
         }, i*speed);
     }
 });

@@ -9518,9 +9518,11 @@ __webpack_require__(/*! ../scripts/vibrant.js */ "./src/scripts/vibrant.js");
 __webpack_require__(/*! node-vibrant */ "./node_modules/node-vibrant/lib/browser.js"); // VARIABLES
 
 
-var speed = 150;
+var speed = 120;
 var playRate = document.getElementById('playRate'),
-    playRateSpan = document.getElementById('playRateSpan');
+    playRateSpan = document.getElementById('playRateSpan'),
+    colorNumberSpan = document.getElementById('colorNumberSpan'),
+    colorNumber = document.getElementById('colorNumber');
 var playImageBtn = document.getElementById('getColors'),
     imgToListen = document.querySelector('.img'),
     btnUpload = document.getElementById('uploadBtn'),
@@ -9528,7 +9530,8 @@ var playImageBtn = document.getElementById('getColors'),
     imageSelection = document.querySelectorAll('.selection-image-el'),
     inputUpload = document.getElementById('uploadInput'),
     colorList = document.querySelector('.color-list'),
-    backgroundImg = document.querySelector('.container-img'); // Affiche le bon message en fonction du device
+    backgroundImg = document.querySelector('.container-img');
+var colorThief = new ColorThief(); // Affiche le bon message en fonction du device
 
 var deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "mon explorateur de fichiers" : "ma galerie";
 btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Réglage de la vitesse de lecture
@@ -9536,6 +9539,10 @@ btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Réglage de la vitesse de le
 playRate.addEventListener('input', function (e) {
   speed = playRate.value * -1;
   playRateSpan.innerHTML = playRate.value * -1;
+}); // Réglage du nombre de couleurs
+
+colorNumber.addEventListener('input', function (e) {
+  colorNumberSpan.innerHTML = colorNumber.value;
 }); // Présélectionne une image
 
 imageSelection[0].classList.add('selected'); // Ouvre la sélection
@@ -9570,53 +9577,41 @@ btnUpload.addEventListener('click', function (e) {
 
 playImageBtn.addEventListener('click', function (e) {
   colorList.innerHTML = "";
-  var vibrant = new Vibrant(imgToListen);
-  var colors = vibrant.swatches();
   var gains = [],
       frqs = [];
+  var palette = colorThief.getPalette(imgToListen, Number(colorNumber.value));
 
-  for (var color in colors) {
-    if (colors.hasOwnProperty(color) && colors[color]) {
-      //Affiche la couleur dans le html
-      var li = document.createElement('li');
-      li.classList.add('color-list-el');
-      li.style.backgroundColor = colors[color].getHex();
-      colorList.appendChild(li); //Récupère les couleurs RGB (getHsl donne des valeurs inutilisable) - pour la fréquence
+  for (var _i5 = 0; _i5 < palette.length; _i5++) {
+    var hslColor = RGBToHSL(palette[_i5][0], palette[_i5][1], palette[_i5][2]);
+    var _h = hslColor[0],
+        _s = hslColor[1],
+        _l = hslColor[2]; // Crée un élement HTML auquel il assigne la couleur
 
-      var rgbColor = colors[color].getRgb(); //Récupère les couleurs HSL - pour le gain
+    var _color3 = document.createElement('li');
 
-      var hslColor = RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]); //Récupère une fréquence pour chaque couleurs
+    _color3.classList.add('color-list-el');
 
-      var _frq2 = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
+    _color3.style.backgroundColor = "hsl(" + _h + ", " + _s + "%, " + _l + "%)";
+    colorList.appendChild(_color3); // Génère un gain et une fréquence pour chaque couleur
 
-      frqs.push(_frq2); //crée et récupère un gain
+    var _gain = setGain(_l, _s);
 
-      var _gain = setGain(hslColor[1], hslColor[2]);
+    var _frq2 = setFrequency(_h, _s, _l);
 
-      gains.push(_gain);
-    }
+    gains.push(_gain);
+    frqs.push(_frq2);
   } //Joue chaque paramètre les uns après les autres
 
 
   for (var i = 0; i < frqs.length; i++) {
     play(i);
-  } //Les rejoue à l'envers pour deux fois plus de plaisir ( ͡° ͜ʖ ͡°)
-
-
-  setTimeout(function () {
-    frqs.reverse();
-    gains.reverse();
-
-    for (var i = 1; i < frqs.length; i++) {
-      play(i);
-    }
-  }, (frqs.length - 1) * speed);
+  }
 
   function play(i) {
     setTimeout(function () {
       g.gain.setValueAtTime(gains[i], context.currentTime);
       o.frequency.setValueAtTime(frqs[i], context.currentTime);
-      g.gain.setTargetAtTime(0, context.currentTime, speed / 1550);
+      g.gain.setTargetAtTime(0, context.currentTime, speed / 1500);
     }, i * speed);
   }
 }); ///////////////////////////////////////////////////////////////////
