@@ -9452,6 +9452,7 @@ document.addEventListener('keydown', function (event) {
   var key = event.key; // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
 
   if (body.getAttribute('data-page') == "piano") {
+    // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
     if (down) return;
     down = true; // Si une fréquence est assigné à la touche, on la joue
 
@@ -9531,9 +9532,17 @@ btnOpenSelection.addEventListener('click', function (e) {
 imageSelection.forEach(function (image) {
   image.addEventListener('click', function (e) {
     var pastTarget = document.querySelector('.selected');
-    pastTarget.classList.remove('selected');
+
+    if (pastTarget != null) {
+      pastTarget.classList.remove('selected');
+    }
+
     var currentTarget = e.currentTarget;
-    currentTarget.classList.add('selected');
+
+    if (currentTarget != null) {
+      currentTarget.classList.add('selected');
+    }
+
     var imgLink = currentTarget.children[0].currentSrc;
     backgroundImg.src = imgLink;
     imgToListen.src = imgLink;

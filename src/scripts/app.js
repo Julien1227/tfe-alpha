@@ -331,6 +331,7 @@ document.addEventListener('keydown', (event) => {
     // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
     if(body.getAttribute('data-page') == "piano") {
 
+        // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
         if(down) return;
         down = true;
 
@@ -423,10 +424,15 @@ btnOpenSelection.addEventListener('click', (e) => {
 imageSelection.forEach(image => {
     image.addEventListener('click', (e) => {
         let pastTarget = document.querySelector('.selected');
-        pastTarget.classList.remove('selected');
+        if (pastTarget != null) {
+            pastTarget.classList.remove('selected');
+        }
 
         let currentTarget = e.currentTarget;
-        currentTarget.classList.add('selected');
+        if (currentTarget != null) {
+            currentTarget.classList.add('selected');
+        }
+
 
         let imgLink = currentTarget.children[0].currentSrc;
                 
