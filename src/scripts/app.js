@@ -131,7 +131,6 @@ for (let i = 0; i < colorInputs.length; i++) {
 
 // Variables
 const pianoBtn = document.querySelectorAll('.pad-btn'),
-      bgColors = document.querySelectorAll('.bg-color'),
 
       tuto = document.querySelector('.pad-tuto'),
       closeTuto = document.getElementById('closeTuto'),
@@ -142,27 +141,24 @@ const pianoBtn = document.querySelectorAll('.pad-btn'),
       editBtn = document.querySelector('.btn-edit'),
       saveBtn = document.querySelector('.btn-save');
 
+var root = document.documentElement;
+
 var btnColors = [];
 
 // Assigne une couleur légèrement aléatoire à chaque touche (chacune compris dans une transche de 40 deg)
 var h = 0;
 pianoBtn.forEach(btn => {
     h = h + 40;
-    let btnColor = [randomMinMax(h, h - 40), 100, 50];
-    btn.style.backgroundColor = 'hsl('+btnColor[0]+', '+btnColor[1]+'%, '+btnColor[2]+'%)';
+    let btnColor = HSLToHex(randomMinMax(h, h - 40), 100, 50);
+    actualisePadBtnColor(btn, btnColor);
 });
-
-// Reporte les couleurs aléatoires au bg
-for (let i = 0; i < pianoBtn.length; i++) {
-    let color = getHslFromAttribute(pianoBtn[i]);
-    bgColors[i].style.backgroundColor = 'hsl('+color[0]+', '+color[1]+'%, '+color[2]+'%)';
-}
 
 // Permets de rentrer en mode "modification" des boutons 
 editBtn.addEventListener('click', (e) => {
 
     // Montre le tuto
     tuto.classList.add('show-tuto');
+
     // Cache le tuto à jamais   
     closeTuto.addEventListener('click', (e) => {
         gsap.to(tuto, {duration: 0.3, opacity: 0, onComplete: hide, onCompleteParams: [tuto]});
@@ -190,26 +186,20 @@ pianoBtn.forEach(btn => {
     btn.addEventListener(event('start'), (e) => {
         let targetBtn = e.currentTarget;
         
-        // Applique la couleur sur le BG
-        let bgNum = targetBtn.getAttribute('id').slice(4);
-        let bgToEdit = document.getElementById('bg-'+bgNum);
-        
         // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
         let hslColor = getHslFromAttribute(targetBtn);
         
-        // jouer les sons des couleuirs
-        let frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
-        let gain = setGain(hslColor[2], hslColor[1]);
+        // Défini le gain et la fréquence
+        let frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]),
+            gain = setGain(hslColor[2], hslColor[1]);
         
         g.gain.setValueAtTime(gain, context.currentTime);
         o.frequency.setValueAtTime(frq, context.currentTime);
         
         // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
         if (sectionPiano.classList.contains('pad-modify') == false) {
-            bgToEdit.classList.add('bg-color-active');
             btn.addEventListener(event('end'), (e) => {
                 g.gain.setTargetAtTime(0, context.currentTime, 0.1);
-                bgToEdit.classList.remove('bg-color-active');
             });
         } else {
             g.gain.setTargetAtTime(0, context.currentTime+0.1, 0.3);
@@ -262,23 +252,18 @@ for (let i = 0; i < pianoFormInput.length; i++) {
 
         pianoFormSpan[i].innerHTML = pianoFormInput[i].value;
         
-        let hexColor = HSLToHex(t, s, l);
         let actualBtn = document.querySelector('.pad-btn-active');
+        let hexColor = HSLToHex(t, s, l);
         
-        // Applique la couleur sur le BG
-        let bgNum = actualBtn.getAttribute('id').slice(4),
-            bgToEdit = document.getElementById('bg-'+bgNum);
-
-        bgToEdit.style.backgroundColor = 'hsl('+t+', '+s+'%, '+l+'%)';
+        // Actualise la couleur du bouton
+        actualisePadBtnColor(actualBtn, hexColor);
         
-        // Donne un aperçu du son de la couleur
+        // Défini le gain et la fréquence
         let frq = setFrequency(t, s, l),
             gain = setGain(l, s);
-        // Défini la fréquence
-        o.frequency.setValueAtTime(frq, context.currentTime);
-        // Défini l'intensité
-        g.gain.setValueAtTime(gain, context.currentTime);
 
+        o.frequency.setValueAtTime(frq, context.currentTime);
+        g.gain.setValueAtTime(gain, context.currentTime);
 
         pianoFormInput[i].addEventListener(event('end'), (e) => {
             g.gain.setTargetAtTime(0, context.currentTime, 0.1);
@@ -346,6 +331,7 @@ document.addEventListener('keydown', (event) => {
     // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
     if(body.getAttribute('data-page') == "piano") {
 
+        // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
         if(down) return;
         down = true;
 
@@ -447,10 +433,15 @@ btnOpenSelection.addEventListener('click', (e) => {
 imageSelection.forEach(image => {
     image.addEventListener('click', (e) => {
         let pastTarget = document.querySelector('.selected');
-        pastTarget.classList.remove('selected');
+        if (pastTarget != null) {
+            pastTarget.classList.remove('selected');
+        }
 
         let currentTarget = e.currentTarget;
-        currentTarget.classList.add('selected');
+        if (currentTarget != null) {
+            currentTarget.classList.add('selected');
+        }
+
 
         let imgLink = currentTarget.children[0].currentSrc;
                 
@@ -527,6 +518,12 @@ playImageBtn.addEventListener('click', (e) => {
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+
+function actualisePadBtnColor(btn, color) {
+    btn.style.backgroundColor = color;
+    let id = btn.getAttribute('id').slice(-1);
+    root.style.setProperty('--pad-btn-color-'+id, color);
+}
 
 function getHslFromAttribute(element) {
     //récupère les nombres (t, s et l) de l'attribu background-color

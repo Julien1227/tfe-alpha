@@ -15,7 +15,7 @@
   
   <link rel="stylesheet" href="styles/app.css">
 </head>
-<body data-page="image">
+<body data-page="color">
 
   <main class="image">
 
@@ -56,25 +56,10 @@
             <button id="closeTuto" class="btn">Compris !</button>
           </div>
         </div>
-
-        <div class="container-tolisten container-tolisten-pad">
-          <ul class="bg">
-            <li id="bg-0" class="bg-color"></li>
-            <li id="bg-1" class="bg-color"></li>
-            <li id="bg-2" class="bg-color"></li>
-            <li id="bg-3" class="bg-color"></li>
-            <li id="bg-4" class="bg-color"></li>
-            <li id="bg-5" class="bg-color"></li>
-            <li id="bg-6" class="bg-color"></li>
-            <li id="bg-7" class="bg-color"></li>
-            <li id="bg-8" class="bg-color"></li>
-          </ul>
-        </div>
         
         <div class="pad-container">
           
           <ul class="pad">
-            <li><button id="btn-0" class="pad-btn"></button></li>
             <li><button id="btn-1" class="pad-btn"></button></li>
             <li><button id="btn-2" class="pad-btn"></button></li>
             <li><button id="btn-3" class="pad-btn"></button></li>
@@ -83,6 +68,7 @@
             <li><button id="btn-6" class="pad-btn"></button></li>
             <li><button id="btn-7" class="pad-btn"></button></li>
             <li><button id="btn-8" class="pad-btn"></button></li>
+            <li><button id="btn-9" class="pad-btn"></button></li>
           </ul>
           
           <button class="btn btn-edit">Modifier</button>
@@ -90,18 +76,16 @@
         
         <div class="form form-pad">
           <div class="form-el">
-            <button class="btn btn-big btn-save">Enregistrer</button>
-          </div>
-          <div class="form-el">
+            <button class="btn btn-save">Enregistrer</button>
             <label>Teinte: <span data-p="color" class="padSpan">180</span>°</label>
             <input class="padInput" type="range" name="volume" min="0" max="359">
           </div>
-      
+          
           <div class="form-el">
             <label>Saturation: <span data-p="sat" class="padSpan">50</span>%</label>
             <input class="padInput" type="range" name="volume" min="0" max="100">
           </div>
-      
+          
           <div class="form-el">
             <label>Luminiosité: <span data-p="lum" class="padSpan">50</span>%</label>
             <input class="padInput" type="range" name="volume" min="0" max="100">

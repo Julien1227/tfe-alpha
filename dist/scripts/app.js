@@ -9280,7 +9280,6 @@ for (var i = 0; i < colorInputs.length; i++) {
 // Variables
 
 var pianoBtn = document.querySelectorAll('.pad-btn'),
-    bgColors = document.querySelectorAll('.bg-color'),
     tuto = document.querySelector('.pad-tuto'),
     closeTuto = document.getElementById('closeTuto'),
     sectionPiano = document.querySelector('.section-pad'),
@@ -9288,21 +9287,15 @@ var pianoBtn = document.querySelectorAll('.pad-btn'),
     pianoFormSpan = document.querySelectorAll('.padSpan'),
     editBtn = document.querySelector('.btn-edit'),
     saveBtn = document.querySelector('.btn-save');
+var root = document.documentElement;
 var btnColors = []; // Assigne une couleur légèrement aléatoire à chaque touche (chacune compris dans une transche de 40 deg)
 
 var h = 0;
 pianoBtn.forEach(function (btn) {
   h = h + 40;
-  var btnColor = [randomMinMax(h, h - 40), 100, 50];
-  btn.style.backgroundColor = 'hsl(' + btnColor[0] + ', ' + btnColor[1] + '%, ' + btnColor[2] + '%)';
-}); // Reporte les couleurs aléatoires au bg
-
-for (var _i = 0; _i < pianoBtn.length; _i++) {
-  var _color = getHslFromAttribute(pianoBtn[_i]);
-
-  bgColors[_i].style.backgroundColor = 'hsl(' + _color[0] + ', ' + _color[1] + '%, ' + _color[2] + '%)';
-} // Permets de rentrer en mode "modification" des boutons 
-
+  var btnColor = HSLToHex(randomMinMax(h, h - 40), 100, 50);
+  actualisePadBtnColor(btn, btnColor);
+}); // Permets de rentrer en mode "modification" des boutons 
 
 editBtn.addEventListener('click', function (e) {
   // Montre le tuto
@@ -9321,9 +9314,9 @@ editBtn.addEventListener('click', function (e) {
   pianoBtn[0].classList.add('pad-btn-active');
   var hslColor = getHslFromAttribute(pianoBtn[0]);
 
-  for (var _i2 = 0; _i2 < pianoFormInput.length; _i2++) {
-    pianoFormInput[_i2].value = hslColor[_i2];
-    pianoFormSpan[_i2].innerHTML = hslColor[_i2];
+  for (var _i = 0; _i < pianoFormInput.length; _i++) {
+    pianoFormInput[_i].value = hslColor[_i];
+    pianoFormSpan[_i].innerHTML = hslColor[_i];
   }
 });
 saveBtn.addEventListener('click', function (e) {
@@ -9335,23 +9328,18 @@ saveBtn.addEventListener('click', function (e) {
 
 pianoBtn.forEach(function (btn) {
   btn.addEventListener(event('start'), function (e) {
-    var targetBtn = e.currentTarget; // Applique la couleur sur le BG
+    var targetBtn = e.currentTarget; // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
 
-    var bgNum = targetBtn.getAttribute('id').slice(4);
-    var bgToEdit = document.getElementById('bg-' + bgNum); // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
+    var hslColor = getHslFromAttribute(targetBtn); // Défini le gain et la fréquence
 
-    var hslColor = getHslFromAttribute(targetBtn); // jouer les sons des couleuirs
-
-    var frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
-    var gain = setGain(hslColor[2], hslColor[1]);
+    var frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]),
+        gain = setGain(hslColor[2], hslColor[1]);
     g.gain.setValueAtTime(gain, context.currentTime);
     o.frequency.setValueAtTime(frq, context.currentTime); // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
 
     if (sectionPiano.classList.contains('pad-modify') == false) {
-      bgToEdit.classList.add('bg-color-active');
       btn.addEventListener(event('end'), function (e) {
         g.gain.setTargetAtTime(0, context.currentTime, 0.1);
-        bgToEdit.classList.remove('bg-color-active');
       });
     } else {
       g.gain.setTargetAtTime(0, context.currentTime + 0.1, 0.3);
@@ -9377,43 +9365,39 @@ pianoBtn.forEach(function (btn) {
         hslColor = getHslFromAttribute(targetBtn);
         btnColors.push(hslColor); // Actualise les valeurs du slider avec la couleur actuelle du bouton
 
-        for (var _i3 = 0; _i3 < pianoFormInput.length; _i3++) {
-          pianoFormInput[_i3].value = hslColor[_i3];
-          pianoFormSpan[_i3].innerHTML = hslColor[_i3];
+        for (var _i2 = 0; _i2 < pianoFormInput.length; _i2++) {
+          pianoFormInput[_i2].value = hslColor[_i2];
+          pianoFormSpan[_i2].innerHTML = hslColor[_i2];
         }
       }
     }
   });
 }); // L'orsqu'un slider bouge - modifie la couleur active
 
-var _loop2 = function _loop2(_i4) {
-  pianoFormInput[_i4].addEventListener('input', function (e) {
+var _loop2 = function _loop2(_i3) {
+  pianoFormInput[_i3].addEventListener('input', function (e) {
     var t = pianoFormInput[0].value,
         s = pianoFormInput[1].value,
         l = pianoFormInput[2].value;
-    pianoFormSpan[_i4].innerHTML = pianoFormInput[_i4].value;
-    var hexColor = HSLToHex(t, s, l);
-    var actualBtn = document.querySelector('.pad-btn-active'); // Applique la couleur sur le BG
+    pianoFormSpan[_i3].innerHTML = pianoFormInput[_i3].value;
+    var actualBtn = document.querySelector('.pad-btn-active');
+    var hexColor = HSLToHex(t, s, l); // Actualise la couleur du bouton
 
-    var bgNum = actualBtn.getAttribute('id').slice(4),
-        bgToEdit = document.getElementById('bg-' + bgNum);
-    bgToEdit.style.backgroundColor = 'hsl(' + t + ', ' + s + '%, ' + l + '%)'; // Donne un aperçu du son de la couleur
+    actualisePadBtnColor(actualBtn, hexColor); // Défini le gain et la fréquence
 
     var frq = setFrequency(t, s, l),
-        gain = setGain(l, s); // Défini la fréquence
-
-    o.frequency.setValueAtTime(frq, context.currentTime); // Défini l'intensité
-
+        gain = setGain(l, s);
+    o.frequency.setValueAtTime(frq, context.currentTime);
     g.gain.setValueAtTime(gain, context.currentTime);
 
-    pianoFormInput[_i4].addEventListener(event('end'), function (e) {
+    pianoFormInput[_i3].addEventListener(event('end'), function (e) {
       g.gain.setTargetAtTime(0, context.currentTime, 0.1);
     });
   });
 };
 
-for (var _i4 = 0; _i4 < pianoFormInput.length; _i4++) {
-  _loop2(_i4);
+for (var _i3 = 0; _i3 < pianoFormInput.length; _i3++) {
+  _loop2(_i3);
 } ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 /////////////////////////// Piano/// //////////////////////////////
@@ -9468,12 +9452,13 @@ document.addEventListener('keydown', function (event) {
   var key = event.key; // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
 
   if (body.getAttribute('data-page') == "piano") {
+    // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
     if (down) return;
     down = true; // Si une fréquence est assigné à la touche, on la joue
 
     if (notes[key] != null) {
       var _frq = notes[key],
-          _color2 = 0; // Assigne la valeur de gain et fréquence
+          _color = 0; // Assigne la valeur de gain et fréquence
 
       o.frequency.setValueAtTime(_frq, context.currentTime);
       g.gain.setValueAtTime(1, context.currentTime); // Cherche une couleur correspondant à la fréquence
@@ -9482,8 +9467,8 @@ document.addEventListener('keydown', function (event) {
         t = randomMinMax(0, 360);
         s = 100;
         l = randomMinMax(50, 60);
-        _color2 = setFrequency(t, s, l);
-      } while (_frq != _color2); // Convertis la couleur en hexadécimal pour l'assigner
+        _color = setFrequency(t, s, l);
+      } while (_frq != _color); // Convertis la couleur en hexadécimal pour l'assigner
 
 
       var hexColor = HSLToHex(t, s, l); // Assignation de la couleur et d'un class de transition
@@ -9554,9 +9539,17 @@ btnOpenSelection.addEventListener('click', function (e) {
 imageSelection.forEach(function (image) {
   image.addEventListener('click', function (e) {
     var pastTarget = document.querySelector('.selected');
-    pastTarget.classList.remove('selected');
+
+    if (pastTarget != null) {
+      pastTarget.classList.remove('selected');
+    }
+
     var currentTarget = e.currentTarget;
-    currentTarget.classList.add('selected');
+
+    if (currentTarget != null) {
+      currentTarget.classList.add('selected');
+    }
+
     var imgLink = currentTarget.children[0].currentSrc;
     backgroundImg.src = imgLink;
     imgToListen.src = imgLink;
@@ -9619,6 +9612,12 @@ playImageBtn.addEventListener('click', function (e) {
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+
+function actualisePadBtnColor(btn, color) {
+  btn.style.backgroundColor = color;
+  var id = btn.getAttribute('id').slice(-1);
+  root.style.setProperty('--pad-btn-color-' + id, color);
+}
 
 function getHslFromAttribute(element) {
   //récupère les nombres (t, s et l) de l'attribu background-color
