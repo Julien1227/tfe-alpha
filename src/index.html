@@ -17,7 +17,7 @@
 </head>
 <body data-page="color">
 
-  <main class="main">
+  <main class="image">
 
       <section class="section-intro fs-center">
         <h2 class="section-intro-msg"></h2>
@@ -134,7 +134,11 @@
         <div class="form">
           <div class="form-el">
             <label>Vitesse de lecture: <span id="playRateSpan">150</span>ms</label>
-            <input id="playRate" type="range" value="150" min="-500" max="-50">
+            <input id="playRate" type="range" value="-150" min="-500" max="-50">
+          </div>
+          <div class="form-el">
+            <label>Nombre de couleurs: <span id="colorNumberSpan">5</span></label>
+            <input id="colorNumber" type="range" value="5" min="0" max="10">
           </div>
           <button id="getColors" class="btn">Jouer la mélodie</button>
         </div>
@@ -169,6 +173,7 @@
     </svg>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
   <script src="scripts/app.js"></script>
 </body>
