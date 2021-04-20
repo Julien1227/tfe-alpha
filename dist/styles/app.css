@@ -109,13 +109,13 @@ label {
 .section {
   overflow: hidden;
   position: relative;
+  display: flex;
   flex-direction: column;
   justify-content: flex-end;
   min-width: 100%;
   height: calc(100vh - 4rem);
 }
 .section .container-tolisten {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -126,7 +126,6 @@ label {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-sizing: content-box;
   padding: 2rem;
   background-color: #fff;
 }
@@ -162,25 +161,31 @@ label {
   background: linear-gradient(to top, #00000033, #00000000);
 }
 .section-image .container-tolisten {
-  display: flex;
+  position: relative;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   height: 100%;
-  box-sizing: border-box;
 }
 .section-image .container-tolisten .color-list {
+  z-index: 1000;
   display: flex;
-  padding: 0.5rem;
-  margin: 0;
-  box-shadow: 0px 0px 25px -10px #00000038;
-  max-width: 100vw;
-  background-color: #fff;
+  justify-content: center;
+  max-width: calc(100% - 2rem);
+  padding: 0.2rem;
+  text-align: center;
   border-radius: 1000px;
+  background-color: #fff;
+  box-shadow: 0px 0px 25px -10px #00000038;
 }
 .section-image .container-tolisten .color-list-el {
-  margin: 0.3rem;
   border-radius: 1000px;
+  width: 9vw;
+  height: 9vw;
+  margin-right: 0.5vw;
+}
+.section-image .container-tolisten .color-list-el:last-child {
+  margin-right: inherit;
 }
 .section-image .container-tolisten .background-container {
   display: none;
@@ -188,9 +193,10 @@ label {
 .section-image .container-tolisten .img {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 5vw);
   object-fit: cover;
-  z-index: 10;
+  object-position: center;
+  z-index: -20;
 }
 .section-image .container-tolisten .selection {
   overflow: hidden;
@@ -525,7 +531,7 @@ input[type=range]::-ms-track {
 }
 
 body[data-page=color] .section-color {
-  display: inherit;
+  display: flex;
 }
 body[data-page=color] .menu-btn[id=color] {
   background-color: #fff;
@@ -534,7 +540,7 @@ body[data-page=color] .menu-btn[id=color] svg {
   opacity: 1;
 }
 body[data-page=pad] .section-pad {
-  display: inherit;
+  display: flex;
 }
 body[data-page=pad] .menu-btn[id=pad] {
   background-color: #fff;
@@ -543,7 +549,7 @@ body[data-page=pad] .menu-btn[id=pad] svg {
   opacity: 1;
 }
 body[data-page=image] .section-image {
-  display: inherit;
+  display: flex;
 }
 body[data-page=image] .menu-btn[id=image] {
   background-color: #fff;
@@ -552,7 +558,7 @@ body[data-page=image] .menu-btn[id=image] svg {
   opacity: 1;
 }
 body[data-page=piano] .section-piano {
-  display: inherit;
+  display: flex;
 }
 body[data-page=piano] .menu-btn[id=piano] {
   background-color: #fff;
@@ -692,16 +698,6 @@ body[data-page=piano] .menu-btn[id=piano] svg {
     height: 15rem;
   }
 }
-@media (min-width: 500px) {
-  .section-image .container-tolisten .color-list {
-    bottom: -3rem;
-  }
-  .section-image .container-tolisten .color-list-el {
-    margin: 0.5rem;
-    width: 3rem;
-    height: 3rem;
-  }
-}
 @media (min-width: 900px) {
   body {
     position: relative;
@@ -756,11 +752,11 @@ body[data-page=piano] .menu-btn[id=piano] svg {
     height: 50vh;
   }
   .section-image .container-tolisten .color-list {
-    bottom: -4rem;
-    padding: 0.25rem;
+    margin-bottom: -2.5rem;
+    padding: 0.3rem;
   }
   .section-image .container-tolisten .color-list-el {
-    margin: 1rem;
+    margin-right: 0.3rem;
     width: 5rem;
     height: 5rem;
   }
@@ -799,7 +795,7 @@ body[data-page=piano] .menu-btn[id=piano] svg {
     z-index: 10;
   }
   .section-image .form {
-    margin-top: 6rem;
+    margin-top: 3rem;
   }
   .section-piano {
     height: 100vh;

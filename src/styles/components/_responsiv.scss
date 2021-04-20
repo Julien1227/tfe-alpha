@@ -14,17 +14,6 @@
     }
 }
 
-@media(min-width: 500px) {
-    .section-image .container-tolisten .color-list {
-        bottom: -3rem;
-        &-el {
-            margin: 0.5rem;
-            width: 3rem;
-            height: 3rem;
-        }
-    }
-}
-
 @media(min-width: 900px) {
 
     body {
@@ -91,10 +80,10 @@
         &-image {
             .container-tolisten {  
                 .color-list {
-                    bottom: -4rem;
-                    padding: 0.25rem;
+                    margin-bottom: -2.5rem;
+                    padding: 0.3rem;
                     &-el {
-                        margin: 1rem;
+                        margin-right: 0.3rem;
                         width: 5rem;
                         height: 5rem;
                     }
@@ -141,7 +130,7 @@
             }
 
             .form {
-                margin-top: 6rem;
+                margin-top: 3rem;
             }
         }
         

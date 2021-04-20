@@ -1,7 +1,7 @@
 .section {display: none;}
 body {
     &[data-page="color"] {
-        .section-color {display: inherit;}
+        .section-color {display: flex;}
         .menu-btn {
             &[id="color"] {
                 background-color: $white;
@@ -13,7 +13,7 @@ body {
     }
     
     &[data-page="pad"] {
-        .section-pad {display: inherit;}
+        .section-pad {display: flex;}
         .menu-btn {
             &[id="pad"] {
                 background-color: $white;
@@ -25,7 +25,7 @@ body {
     }
     
     &[data-page="image"] {
-        .section-image {display: inherit;}
+        .section-image {display: flex;}
         .menu-btn {
             &[id="image"] {
                 background-color: $white;
@@ -37,7 +37,7 @@ body {
     }
 
     &[data-page="piano"] {
-        .section-piano {display: inherit;}
+        .section-piano {display: flex;}
         .menu-btn {
             &[id="piano"] {
                 background-color: $white;

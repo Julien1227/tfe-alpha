@@ -11,7 +11,7 @@
 
   <!-- Favicon -->
 
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=0">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=1">
   
   <link rel="stylesheet" href="styles/app.css">
 </head>
@@ -138,19 +138,19 @@
           </div>
           <div class="form-el">
             <label>Nombre de couleurs: <span id="colorNumberSpan">5</span></label>
-            <input id="colorNumber" type="range" value="5" min="0" max="10">
+            <input id="colorNumber" type="range" value="5" min="2" max="10">
           </div>
           <button id="getColors" class="btn">Jouer la mélodie</button>
         </div>
       </section>
   </main>
 
-  <div class="menu">
+  <footer class="menu">
     <button id="color" class="menu-btn"><svg><use xlink:href="#colorSvg"/></svg></button>
     <button id="pad" class="menu-btn"><svg><use xlink:href="#gridSvg"/></svg></button>
     <button id="piano" class="menu-btn desktop"><svg><use xlink:href="#pianoSvg"/></svg></button>
     <button id="image" class="menu-btn"><svg><use xlink:href="#pictureSvg"/></svg></button>
-  </div>
+  </footer>
 
   <div class="use-svg">
     <svg id="colorSvg" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">

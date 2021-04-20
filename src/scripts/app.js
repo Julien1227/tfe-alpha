@@ -382,10 +382,6 @@ document.addEventListener('keyup', (event) => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-// Require de vibrant
-require('../scripts/vibrant.js');
-require("node-vibrant");
-
 
 // VARIABLES
 var speed = 120;
@@ -420,9 +416,12 @@ colorNumber.addEventListener('input', (e) => {
     colorNumberSpan.innerHTML = colorNumber.value;
 });
 
-
 // Présélectionne une image
 imageSelection[0].classList.add('selected');
+
+// Crée la palette de l'image présélectionnée
+// S'assure que l'image est chargée
+createPalette(imgToListen);
 
 // Ouvre la sélection
 btnOpenSelection.addEventListener('click', (e) => {
@@ -432,21 +431,19 @@ btnOpenSelection.addEventListener('click', (e) => {
 // Change l'image avec l'image sélectionnée
 imageSelection.forEach(image => {
     image.addEventListener('click', (e) => {
-        let pastTarget = document.querySelector('.selected');
-        if (pastTarget != null) {
-            pastTarget.classList.remove('selected');
-        }
-
         let currentTarget = e.currentTarget;
-        if (currentTarget != null) {
-            currentTarget.classList.add('selected');
-        }
-
+        currentTarget.classList.add('selected');
+        
+        // Vérifie si ils sont null avant d'ajouter ou retirer la class
+        let pastTarget = document.querySelector('.selected');
+        pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added');
+        
 
         let imgLink = currentTarget.children[0].currentSrc;
                 
         backgroundImg.src = imgLink;
         imgToListen.src = imgLink;
+        createPalette(imgToListen);
     });
 });
 
@@ -457,18 +454,21 @@ btnUpload.addEventListener('click', (e) => {
      inputUpload.click();
      //Actualise l'image uploadée
      inputUpload.addEventListener('change', (e) => {
-        let pastTarget = document.querySelector('.selected')
-        pastTarget.classList.remove('selected');
+        let pastTarget = document.querySelector('.selected');
+        pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection removed');
 
         let imgLink = URL.createObjectURL(e.target.files[0]);
         backgroundImg.src = imgLink;
         imgToListen.src = imgLink;
+
+        createPalette(imgToListen);
      });
 });
 
 //Récupère les couleurs de l'image et les joue
 playImageBtn.addEventListener('click', (e) => {
     colorList.innerHTML = "";
+
     let gains = [],
         frqs = [];
     
@@ -518,6 +518,37 @@ playImageBtn.addEventListener('click', (e) => {
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+
+function createPalette(image) {
+    if (image.complete) {
+        createPaletteOnLoad(image);
+    }else {
+        image.addEventListener('load', function() {
+            createPaletteOnLoad(image);
+        });
+    }
+}
+
+function createPaletteOnLoad(image) {
+    colorList.innerHTML = "";
+    const palette = colorThief.getPalette(image, Number(colorNumber.value));
+    
+    for (let i = 0; i < palette.length; i++) {
+    
+        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);
+    
+        let h = hslColor[0],
+            s = hslColor[1],
+            l = hslColor[2];           
+        
+        // Crée un élement HTML auquel il assigne la couleur
+        let color = document.createElement('li');
+        color.classList.add('color-list-el');
+        color.style.backgroundColor = "hsl("+ h +", "+ s +"%, "+ l +"%)";
+        
+        colorList.appendChild(color);
+    }
+}
 
 function actualisePadBtnColor(btn, color) {
     btn.style.backgroundColor = color;
