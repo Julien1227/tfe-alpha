@@ -758,11 +758,6 @@ body[data-page=piano] .menu-btn[id=piano] svg {
   .section-image .container-tolisten .color-list {
     padding: 0.3rem;
   }
-  .section-image .container-tolisten .color-list-el {
-    margin-right: 0.3rem;
-    width: 5rem;
-    height: 5rem;
-  }
   .section-image .container-tolisten .background-container {
     display: block;
     position: absolute;
