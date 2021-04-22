@@ -51,6 +51,7 @@ $function:  #F0C674;
 
     display: flex;
     &-btn{
+        box-shadow: inherit;
         border-radius: inherit;
 
         cursor: pointer;
@@ -80,13 +81,6 @@ $function:  #F0C674;
 @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
     .btn {
         background-color: $white09;
-    }
-}
-
-@media(min-width: 900px) {
-    .btn:hover {
-        opacity: .6;
-        transition: $t-fast;
     }
 }
 
@@ -364,7 +358,6 @@ $function:  #F0C674;
             margin: 1rem auto;
             border-radius: $rounded;
             box-shadow: $shadow;
-            background-color: $white;
 
             box-sizing: border-box;
             &-btn {

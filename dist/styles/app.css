@@ -869,6 +869,7 @@ label {
   display: flex;
 }
 .menu-btn {
+  box-shadow: inherit;
   border-radius: inherit;
   cursor: pointer;
   display: flex;
@@ -1116,7 +1117,6 @@ label {
   margin: 1rem auto;
   border-radius: 10px;
   box-shadow: 0px 0px 25px -10px #00000038;
-  background-color: #fff;
   box-sizing: border-box;
 }
 .section-pad .pad-btn {

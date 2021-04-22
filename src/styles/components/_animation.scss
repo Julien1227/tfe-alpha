@@ -219,3 +219,10 @@ body {
         transition: $t-fast;
     }
 }
+
+@media(min-width: 900px) {
+    .btn:hover {
+        opacity: .6;
+        transition: $t-fast;
+    }
+}
