@@ -166,7 +166,7 @@ body {
 }
 
 .section-image {
-    .container-tolisten {
+    .module {
         .selection.selection-open {
             overflow: visible;
             
@@ -209,5 +209,13 @@ body {
 
     .selection-image-el.selected img{
         border: 5px solid #fff;
+    }
+}
+
+.btn {
+    transition: $t-fast;
+    &:active {
+        opacity: .6;
+        transition: $t-fast;
     }
 }

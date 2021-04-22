@@ -7,10 +7,8 @@
 }
 
 @media(min-width:480px) {
-    .section-image .container-tolisten .selection.selection-open {
+    .section-image .module .selection.selection-open {
         height: 15rem;
-        .selection-image-el {
-        }
     }
 }
 
@@ -32,7 +30,7 @@
             margin-top: -10rem;
         }
         
-        .container-tolisten {
+        .module {
             width: 100%;
             height: 50vh;
         }
@@ -47,7 +45,7 @@
         }
 
         &-color {
-            .container-tolisten {
+            .module {
                 &-frequency {
                     font-size: 10vw;
                     line-height: 28vw;
@@ -57,12 +55,12 @@
 
         &-pad {
             height: 100vh;
-            .container-tolisten {
+            .module {
                 height: 100vh;
             }
 
             &.pad-modify {
-                .container-tolisten {
+                .module {
                     height: 50vh;
                 }
 
@@ -78,7 +76,7 @@
         }
 
         &-image {
-            .container-tolisten {  
+            .module {  
                 .color-list {
                     padding: 0.3rem;
                 }

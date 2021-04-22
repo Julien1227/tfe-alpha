@@ -24,24 +24,24 @@
       </section>
 
       <section class="section section-color">
-        <div style="background: linear-gradient(#40bfbf, #3986ac);" class="container-tolisten container-tolisten-color">
-          <span class="container-tolisten-frequency" id="playedColor">514 Hz</span>
-          <div class="container-tolisten-shadow"></div>
+        <div class="module" style="background: linear-gradient(#40bfbf, #3986ac);">
+          <span class="module-frequency" id="playedColor">514 Hz</span>
+          <div class="module-shadow"></div>
         </div>
 
         <div class="form">
           <div class="form-el">
-            <label>Teinte: <span data-p="color" class="colorSpan">180</span>°</label>
+            <label class="form-el-title">Teinte: <span data-p="color" class="colorSpan">180</span>°</label>
             <input class="colorInput" value="180" type="range" name="volume" min="0" max="359">
           </div>
       
           <div class="form-el">
-            <label>Saturation: <span data-p="sat" class="colorSpan">50</span>%</label>
+            <label class="form-el-title">Saturation: <span data-p="sat" class="colorSpan">50</span>%</label>
             <input class="colorInput" value="50" type="range" name="volume" min="0" max="100">
           </div>
       
           <div class="form-el">
-            <label>Luminiosité: <span data-p="lum" class="colorSpan">50</span>%</label>
+            <label class="form-el-title">Luminiosité: <span data-p="lum" class="colorSpan">50</span>%</label>
             <input class="colorInput" value="50" type="range" name="volume" min="0" max="100">
           </div>
         </div>
@@ -75,19 +75,19 @@
         </div>
         
         <div class="form form-pad">
+          <button class="btn btn-save">Enregistrer</button>
           <div class="form-el">
-            <button class="btn btn-save">Enregistrer</button>
-            <label>Teinte: <span data-p="color" class="padSpan">180</span>°</label>
+            <label class="slider-el-title">Teinte: <span data-p="color" class="padSpan">180</span>°</label>
             <input class="padInput" type="range" name="volume" min="0" max="359">
           </div>
           
           <div class="form-el">
-            <label>Saturation: <span data-p="sat" class="padSpan">50</span>%</label>
+            <label class="slider-el-title">Saturation: <span data-p="sat" class="padSpan">50</span>%</label>
             <input class="padInput" type="range" name="volume" min="0" max="100">
           </div>
           
           <div class="form-el">
-            <label>Luminiosité: <span data-p="lum" class="padSpan">50</span>%</label>
+            <label class="slider-el-title">Luminiosité: <span data-p="lum" class="padSpan">50</span>%</label>
             <input class="padInput" type="range" name="volume" min="0" max="100">
           </div>
         </div>
@@ -100,7 +100,7 @@
       
       <section class="section section-image">
 
-        <div class="container-tolisten container-tolisten-image">
+        <div class="module">
 
           <div id="btnOpenSelection" class="btn selection">
             <span>Choisir une autre image</span>
@@ -126,7 +126,7 @@
 
           <input id="uploadInput" type="file" accept=".jpeg, .jpg, .png">
 
-          <div class="container-tolisten-shadow"></div>
+          <div class="module-shadow"></div>
 
           <ul class="color-list"></ul>
         </div>
@@ -146,10 +146,10 @@
   </main>
 
   <footer class="menu">
-    <button id="color" class="menu-btn"><svg><use xlink:href="#colorSvg"/></svg></button>
-    <button id="pad" class="menu-btn"><svg><use xlink:href="#gridSvg"/></svg></button>
-    <button id="piano" class="menu-btn desktop"><svg><use xlink:href="#pianoSvg"/></svg></button>
-    <button id="image" class="menu-btn"><svg><use xlink:href="#pictureSvg"/></svg></button>
+    <button id="color" class="btn menu-btn"><svg class="menu-btn-svg"><use xlink:href="#colorSvg"/></svg></button>
+    <button id="pad" class="btn menu-btn"><svg class="menu-btn-svg"><use xlink:href="#gridSvg"/></svg></button>
+    <button id="piano" class="btn menu-btn desktop"><svg class="menu-btn-svg"><use xlink:href="#pianoSvg"/></svg></button>
+    <button id="image" class="btn menu-btn"><svg class="menu-btn-svg"><use xlink:href="#pictureSvg"/></svg></button>
   </footer>
 
   <div class="use-svg">

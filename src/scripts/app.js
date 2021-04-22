@@ -610,11 +610,6 @@ function setGain(lum, sat) {
     
     gainValue = (Math.round(gainValue * 100) / 100)*2;
 
-    //Si couleur invisible -> son 0
-    if(lum == 0 || lum == 100 || sat == 0) {
-        gainValue = 0.0001;
-    }
-
     return gainValue;
 }
 
