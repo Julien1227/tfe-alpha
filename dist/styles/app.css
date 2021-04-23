@@ -3,7 +3,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
-  color: #353535;
+  color: #6b6b6b;
 }
 
 h1, h2, h3, p {
@@ -22,7 +22,6 @@ h2 {
 
 label {
   font-weight: 700;
-  color: #6b6b6b;
 }
 
 .use-svg, #uploadInput {
@@ -853,6 +852,7 @@ label {
 
 .btn {
   cursor: pointer;
+  color: #353535;
   background-color: #ffffff88;
   padding: 1rem;
   border-radius: 1000px;
@@ -897,12 +897,6 @@ label {
     background-color: #ffffffda;
   }
 }
-@media (min-width: 900px) {
-  .btn:hover {
-    opacity: 0.6;
-    transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-  }
-}
 .section-intro {
   background-color: #fff;
   cursor: pointer;
@@ -916,6 +910,17 @@ label {
   justify-content: flex-end;
   min-width: 100%;
   height: calc(100vh - 4rem);
+}
+.section-title {
+  display: block;
+  font-size: 14px;
+  width: 100%;
+  height: 30px;
+  padding: 0.5rem;
+  margin: 0;
+  text-align: center;
+  box-sizing: content-box;
+  background-color: #fff;
 }
 .section .module {
   display: flex;
@@ -1175,7 +1180,6 @@ label {
   background-color: var(--pad-btn-color-9);
 }
 .section-pad .form {
-  z-index: 100;
   background: #fff;
   margin-top: 1rem;
   padding-top: 2rem;
@@ -1192,6 +1196,10 @@ label {
   height: 100vh;
   justify-content: center;
   align-items: center;
+}
+.section-piano .section-title {
+  position: fixed;
+  top: 0;
 }
 .section-piano .piano-color {
   position: absolute;
@@ -1497,6 +1505,12 @@ body[data-page=piano] .menu-btn[id=piano] svg {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
+@media (min-width: 900px) {
+  .btn:hover {
+    opacity: 0.6;
+    transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+}
 .desktop {
   display: none;
 }
@@ -1526,17 +1540,14 @@ body[data-page=piano] .menu-btn[id=piano] svg {
   }
 
   .section {
-    height: 100%;
+    height: 100vh;
     align-items: center;
-  }
-  .section-title {
-    margin-top: -10rem;
   }
   .section .module {
     width: 100%;
-    height: 50vh;
   }
   .section .form {
+    box-sizing: border-box;
     justify-content: flex-start;
     width: 100%;
     height: 100%;
@@ -1561,11 +1572,15 @@ body[data-page=piano] .menu-btn[id=piano] svg {
     height: 50vh;
   }
   .section-pad.pad-modify .form {
-    box-sizing: border-box;
     height: 50vh;
   }
   .section-image .module .color-list {
+    margin-bottom: inherit;
     padding: 0.3rem;
+  }
+  .section-image .module .color-list-el {
+    width: 5rem;
+    height: 5rem;
   }
   .section-image .module .background-container {
     display: block;
@@ -1602,7 +1617,7 @@ body[data-page=piano] .menu-btn[id=piano] svg {
     z-index: 10;
   }
   .section-image .form {
-    margin-top: 3rem;
+    margin-top: 0rem;
   }
   .section-piano {
     height: 100vh;

@@ -157,7 +157,7 @@ sliderBtn.forEach(function (element) {
 var colorInput = document.querySelectorAll('.colorInput'),
     colorSpan = document.querySelectorAll('.colorSpan'),
     actualNote = document.getElementById('playedColor');
-var color = document.querySelector('.container-tolisten-color');
+var color = document.getElementById('module-color');
 var colorInputs = [],
     colorSpans = [];
 colorInput.forEach(function (input) {

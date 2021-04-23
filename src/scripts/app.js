@@ -50,7 +50,6 @@ const body = document.querySelector('body'),
       sliderBtn = document.querySelectorAll('.menu-btn'),
       pianoMsg = document.querySelector('.piano-msg');
 
-
 sliderBtn.forEach(element => {
     element.addEventListener('click', (e) => {
         let target = e.currentTarget;
@@ -78,7 +77,7 @@ var colorInput = document.querySelectorAll('.colorInput'),
     colorSpan = document.querySelectorAll('.colorSpan'),
     actualNote = document.getElementById('playedColor');
 
-const color = document.querySelector('.container-tolisten-color');
+const color = document.getElementById('module-color');
 
 var colorInputs = [],
     colorSpans = [];

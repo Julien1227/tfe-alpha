@@ -35,6 +35,7 @@ $function:  #F0C674;
 
 .btn {
     cursor: pointer;
+    color: $grey;
     background-color: $lightBtn;
     padding: 1rem;
     border-radius: $round;
@@ -98,7 +99,23 @@ $function:  #F0C674;
     justify-content: flex-end;
 
     min-width: 100%;
+
+    // Taille de l'écran moins le footer + le header.
     height: calc(100vh - #{$menu-height});
+
+    &-title {
+        display: block;
+        font-size: 14px;
+
+        width: 100%;
+        height: 30px;
+        padding: 0.5rem;
+        margin: 0;
+
+        text-align: center;
+        box-sizing: content-box;
+        background-color: $white;
+    }
 
     .module {
         display: flex;
@@ -397,7 +414,6 @@ $function:  #F0C674;
         }
 
         .form {
-            z-index: 100;
             background: $white;
             margin-top: 1rem;
             padding-top: 2rem;
@@ -418,6 +434,12 @@ $function:  #F0C674;
         height: 100vh;
         justify-content: center;
         align-items: center;
+
+        .section-title {
+            position: fixed;
+            top: 0;
+        }
+
         .piano-color {
             position: absolute;
             top: 0;
