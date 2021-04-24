@@ -47,6 +47,18 @@ body {
             }
         }
     }
+
+    &[data-page="info"] {
+        .section-info {display: flex;}
+        .menu-btn {
+            &[id="info"] {
+                background-color: $white;
+                svg {
+                    opacity: 1;
+                }
+            }
+        }
+    }
 }
 
 

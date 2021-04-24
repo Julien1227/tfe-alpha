@@ -3,7 +3,8 @@
 $size-text: 16px;
 $line-height: 1.5;
 
-$h3: $size-text * $line-height;
+$h4: $size-text * $line-height;
+$h3: $h4 * $line-height;
 $h2: $h3 * $line-height;
 $h1: $h2 * $line-height;
 
@@ -15,18 +16,31 @@ body {
   color: $grey-text;
 }
 
-h1, h2, h3, p {
-  margin-top: 0;
-}
-
 h1 {
   font-size: $h2;
   font-weight: 900;
 }
 
 h2 {
-  font-size: $h3;
+  font-size: 14px;
   opacity: .8;
+}
+
+h3 {
+  font-size: $h2;
+}
+
+h3 {
+  font-size: $h3;
+}
+
+p {
+  margin-block-start: 1.5rem;
+  margin-block-end: 1.5rem;
+}
+
+a {
+  font-weight: 600;
 }
 
 label {

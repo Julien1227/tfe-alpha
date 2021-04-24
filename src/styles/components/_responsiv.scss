@@ -129,6 +129,60 @@
         &-piano {
             height: 100vh;
         }
+
+        &-info {
+            .container {
+
+                &:after {height: calc((#{$h1} * 1.5) + 100px);}
+
+                transform: translateX(50%);
+                &-code {
+                    &-name {
+                        text-align: left;
+                        
+                        margin: -4px 0;
+                        margin-left: -2rem;
+                        border-left: none;
+
+                        padding-left: 2rem;
+                        border-radius: 0 $rounded $rounded 0;
+                    }
+    
+                    & .gist {
+                        position: absolute;
+                        margin-top: -3.5rem;
+                        max-width: 500px;
+                        margin-left: calc(-500px - 2rem);
+
+                        &-file {
+                            border-radius: $rounded 0 $rounded $rounded!important;
+                        }
+
+                        &:after {
+                            background: linear-gradient(to right, #ffffff00, #dadada);
+                            margin: 0;
+                            border-radius: 0 $round $round 0;
+                        }
+                    }
+
+                    &-shapeBig .gist:after {
+                        top: calc(-#{$codeShapeBig} / 2);
+                        height: calc(100% + #{$codeShapeBig});
+                        width: 150%;
+                    }
+                    &-shapeMedium .gist:after {
+                        top: calc(-#{$codeShapeMedium} / 2);
+                        height: calc(100% + #{$codeShapeMedium});
+                        width: 150%;
+                    }
+                    &-shapeLittle .gist:after {
+                        top: calc(-#{$codeShapeLittle} / 2);
+                        height: calc(100% + #{$codeShapeLittle});
+                        width: 150%;
+                    }
+                }
+            }
+        }
     }
 
     .menu {
