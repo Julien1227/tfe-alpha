@@ -514,6 +514,69 @@ playImageBtn.addEventListener('click', (e) => {
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+//////////////////////////// INFO MENU ////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+const navBtn = document.getElementById('navBtn'),
+      nav = document.getElementById('nav'),
+      gist = document.querySelectorAll('.gist'),
+      anchors = document.querySelectorAll('.anchor'),
+      navElements = document.querySelectorAll('.navigation-list-el'),
+      infoSection = document.querySelector('.section-info');
+
+// Ouvrir/fermer le menu
+navBtn.addEventListener('click', (e) => {
+    nav.classList.toggle('open');
+});
+
+navElements.forEach(element => {
+    element.addEventListener('click', (e) => {
+        nav.classList.toggle('open');
+    });
+});
+
+// Actualise le menu en fonction du scroll
+infoSection.addEventListener('scroll', () => {
+    for (let i = 0; i < anchors.length; i++) {  
+        if (infoSection.scrollTop >= anchors[i].offsetTop - (window.innerHeight/2)) {
+            navElements.forEach(element => {
+                element.classList.remove('current');
+            });
+            if(navElements[i].classList.contains('current') == false) {
+                navElements[i].classList.add('current');
+            }
+        }
+
+    }
+
+    if (window.matchMedia("(min-width: 900px)").matches) {
+        // Peut être optimisé
+        if (isCollide(nav, gist[0]) == false &&
+            isCollide(nav, gist[1]) == false &&
+            isCollide(nav, gist[4]) == false) {
+            nav.classList.remove('hide');
+        }else {
+            nav.classList.add('hide')
+        }
+    }
+});
+
+// Trouver le source
+function isCollide(a, b) {
+    var aRect = a.getBoundingClientRect();
+    var bRect = b.getBoundingClientRect();
+
+    return !(
+        ((aRect.top + aRect.height) < (bRect.top)) ||
+        (aRect.top > (bRect.top + bRect.height)) ||
+        ((aRect.left + aRect.width) < bRect.left) ||
+        (aRect.left > (bRect.left + bRect.width))
+    );
+}
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////

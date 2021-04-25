@@ -45,21 +45,22 @@ label {
   background-color: rgba(154, 223, 255, 0.219);
 }
 
-*::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+@media (min-width: 900px) {
+  *::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  *::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 1000px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }
-*::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-*::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 1000px;
-}
-*::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
 /*!
 * Gist DarkCode ver 0.2.0 
 * Copyright (c) 2017 KillerCodes.in
@@ -926,13 +927,13 @@ label {
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-  .btn {
+  .btn, .navigation-container {
     backdrop-filter: blur(20px);
   }
 }
 /* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
 @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-  .btn {
+  .btn, .navigation-container {
     background-color: #ffffffda;
   }
 }
@@ -1266,6 +1267,7 @@ label {
   align-items: center;
   position: relative;
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 .section-info .container {
   height: 100%;
@@ -1315,7 +1317,57 @@ label {
   width: 100vw;
   height: 300px;
   border-radius: 0 0 1000px 1000px;
-  background: linear-gradient(to bottom, #ffffff00, #000000);
+  background: linear-gradient(to bottom, #ffffff00, #00000085);
+}
+.section-info .navigation-container {
+  z-index: 1000;
+  position: fixed;
+  left: 0;
+  bottom: 4rem;
+  width: 4rem;
+  height: 4rem;
+  overflow: hidden;
+  margin: 0.5rem;
+  border-radius: 2.5rem;
+  background-color: #ffffffda;
+  box-shadow: 0px 0px 25px -10px #00000038;
+  text-align: center;
+}
+.section-info .navigation-container .nav-btn {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+}
+.section-info .navigation-container .nav-btn-open {
+  opacity: 1;
+  right: 1rem;
+  bottom: 1rem;
+}
+.section-info .navigation-container .nav-btn-close {
+  opacity: 0;
+  transform: scale(1.2);
+  left: 1.5rem;
+  top: 1.5rem;
+}
+.section-info .navigation-container .navigation {
+  box-sizing: content-box;
+  min-height: 150px;
+}
+.section-info .navigation-container .navigation-title {
+  margin-top: 0;
+}
+.section-info .navigation-container .navigation-list {
+  line-height: calc(1.5 * 1.5);
+}
+.section-info .navigation-container .navigation-list-el {
+  font-weight: 400;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.5;
+}
+.section-info .navigation-container .navigation-list-el.current {
+  opacity: 1;
+  font-weight: 700;
 }
 
 /* Css 100% responsiv des input range */
@@ -1608,6 +1660,41 @@ body[data-page=info] .menu-btn[id=info] svg {
   border: 5px solid #fff;
 }
 
+.navigation-container {
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  opacity: 1;
+}
+.navigation-container .navigation {
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.navigation-container.open {
+  width: calc(100vw - 2rem);
+  height: 240px;
+  padding-bottom: 36px;
+  padding-top: 36px;
+}
+.navigation-container.open .navigation {
+  opacity: 1;
+  transform: translateX(0);
+}
+.navigation-container.open .navigation-list-el {
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.navigation-container.open .nav-btn {
+  opacity: 0;
+}
+.navigation-container.open .nav-btn-open {
+  opacity: 0;
+}
+.navigation-container.open .nav-btn-close {
+  opacity: 1;
+}
+.navigation-container.hide {
+  opacity: 0;
+}
+
 .btn {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
@@ -1740,6 +1827,7 @@ body[data-page=info] .menu-btn[id=info] svg {
     height: calc((81px * 1.5) + 100px);
   }
   .section-info .container-code-name {
+    white-space: nowrap;
     text-align: left;
     margin: -4px 0;
     margin-left: -2rem;
@@ -1775,6 +1863,26 @@ body[data-page=info] .menu-btn[id=info] svg {
     top: calc(-4rem / 2);
     height: calc(100% + 4rem);
     width: 150%;
+  }
+  .section-info .navigation-container {
+    position: sticky;
+    top: calc((81px * 1.5) + 54px);
+    right: calc(50% + 1rem);
+    width: auto;
+    height: auto;
+    overflow: visible;
+    padding: 3rem;
+    text-align: right;
+    background-color: transparent;
+    border-radius: inherit;
+    border-right: 2px solid #00000056;
+    border-radius: 10px 0 0 10px;
+  }
+  .section-info .navigation-container .navigation {
+    width: auto;
+    height: auto;
+    transform: translateX(0);
+    opacity: 1;
   }
 
   .menu {

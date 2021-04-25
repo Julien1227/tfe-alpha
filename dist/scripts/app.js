@@ -522,9 +522,59 @@ playImageBtn.addEventListener('click', function (e) {
   }
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+//////////////////////////// INFO MENU ////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+var navBtn = document.getElementById('navBtn'),
+    nav = document.getElementById('nav'),
+    gist = document.querySelectorAll('.gist'),
+    anchors = document.querySelectorAll('.anchor'),
+    navElements = document.querySelectorAll('.navigation-list-el'),
+    infoSection = document.querySelector('.section-info'); // Ouvrir/fermer le menu
+
+navBtn.addEventListener('click', function (e) {
+  nav.classList.toggle('open');
+});
+navElements.forEach(function (element) {
+  element.addEventListener('click', function (e) {
+    nav.classList.toggle('open');
+  });
+}); // Actualise le menu en fonction du scroll
+
+infoSection.addEventListener('scroll', function () {
+  for (var _i5 = 0; _i5 < anchors.length; _i5++) {
+    if (infoSection.scrollTop >= anchors[_i5].offsetTop - window.innerHeight / 2) {
+      navElements.forEach(function (element) {
+        element.classList.remove('current');
+      });
+
+      if (navElements[_i5].classList.contains('current') == false) {
+        navElements[_i5].classList.add('current');
+      }
+    }
+  }
+
+  if (window.matchMedia("(min-width: 900px)").matches) {
+    // Peut être optimisé
+    if (isCollide(nav, gist[0]) == false && isCollide(nav, gist[1]) == false && isCollide(nav, gist[4]) == false) {
+      nav.classList.remove('hide');
+    } else {
+      nav.classList.add('hide');
+    }
+  }
+}); // Trouver le source
+
+function isCollide(a, b) {
+  var aRect = a.getBoundingClientRect();
+  var bRect = b.getBoundingClientRect();
+  return !(aRect.top + aRect.height < bRect.top || aRect.top > bRect.top + bRect.height || aRect.left + aRect.width < bRect.left || aRect.left > bRect.left + bRect.width);
+} ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+
 
 function createPalette(image) {
   if (image.complete) {
@@ -540,8 +590,8 @@ function createPaletteOnLoad(image) {
   colorList.innerHTML = "";
   var palette = colorThief.getPalette(image, Number(colorNumber.value));
 
-  for (var _i5 = 0; _i5 < palette.length; _i5++) {
-    var hslColor = RGBToHSL(palette[_i5][0], palette[_i5][1], palette[_i5][2]);
+  for (var _i6 = 0; _i6 < palette.length; _i6++) {
+    var hslColor = RGBToHSL(palette[_i6][0], palette[_i6][1], palette[_i6][2]);
     var _h2 = hslColor[0],
         _s2 = hslColor[1],
         _l2 = hslColor[2]; // Crée un élement HTML auquel il assigne la couleur
@@ -794,8 +844,8 @@ function RGBToHSL(r, g, b) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

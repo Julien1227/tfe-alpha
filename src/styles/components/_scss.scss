@@ -4,24 +4,27 @@
     background-color: rgba(154, 223, 255, 0.219);
 }
 
-// ScrollBar
-*::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-
-    &-track {
-        background: #f1f1f1; 
-    }
+// ScrollBar - chrome
+@media(min-width: 900px) {
+    *::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
     
-    &-thumb {
-        background: #888;
-        border-radius: $round;
-    }
-    
-    &-thumb:hover {
-        background: #555; 
+        &-track {
+            background: #f1f1f1; 
+        }
+        
+        &-thumb {
+            background: #888;
+            border-radius: $round;
+        }
+        
+        &-thumb:hover {
+            background: #555; 
+        }
     }
 }
+
 
 // Gist
 $gist-variables: #c9d1d9;
@@ -124,14 +127,14 @@ $gist-radius: 0;
 
 // Si le navigateur ne supporte pas la "backdrop filter", on remplace avec un fond plus opaque
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-    .btn {
+    .btn, .navigation-container {
         backdrop-filter: blur(20px);
     }
 }
   
 /* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
 @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-    .btn {
+    .btn, .navigation-container {
         background-color: $white09;
     }
 }
@@ -525,6 +528,7 @@ $gist-radius: 0;
         align-items: center;
         position: relative;
         overflow-y: scroll;
+        scroll-behavior: smooth;
 
         .container {
             // Rajoute de l'espacement en haut et en bas pour aérer, utiliser des margin/ padding casse le "overflow: scroll", il faut utiliser des éléments.
@@ -575,10 +579,70 @@ $gist-radius: 0;
                         height: 300px;
                         border-radius: 0 0 $round $round;
 
-                        background: linear-gradient(to bottom, #ffffff00, #000000);
+                        background: linear-gradient(to bottom, #ffffff00, #00000085);
                     }
                 }
             }
+        }
+
+        .navigation-container {
+            z-index: 1000;
+            position: fixed;
+            left: 0;
+            bottom: $menu-height;
+
+            width: 4rem;
+            height: 4rem;
+            
+            overflow: hidden;
+            
+            margin: 0.5rem;
+            border-radius: 2.5rem;
+            background-color: $white09;
+            box-shadow: $shadow;
+            
+            text-align: center;
+            
+            .nav-btn {
+                position: absolute;
+                
+                width: 30px;
+                height: 30px;
+                
+
+                &-open {
+                    opacity: 1;
+                    right: 1rem; bottom: 1rem;
+                }
+                &-close {
+                    opacity: 0;
+                    transform: scale(1.2);
+                    left: 1.5rem; top: 1.5rem;
+                }
+            }
+            
+            .navigation {
+                box-sizing: content-box;
+                min-height: 150px;
+                
+                &-title {
+                    margin-top: 0;
+                }
+                
+                &-list {
+                    line-height: calc(#{$line-height} * 1.5);
+                    &-el {
+                        font-weight: 400;
+                        text-decoration: none;
+                        cursor: pointer;
+                        opacity: 0.5;
+                        &.current {
+                            opacity: 1;
+                            font-weight: 700;
+                        }
+                    }
+                }
+            } 
         }
     }
 }

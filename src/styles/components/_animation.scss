@@ -224,6 +224,43 @@ body {
     }
 }
 
+.navigation-container {
+    transition: $t-fast;
+    opacity: 1;
+
+    .navigation {
+        opacity: 0;
+        transform: translateX(100px);
+        transition: $t-fast;
+    }
+
+    &.open {
+        width: calc(100vw - 2rem);
+
+        height: 240px;
+        padding-bottom: $h3;
+        padding-top: $h3;
+
+        .navigation {
+            opacity: 1;
+            transform: translateX(0);
+            &-list-el {
+                transition: $t-fast;
+            }
+        }
+
+        .nav-btn {
+            opacity: 0;
+            &-open {opacity: 0;}
+            &-close {opacity: 1;}
+        }
+    }
+
+    &.hide {
+        opacity: 0;
+    }
+}
+
 .btn {
     transition: $t-fast;
     &:active {
