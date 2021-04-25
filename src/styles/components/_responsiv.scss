@@ -132,7 +132,7 @@
 
         &-info {
             .container {
-
+                &:before {height: calc(#{$h1} * 1.5);}
                 &:after {height: calc((#{$h1} * 1.5) + 100px);}
 
                 transform: translateX(50%);
@@ -189,7 +189,7 @@
                 top: calc((#{$h1} * 1.5) + #{$h2});
                 right: calc(50% + 1rem);
                 
-                width: auto;
+                width: 270px;
                 height: auto;
                 overflow: visible;
                 padding: 3rem;

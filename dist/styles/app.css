@@ -13,15 +13,14 @@ h1 {
 
 h2 {
   font-size: 14px;
-  opacity: 0.8;
-}
-
-h3 {
-  font-size: 54px;
 }
 
 h3 {
   font-size: 36px;
+}
+
+h4 {
+  font-size: 24px;
 }
 
 p {
@@ -896,6 +895,7 @@ label {
   font-weight: 700;
   font-size: 20px;
   box-shadow: 0px 0px 25px -10px #00000038;
+  text-decoration: none;
 }
 
 .menu {
@@ -933,11 +933,16 @@ label {
 }
 /* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
 @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-  .btn, .navigation-container {
+  .btn {
     background-color: #ffffffda;
+  }
+
+  .navigation-container {
+    background-color: #fff;
   }
 }
 .section-intro {
+  z-index: 2000;
   background-color: #fff;
   cursor: pointer;
 }
@@ -955,12 +960,13 @@ label {
   height: calc(100vh - 4rem);
 }
 .section-title {
+  position: relative;
+  z-index: 500;
   display: block;
   width: 100%;
   height: 30px;
   padding: 0.5rem;
   margin: 0;
-  backdrop-filter: blur(50px);
   text-align: center;
   box-sizing: content-box;
   background-color: #fff;
@@ -1273,24 +1279,23 @@ label {
   height: 100%;
   width: 100%;
   max-width: 500px;
-  margin-left: 500px;
-  margin: 0 1rem;
 }
 .section-info .container:before {
   content: "";
   display: block;
-  height: calc(81px * 1.5);
+  height: 81px;
 }
 .section-info .container:after {
   content: "";
   display: block;
-  height: calc(81px * 1.5);
+  height: 81px;
 }
 .section-info .container-text {
-  margin: 0 1rem;
+  margin: 0 2rem;
 }
 .section-info .container-image {
-  width: 100%;
+  margin: 0 1rem;
+  width: calc(100% - 2rem);
 }
 .section-info .container-code {
   margin: 0 1rem;
@@ -1320,9 +1325,9 @@ label {
   background: linear-gradient(to bottom, #ffffff00, #00000085);
 }
 .section-info .navigation-container {
-  z-index: 1000;
+  z-index: 20;
   position: fixed;
-  left: 0;
+  right: 0;
   bottom: 4rem;
   width: 4rem;
   height: 4rem;
@@ -1364,10 +1369,6 @@ label {
   text-decoration: none;
   cursor: pointer;
   opacity: 0.5;
-}
-.section-info .navigation-container .navigation-list-el.current {
-  opacity: 1;
-  font-weight: 700;
 }
 
 /* Css 100% responsiv des input range */
@@ -1669,8 +1670,18 @@ body[data-page=info] .menu-btn[id=info] svg {
   transform: translateX(100px);
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
+.navigation-container .navigation-list-el {
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.navigation-container .navigation-list-el.current {
+  opacity: 1;
+  font-weight: 700;
+}
+.navigation-container .nav-btn {
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
 .navigation-container.open {
-  width: calc(100vw - 2rem);
+  width: calc(100% - 1rem);
   height: 240px;
   padding-bottom: 36px;
   padding-top: 36px;
@@ -1681,9 +1692,6 @@ body[data-page=info] .menu-btn[id=info] svg {
 }
 .navigation-container.open .navigation-list-el {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-}
-.navigation-container.open .nav-btn {
-  opacity: 0;
 }
 .navigation-container.open .nav-btn-open {
   opacity: 0;
@@ -1823,6 +1831,9 @@ body[data-page=info] .menu-btn[id=info] svg {
   .section-info .container {
     transform: translateX(50%);
   }
+  .section-info .container:before {
+    height: calc(81px * 1.5);
+  }
   .section-info .container:after {
     height: calc((81px * 1.5) + 100px);
   }
@@ -1868,7 +1879,7 @@ body[data-page=info] .menu-btn[id=info] svg {
     position: sticky;
     top: calc((81px * 1.5) + 54px);
     right: calc(50% + 1rem);
-    width: auto;
+    width: 270px;
     height: auto;
     overflow: visible;
     padding: 3rem;

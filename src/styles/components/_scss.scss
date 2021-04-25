@@ -91,6 +91,7 @@ $gist-radius: 0;
     font-weight: 700;
     font-size: 20px;
     box-shadow: $shadow;
+    text-decoration: none;
 }
 
 // Menu
@@ -134,12 +135,17 @@ $gist-radius: 0;
   
 /* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
 @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-    .btn, .navigation-container {
+    .btn {
         background-color: $white09;
+    }
+
+    .navigation-container {
+        background-color: $white;
     }
 }
 
 .section-intro {
+    z-index: 2000;
     background-color: $white;
     cursor: pointer;
     &-msg {
@@ -161,6 +167,8 @@ $gist-radius: 0;
     height: calc(100vh - #{$menu-height});
 
     &-title {
+        position: relative;
+        z-index: 500;
         display: block;
 
         width: 100%;
@@ -168,7 +176,6 @@ $gist-radius: 0;
         padding: 0.5rem;
         margin: 0;
 
-        backdrop-filter: blur(50px);
         text-align: center;
         box-sizing: content-box;
         background-color: $white;
@@ -532,22 +539,20 @@ $gist-radius: 0;
 
         .container {
             // Rajoute de l'espacement en haut et en bas pour aérer, utiliser des margin/ padding casse le "overflow: scroll", il faut utiliser des éléments.
-            &:before {content: ""; display: block; height: calc(#{$h1} * 1.5);}
-            &:after {content: ""; display: block; height: calc(#{$h1} * 1.5);}
+            &:before {content: ""; display: block; height: $h1;}
+            &:after {content: ""; display: block; height: $h1;}
 
             height: 100%;
             width: 100%;
             max-width: 500px;
 
-            margin-left: 500px;
-            margin: 0 1rem;
-
             &-text {
-                margin: 0 1rem;
+                margin: 0 2rem;
             }
 
             &-image {
-                width: 100%;
+                margin: 0 1rem;
+                width: calc(100% - 2rem);
             }
 
             &-code {
@@ -586,9 +591,9 @@ $gist-radius: 0;
         }
 
         .navigation-container {
-            z-index: 1000;
+            z-index: 20;
             position: fixed;
-            left: 0;
+            right: 0;
             bottom: $menu-height;
 
             width: 4rem;
@@ -608,7 +613,6 @@ $gist-radius: 0;
                 
                 width: 30px;
                 height: 30px;
-                
 
                 &-open {
                     opacity: 1;
@@ -636,10 +640,6 @@ $gist-radius: 0;
                         text-decoration: none;
                         cursor: pointer;
                         opacity: 0.5;
-                        &.current {
-                            opacity: 1;
-                            font-weight: 700;
-                        }
                     }
                 }
             } 

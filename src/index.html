@@ -158,7 +158,7 @@
             <svg class="nav-btn nav-btn-close"><use xlink:href="#navSvgClose"/></svg>
           </button>
           <div class="navigation">
-            <h3 class="navigation-title">Navigation</h3>
+            <h4 class="navigation-title">Navigation</h4>
             <ul class="navigation-list">
               <li><a class="navigation-list-el current" href="#intro">Comment ça marche ?</a></li>
               <li><a class="navigation-list-el" href="#osc">Comment utiliser l'oscillateur ?</a></li>
@@ -187,7 +187,7 @@
           </div>
 
           <div class="container-text">
-            <p>Avec ces paramètres, nous arrivons à la <a href="https://julienscheen.be/projets/TFE-exp/exp-create-sound/">première version de mon projet</a>. Elle est intéressante mais semble incomplète n’est-ce pas ?</p>
+            <p>Avec ces paramètres, nous arrivons à la <a target="_blank" href="https://julienscheen.be/projets/TFE-exp/exp-create-sound/">première version de mon projet</a>. Elle est intéressante mais semble incomplète n’est-ce pas ?</p>
             <p>C’est parce qu’elle joue les fréquences des couleurs telle qu’elle sont présentée dans le spectre visible (de 428 Thz à 750 Thz), à cause de ça vous pourrez voir que nous avons aussi un seul rouge jouant deux sons différents (aux deux extrémités du slider de teinte). Cela ne semble pas fort logique étant donné que la première chose que l’on voit n’est pas une fréquence mais bien une couleur.</p>
           </div>
 
@@ -210,15 +210,10 @@
           <div id="osc" class="anchor container-text">
             <h3>Comment jouer les paramètres obtenu par ces méthodes ?</h3>
             <p>Pour jouer une fréquence avec la Web audio API, il faut créer un oscillateur et le démarrer. Une fois démarré, l’oscillateur prends trois principaux paramètres en compte: le type d’oscillateur, la fréquence, et le gain. Une fois que j’ai récupéré mon gain et ma fréquence avec les fonctions vue ci-dessus, comme ceci…</p>
-          </div>
-
-          <script src="https://gist.github.com/Julien1227/2b7b050aad5b6e48155ad2600a784914.js"></script>
-
-          <div class="container-text">
+            <script src="https://gist.github.com/Julien1227/2b7b050aad5b6e48155ad2600a784914.js"></script>
             <p>Je dois les assigner à mon oscillateur. Pour ce faire, la Web audio API met à disposition “setValueAtTime” et “setTargetAtTime”. “setTargetAtTime” est très utile pour le gain car il permet de gérer des fondus pour ainsi éviter de couper le son net. Avec ces deux outils, je demande donc ceci à mon code:</p>
+            <script src="https://gist.github.com/Julien1227/e189528791f43b05c6da77ed04d2d247.js"></script>
           </div>
-
-          <script src="https://gist.github.com/Julien1227/e189528791f43b05c6da77ed04d2d247.js"></script>
 
           <div id="piano" class="anchor container-text">
             <h3>Le piano.</h3>
@@ -229,7 +224,7 @@
           <img class="container-image" srcset="assets/images/info/colorfulNote.png, assets/images/info/colorfulNote@2x.png 2x" type="image/png"/>
           
           <div class="container-text">
-            <p>La solution, c’est donc de demander au code de trouver une couleur correspondant à la fréquence demandée par le piano, et d’ensuite l’afficher à l’écran !</p>
+            <p>La solution, c’est donc de demander au code de trouver une couleur correspondant à la fréquence demandée par le piano, et d’ensuite l’afficher à l’écran&nbsp;!</p>
           </div>
 
           <div class="container-code container-code-shapeMedium">
@@ -241,9 +236,9 @@
             <h3>Pour la suite.</h3>
             <p>Les prototypes pourraient être améliorés à certains niveaux. Certaines peronnes...</p>
             <p>Tout ceci n’était que le résumé du résumé d’une explication raccourcie du fonctionnement de mon code, si vous voulez découvrir les recherches qui se cachent derrière, vous pouvez consulter le medium de mes recherches !</p>
+            <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab" class="btn">En savoir plus sur mes recherches</a>
           </div>
           
-          <button class="btn">En savoir plus sur mes recherches</button>
         </div>
       </section>
   </main>
