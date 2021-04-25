@@ -41,7 +41,8 @@ label {
 }
 
 *::selection {
-  background-color: rgba(154, 223, 255, 0.219);
+  background: rgba(154, 223, 255, 0.5) !important;
+  color: inherit !important;
 }
 
 @media (min-width: 900px) {
@@ -898,6 +899,21 @@ label {
   text-decoration: none;
 }
 
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+  .btn, .navigation-container {
+    backdrop-filter: blur(20px);
+  }
+}
+/* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
+@supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .btn {
+    background-color: #ffffffda;
+  }
+
+  .navigation-container {
+    background-color: #fff;
+  }
+}
 .menu {
   position: fixed;
   bottom: 0;
@@ -926,21 +942,6 @@ label {
   transform: scale(1.5);
 }
 
-@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-  .btn, .navigation-container {
-    backdrop-filter: blur(20px);
-  }
-}
-/* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
-@supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-  .btn {
-    background-color: #ffffffda;
-  }
-
-  .navigation-container {
-    background-color: #fff;
-  }
-}
 .section-intro {
   z-index: 2000;
   background-color: #fff;
@@ -1045,9 +1046,9 @@ label {
   border-radius: 1000px;
   width: 14.5vw;
   height: 14.5vw;
-  max-width: 80px;
-  max-height: 80px;
-  margin: 1vw;
+  max-width: 60px;
+  max-height: 60px;
+  margin: 0.25rem;
 }
 .section-image .module .background-container {
   display: none;
@@ -1332,7 +1333,7 @@ label {
   width: 4rem;
   height: 4rem;
   overflow: hidden;
-  margin: 0.5rem;
+  margin: 2rem;
   border-radius: 2.5rem;
   background-color: #ffffffda;
   box-shadow: 0px 0px 25px -10px #00000038;
@@ -1343,12 +1344,19 @@ label {
   width: 30px;
   height: 30px;
 }
+.section-info .navigation-container .nav-btn svg {
+  width: 100%;
+  height: 100%;
+  transform: scale(2);
+}
 .section-info .navigation-container .nav-btn-open {
+  z-index: 10;
   opacity: 1;
   right: 1rem;
   bottom: 1rem;
 }
 .section-info .navigation-container .nav-btn-close {
+  z-index: 5;
   opacity: 0;
   transform: scale(1.2);
   left: 1.5rem;
@@ -1667,7 +1675,7 @@ body[data-page=info] .menu-btn[id=info] svg {
 }
 .navigation-container .navigation {
   opacity: 0;
-  transform: translateX(100px);
+  transform: translateX(-100px);
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
 .navigation-container .navigation-list-el {
@@ -1681,7 +1689,8 @@ body[data-page=info] .menu-btn[id=info] svg {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
 .navigation-container.open {
-  width: calc(100% - 1rem);
+  margin: 1rem;
+  width: calc(100% - 2rem);
   height: 240px;
   padding-bottom: 36px;
   padding-top: 36px;
@@ -1837,20 +1846,26 @@ body[data-page=info] .menu-btn[id=info] svg {
   .section-info .container:after {
     height: calc((81px * 1.5) + 100px);
   }
+  .section-info .container-image {
+    margin: 0;
+  }
+  .section-info .container-text {
+    margin: 0;
+  }
   .section-info .container-code-name {
     white-space: nowrap;
     text-align: left;
     margin: -4px 0;
-    margin-left: -2rem;
+    margin-left: -3rem;
     border-left: none;
-    padding-left: 2rem;
+    padding-left: 3rem;
     border-radius: 0 10px 10px 0;
   }
   .section-info .container-code .gist {
     position: absolute;
     margin-top: -3.5rem;
     max-width: 500px;
-    margin-left: calc(-500px - 2rem);
+    margin-left: calc(-500px - 3rem);
   }
   .section-info .container-code .gist-file {
     border-radius: 10px 0 10px 10px !important;
@@ -1878,13 +1893,12 @@ body[data-page=info] .menu-btn[id=info] svg {
   .section-info .navigation-container {
     position: sticky;
     top: calc((81px * 1.5) + 54px);
-    right: calc(50% + 1rem);
-    width: 270px;
+    right: calc(50% + 2rem);
+    width: 265px;
     height: auto;
     overflow: visible;
     padding: 3rem;
     text-align: right;
-    background-color: transparent;
     border-radius: inherit;
     border-right: 2px solid #00000056;
     border-radius: 10px 0 0 10px;
@@ -1904,8 +1918,12 @@ body[data-page=info] .menu-btn[id=info] svg {
   .menu-btn {
     width: 5rem;
     height: 5rem;
-    border-radius: 10px;
-    margin: 1rem;
+  }
+  .menu-btn:first-child {
+    border-radius: 10px 0 0 10px;
+  }
+  .menu-btn:last-child {
+    border-radius: 0 10px 10px 0;
   }
 }
 @media (max-height: 750px) {

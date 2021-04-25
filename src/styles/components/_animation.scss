@@ -230,7 +230,7 @@ body {
 
     .navigation {
         opacity: 0;
-        transform: translateX(100px);
+        transform: translateX(-100px);
         transition: $t-fast;
         &-list-el {
             transition: $t-fast;
@@ -244,14 +244,15 @@ body {
     .nav-btn {
         transition: $t-fast;
     }
-
+    
     &.open {
-        width: calc(100% - 1rem);
-
+        margin: 1rem;
+        width: calc(100% - 2rem);
+        
         height: 240px;
         padding-bottom: $h3;
         padding-top: $h3;
-
+        
         .navigation {
             opacity: 1;
             transform: translateX(0);
@@ -259,7 +260,7 @@ body {
                 transition: $t-fast;
             }
         }
-
+        
         .nav-btn {
             &-open {opacity: 0;}
             &-close {opacity: 1;}

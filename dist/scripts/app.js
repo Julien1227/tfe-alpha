@@ -526,15 +526,19 @@ playImageBtn.addEventListener('click', function (e) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-var navBtn = document.getElementById('navBtn'),
+var navBtnOpen = document.querySelector('.nav-btn-open'),
+    navBtnClose = document.querySelector('.nav-btn-close'),
     nav = document.getElementById('nav'),
     gist = document.querySelectorAll('.gist'),
     anchors = document.querySelectorAll('.anchor'),
     navElements = document.querySelectorAll('.navigation-list-el'),
     infoSection = document.querySelector('.section-info'); // Ouvrir/fermer le menu
 
-navBtn.addEventListener('click', function (e) {
-  nav.classList.toggle('open');
+navBtnOpen.addEventListener('click', function (e) {
+  nav.classList.add('open');
+});
+navBtnClose.addEventListener('click', function (e) {
+  nav.classList.remove('open');
 });
 navElements.forEach(function (element) {
   element.addEventListener('click', function (e) {
