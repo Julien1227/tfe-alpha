@@ -24,7 +24,7 @@
       </section>
 
       <section class="section section-color">
-        <h2 class="section-title">Ecoutez des couleur</h2>
+        <h2 class="section-title">Le son des couleurs</h2>
         <div class="module" id="module-color" style="background: linear-gradient(#40bfbf, #3986ac);">
           <span class="module-frequency" id="playedColor">514 Hz</span>
           <div class="module-shadow"></div>
@@ -49,7 +49,7 @@
       </section>
 
       <section class="section section-pad">
-        <h2 class="section-title">Jouez des couleur</h2>
+        <h2 class="section-title">Pad</h2>
 
         <div class="fs-center pad-tuto">
           <div class="tuto-container">
@@ -77,8 +77,8 @@
         </div>
         
         <div class="form form-pad">
-          <button class="btn btn-save">Enregistrer</button>
           <div class="form-el">
+            <button class="btn btn-save">Enregistrer</button>
             <label class="slider-el-title">Teinte: <span data-p="color" class="padSpan">180</span>°</label>
             <input class="padInput" type="range" name="volume" min="0" max="359">
           </div>
@@ -96,13 +96,13 @@
       </section>
       
       <section class="section section-piano">
-        <h2 class="section-title section-title-fixed">Jouez les couleur</h2>
+        <h2 class="section-title section-title-fixed">Piano</h2>
         <div class="piano-color"></div>
         <h2 class="piano-msg">Appuyez sur une touche.</h2>
       </section>
       
       <section class="section section-image">
-        <h2 class="section-title">Ecoutez des images</h2>
+        <h2 class="section-title">Le son des images</h2>
 
         <div class="module">
 
@@ -188,7 +188,7 @@
           <div class="container-text">
             <p>Avec ces paramètres, nous arrivons à la <a target="_blank" href="https://julienscheen.be/projets/TFE-exp/exp-create-sound/">première version de mon projet</a>. Elle est intéressante mais semble incomplète n’est-ce pas ?</p>
             <p>C’est parce qu’elle joue les fréquences des couleurs telle qu’elle sont présentée dans le spectre visible (de 428 Thz à 750 Thz), à cause de ça vous pourrez voir que nous avons aussi un seul rouge jouant deux sons différents (aux deux extrémités du slider de teinte). Cela ne semble pas fort logique étant donné que la première chose que l’on voit n’est pas une fréquence mais bien une couleur.</p>
-          </div>
+          </div>  
 
           <img class="container-image" srcset="assets/images/info/colorfulWave.png, assets/images/info/colorfulWave@2x.png 2x" type="image/png"/>
 
@@ -233,9 +233,9 @@
 
           <div id="comingUp" class="anchor container-text">
             <h3>Pour la suite.</h3>
-            <p>Les prototypes pourraient être améliorés à certains niveaux. Certaines peronnes...</p>
+            <p>Les prototypes pourraient être améliorés à certains niveaux. Certaines peronnes trouvent que tout ceci pourrait être utilisé chez les personnes aveugles, il serait même possible de créer, de mes propres moyens, un petit dispositif qui permettrait d'écouter par un simple contact avec une surface !</p>
             <p>Tout ceci n’était que le résumé du résumé d’une explication raccourcie du fonctionnement de mon code, si vous voulez découvrir les recherches qui se cachent derrière, vous pouvez consulter le medium de mes recherches !</p>
-            <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab">En savoir plus sur mes recherches</a>
+            <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab">En savoir plus sur mes recherches.</a>
           </div>
           
         </div>
@@ -243,18 +243,24 @@
   </main>
 
   <footer class="menu">
-    <button id="color" class="btn menu-btn"><svg class="menu-btn-svg"><use xlink:href="#colorSvg"/></svg></button>
-    <button id="image" class="btn menu-btn"><svg class="menu-btn-svg"><use xlink:href="#pictureSvg"/></svg></button>
-    <button id="pad" class="btn menu-btn"><svg class="menu-btn-svg"><use xlink:href="#gridSvg"/></svg></button>
-    <button id="piano" class="btn menu-btn desktop"><svg class="menu-btn-svg"><use xlink:href="#pianoSvg"/></svg></button>
-    <button id="info" class="btn menu-btn"><svg class="menu-btn-svg info"><use xlink:href="#infoSvg"/></svg></button>
+    <ul class="menu-list">
+      <li class="menu-list-el"><button class="menu-btn" id="color"><svg><use xlink:href="#colorSvg"/></svg></button>
+      </li>
+      <li class="menu-list-el"><button class="menu-btn" id="image"><svg><use xlink:href="#pictureSvg"/></svg></button>
+      </li>
+      <li class="menu-list-el"><button class="menu-btn" id="pad"><svg><use xlink:href="#gridSvg"/></svg></button>
+      </li>
+      <li class="menu-list-el desktop"><button class="menu-btn" id="piano"><svg><use xlink:href="#pianoSvg"/></svg></button>
+      </li>
+    </ul>
+    <button id="info" class="menu-btn menu-btn-info"><svg class="menu-list-btn-svg info"><use xlink:href="#infoSvg"/></svg></button>
   </footer>
 
   <div class="use-svg">
 
     <svg id="navSvgClose" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
       <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-    </svg>
+    </svg>  
 
     <svg id="navSvgOpen" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
       <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>

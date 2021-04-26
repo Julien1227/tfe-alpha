@@ -135,7 +135,8 @@ beginBtn.addEventListener('click', function (e) {
 
 var body = document.querySelector('body'),
     sliderBtn = document.querySelectorAll('.menu-btn'),
-    pianoMsg = document.querySelector('.piano-msg');
+    pianoMsg = document.querySelector('.piano-msg'),
+    infoSection = document.querySelector('.section-info');
 sliderBtn.forEach(function (element) {
   element.addEventListener('click', function (e) {
     var target = e.currentTarget;
@@ -145,6 +146,12 @@ sliderBtn.forEach(function (element) {
     if (page != "piano") {
       pianoMsg.style.opacity = "1";
       pianoMsg.style.display = "inherit";
+    } // Reset le scroll de la page malgré l'ancre
+
+
+    if (page == "info") {
+      infoSection.scrollTop = 0;
+      console.log('ok');
     }
   });
 }); ///////////////////////////////////////////////////////////////////
@@ -250,10 +257,13 @@ pianoBtn.forEach(function (btn) {
   btn.addEventListener(event('start'), function (e) {
     var targetBtn = e.currentTarget; // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
 
-    var hslColor = getHslFromAttribute(targetBtn); // Défini le gain et la fréquence
+    var hslColor = getHslFromAttribute(targetBtn),
+        h = hslColor[0],
+        s = hslColor[1],
+        l = hslColor[2]; // Défini le gain et la fréquence
 
-    var frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]),
-        gain = setGain(hslColor[2], hslColor[1]);
+    var frq = setFrequency(h, s, l),
+        gain = setGain(l, s);
     g.gain.setValueAtTime(gain, context.currentTime);
     o.frequency.setValueAtTime(frq, context.currentTime); // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
 
@@ -529,10 +539,9 @@ playImageBtn.addEventListener('click', function (e) {
 var navBtnOpen = document.querySelector('.nav-btn-open'),
     navBtnClose = document.querySelector('.nav-btn-close'),
     nav = document.getElementById('nav'),
-    gist = document.querySelectorAll('.gist'),
+    gist = document.querySelectorAll('.container-code .gist'),
     anchors = document.querySelectorAll('.anchor'),
-    navElements = document.querySelectorAll('.navigation-list-el'),
-    infoSection = document.querySelector('.section-info'); // Ouvrir/fermer le menu
+    navElements = document.querySelectorAll('.navigation-list-el'); // Ouvrir/fermer le menu
 
 navBtnOpen.addEventListener('click', function (e) {
   nav.classList.add('open');
@@ -561,24 +570,27 @@ infoSection.addEventListener('scroll', function () {
 
   if (window.matchMedia("(min-width: 900px)").matches) {
     // Peut être optimisé
-    if (isCollide(nav, gist[0]) == false && isCollide(nav, gist[1]) == false && isCollide(nav, gist[4]) == false) {
+    if (isCollide(nav, gist[0]) == false && isCollide(nav, gist[1]) == false && isCollide(nav, gist[2]) == false) {
       nav.classList.remove('hide');
     } else {
       nav.classList.add('hide');
     }
   }
-}); // Trouver le source
+}); //SMOOTH SCROLL ONLY ON ANCHOR BUTTONS
+//source: https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
 
-function isCollide(a, b) {
-  var aRect = a.getBoundingClientRect();
-  var bRect = b.getBoundingClientRect();
-  return !(aRect.top + aRect.height < bRect.top || aRect.top > bRect.top + bRect.height || aRect.left + aRect.width < bRect.left || aRect.left > bRect.left + bRect.width);
-} ///////////////////////////////////////////////////////////////////
+document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+}); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-
 
 function createPalette(image) {
   if (image.complete) {
@@ -706,7 +718,14 @@ function event(param) {
 ///////////////////// OTHERS FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-//source: https://css-tricks.com/converting-color-spaces-in-javascript/
+// https://codepen.io/dropinks/pen/MrzPXB
+
+
+function isCollide(el1, el2) {
+  var element1 = el1.getBoundingClientRect();
+  var element2 = el2.getBoundingClientRect();
+  return !(element1.top + element1.height < element2.top + 50 || element1.top > element2.top + element2.height - 50);
+} //source: https://css-tricks.com/converting-color-spaces-in-javascript/
 //Convertit ma valeur HSL vers RGB
 
 
@@ -848,8 +867,8 @@ function RGBToHSL(r, g, b) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

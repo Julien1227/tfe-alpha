@@ -169,7 +169,7 @@
                         }
 
                         &:after {
-                            background: linear-gradient(to right, #ffffff00, #dadada);
+                            background: linear-gradient(to right, #ffffff00, #00000013);
                             margin: 0;
                             border-radius: 0 $round $round 0;
                         }
@@ -206,6 +206,7 @@
                 border-radius: inherit;
                 border-right: 2px solid $black02;
                 border-radius: $rounded 0 0 $rounded;
+                background-color: $white05;
 
                 .navigation {
                     width: auto;
@@ -218,19 +219,34 @@
     }
 
     .menu {
-        height: inherit;
-        bottom: 1rem;
         justify-content: center;
-        &-btn {
-            width: 5rem;
-            height: 5rem;
-            &:first-child {
-                border-radius: $rounded 0 0 $rounded;
-            }
+        margin-bottom: 3rem;
+        &-list {
+            max-width:600px;
+            border-radius: $rounded;
+            &-el {
+                &:nth-child(3) {
+                    border-radius: 0;
+                }
 
-            &:last-child {
-                border-radius: 0 $rounded $rounded 0;
+                &:last-child {
+                    border-radius: 0 $rounded $rounded 0;
+                }
+    
+                &:first-child {
+                    border-radius: $rounded 0 0 $rounded;
+                }
             }
+        }
+        
+        &-btn {
+            padding: 1.5rem;
+        }
+
+        &-btn-info {
+            border-radius: $rounded;
+            padding: 2rem 3rem;
+            margin-left: 3rem;
         }
     }
 }

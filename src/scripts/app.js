@@ -48,7 +48,9 @@ beginBtn.addEventListener('click', (e) => {
 // VARIABLES
 const body = document.querySelector('body'),
       sliderBtn = document.querySelectorAll('.menu-btn'),
-      pianoMsg = document.querySelector('.piano-msg');
+      pianoMsg = document.querySelector('.piano-msg'),
+      infoSection = document.querySelector('.section-info');
+
 
 sliderBtn.forEach(element => {
     element.addEventListener('click', (e) => {
@@ -62,8 +64,15 @@ sliderBtn.forEach(element => {
             pianoMsg.style.opacity = "1";
             pianoMsg.style.display = "inherit";
         }
+
+        // Reset le scroll de la page malgré l'ancre
+        if (page == "info") {
+            infoSection.scrollTop = 0;
+            console.log('ok');
+        }
     });
 });
+
 
 
 ///////////////////////////////////////////////////////////////////
@@ -184,13 +193,17 @@ saveBtn.addEventListener('click', (e) => {
 pianoBtn.forEach(btn => {
     btn.addEventListener(event('start'), (e) => {
         let targetBtn = e.currentTarget;
+
         
         // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
-        let hslColor = getHslFromAttribute(targetBtn);
-        
+        let hslColor = getHslFromAttribute(targetBtn),
+            h = hslColor[0],
+            s = hslColor[1],
+            l = hslColor[2];
+
         // Défini le gain et la fréquence
-        let frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]),
-            gain = setGain(hslColor[2], hslColor[1]);
+        let frq = setFrequency(h, s, l),
+            gain = setGain(l, s);
         
         g.gain.setValueAtTime(gain, context.currentTime);
         o.frequency.setValueAtTime(frq, context.currentTime);
@@ -521,10 +534,9 @@ playImageBtn.addEventListener('click', (e) => {
 const navBtnOpen = document.querySelector('.nav-btn-open'),
       navBtnClose = document.querySelector('.nav-btn-close'),
       nav = document.getElementById('nav'),
-      gist = document.querySelectorAll('.gist'),
+      gist = document.querySelectorAll('.container-code .gist'),
       anchors = document.querySelectorAll('.anchor'),
-      navElements = document.querySelectorAll('.navigation-list-el'),
-      infoSection = document.querySelector('.section-info');
+      navElements = document.querySelectorAll('.navigation-list-el');
 
 // Ouvrir/fermer le menu
 navBtnOpen.addEventListener('click', (e) => {
@@ -558,7 +570,7 @@ infoSection.addEventListener('scroll', () => {
         // Peut être optimisé
         if (isCollide(nav, gist[0]) == false &&
             isCollide(nav, gist[1]) == false &&
-            isCollide(nav, gist[4]) == false) {
+            isCollide(nav, gist[2]) == false) {
             nav.classList.remove('hide');
         }else {
             nav.classList.add('hide')
@@ -566,18 +578,17 @@ infoSection.addEventListener('scroll', () => {
     }
 });
 
-// Trouver le source
-function isCollide(a, b) {
-    var aRect = a.getBoundingClientRect();
-    var bRect = b.getBoundingClientRect();
-
-    return !(
-        ((aRect.top + aRect.height) < (bRect.top)) ||
-        (aRect.top > (bRect.top + bRect.height)) ||
-        ((aRect.left + aRect.width) < bRect.left) ||
-        (aRect.left > (bRect.left + bRect.width))
-    );
-}
+//SMOOTH SCROLL ONLY ON ANCHOR BUTTONS
+//source: https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+  
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -735,6 +746,16 @@ function event(param) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+// https://codepen.io/dropinks/pen/MrzPXB
+function isCollide(el1, el2) {
+    var element1 = el1.getBoundingClientRect();
+    var element2 = el2.getBoundingClientRect();
+
+    return !(
+        ((element1.top + element1.height) < (element2.top + 50)) ||
+        (element1.top > (element2.top + element2.height - 50))
+    );
+}
 
 //source: https://css-tricks.com/converting-color-spaces-in-javascript/
 //Convertit ma valeur HSL vers RGB
