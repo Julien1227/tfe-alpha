@@ -132,6 +132,7 @@
 
         &-info {
             .container {
+                padding: inherit;
                 &:before {height: calc(#{$h1} * 1.5);}
                 &:after {height: calc((#{$h1} * 1.5) + 100px);}
 
@@ -139,10 +140,7 @@
 
                 &-image {
                     margin: 0;
-                }
-                
-                &-text {
-                    margin: 0;
+                    width: 100%;
                 }
                 
                 &-code {
@@ -154,7 +152,7 @@
                         margin-left: -3rem;
                         border-left: none;
 
-                        padding-left: 3rem;
+                        padding-left: 4rem;
                         border-radius: 0 $rounded $rounded 0;
                     }
     
@@ -162,7 +160,7 @@
                         position: absolute;
                         margin-top: -3.5rem;
                         max-width: 500px;
-                        margin-left: calc(-500px - 3rem);
+                        margin-left: calc(-500px - 1rem);
 
                         &-file {
                             border-radius: $rounded 0 $rounded $rounded!important;
@@ -195,18 +193,20 @@
 
             .navigation-container {
                 position: sticky;
-                top: calc((#{$h1} * 1.5) + #{$h2});
+                top: calc((#{$h1} * 1.5) + #{$h3});
                 right: calc(50% + 2rem);
                 
                 width: 265px;
                 height: auto;
                 overflow: visible;
-                padding: 3rem;
+                padding: 2rem 3rem;
+                padding-left: 2rem;
+                box-shadow: none;
                 text-align: right;
                 border-radius: inherit;
                 border-right: 2px solid $black02;
                 border-radius: $rounded 0 0 $rounded;
-                background-color: $white05;
+                background-color: $white08;
 
                 .navigation {
                     width: auto;
@@ -247,6 +247,7 @@
             border-radius: $rounded;
             padding: 2rem 3rem;
             margin-left: 3rem;
+            box-shadow: none;
         }
     }
 }

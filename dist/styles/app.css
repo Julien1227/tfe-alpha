@@ -11,13 +11,10 @@ h1 {
   font-weight: 900;
 }
 
-h2 {
-  font-size: 14px;
-}
-
 h3 {
   font-size: 36px;
-  margin-bottom: 0;
+  margin-block-start: calc(36px * 1.5);
+  margin-block-end: 0;
 }
 
 h4 {
@@ -910,10 +907,6 @@ label {
   .btn {
     background-color: #ffffffda;
   }
-
-  .navigation-container {
-    background-color: #fff;
-  }
 }
 .menu {
   position: fixed;
@@ -930,15 +923,12 @@ label {
 .menu-list {
   display: flex;
   align-items: flex-end;
-  width: calc(75vw - 2rem);
-  height: 5rem;
+  width: 100%;
+  height: 4rem;
 }
 .menu-list-el {
   width: 100%;
   background-color: #eeeeee;
-}
-.menu-list-el:nth-child(3) {
-  border-radius: 0 10px 0 0;
 }
 .menu-btn {
   display: flex;
@@ -956,7 +946,7 @@ label {
   background-color: #eeeeee;
   border-radius: 10px 0 0 0;
   padding: 0.75rem 2rem;
-  margin-left: 0.5rem;
+  box-shadow: 0px 0px 25px -10px #00000038;
 }
 .menu-btn-info svg {
   width: 3.5rem;
@@ -979,7 +969,7 @@ label {
   flex-direction: column;
   justify-content: flex-end;
   min-width: 100%;
-  height: calc(100vh - 5rem);
+  height: calc(100vh - 4rem);
 }
 .section-title {
   position: relative;
@@ -989,14 +979,15 @@ label {
   height: 30px;
   padding: 0.5rem;
   margin: 0;
+  font-size: 14px;
   text-align: center;
   box-sizing: content-box;
   background-color: #fff;
 }
 .section-title-fixed {
+  padding-bottom: 0;
   position: fixed;
   top: 0;
-  padding-bottom: 0;
 }
 .section .module {
   display: flex;
@@ -1084,18 +1075,18 @@ label {
 }
 .section-image .module .selection {
   overflow: hidden;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   z-index: 20;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 2rem;
-  height: 3.75rem;
+  height: 3.5rem;
   width: 19rem;
   max-width: 450px;
 }
-.section-image .module .selection span {
+.section-image .module .selection-btn {
   margin-bottom: 1rem;
 }
 .section-image .module .selection-image {
@@ -1124,7 +1115,7 @@ label {
   position: relative;
   display: block;
   background-color: #ffffffc5;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 .section-image .form {
   padding-top: 5rem;
@@ -1284,36 +1275,36 @@ label {
   align-items: center;
   position: relative;
   overflow-y: scroll;
-  height: 100vh;
 }
 .section-info .container {
   height: 100%;
   width: 100%;
   max-width: 500px;
+  padding: 0 2rem;
+  box-sizing: border-box;
 }
 .section-info .container:before {
   content: "";
   display: block;
-  height: 81px;
+  height: 36px;
 }
 .section-info .container:after {
   content: "";
   display: block;
   height: 81px;
 }
-.section-info .container-text {
-  margin: 0 2rem;
-}
 .section-info .container-image {
-  margin: 0 1rem;
-  width: calc(100% - 2rem);
+  width: calc(100% + 2rem);
+  margin: 0 -1rem;
 }
 .section-info .container-code {
-  margin: 0 1rem;
+  width: calc(100% + 2rem);
+  margin: 0 -1rem;
 }
 .section-info .container-code-name {
   font-weight: 700;
   text-align: center;
+  color: #151c29;
   padding: 1rem;
   margin: 0;
   box-sizing: border-box;
@@ -1339,14 +1330,14 @@ label {
   z-index: 20;
   position: fixed;
   right: 0;
-  bottom: 5rem;
+  bottom: 4rem;
   width: 4rem;
   height: 4rem;
   overflow: hidden;
   margin: 2rem;
   border-radius: 2.5rem;
   box-shadow: 0px 0px 25px -10px #00000038;
-  background-color: #ffffffda;
+  background-color: #fff;
   text-align: center;
 }
 .section-info .navigation-container .nav-btn {
@@ -1606,6 +1597,8 @@ body[data-page=info] .menu-btn[id=info] svg {
 .section-pad.pad-modify .pad-btn-active {
   position: relative;
   z-index: 100;
+  transform: scale(1.1);
+  border-radius: 10px;
   opacity: 1 !important;
 }
 .section-pad.pad-modify .pad-btn-active::after {
@@ -1680,7 +1673,7 @@ body[data-page=info] .menu-btn[id=info] svg {
 .section-image .module .selection.selection-open .btn-upload {
   transition-delay: 0.2s;
   opacity: 1;
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
 }
 .section-image .selection-image-el.selected img {
   border: 5px solid #fff;
@@ -1873,6 +1866,7 @@ body[data-page=info] .menu-btn[id=info] svg {
     height: 100vh;
   }
   .section-info .container {
+    padding: inherit;
     transform: translateX(50%);
   }
   .section-info .container:before {
@@ -1883,9 +1877,7 @@ body[data-page=info] .menu-btn[id=info] svg {
   }
   .section-info .container-image {
     margin: 0;
-  }
-  .section-info .container-text {
-    margin: 0;
+    width: 100%;
   }
   .section-info .container-code-name {
     white-space: nowrap;
@@ -1893,14 +1885,14 @@ body[data-page=info] .menu-btn[id=info] svg {
     margin: -4px 0;
     margin-left: -3rem;
     border-left: none;
-    padding-left: 3rem;
+    padding-left: 4rem;
     border-radius: 0 10px 10px 0;
   }
   .section-info .container-code .gist {
     position: absolute;
     margin-top: -3.5rem;
     max-width: 500px;
-    margin-left: calc(-500px - 3rem);
+    margin-left: calc(-500px - 1rem);
   }
   .section-info .container-code .gist-file {
     border-radius: 10px 0 10px 10px !important;
@@ -1927,17 +1919,19 @@ body[data-page=info] .menu-btn[id=info] svg {
   }
   .section-info .navigation-container {
     position: sticky;
-    top: calc((81px * 1.5) + 54px);
+    top: calc((81px * 1.5) + 36px);
     right: calc(50% + 2rem);
     width: 265px;
     height: auto;
     overflow: visible;
-    padding: 3rem;
+    padding: 2rem 3rem;
+    padding-left: 2rem;
+    box-shadow: none;
     text-align: right;
     border-radius: inherit;
     border-right: 2px solid #00000056;
     border-radius: 10px 0 0 10px;
-    background-color: #ffffff79;
+    background-color: #ffffffbe;
   }
   .section-info .navigation-container .navigation {
     width: auto;
@@ -1970,6 +1964,7 @@ body[data-page=info] .menu-btn[id=info] svg {
     border-radius: 10px;
     padding: 2rem 3rem;
     margin-left: 3rem;
+    box-shadow: none;
   }
 }
 @media (max-height: 750px) {

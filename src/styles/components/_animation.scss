@@ -116,6 +116,8 @@ body {
                 &-active {
                     position: relative;
                     z-index: 100;
+                    transform: scale(1.1);
+                    border-radius: $rounded;
                     opacity: 1!important;
                     &::after {
                         transform: scale(1.1);
@@ -220,7 +222,7 @@ body {
             .btn-upload {
                 transition-delay: 0.2s;
                 opacity: 1;
-                margin-top: 1.25rem;
+                margin-top: 1.5rem;
             }
         }
     }

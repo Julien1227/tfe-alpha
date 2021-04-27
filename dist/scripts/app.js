@@ -181,7 +181,7 @@ var _loop = function _loop(i) {
 
     o.frequency.setValueAtTime(frq, context.currentTime); // Défini l'intensité
 
-    g.gain.setValueAtTime(gain, context.currentTime); // Affiche la fréquence jouée
+    g.gain.setTargetAtTime(gain, context.currentTime, 0.002); // Affiche la fréquence jouée
 
     actualNote.innerHTML = o.frequency.value + " Hz"; // Affiche la valeur du slider 
 
@@ -264,7 +264,7 @@ pianoBtn.forEach(function (btn) {
 
     var frq = setFrequency(h, s, l),
         gain = setGain(l, s);
-    g.gain.setValueAtTime(gain, context.currentTime);
+    g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
     o.frequency.setValueAtTime(frq, context.currentTime); // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
 
     if (sectionPiano.classList.contains('pad-modify') == false) {
@@ -318,7 +318,7 @@ var _loop2 = function _loop2(_i3) {
     var frq = setFrequency(t, s, l),
         gain = setGain(l, s);
     o.frequency.setValueAtTime(frq, context.currentTime);
-    g.gain.setValueAtTime(gain, context.currentTime);
+    g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
 
     pianoFormInput[_i3].addEventListener(event('end'), function (e) {
       g.gain.setTargetAtTime(0, context.currentTime, 0.1);
@@ -391,7 +391,7 @@ document.addEventListener('keydown', function (event) {
           _color = 0; // Assigne la valeur de gain et fréquence
 
       o.frequency.setValueAtTime(_frq, context.currentTime);
-      g.gain.setValueAtTime(1, context.currentTime); // Cherche une couleur correspondant à la fréquence
+      g.gain.setTargetAtTime(1, context.currentTime, 0.002); // Cherche une couleur correspondant à la fréquence
 
       do {
         t = randomMinMax(0, 360);
@@ -525,9 +525,9 @@ playImageBtn.addEventListener('click', function (e) {
 
   function play(i) {
     setTimeout(function () {
-      g.gain.setValueAtTime(gains[i], context.currentTime);
+      g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
       o.frequency.setValueAtTime(frqs[i], context.currentTime);
-      g.gain.setTargetAtTime(0, context.currentTime, speed / 1500);
+      g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
     }, i * speed);
   }
 }); ///////////////////////////////////////////////////////////////////
@@ -867,8 +867,8 @@ function RGBToHSL(r, g, b) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

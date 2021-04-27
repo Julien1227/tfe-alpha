@@ -49,7 +49,7 @@
       </section>
 
       <section class="section section-pad">
-        <h2 class="section-title">Pad</h2>
+        <h2 class="section-title section-title-fixed">Pad</h2>
 
         <div class="fs-center pad-tuto">
           <div class="tuto-container">
@@ -107,7 +107,7 @@
         <div class="module">
 
           <div id="btnOpenSelection" class="btn selection">
-            <span>Choisir une autre image</span>
+            <button class="selection-btn">Choisir une autre image</button>
             <ul class="selection-image">
               <!-- Photo de PixaBay -->
               <li class="selection-image-el"><img src="assets/images/toListen1.jpg" alt="Image 1"></li>
@@ -168,75 +168,55 @@
         </div>
         <div class="container">
 
-          <div id="intro" class="anchor container-text">
-            <h3>Comment ça marche ?</h3>
-            <p>De votre point de vue, vous jouez avec trois sliders qui modifient une couleur et la fréquence sonore qui en sort.</p>
-            <p>Vous avez sans doute remarqué que plus la couleur est présente plus le son est jouée fort tandis que plus elle sera blanche, noir ou dé-saturée (moins la couleur est présente), moins le son sera audible.</p>
-          </div>
+          <h3 id="intro" class="anchor">Comment ça marche ?</h3>
+          <p>De votre point de vue, vous jouez avec trois sliders qui modifient une couleur et la fréquence sonore qui en sort.</p>
+          <p>Vous avez sans doute remarqué que plus la couleur est présente plus le son est jouée fort tandis que plus elle sera blanche, noir ou dé-saturée (moins la couleur est présente), moins le son sera audible.</p>
 
           <img class="container-image" srcset="assets/images/info/colorfulSound.png, assets/images/info/colorfulSound@2x.png 2x" type="image/png"/>
           
-          <div class="container-text">
-            <p>Ces observation permettent déjà de comprendre que la luminosité et la saturation sont directement lié à l’intensité du son. La raison de ceci est tout d’abord que le blanc et le noir ne sont pas reconnu comme étant des couleurs. Plus encore, selon cette sources par exemple, dans le domaine musical, le blanc/noir sont lié à un vide ce qui accompagne à merveille mon raisonnement.</p>
-          </div>
+          <p>Ces observation permettent déjà de comprendre que la luminosité et la saturation sont directement lié à l’intensité du son. La raison de ceci est tout d’abord que le blanc et le noir ne sont pas reconnu comme étant des couleurs. Plus encore, selon cette sources par exemple, dans le domaine musical, le blanc/noir sont lié à un vide ce qui accompagne à merveille mon raisonnement.</p>
 
           <div class="container-code container-code-shapeBig">
             <p class="container-code-name">Démonstration de la fonction qui calcule le gain</p>
             <script src="https://gist.github.com/Julien1227/52d1209153c4459555b15f2d62364f53.js"></script>
           </div>
 
-          <div class="container-text">
-            <p>Avec ces paramètres, nous arrivons à la <a target="_blank" href="https://julienscheen.be/projets/TFE-exp/exp-create-sound/">première version de mon projet</a>. Elle est intéressante mais semble incomplète n’est-ce pas ?</p>
-            <p>C’est parce qu’elle joue les fréquences des couleurs telle qu’elle sont présentée dans le spectre visible (de 428 Thz à 750 Thz), à cause de ça vous pourrez voir que nous avons aussi un seul rouge jouant deux sons différents (aux deux extrémités du slider de teinte). Cela ne semble pas fort logique étant donné que la première chose que l’on voit n’est pas une fréquence mais bien une couleur.</p>
-          </div>  
+          <p>Avec ces paramètres, nous arrivons à la <a target="_blank" href="https://julienscheen.be/projets/TFE-exp/exp-create-sound/">première version de mon projet</a>. Elle est intéressante mais semble incomplète n’est-ce pas ?</p>
+          <p>C’est parce qu’elle joue les fréquences des couleurs telle qu’elle sont présentée dans le spectre visible (de 428 Thz à 750 Thz), à cause de ça vous pourrez voir que nous avons aussi un seul rouge jouant deux sons différents (aux deux extrémités du slider de teinte). Cela ne semble pas fort logique étant donné que la première chose que l’on voit n’est pas une fréquence mais bien une couleur.</p>
 
           <img class="container-image" srcset="assets/images/info/colorfulWave.png, assets/images/info/colorfulWave@2x.png 2x" type="image/png"/>
 
-          <div class="container-text">
-            <p>Pour améliorer ceci, le code ne crée désormais plus la fréquence depuis la teinte du schéma TSL (Teinte, Saturation, Luminiosité) mais bien depuis l’addition des couleurs rouge, vert et bleu du schéma RVB.</p>
-            <p>Pour obtenir ce schéma, je convertis la couleur fournie par le schéma TSL en couleur RVB à l’aide de cette fonction “TSLToRGB(t, s, l)”, et obtiens donc les valeurs “rouge”, “vert” et “bleu” avec lesquelles je peux jongler.</p>
-          </div>
+          <p>Pour améliorer ceci, le code ne crée désormais plus la fréquence depuis la teinte du schéma TSL (Teinte, Saturation, Luminiosité) mais bien depuis l’addition des couleurs rouge, vert et bleu du schéma RVB.</p>
+          <p>Pour obtenir ce schéma, je convertis la couleur fournie par le schéma TSL en couleur RVB à l’aide de cette fonction “TSLToRGB(t, s, l)”, et obtiens donc les valeurs “rouge”, “vert” et “bleu” avec lesquelles je peux jongler.</p>
 
           <div class="container-code container-code-shapeLittle">
             <p class="container-code-name">Démonstration de la fonction qui calcule la fréquence</p>
             <script src="https://gist.github.com/Julien1227/5eb6f3e07dcf38b1f45746140629ad66.js"></script>
           </div>
 
-          <div class="container-text">
-            <p>De cette manière, je peux associer une gamme de fréquence à chaque valeur du schéma RVB pour créer non seulement un mélange de couleurs mais également un mélange de ces gammes ce qui résultera d’un son plus représentatif de chaque couleur (un bleu grave, un jeune aigu, etc,…).</p>
-          </div>
+          <p>De cette manière, je peux associer une gamme de fréquence à chaque valeur du schéma RVB pour créer non seulement un mélange de couleurs mais également un mélange de ces gammes ce qui résultera d’un son plus représentatif de chaque couleur (un bleu grave, un jeune aigu, etc,…).</p>
+            
+          <h3 id="osc" class="anchor">Comment jouer les paramètres obtenu par ces méthodes ?</h3>
+          <p>Pour jouer une fréquence avec la Web audio API, il faut créer un oscillateur et le démarrer. Une fois démarré, l’oscillateur prends trois principaux paramètres en compte: le type d’oscillateur, la fréquence, et le gain. Une fois que j’ai récupéré mon gain et ma fréquence avec les fonctions vue ci-dessus, comme ceci…</p>
+          <script src="https://gist.github.com/Julien1227/2b7b050aad5b6e48155ad2600a784914.js"></script>
+          <p>Je dois les assigner à mon oscillateur. Pour ce faire, la Web audio API met à disposition “setValueAtTime” et “setTargetAtTime”. “setTargetAtTime” est très utile pour le gain car il permet de gérer des fondus pour ainsi éviter de couper le son net. Avec ces deux outils, je demande donc ceci à mon code:</p>
+          <script src="https://gist.github.com/Julien1227/e189528791f43b05c6da77ed04d2d247.js"></script>
 
-          <div id="osc" class="anchor container-text">
-            <h3>Comment jouer les paramètres obtenu par ces méthodes ?</h3>
-            <p>Pour jouer une fréquence avec la Web audio API, il faut créer un oscillateur et le démarrer. Une fois démarré, l’oscillateur prends trois principaux paramètres en compte: le type d’oscillateur, la fréquence, et le gain. Une fois que j’ai récupéré mon gain et ma fréquence avec les fonctions vue ci-dessus, comme ceci…</p>
-            <script src="https://gist.github.com/Julien1227/2b7b050aad5b6e48155ad2600a784914.js"></script>
-            <p>Je dois les assigner à mon oscillateur. Pour ce faire, la Web audio API met à disposition “setValueAtTime” et “setTargetAtTime”. “setTargetAtTime” est très utile pour le gain car il permet de gérer des fondus pour ainsi éviter de couper le son net. Avec ces deux outils, je demande donc ceci à mon code:</p>
-            <script src="https://gist.github.com/Julien1227/e189528791f43b05c6da77ed04d2d247.js"></script>
-          </div>
-
-          <div id="piano" class="anchor container-text">
-            <h3>Le piano.</h3>
-            <p>Si vous êtes sur la version ordinateur du site et que vous avez fait le tour des onglets, après avoir lu ceci vous aurez compris qu’il s’agit généralement du même principe pour chaque page: récupérer une couleur, créer sa fréquence et son gain, jouer les paramètres. Cependant le piano, lui, sort du lot.</p>
-            <p>C’est le seul code auquel on donne d’abord une fréquence, et non une couleur. Cependant, le problème est que plusieurs fréquences correspondent à plusieurs couleurs et que même faire machine arrière pour calculer une couleur depuis la fréquence est alors impossible.</p>
-          </div>
-
+          <h3 id="piano" class="anchor">Le piano.</h3>
+          <p>Si vous êtes sur la version ordinateur du site et que vous avez fait le tour des onglets, après avoir lu ceci vous aurez compris qu’il s’agit généralement du même principe pour chaque page: récupérer une couleur, créer sa fréquence et son gain, jouer les paramètres. Cependant le piano, lui, sort du lot.</p>
+          <p>C’est le seul code auquel on donne d’abord une fréquence, et non une couleur. Cependant, le problème est que plusieurs fréquences correspondent à plusieurs couleurs et que même faire machine arrière pour calculer une couleur depuis la fréquence est alors impossible.</p>
           <img class="container-image" srcset="assets/images/info/colorfulNote.png, assets/images/info/colorfulNote@2x.png 2x" type="image/png"/>
-          
-          <div class="container-text">
-            <p>La solution, c’est donc de demander au code de trouver une couleur correspondant à la fréquence demandée par le piano, et d’ensuite l’afficher à l’écran&nbsp;!</p>
-          </div>
+          <p>La solution, c’est donc de demander au code de trouver une couleur correspondant à la fréquence demandée par le piano, et d’ensuite l’afficher à l’écran&nbsp;!</p>
 
           <div class="container-code container-code-shapeMedium">
             <p class="container-code-name">Démonstration du fonctionnement du piano</p>
             <script src="https://gist.github.com/Julien1227/0df6b5e65c88e744da6b48e822adee8b.js"></script>
           </div>
 
-          <div id="comingUp" class="anchor container-text">
-            <h3>Pour la suite.</h3>
-            <p>Les prototypes pourraient être améliorés à certains niveaux. Certaines peronnes trouvent que tout ceci pourrait être utilisé chez les personnes aveugles, il serait même possible de créer, de mes propres moyens, un petit dispositif qui permettrait d'écouter par un simple contact avec une surface !</p>
-            <p>Tout ceci n’était que le résumé du résumé d’une explication raccourcie du fonctionnement de mon code, si vous voulez découvrir les recherches qui se cachent derrière, vous pouvez consulter le medium de mes recherches !</p>
-            <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab">En savoir plus sur mes recherches.</a>
-          </div>
+          <h3 id="comingUp" class="anchor">Pour la suite.</h3>
+          <p>Les prototypes pourraient être améliorés à certains niveaux. Certaines peronnes trouvent que tout ceci pourrait être utilisé chez les personnes aveugles, il serait même possible de créer, de mes propres moyens, un petit dispositif qui permettrait d'écouter par un simple contact avec une surface !</p>
+          <p>Tout ceci n’était que le résumé du résumé d’une explication raccourcie du fonctionnement de mon code, si vous voulez découvrir les recherches qui se cachent derrière, vous pouvez consulter le medium de mes recherches !</p>
+          <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab">En savoir plus sur mes recherches.</a>
           
         </div>
       </section>

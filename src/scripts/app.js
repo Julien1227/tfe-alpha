@@ -111,7 +111,7 @@ for (let i = 0; i < colorInputs.length; i++) {
         // Défini la fréquence
         o.frequency.setValueAtTime(frq, context.currentTime);
         // Défini l'intensité
-        g.gain.setValueAtTime(gain, context.currentTime);
+        g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
         // Affiche la fréquence jouée
         actualNote.innerHTML = o.frequency.value + " Hz";
         
@@ -205,7 +205,7 @@ pianoBtn.forEach(btn => {
         let frq = setFrequency(h, s, l),
             gain = setGain(l, s);
         
-        g.gain.setValueAtTime(gain, context.currentTime);
+        g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
         o.frequency.setValueAtTime(frq, context.currentTime);
         
         // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
@@ -275,7 +275,7 @@ for (let i = 0; i < pianoFormInput.length; i++) {
             gain = setGain(l, s);
 
         o.frequency.setValueAtTime(frq, context.currentTime);
-        g.gain.setValueAtTime(gain, context.currentTime);
+        g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
 
         pianoFormInput[i].addEventListener(event('end'), (e) => {
             g.gain.setTargetAtTime(0, context.currentTime, 0.1);
@@ -354,7 +354,8 @@ document.addEventListener('keydown', (event) => {
 
             // Assigne la valeur de gain et fréquence
             o.frequency.setValueAtTime(frq, context.currentTime);
-            g.gain.setValueAtTime(1, context.currentTime);
+            g.gain.setTargetAtTime(1, context.currentTime, 0.002);
+            
                 
             // Cherche une couleur correspondant à la fréquence
             do {
@@ -516,10 +517,10 @@ playImageBtn.addEventListener('click', (e) => {
 
     function play(i) {
         setTimeout(function() {
-            g.gain.setValueAtTime(gains[i], context.currentTime);
+            g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
             o.frequency.setValueAtTime(frqs[i], context.currentTime);
 
-            g.gain.setTargetAtTime(0, context.currentTime, speed/1500);
+            g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
         }, i*speed);
     }
 });
