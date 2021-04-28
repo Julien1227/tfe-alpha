@@ -65,20 +65,25 @@
     z-index: 100;
     position: absolute;
     width: 100%;
-    height: 100vh;
+    height: $section-height;
 }
 
 // Boutons
 .btn {
     cursor: pointer;
     color: $grey;
-    background-color: $lightBtn;
+    background-color: $white08;
     padding: 1rem;
     border-radius: $round;
     font-weight: 700;
     font-size: 20px;
     box-shadow: $shadow;
     text-decoration: none;
+
+    &-bottom {
+        display: block;
+        margin: 0 auto -1.5rem auto;
+    }
 }
 
 // Si le navigateur ne supporte pas la "backdrop filter", on remplace avec un fond plus opaque
@@ -98,6 +103,7 @@
 // Menu
 .menu {
     position: fixed;
+    z-index: 200;
     bottom: 0;
     width: 100%;
 
@@ -171,28 +177,26 @@
     min-width: 100%;
 
     // Taille de l'écran moins le footer + le header.
-    height: calc(100vh - #{$menu-height});
+    height: calc(#{$section-height} - #{$menu-height});
+    margin-top: $header-height;
 
-    &-title {
-        position: relative;
+    &-header {
+        position: fixed;
+        top: 0;
         z-index: 500;
-        display: block;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: $shadow;
 
         width: 100%;
-        height: 30px;
-        padding: 0.5rem;
-
-        margin: 0;
-
-        font-size: 14px;
-        text-align: center;
-        box-sizing: content-box;
+        height: $header-height;
         background-color: $white;
-
-        &-fixed {
-            padding-bottom: 0;
-            position: fixed;
-            top: 0;
+        
+        &-title {
+            margin: 0;
+            font-size: 14px;
         }
     }
 
@@ -320,7 +324,7 @@
                 border-radius: 2rem;
 
                 height: 3.5rem;
-                width: 19rem;
+                width: 17rem;
                 max-width: 450px;
                 &-btn {
                     margin-bottom: 1rem;
@@ -354,13 +358,6 @@
                         }
                     } 
                 }
-
-                .btn-upload {
-                    position: relative;
-                    display: block;
-                    background-color: #ffffffc5;
-                    margin-top: 2.5rem;
-                }
             }
         }
 
@@ -373,44 +370,34 @@
     &-pad {
         justify-content: flex-start!important;
 
-        &.show-tuto {
-            .pad-tuto {
-                opacity: 1;
-                transition: $t-slow;
-            }
-        }
-
         .pad-tuto {
-            
-            transition: $t-fast;
             top: 0;
             z-index: 200;
-            
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
 
             background-color: $black02;
             
-            
             .tuto-container {
-                display: flex;
-                flex-direction: column;
+                align-self: flex-start;
+
+                text-align: center;
 
                 max-width: 500px;
                 padding: 2rem;
                 padding-bottom: 0;
-                margin: 1rem;
-                border-radius: $rounded;
+                border-radius: 0 0 $rounded2 $rounded2;
                 
                 background-color: $white;
                 box-shadow: $light-shadow;
                 & .btn {
                     align-self: center;
-                    margin-top: 1.5rem;
-                    margin-bottom: -1.75rem;
                 }
+            }
+        }
+
+        &.show-tuto {
+            .pad-tuto {
+                opacity: 1;
+                transition: $t-slow;
             }
         }
 

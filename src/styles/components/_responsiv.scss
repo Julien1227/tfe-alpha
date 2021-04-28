@@ -23,7 +23,7 @@
     .mobile {display: none;}
 
     .section {
-        height: 100vh;
+        height: $section-height;
         align-items: center;
         
         .module {
@@ -43,23 +43,15 @@
         &-color {
             .module {
                 &-frequency {
-                    font-size: 10vw;
-                    line-height: 28vw;
+                    font-size: 165px;
+                    line-height: 115px;
+                    margin-bottom: inherit;
                 }
             }
         }
 
         &-pad {
-            height: 100vh;
-            .module {
-                height: 100vh;
-            }
-
             &.pad-modify {
-                .module {
-                    height: 50vh;
-                }
-
                 .pad-container {
                     height: 50vh;
                 }
@@ -90,7 +82,8 @@
                     .container-img {            
                         position: absolute;
                         object-fit: cover;
-                        width: 100%;
+                        width: 100vw;
+                        height: 100vh;
     
                         filter: blur(50px);
                         transform: scale(1.2) translateY(-10%);

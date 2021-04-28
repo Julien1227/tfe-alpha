@@ -150,18 +150,24 @@ body {
     }
 
     .pad-tuto {
-        transform: translateY(-100%);
+        transition: $t-superfast;
         opacity: 0;
-
+        pointer-events: none;
+        
+        .tuto-container {
+            transition: $t-fast;
+            transition-delay: 0.1s;
+            transform: translateY(-100%);
+        }
         &.show-tuto {
-            transition: 
-            transform       0.001s,
-            opacity     0.3s 0.001s;
-
-            transform: translateY(0);
             opacity: 1;
+            pointer-events: inherit;
+            .tuto-container {
+                transform: translateY(0);
+            }
         }
     }
+
 }
 
 
@@ -179,6 +185,7 @@ body {
     }
     
     .btn-upload {
+        transform: translateY(20px);
         opacity: 0;
         transition: $t-fast;
         transition-delay: 0s;
@@ -220,6 +227,7 @@ body {
             }
 
             .btn-upload {
+                transform: translateY(0);
                 transition-delay: 0.2s;
                 opacity: 1;
                 margin-top: 1.5rem;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,14 +38,16 @@
 </head>
 <body data-page="info">
 
-  <main class="image">
+  <main>
 
       <section class="section-intro fs-center">
-        <span class="section-intro-msg"></span>
+        <h2 class="section-intro-msg"></h2>
       </section>
 
       <section class="section section-color">
-        <h2 class="section-title">Le son des couleurs</h2>
+        <header class="section-header">
+          <h2 class="section-header-title">Le son des couleurs</h2>
+        </header>
         <div class="module" id="module-color" style="background: linear-gradient(#40bfbf, #3986ac);">
           <span class="module-frequency" id="playedColor">514 Hz</span>
           <div class="module-shadow"></div>
@@ -70,13 +72,15 @@
       </section>
 
       <section class="section section-pad">
-        <h2 class="section-title section-title-fixed">Pad</h2>
+        <header class="section-header">
+          <h2 class="section-header-title">Pad</h2>
+        </header>
 
         <div class="fs-center pad-tuto">
           <div class="tuto-container">
             <h2>Guide</h2>
             <p>Appuyez sur une touche et bougez les sliders pour en modifier la couleur. Sélectionner "Enregistrer" pour sauvegarder vos nouvelles touches.</p>
-            <button id="closeTuto" class="btn">Compris !</button>
+            <button id="closeTuto" class="btn btn-bottom">Compris !</button>
           </div>
         </div>
         
@@ -117,13 +121,17 @@
       </section>
       
       <section class="section section-piano">
-        <h2 class="section-title section-title-fixed">Piano</h2>
+        <header class="section-header">
+          <h2 class="section-header-title">Piano</h2>
+        </header>
         <div class="piano-color"></div>
         <h2 class="piano-msg">Appuyez sur une touche.</h2>
       </section>
       
       <section class="section section-image">
-        <h2 class="section-title">Le son des images</h2>
+        <header class="section-header">
+          <h2 class="section-header-title">Le son des images</h2>
+        </header>
 
         <div class="module">
 
@@ -141,12 +149,12 @@
               <!-- Photo de Sharon Mccutcheon provenant de Pexels -->
               <li class="selection-image-el desktop"><img src="assets/images/toListen/tumbnail/toListen4.jpg" srcset="assets/images/toListen/tumbnail/toListen4@2x.jpg 2x" alt="Image 3"></li>
             </ul>
-            <button id="uploadBtn" class="btn btn-upload"></button>
+            <button id="uploadBtn" class="btn btn-bottom btn-upload"></button>
           </div>
 
-          <img class="img" srcset="assets/images/toListen/toListen1.jpg, assets/images/toListen/toListen1@2x.jpg 2x" alt="L'image n'a pas pu charger">
+          <img class="img" src="assets/images/toListen/toListen1.jpg" srcset="assets/images/toListen/toListen1@2x.jpg 2x" alt="L'image n'a pas pu charger">
           <div class="background-container">
-            <img class="container-img" srcset="assets/images/toListen/toListen1.jpg, assets/images/toListen/toListen1@2x.jpg 2x" alt="L'image n'a pas pu charger">
+            <img class="container-img" src="assets/images/toListen/toListen1.jpg" srcset="assets/images/toListen/toListen1@2x.jpg 2x" alt="L'image n'a pas pu charger">
           </div>
 
           <input id="uploadInput" type="file" accept=".jpeg, .jpg, .png">
@@ -170,7 +178,9 @@
       </section>
 
       <section class="section section-info">
-        <h2 class="section-title section-title-fixed">En savoir plus</h2>
+        <header class="section-header">
+          <h2 class="section-header-title">En savoir plus</h2>
+        </header>
 
         
         <div id="nav" class="navigation-container">
@@ -182,18 +192,18 @@
             <ul class="navigation-list">
               <li><a class="navigation-list-el current" href="#intro">Comment ça marche ?</a></li>
               <li><a class="navigation-list-el" href="#osc">Comment utiliser l'oscillateur ?</a></li>
-              <li><a class="navigation-list-el" href="#piano">Le piano.</a></li>
+              <li><a class="navigation-list-el" href="#pianoInfo">Le piano.</a></li>
               <li><a class="navigation-list-el" href="#comingUp">Pour la suite...</a></li>
             </ul>
           </div>
         </div>
         <div class="container">
 
-          <h3 id="intro" class="anchor">Comment ça marche ?</h3>
+          <h3 id="intro" class="anchor">Comment ça marche&nbsp;?</h3>
           <p>De votre point de vue, vous jouez avec trois sliders qui modifient une couleur et la fréquence sonore qui en sort.</p>
           <p>Vous avez sans doute remarqué que plus la couleur est présente plus le son est jouée fort tandis que plus elle sera blanche, noir ou dé-saturée (moins la couleur est présente), moins le son sera audible.</p>
 
-          <img class="container-image" srcset="assets/images/info/colorfulSound.png, assets/images/info/colorfulSound@2x.png 2x" type="image/png"/>
+          <img class="container-image" src="assets/images/info/colorfulSound.png" srcset="assets/images/info/colorfulSound@2x.png 2x" alt="Démontration de l'intensité du don provenant d'une couleur."/>
           
           <p>Ces observation permettent déjà de comprendre que la luminosité et la saturation sont directement lié à l’intensité du son. La raison de ceci est tout d’abord que le blanc et le noir ne sont pas reconnu comme étant des couleurs. Plus encore, selon cette sources par exemple, dans le domaine musical, le blanc/noir sont lié à un vide ce qui accompagne à merveille mon raisonnement.</p>
 
@@ -205,7 +215,7 @@
           <p>Avec ces paramètres, nous arrivons à la <a target="_blank" href="https://julienscheen.be/projets/TFE-exp/exp-create-sound/">première version de mon projet</a>. Elle est intéressante mais semble incomplète n’est-ce pas ?</p>
           <p>C’est parce qu’elle joue les fréquences des couleurs telle qu’elle sont présentée dans le spectre visible (de 428 Thz à 750 Thz), à cause de ça vous pourrez voir que nous avons aussi un seul rouge jouant deux sons différents (aux deux extrémités du slider de teinte). Cela ne semble pas fort logique étant donné que la première chose que l’on voit n’est pas une fréquence mais bien une couleur.</p>
 
-          <img class="container-image" srcset="assets/images/info/colorfulWave.png, assets/images/info/colorfulWave@2x.png 2x" type="image/png"/>
+          <img class="container-image" src="assets/images/info/colorfulWave.png" srcset="assets/images/info/colorfulWave@2x.png 2x" alt="Répartition des fréquences à travers le spectre lumineux."/>
 
           <p>Pour améliorer ceci, le code ne crée désormais plus la fréquence depuis la teinte du schéma TSL (Teinte, Saturation, Luminiosité) mais bien depuis l’addition des couleurs rouge, vert et bleu du schéma RVB.</p>
           <p>Pour obtenir ce schéma, je convertis la couleur fournie par le schéma TSL en couleur RVB à l’aide de cette fonction “TSLToRGB(t, s, l)”, et obtiens donc les valeurs “rouge”, “vert” et “bleu” avec lesquelles je peux jongler.</p>
@@ -223,10 +233,10 @@
           <p>Je dois les assigner à mon oscillateur. Pour ce faire, la Web audio API met à disposition “setValueAtTime” et “setTargetAtTime”. “setTargetAtTime” est très utile pour le gain car il permet de gérer des fondus pour ainsi éviter de couper le son net. Avec ces deux outils, je demande donc ceci à mon code:</p>
           <script src="https://gist.github.com/Julien1227/e189528791f43b05c6da77ed04d2d247.js"></script>
 
-          <h3 id="piano" class="anchor">Le piano.</h3>
+          <h3 id="pianoInfo" class="anchor">Le piano.</h3>
           <p>Si vous êtes sur la version ordinateur du site et que vous avez fait le tour des onglets, après avoir lu ceci vous aurez compris qu’il s’agit généralement du même principe pour chaque page: récupérer une couleur, créer sa fréquence et son gain, jouer les paramètres. Cependant le piano, lui, sort du lot.</p>
           <p>C’est le seul code auquel on donne d’abord une fréquence, et non une couleur. Cependant, le problème est que plusieurs fréquences correspondent à plusieurs couleurs et que même faire machine arrière pour calculer une couleur depuis la fréquence est alors impossible.</p>
-          <img class="container-image" srcset="assets/images/info/colorfulNote.png, assets/images/info/colorfulNote@2x.png 2x" type="image/png"/>
+          <img class="container-image" src="assets/images/info/colorfulNote.png" srcset="assets/images/info/colorfulNote@2x.png 2x" alt="Image montrant le fonctionnement du piano."/>
           <p>La solution, c’est donc de demander au code de trouver une couleur correspondant à la fréquence demandée par le piano, et d’ensuite l’afficher à l’écran&nbsp;!</p>
 
           <div class="container-code container-code-shapeMedium">
