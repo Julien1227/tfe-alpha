@@ -1,4 +1,5 @@
 $white: #fff;
+$white01: #ffffff09;
 $white05: #ffffff79;
 $white08: #ffffffbe;
 $white09: #ffffffda;
@@ -47,14 +48,13 @@ $codeShapeMedium: 12rem;
 $codeShapeLittle: 4rem;
 
 // Gist
+$gist-blob-num: #ffffff4d;
+$gist-blob-num-hover: #ffffff8e;
 $gist-variables: #c9d1d9;
-$gist-bottomBackground: #151c29;
-$gist-topBackground: $gist-bottomBackground;
-$gist-borderColor: none;
+$gist-background: #151c29;
 $gist-specialChars: #c9d1d9;
 $gist-commentary: #8b949e;
 $gist-number: #79c0ff;
 $gist-function:  #d2a8ff;
 $gist-existingFunction: #ffa657;
 $gist-functionDeclaration: #ff9a9a;
-$gist-radius: 0;

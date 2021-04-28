@@ -59,826 +59,63 @@ label {
     background: #555;
   }
 }
-/*!
-* Gist DarkCode ver 0.2.0 
-* Copyright (c) 2017 KillerCodes.in
-* License: Free to use with this file header ;)
-*/
-.gist {
-  font-size: 18px;
-}
-
-.gist-meta, .gist-file, .octotree_toggle, ul.comparison-list > li.title, button.button, a.button, span.button, button.minibutton, a.minibutton, span.minibutton, .clone-url-button > .clone-url-link {
-  background: #151c29 !important;
-  border: none !important;
-  overflow: hidden !important;
-  border-radius: 0 !important;
-  text-shadow: none !important;
-  color: #b5b5b5 !important;
-}
-
-.markdown-format pre, .markdown-body pre, .markdown-format .highlight pre, .markdown-body .highlight pre, body.blog pre, #facebox pre, .blob-expanded, .terminal, .copyable-terminal, #notebook .input_area, .blob-code-context, .markdown-format code, body.blog pre > code, .api pre, .api code, .CodeMirror, .highlight {
-  background-color: #151c29 !important;
-  color: #C5C8C6 !important;
-}
-
-.gist .blob-code {
-  padding: 1px 10px !important;
-  text-align: left;
-  background: #000;
-  border: 0;
-}
-
-::-moz-selection {
-  background: #24890d;
-  color: #fff;
-  text-shadow: none;
-}
-
-.blob-num {
-  padding: 10px 8px 9px;
-  text-align: right;
-  color: #6B6B6B !important;
-  border: 0;
-}
-
-.blob-code, .blob-code-inner {
-  color: #C5C8C6 !important;
-}
-
-.pl-c, .pl-c span {
-  color: #8b949e !important;
-  font-style: italic !important;
-}
-
-.pl-c1 {
-  color: #79c0ff !important;
-}
-
-.pl-cce {
-  color: #c9d1d9 !important;
-}
-
-.pl-cn {
-  color: #c9d1d9 !important;
-}
-
-.pl-coc {
-  color: #c9d1d9 !important;
-}
-
-.pl-cos {
-  color: #c9d1d9 !important;
-}
-
-.pl-e {
-  color: #d2a8ff !important;
-}
-
-.pl-ef {
-  color: #d2a8ff !important;
-}
-
-.pl-en {
-  color: #d2a8ff !important;
-}
-
-.pl-enc {
-  color: #c9d1d9 !important;
-}
-
-.pl-enf {
-  color: #d2a8ff !important;
-}
-
-.pl-enm {
-  color: #d2a8ff !important;
-}
-
-.pl-ens {
-  color: #c9d1d9 !important;
-}
-
-.pl-ent {
-  color: #B294BB !important;
-}
-
-.pl-entc {
-  color: #d2a8ff !important;
-}
-
-.pl-enti {
-  color: #d2a8ff !important;
-  font-weight: 700 !important;
-}
-
-.pl-entm {
-  color: #C66 !important;
-}
-
-.pl-eoa {
-  color: #B294BB !important;
-}
-
-.pl-eoac {
-  color: #C66 !important;
-}
-
-.pl-eoac .pl-pde {
-  color: #C66 !important;
-}
-
-.pl-eoai {
-  color: #B294BB !important;
-}
-
-.pl-eoai .pl-pde {
-  color: #B294BB !important;
-}
-
-.pl-eoi {
-  color: #d2a8ff !important;
-}
-
-.pl-k {
-  color: #ff9a9a !important;
-}
-
-.pl-ko {
-  color: #B294BB !important;
-}
-
-.pl-kolp {
-  color: #B294BB !important;
-}
-
-.pl-kos {
-  color: #c9d1d9 !important;
-}
-
-.pl-kou {
-  color: #c9d1d9 !important;
-}
-
-.pl-mai .pl-sf {
-  color: #C66 !important;
-}
-
-.pl-mb {
-  color: #c9d1d9 !important;
-  font-weight: 700 !important;
-}
-
-.pl-mc {
-  color: #B294BB !important;
-}
-
-.pl-mh .pl-pdh {
-  color: #c9d1d9 !important;
-}
-
-.pl-mi {
-  color: #B294BB !important;
-  font-style: italic !important;
-}
-
-.pl-ml {
-  color: #c9d1d9 !important;
-}
-
-.pl-mm {
-  color: #C66 !important;
-}
-
-.pl-mp {
-  color: #81A2BE !important;
-}
-
-.pl-mp1 .pl-sf {
-  color: #81A2BE !important;
-}
-
-.pl-mq {
-  color: #c9d1d9 !important;
-}
-
-.pl-mr {
-  color: #B294BB !important;
-}
-
-.pl-ms {
-  color: #B294BB !important;
-}
-
-.pl-pdb {
-  color: #c9d1d9 !important;
-  font-weight: 700 !important;
-}
-
-.pl-pdc {
-  color: #969896 !important;
-  font-style: italic !important;
-}
-
-.pl-pdc1 {
-  color: #c9d1d9 !important;
-}
-
-.pl-pde {
-  color: #c9d1d9 !important;
-}
-
-.pl-pdi {
-  color: #B294BB !important;
-  font-style: italic !important;
-}
-
-.pl-pds {
-  color: #c9d1d9 !important;
-}
-
-.pl-pdv {
-  color: #C66 !important;
-}
-
-.pl-pse {
-  color: #c9d1d9 !important;
-}
-
-.pl-pse .pl-s2 {
-  color: #c9d1d9 !important;
-}
-
-.pl-s {
-  color: #B294BB !important;
-}
-
-.pl-s1 {
-  color: #c9d1d9 !important;
-}
-
-.pl-s2 {
-  color: #c5c8c6 !important;
-}
-
-.pl-mp .pl-s3 {
-  color: #B294BB !important;
-}
-
-.pl-s3 {
-  color: #81a2be !important;
-}
-
-.pl-sc {
-  color: #c5c8c6 !important;
-}
-
-.pl-scp {
-  color: #c9d1d9 !important;
-}
-
-.pl-sf {
-  color: #DAD085 !important;
-}
-
-.pl-smc {
-  color: #d2a8ff !important;
-}
-
-.pl-smi {
-  color: #c5c8c6 !important;
-}
-
-.pl-smp {
-  color: #c5c8c6 !important;
-}
-
-.pl-sok {
-  color: #B294BB !important;
-}
-
-.pl-sol {
-  color: #c9d1d9 !important;
-}
-
-.pl-som {
-  color: #C66 !important;
-}
-
-.pl-sr {
-  color: #C66 !important;
-}
-
-.pl-sra {
-  color: #B294BB !important;
-}
-
-.pl-src {
-  color: #B294BB !important;
-}
-
-.pl-sre {
-  color: #B294BB !important;
-}
-
-.pl-st {
-  color: #B294BB !important;
-}
-
-.pl-stj {
-  color: #c5c8c6 !important;
-}
-
-.pl-stp {
-  color: #c9d1d9 !important;
-}
-
-.pl-sv {
-  color: #c9d1d9 !important;
-}
-
-.pl-v {
-  color: #ffa657 !important;
-}
-
-.pl-vi {
-  color: #c9d1d9 !important;
-}
-
-.pl-vo {
-  color: #ffa657 !important;
-}
-
-.pl-vpf {
-  color: #c9d1d9 !important;
-}
-
-.pl-mi1 {
-  color: #8F9D6A !important;
-  background: rgba(0, 64, 0, 0.5) !important;
-}
-
-.pl-mdht {
-  color: #8F9D6A !important;
-  background: rgba(0, 64, 0, 0.5) !important;
-}
-
-.pl-md {
-  color: #C66 !important;
-  background: rgba(64, 0, 0, 0.5) !important;
-}
-
-.pl-mdhf {
-  color: #C66 !important;
-  background: rgba(64, 0, 0, 0.5) !important;
-}
-
-.pl-mdr {
-  color: #c9d1d9 !important;
-  font-weight: 400 !important;
-}
-
-.pl-mdh {
-  color: #C66 !important;
-  font-weight: 400 !important;
-}
-
-.pl-mdi {
-  color: #C66 !important;
-  font-weight: 400 !important;
-}
-
-.pl-ib {
-  background-color: #C66 !important;
-}
-
-.pl-id {
-  background-color: #C66 !important;
-  color: #fff !important;
-}
-
-.pl-ii {
-  background-color: #C66 !important;
-  color: #fff !important;
-}
-
-.pl-iu {
-  background-color: #C66 !important;
-}
-
-.pl-mo {
-  color: #c5c8c6 !important;
-}
-
-.pl-mri {
-  color: #c9d1d9 !important;
-}
-
-.pl-ms1 {
-  background-color: #c5c8c6 !important;
-}
-
-.pl-va {
-  color: #c9d1d9 !important;
-}
-
-.pl-vpu {
-  color: #c9d1d9 !important;
-}
-
-.pl-entl {
-  color: #c5c8c6 !important;
-}
-
-.CodeMirror-gutters {
-  background: #222 !important;
-  border-right: 1px solid #484848 !important;
-}
-
-.CodeMirror-guttermarker {
-  color: #fff !important;
-}
-
-.CodeMirror-guttermarker-subtle {
-  color: #aaa !important;
-}
-
-.CodeMirror-linenumber {
-  color: #aaa !important;
-}
-
-.CodeMirror-cursor {
-  border-left: 1px solid #fff !important;
-}
-
-.CodeMirror-activeline-background {
-  background: #27282E !important;
-}
-
-.CodeMirror-matchingbracket {
-  outline: 1px solid grey !important;
-  color: #fff !important;
-}
-
-.cm-keyword {
-  color: #f9ee98 !important;
-}
-
-.cm-atom {
-  color: #FC0 !important;
-}
-
-.cm-number {
-  color: #ca7841 !important;
-}
-
-.cm-def {
-  color: #8DA6CE !important;
-}
-
-.cm-variable-2, span.cm-tag {
-  color: #607392 !important;
-}
-
-.cm-variable-3, span.cm-def {
-  color: #607392 !important;
-}
-
-.cm-operator {
-  color: #cda869 !important;
-}
-
-.cm-comment {
-  color: #777 !important;
-  font-style: italic !important;
-  font-weight: 400 !important;
-}
-
-.cm-string {
-  color: #8f9d6a !important;
-}
-
-.cm-string-2 {
-  color: #bd6b18 !important;
-}
-
-.cm-meta {
-  background-color: #141414 !important;
-  color: #f7f7f7 !important;
-}
-
-.cm-builtin {
-  color: #cda869 !important;
-}
-
-.cm-tag {
-  color: #997643 !important;
-}
-
-.cm-attribute {
-  color: #d6bb6d !important;
-}
-
-.cm-header {
-  color: #FF6400 !important;
-}
-
-.cm-hr {
-  color: #AEAEAE !important;
-}
-
-.cm-link {
-  color: #ad9361 !important;
-  font-style: italic !important;
-  text-decoration: none !important;
-}
-
-.cm-error {
-  border-bottom: 1px solid red !important;
-}
-
-#notebook .highlight table {
-  background: #1d1f21 !important;
-  color: #c5c8c6 !important;
-}
-
-.highlight .hll {
-  background-color: #373b41 !important;
-}
-
-.highlight .c {
-  color: #969896 !important;
-}
-
-.highlight .err {
-  color: #c66 !important;
-}
-
-.highlight .k {
-  color: #b294bb !important;
-}
-
-.highlight .l {
-  color: #c9d1d9 !important;
-}
-
-.highlight .h, .highlight .n {
-  color: #c5c8c6 !important;
-}
-
-.highlight .o {
-  color: #8abeb7 !important;
-}
-
-.highlight .p {
-  color: #c5c8c6 !important;
-}
-
-.highlight .cm {
-  color: #969896 !important;
-}
-
-.highlight .cp {
-  color: #969896 !important;
-}
-
-.highlight .c1 {
-  color: #969896 !important;
-}
-
-.highlight .cs {
-  color: #969896 !important;
-}
-
-.highlight .gd {
-  color: #c66 !important;
-}
-
-.highlight .ge {
-  font-style: italic !important;
-}
-
-.highlight .gh {
-  color: #c5c8c6 !important;
-  font-weight: 700 !important;
-}
-
-.highlight .gi {
-  color: #c9d1d9 !important;
-}
-
-.highlight .gp {
-  color: #969896 !important;
-  font-weight: 700 !important;
-}
-
-.highlight .gs {
-  font-weight: 700 !important;
-}
-
-.highlight .gu {
-  color: #8abeb7 !important;
-  font-weight: 700 !important;
-}
-
-.highlight .kc {
-  color: #b294bb !important;
-}
-
-.highlight .kd {
-  color: #b294bb !important;
-}
-
-.highlight .kn {
-  color: #8abeb7 !important;
-}
-
-.highlight .kp {
-  color: #b294bb !important;
-}
-
-.highlight .kr {
-  color: #b294bb !important;
-}
-
-.highlight .kt {
-  color: #d2a8ff !important;
-}
-
-.highlight .ld {
-  color: #c9d1d9 !important;
-}
-
-.highlight .m {
-  color: #c9d1d9 !important;
-}
-
-.highlight .s {
-  color: #c9d1d9 !important;
-}
-
-.highlight .na {
-  color: #81a2be !important;
-}
-
-.highlight .nb {
-  color: #c5c8c6 !important;
-}
-
-.highlight .nc {
-  color: #d2a8ff !important;
-}
-
-.highlight .no {
-  color: #c66 !important;
-}
-
-.highlight .nd {
-  color: #8abeb7 !important;
-}
-
-.highlight .ni {
-  color: #c5c8c6 !important;
-}
-
-.highlight .ne {
-  color: #c66 !important;
-}
-
-.highlight .nf {
-  color: #81a2be !important;
-}
-
-.highlight .nl {
-  color: #c5c8c6 !important;
-}
-
-.highlight .nn {
-  color: #d2a8ff !important;
-}
-
-.highlight .nx {
-  color: #81a2be !important;
-}
-
-.highlight .py {
-  color: #c5c8c6 !important;
-}
-
-.highlight .nt {
-  color: #8abeb7 !important;
-}
-
-.highlight .nv {
-  color: #c66 !important;
-}
-
-.highlight .ow {
-  color: #8abeb7 !important;
-}
-
-.highlight .w {
-  color: #c5c8c6 !important;
-}
-
-.highlight .mf {
-  color: #c9d1d9 !important;
-}
-
-.highlight .mh {
-  color: #c9d1d9 !important;
-}
-
-.highlight .mi {
-  color: #c9d1d9 !important;
-}
-
-.highlight .mo {
-  color: #c9d1d9 !important;
-}
-
-.highlight .sb {
-  color: #c9d1d9 !important;
-}
-
-.highlight .sc {
-  color: #c5c8c6 !important;
-}
-
-.highlight .sd {
-  color: #969896 !important;
-}
-
-.highlight .s2 {
-  color: #c9d1d9 !important;
-}
-
-.highlight .se {
-  color: #c9d1d9 !important;
-}
-
-.highlight .sh {
-  color: #c9d1d9 !important;
-}
-
-.highlight .si {
-  color: #c9d1d9 !important;
-}
-
-.highlight .sx {
-  color: #c9d1d9 !important;
-}
-
-.highlight .sr {
-  color: #6886bd !important;
-}
-
-.highlight .s1 {
-  color: #c9d1d9 !important;
-}
-
-.highlight .ss {
-  color: #c9d1d9 !important;
-}
-
-.highlight .bp {
-  color: #c5c8c6 !important;
-}
-
-.highlight .vc {
-  color: #c66 !important;
-}
-
-.highlight .vg {
-  color: #c66 !important;
-}
-
-.highlight .vi {
-  color: #c66 !important;
-}
-
-.highlight .il {
-  color: #c9d1d9 !important;
-}
-
 .gist-file {
   border-radius: 10px !important;
+  overflow: hidden !important;
   margin: 0 !important;
+  border: none !important;
+  background: #151c29 !important;
+}
+.gist-data, .gist-meta {
+  background: #151c29 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+.gist .highlight {
+  background: linear-gradient(#151c29 50%, #121924 100%) !important;
+}
+.gist .blob-num {
+  color: #ffffff4d !important;
+  border-right: 1px solid #ffffff09 !important;
+}
+.gist .blob-num:hover {
+  color: #ffffff8e !important;
+}
+.gist .pl-v {
+  color: #ffa657 !important;
+}
+.gist .pl-kos {
+  color: #c9d1d9 !important;
+}
+.gist .pl-c {
+  color: #8b949e !important;
+}
+.gist .pl-s1 {
+  color: #c9d1d9 !important;
+}
+.gist .pl-c1 {
+  color: #79c0ff !important;
+}
+.gist .pl-en {
+  color: #d2a8ff !important;
+}
+.gist .pl-k {
+  color: #ff9a9a !important;
 }
 .gist .blob-wrapper::-webkit-scrollbar-track {
   background: #151c29;
 }
 .gist .blob-wrapper::-webkit-scrollbar-thumb {
-  background: #38465f;
+  background: #26334b;
 }
 .gist .blob-wrapper::-webkit-scrollbar-thumb:hover {
-  background: #5e7092;
+  background: #384a6c;
 }
 
 .fs-center {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 100;
   position: absolute;
   width: 100%;
@@ -1002,16 +239,16 @@ label {
 .section .form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 2rem;
   background-color: #fff;
 }
 .section .form-el {
-  margin: 0.5rem 0;
-  width: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0.5rem 0;
+  width: 100%;
 }
 .section .form-el label {
   margin-left: 3px;
@@ -1046,9 +283,9 @@ label {
   height: 100%;
 }
 .section-image .module .color-list {
-  z-index: 1000;
   display: flex;
   justify-content: center;
+  z-index: 1000;
   flex-wrap: wrap;
   max-width: calc(100% - 3rem);
   padding: 0.2rem;
@@ -1078,14 +315,14 @@ label {
   z-index: -20;
 }
 .section-image .module .selection {
-  overflow: hidden;
-  margin-top: 1.5rem;
-  z-index: 20;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 2rem;
+  overflow: hidden;
+  z-index: 20;
+  margin-top: 1.5rem;
+  box-sizing: border-box;
+  border-radius: 30px;
   height: 3.5rem;
   width: 17rem;
   max-width: 450px;
@@ -1152,18 +389,18 @@ label {
   align-items: center;
 }
 .section-pad .pad-container {
-  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 .section-pad .pad {
   display: grid;
   grid-template-columns: repeat(3, 100px);
   grid-template-rows: repeat(3, 100px);
-  max-width: 100vw;
   justify-content: center;
+  max-width: 100vw;
   box-sizing: content-box;
   margin: 1rem auto;
   border-radius: 10px;
@@ -1239,9 +476,10 @@ label {
   margin-bottom: 0.5rem !important;
 }
 .section-piano {
-  height: 100vh;
-  justify-content: center;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 .section-piano-fixed {
   position: fixed;
@@ -1262,6 +500,8 @@ label {
   transition: all 0.1s cubic-bezier(0.33, 1, 0.68, 1);
 }
 .section-info {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   position: relative;
   overflow-y: scroll;
@@ -1318,14 +558,14 @@ label {
 }
 .section-info .navigation-container {
   z-index: 20;
+  overflow: hidden;
   position: fixed;
   right: 0;
-  bottom: 4rem;
+  bottom: calc(4rem + 1rem);
   width: 4rem;
   height: 4rem;
-  overflow: hidden;
   margin: 2rem;
-  border-radius: 2.5rem;
+  border-radius: 30px;
   box-shadow: 0px 0px 25px -10px #00000038;
   background-color: #fff;
   text-align: center;
