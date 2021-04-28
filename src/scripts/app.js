@@ -48,7 +48,9 @@ beginBtn.addEventListener('click', (e) => {
 // VARIABLES
 const body = document.querySelector('body'),
       sliderBtn = document.querySelectorAll('.menu-btn'),
-      pianoMsg = document.querySelector('.piano-msg');
+      pianoMsg = document.querySelector('.piano-msg'),
+      infoSection = document.querySelector('.section-info');
+
 
 sliderBtn.forEach(element => {
     element.addEventListener('click', (e) => {
@@ -62,8 +64,15 @@ sliderBtn.forEach(element => {
             pianoMsg.style.opacity = "1";
             pianoMsg.style.display = "inherit";
         }
+
+        // Reset le scroll de la page malgré l'ancre
+        if (page == "info") {
+            infoSection.scrollTop = 0;
+            console.log('ok');
+        }
     });
 });
+
 
 
 ///////////////////////////////////////////////////////////////////
@@ -102,7 +111,7 @@ for (let i = 0; i < colorInputs.length; i++) {
         // Défini la fréquence
         o.frequency.setValueAtTime(frq, context.currentTime);
         // Défini l'intensité
-        g.gain.setValueAtTime(gain, context.currentTime);
+        g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
         // Affiche la fréquence jouée
         actualNote.innerHTML = o.frequency.value + " Hz";
         
@@ -119,6 +128,151 @@ for (let i = 0; i < colorInputs.length; i++) {
         });
     });
 };
+
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+
+// VARIABLES
+var speed = 120;
+const playRate = document.getElementById('playRate'),
+      playRateSpan = document.getElementById('playRateSpan'),
+      colorNumberSpan = document.getElementById('colorNumberSpan'),
+      colorNumber = document.getElementById('colorNumber');
+
+const playImageBtn = document.getElementById('getColors'),
+      imgToListen = document.querySelector('.img'),
+      btnUpload = document.getElementById('uploadBtn'),
+      btnOpenSelection = document.getElementById('btnOpenSelection'),
+      imageSelection = document.querySelectorAll('.selection-image-el'),
+      inputUpload = document.getElementById('uploadInput'),
+      colorList = document.querySelector('.color-list'),
+      backgroundImg = document.querySelector('.container-img');
+
+const colorThief = new ColorThief();
+
+// Affiche le bon message en fonction du device
+let deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "mon explorateur de fichiers" : "ma galerie";
+btnUpload.innerHTML = "Ouvrir " + deviceAction2;
+
+// Réglage de la vitesse de lecture
+playRate.addEventListener('input', (e) => {
+    speed = playRate.value * -1;
+    playRateSpan.innerHTML = playRate.value * -1;
+});
+
+// Réglage du nombre de couleurs
+colorNumber.addEventListener('input', (e) => {
+    colorNumberSpan.innerHTML = colorNumber.value;
+});
+
+// Présélectionne une image
+imageSelection[0].classList.add('selected');
+
+// Crée la palette de l'image présélectionnée
+// S'assure que l'image est chargée
+createPalette(imgToListen);
+
+// Ouvre la sélection
+btnOpenSelection.addEventListener('click', (e) => {
+    btnOpenSelection.classList.toggle('selection-open');
+});
+
+// Change l'image avec l'image sélectionnée
+imageSelection.forEach(image => {
+    image.addEventListener('click', (e) => {
+        let currentTarget = e.currentTarget;
+        let pastTarget = document.querySelector('.selected');
+        currentTarget.classList.add('selected');
+        
+        // Vérifie si ils sont null avant d'ajouter ou retirer la class
+        pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added');
+        
+        // Children[0] car currentTarget est "li" et non "li > img"
+        let imgName = currentTarget.children[0].currentSrc.slice(-13);
+        imgName = imgName.slice(0, imgName.length - 4);
+
+
+        backgroundImg.setAttribute('src', 'assets/images/toListen/'+ imgName +'.jpg');
+        imgToListen.setAttribute('src', 'assets/images/toListen/'+ imgName +'.jpg');
+
+        backgroundImg.setAttribute('srcset', 'assets/images/toListen/'+ imgName +'@2x.jpg 2x');
+        imgToListen.setAttribute('srcset', 'assets/images/toListen/'+ imgName +'@2x.jpg 2x');
+        createPalette(imgToListen);
+    });
+});
+
+
+
+// Upload d'une image
+btnUpload.addEventListener('click', (e) => {
+     inputUpload.click();
+     //Actualise l'image uploadée
+     inputUpload.addEventListener('change', (e) => {
+        // Retire la class "selected" de l'image précédement sélectionnée
+        let pastTarget = document.querySelector('.selected');
+        pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection removed');
+
+        let imgLink = URL.createObjectURL(e.target.files[0]);
+        console.log(imgLink);
+        backgroundImg.setAttribute('srcset', imgLink);
+        imgToListen.setAttribute('srcset', imgLink);
+
+        createPalette(imgToListen);
+     });
+});
+
+//Récupère les couleurs de l'image et les joue
+playImageBtn.addEventListener('click', (e) => {
+    colorList.innerHTML = "";
+
+    let gains = [],
+        frqs = [];
+    
+    let palette = colorThief.getPalette(imgToListen, Number(colorNumber.value));
+
+    for (let i = 0; i < palette.length; i++) {
+
+        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);
+
+        let h = hslColor[0],
+            s = hslColor[1],
+            l = hslColor[2];           
+        
+        // Crée un élement HTML auquel il assigne la couleur
+        let color = document.createElement('li');
+        color.classList.add('color-list-el');
+        color.style.backgroundColor = "hsl("+ h +", "+ s +"%, "+ l +"%)";
+        
+        colorList.appendChild(color);
+
+        // Génère un gain et une fréquence pour chaque couleur
+        let gain = setGain(l, s);
+        let frq = setFrequency(h, s, l);
+
+        gains.push(gain);
+        frqs.push(frq);
+    }
+    
+    //Joue chaque paramètre les uns après les autres
+    for(var i = 0; i < frqs.length; i++) {
+        play(i);
+    }
+
+    function play(i) {
+        setTimeout(function() {
+            g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
+            o.frequency.setValueAtTime(frqs[i], context.currentTime);
+
+            g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
+        }, i*speed);
+    }
+});
 
 
 
@@ -184,15 +338,19 @@ saveBtn.addEventListener('click', (e) => {
 pianoBtn.forEach(btn => {
     btn.addEventListener(event('start'), (e) => {
         let targetBtn = e.currentTarget;
+
         
         // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
-        let hslColor = getHslFromAttribute(targetBtn);
-        
+        let hslColor = getHslFromAttribute(targetBtn),
+            h = hslColor[0],
+            s = hslColor[1],
+            l = hslColor[2];
+
         // Défini le gain et la fréquence
-        let frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]),
-            gain = setGain(hslColor[2], hslColor[1]);
+        let frq = setFrequency(h, s, l),
+            gain = setGain(l, s);
         
-        g.gain.setValueAtTime(gain, context.currentTime);
+        g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
         o.frequency.setValueAtTime(frq, context.currentTime);
         
         // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
@@ -245,24 +403,24 @@ pianoBtn.forEach(btn => {
 // L'orsqu'un slider bouge - modifie la couleur active
 for (let i = 0; i < pianoFormInput.length; i++) {
     pianoFormInput[i].addEventListener('input', (e) => {
-        let t = pianoFormInput[0].value,
+        let h = pianoFormInput[0].value,
             s = pianoFormInput[1].value,
             l = pianoFormInput[2].value;
 
         pianoFormSpan[i].innerHTML = pianoFormInput[i].value;
         
         let actualBtn = document.querySelector('.pad-btn-active');
-        let hexColor = HSLToHex(t, s, l);
+        let hexColor = HSLToHex(h, s, l);
         
         // Actualise la couleur du bouton
         actualisePadBtnColor(actualBtn, hexColor);
         
         // Défini le gain et la fréquence
-        let frq = setFrequency(t, s, l),
+        let frq = setFrequency(h, s, l),
             gain = setGain(l, s);
 
         o.frequency.setValueAtTime(frq, context.currentTime);
-        g.gain.setValueAtTime(gain, context.currentTime);
+        g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
 
         pianoFormInput[i].addEventListener(event('end'), (e) => {
             g.gain.setTargetAtTime(0, context.currentTime, 0.1);
@@ -284,7 +442,7 @@ for (let i = 0; i < pianoFormInput.length; i++) {
 // Variables
 const pianoColor = document.querySelector('.piano-color');
 
-var t = 0,
+var h = 0,
     s = 0,
     l = 0,
     down = false;
@@ -341,18 +499,19 @@ document.addEventListener('keydown', (event) => {
 
             // Assigne la valeur de gain et fréquence
             o.frequency.setValueAtTime(frq, context.currentTime);
-            g.gain.setValueAtTime(1, context.currentTime);
+            g.gain.setTargetAtTime(1, context.currentTime, 0.002);
+            
                 
             // Cherche une couleur correspondant à la fréquence
             do {
-                t = randomMinMax(0, 360);
+                h = randomMinMax(0, 360);
                 s = 100;
                 l = randomMinMax(50, 60);
-                color = setFrequency(t, s, l);
+                color = setFrequency(h, s, l);
             } while (frq != color);
 
             // Convertis la couleur en hexadécimal pour l'assigner
-            let hexColor = HSLToHex(t, s, l);
+            let hexColor = HSLToHex(h, s, l);
 
             // Assignation de la couleur et d'un class de transition
             pianoColor.style.backgroundColor = hexColor;
@@ -374,143 +533,70 @@ document.addEventListener('keyup', (event) => {
 }, false);
 
 
-
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
+//////////////////////////// INFO MENU ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+const navBtnOpen = document.querySelector('.nav-btn-open'),
+      navBtnClose = document.querySelector('.nav-btn-close'),
+      nav = document.getElementById('nav'),
+      gist = document.querySelectorAll('.container-code .gist'),
+      anchors = document.querySelectorAll('.anchor'),
+      navElements = document.querySelectorAll('.navigation-list-el');
 
-// VARIABLES
-var speed = 120;
-const playRate = document.getElementById('playRate'),
-      playRateSpan = document.getElementById('playRateSpan'),
-      colorNumberSpan = document.getElementById('colorNumberSpan'),
-      colorNumber = document.getElementById('colorNumber');
-
-const playImageBtn = document.getElementById('getColors'),
-      imgToListen = document.querySelector('.img'),
-      btnUpload = document.getElementById('uploadBtn'),
-      btnOpenSelection = document.getElementById('btnOpenSelection'),
-      imageSelection = document.querySelectorAll('.selection-image-el'),
-      inputUpload = document.getElementById('uploadInput'),
-      colorList = document.querySelector('.color-list'),
-      backgroundImg = document.querySelector('.container-img');
-
-const colorThief = new ColorThief();
-
-// Affiche le bon message en fonction du device
-let deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "mon explorateur de fichiers" : "ma galerie";
-btnUpload.innerHTML = "Ouvrir " + deviceAction2;
-
-// Réglage de la vitesse de lecture
-playRate.addEventListener('input', (e) => {
-    speed = playRate.value * -1;
-    playRateSpan.innerHTML = playRate.value * -1;
+// Ouvrir/fermer le menu
+navBtnOpen.addEventListener('click', (e) => {
+    nav.classList.add('open');
+});
+navBtnClose.addEventListener('click', (e) => {
+    nav.classList.remove('open');
 });
 
-// Réglage du nombre de couleurs
-colorNumber.addEventListener('input', (e) => {
-    colorNumberSpan.innerHTML = colorNumber.value;
-});
-
-// Présélectionne une image
-imageSelection[0].classList.add('selected');
-
-// Crée la palette de l'image présélectionnée
-// S'assure que l'image est chargée
-createPalette(imgToListen);
-
-// Ouvre la sélection
-btnOpenSelection.addEventListener('click', (e) => {
-    btnOpenSelection.classList.toggle('selection-open');
-});
-
-// Change l'image avec l'image sélectionnée
-imageSelection.forEach(image => {
-    image.addEventListener('click', (e) => {
-        let currentTarget = e.currentTarget;
-        currentTarget.classList.add('selected');
-        
-        // Vérifie si ils sont null avant d'ajouter ou retirer la class
-        let pastTarget = document.querySelector('.selected');
-        pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added');
-        
-
-        let imgLink = currentTarget.children[0].currentSrc;
-                
-        backgroundImg.src = imgLink;
-        imgToListen.src = imgLink;
-        createPalette(imgToListen);
+navElements.forEach(element => {
+    element.addEventListener('click', (e) => {
+        nav.classList.toggle('open');
     });
 });
 
+// Actualise le menu en fonction du scroll
+infoSection.addEventListener('scroll', () => {
+    for (let i = 0; i < anchors.length; i++) {  
+        if (infoSection.scrollTop >= anchors[i].offsetTop - (window.innerHeight/2)) {
+            navElements.forEach(element => {
+                element.classList.remove('current');
+            });
+            if(navElements[i].classList.contains('current') == false) {
+                navElements[i].classList.add('current');
+            }
+        }
 
-
-// Upload d'une image
-btnUpload.addEventListener('click', (e) => {
-     inputUpload.click();
-     //Actualise l'image uploadée
-     inputUpload.addEventListener('change', (e) => {
-        let pastTarget = document.querySelector('.selected');
-        pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection removed');
-
-        let imgLink = URL.createObjectURL(e.target.files[0]);
-        backgroundImg.src = imgLink;
-        imgToListen.src = imgLink;
-
-        createPalette(imgToListen);
-     });
-});
-
-//Récupère les couleurs de l'image et les joue
-playImageBtn.addEventListener('click', (e) => {
-    colorList.innerHTML = "";
-
-    let gains = [],
-        frqs = [];
-    
-    let palette = colorThief.getPalette(imgToListen, Number(colorNumber.value));
-
-    for (let i = 0; i < palette.length; i++) {
-
-        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);
-
-        let h = hslColor[0],
-            s = hslColor[1],
-            l = hslColor[2];           
-        
-        // Crée un élement HTML auquel il assigne la couleur
-        let color = document.createElement('li');
-        color.classList.add('color-list-el');
-        color.style.backgroundColor = "hsl("+ h +", "+ s +"%, "+ l +"%)";
-        
-        colorList.appendChild(color);
-
-        // Génère un gain et une fréquence pour chaque couleur
-        let gain = setGain(l, s);
-        let frq = setFrequency(h, s, l);
-
-        gains.push(gain);
-        frqs.push(frq);
-    }
-    
-    //Joue chaque paramètre les uns après les autres
-    for(var i = 0; i < frqs.length; i++) {
-        play(i);
     }
 
-    function play(i) {
-        setTimeout(function() {
-            g.gain.setValueAtTime(gains[i], context.currentTime);
-            o.frequency.setValueAtTime(frqs[i], context.currentTime);
-
-            g.gain.setTargetAtTime(0, context.currentTime, speed/1500);
-        }, i*speed);
+    if (window.matchMedia("(min-width: 900px)").matches) {
+        // Peut être optimisé
+        if (isCollide(nav, gist[0]) == false &&
+            isCollide(nav, gist[1]) == false &&
+            isCollide(nav, gist[2]) == false) {
+            nav.classList.remove('hide');
+        }else {
+            nav.classList.add('hide')
+        }
     }
 });
 
+//SMOOTH SCROLL ONLY ON ANCHOR BUTTONS - Permet de reset le scroll de la page info sans l'animation du smooth scroll
+//source: https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+  
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -668,6 +754,16 @@ function event(param) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+// https://codepen.io/dropinks/pen/MrzPXB
+function isCollide(el1, el2) {
+    var element1 = el1.getBoundingClientRect();
+    var element2 = el2.getBoundingClientRect();
+
+    return !(
+        ((element1.top + element1.height) < (element2.top + 50)) ||
+        (element1.top > (element2.top + element2.height - 50))
+    );
+}
 
 //source: https://css-tricks.com/converting-color-spaces-in-javascript/
 //Convertit ma valeur HSL vers RGB

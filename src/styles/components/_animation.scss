@@ -5,6 +5,7 @@ body {
         .menu-btn {
             &[id="color"] {
                 background-color: $white;
+                box-shadow: $shadow;
                 svg {
                     opacity: 1;
                 }
@@ -17,6 +18,7 @@ body {
         .menu-btn {
             &[id="pad"] {
                 background-color: $white;
+                box-shadow: $shadow;
                 svg {
                     opacity: 1;
                 }
@@ -29,6 +31,7 @@ body {
         .menu-btn {
             &[id="image"] {
                 background-color: $white;
+                box-shadow: $shadow;
                 svg {
                     opacity: 1;
                 }
@@ -41,6 +44,20 @@ body {
         .menu-btn {
             &[id="piano"] {
                 background-color: $white;
+                box-shadow: $shadow;
+                svg {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    &[data-page="info"] {
+        .section-info {display: flex;}
+        .menu-btn {
+            &[id="info"] {
+                background-color: $white;
+                box-shadow: $shadow;
                 svg {
                     opacity: 1;
                 }
@@ -48,7 +65,6 @@ body {
         }
     }
 }
-
 
 
 
@@ -61,12 +77,13 @@ body {
     }
 
     .btn-edit {
-        transition: $t-fast;
+        transition: $t-fast;   
     }
-
+    
     .pad {
         &-btn {
             transition: $t-superfast;
+            transition-property: transform, opacity;
             &::after {
                 transform: scale(1.1);
 
@@ -74,10 +91,11 @@ body {
                 transition-property: transform, opacity;
             }
             &:active {
-                background-color: white!important;
+                transform: scale(1.1);
+                border-radius: $rounded;
                 &::after {
-                    opacity: 0.7;
-                    transform: scale(2);
+                    filter: blur(35px);
+                    transform: scale(1.5);
                 }
             }
         }
@@ -98,6 +116,8 @@ body {
                 &-active {
                     position: relative;
                     z-index: 100;
+                    transform: scale(1.1);
+                    border-radius: $rounded;
                     opacity: 1!important;
                     &::after {
                         transform: scale(1.1);
@@ -202,13 +222,62 @@ body {
             .btn-upload {
                 transition-delay: 0.2s;
                 opacity: 1;
-                margin-top: 1.25rem;
+                margin-top: 1.5rem;
             }
         }
     }
 
     .selection-image-el.selected img{
         border: 5px solid #fff;
+    }
+}
+
+.navigation-container {
+    transition: $t-fast;
+    opacity: 1;
+
+    .navigation {
+        opacity: 0;
+        transform: translateX(-100px);
+        transition: $t-fast;
+        &-list-el {
+            transition: $t-fast;
+            &.current {
+                opacity: 1;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .nav-btn {
+        transition: $t-fast;
+    }
+    
+    &.open {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+        
+        height: 240px;
+        padding-bottom: $h3;
+        padding-top: $h3;
+        
+        .navigation {
+            opacity: 1;
+            transform: translateX(0);
+            &-list-el {
+                transition: $t-fast;
+            }
+        }
+        
+        .nav-btn {
+            &-open {opacity: 0;}
+            &-close {opacity: 1;}
+        }
+    }
+
+    &.hide {
+        opacity: 0;
+        pointer-events: none;
     }
 }
 
@@ -220,9 +289,28 @@ body {
     }
 }
 
+.menu-btn {
+    transition: $t-fast;
+    & svg{
+        transition: $t-fast;
+    }
+}
+
 @media(min-width: 900px) {
     .btn:hover {
         opacity: .6;
         transition: $t-fast;
+    }
+
+    .menu-btn {
+        &:hover {
+            opacity: 1;
+            background-color: $white;
+            box-shadow: $shadow;
+            & svg {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@
   
   <!-- Meta Partage -->
   <!-- Primary Meta Tags -->
-  <title>Color'sounds - alpha</title>
+  <title>Color'sounds - beta</title>
 
 
   <!-- Favicon -->
@@ -15,16 +15,16 @@
   
   <link rel="stylesheet" href="styles/app.css">
 </head>
-<body data-page="color">
+<body data-page="info">
 
   <main class="image">
 
       <section class="section-intro fs-center">
-        <h2 class="section-intro-msg"></h2>
+        <span class="section-intro-msg"></span>
       </section>
 
       <section class="section section-color">
-        <h2 class="section-title">Ecoutez des couleur</h2>
+        <h2 class="section-title">Le son des couleurs</h2>
         <div class="module" id="module-color" style="background: linear-gradient(#40bfbf, #3986ac);">
           <span class="module-frequency" id="playedColor">514 Hz</span>
           <div class="module-shadow"></div>
@@ -49,7 +49,7 @@
       </section>
 
       <section class="section section-pad">
-        <h2 class="section-title">Jouez des couleur</h2>
+        <h2 class="section-title section-title-fixed">Pad</h2>
 
         <div class="fs-center pad-tuto">
           <div class="tuto-container">
@@ -77,8 +77,8 @@
         </div>
         
         <div class="form form-pad">
-          <button class="btn btn-save">Enregistrer</button>
           <div class="form-el">
+            <button class="btn btn-save">Enregistrer</button>
             <label class="slider-el-title">Teinte: <span data-p="color" class="padSpan">180</span>°</label>
             <input class="padInput" type="range" name="volume" min="0" max="359">
           </div>
@@ -96,36 +96,36 @@
       </section>
       
       <section class="section section-piano">
-        <h2 class="section-title">Jouez les couleur</h2>
+        <h2 class="section-title section-title-fixed">Piano</h2>
         <div class="piano-color"></div>
         <h2 class="piano-msg">Appuyez sur une touche.</h2>
       </section>
       
       <section class="section section-image">
-        <h2 class="section-title">Ecoutez des images</h2>
+        <h2 class="section-title">Le son des images</h2>
 
         <div class="module">
 
           <div id="btnOpenSelection" class="btn selection">
-            <span>Choisir une autre image</span>
+            <button class="selection-btn">Choisir une autre image</button>
             <ul class="selection-image">
+              <!-- Photo de Steve Johnson provenant de Pexels -->
+              <li class="selection-image-el"><img src="assets/images/toListen/tumbnail/toListen1.jpg" srcset="assets/images/toListen/tumbnail/toListen1@2x.jpg 2x" alt="Image 1"></li>
+              <!-- Photo de 𝐕𝐞𝐧𝐮𝐬 𝐇𝐃 𝐌𝐚𝐤𝐞- 𝐮𝐩 & 𝐏𝐞𝐫𝐟𝐮𝐦𝐞 provenant de Pexels -->
+              <li class="selection-image-el"><img src="assets/images/toListen/tumbnail/toListen2.jpg" srcset="assets/images/toListen/tumbnail/toListen2@2x.jpg 2x" alt="Image 2"></li>
               <!-- Photo de PixaBay -->
-              <li class="selection-image-el"><img src="assets/images/toListen1.jpg" alt="Image 1"></li>
-              <!-- Photo de Zaksheuskaya provenant de Pexels -->
-              <li class="selection-image-el"><img src="assets/images/toListen2.jpg" alt="Image 2"></li>
-              <!-- Photo de PixaBay -->
-              <li class="selection-image-el"><img src="assets/images/toListen3.jpg" alt="Image 3"></li>
+              <li class="selection-image-el desktop"><img src="assets/images/toListen/tumbnail/toListen5.jpg" srcset="assets/images/toListen/tumbnail/toListen5@2x.jpg 2x" alt="Image 3"></li>
               <!-- Photo de Tara Winstead provenant de Pexels -->
-              <li class="selection-image-el desktop"><img src="assets/images/toListen4.jpg" alt="Image 3"></li>
+              <li class="selection-image-el"><img src="assets/images/toListen/tumbnail/toListen3.jpg" srcset="assets/images/toListen/tumbnail/toListen3@2x.jpg 2x" alt="Image 3"></li>
               <!-- Photo de Daria Liudnaya provenant de Pexels -->
-              <li class="selection-image-el desktop"><img src="assets/images/toListen5.jpg" alt="Image 3"></li>
+              <li class="selection-image-el desktop"><img src="assets/images/toListen/tumbnail/toListen4.jpg" srcset="assets/images/toListen/tumbnail/toListen4@2x.jpg 2x" alt="Image 3"></li>
             </ul>
             <button id="uploadBtn" class="btn btn-upload"></button>
           </div>
 
-          <img class="img" src="assets/images/toListen1.jpg" alt="L'image n'a pas pu charger">
+          <img class="img" srcset="assets/images/toListen/toListen1.jpg, assets/images/toListen/toListen1@2x.jpg 2x" alt="L'image n'a pas pu charger">
           <div class="background-container">
-            <img class="container-img" src="assets/images/toListen1.jpg" alt="L'image n'a pas pu charger">
+            <img class="container-img" srcset="assets/images/toListen/toListen1.jpg, assets/images/toListen/toListen1@2x.jpg 2x" alt="L'image n'a pas pu charger">
           </div>
 
           <input id="uploadInput" type="file" accept=".jpeg, .jpg, .png">
@@ -147,16 +147,109 @@
           <button id="getColors" class="btn">Jouer la mélodie</button>
         </div>
       </section>
+
+      <section class="section section-info">
+        <h2 class="section-title section-title-fixed">En savoir plus</h2>
+
+        
+        <div id="nav" class="navigation-container">
+          <button class="mobile nav-btn nav-btn-open"><svg><use xlink:href="#navSvgOpen"/></svg></button>
+           <button class="mobile nav-btn nav-btn-close"><svg><use xlink:href="#navSvgClose"/></svg></button>
+          
+          <div class="navigation">
+            <h4 class="navigation-title">Navigation</h4>
+            <ul class="navigation-list">
+              <li><a class="navigation-list-el current" href="#intro">Comment ça marche ?</a></li>
+              <li><a class="navigation-list-el" href="#osc">Comment utiliser l'oscillateur ?</a></li>
+              <li><a class="navigation-list-el" href="#piano">Le piano.</a></li>
+              <li><a class="navigation-list-el" href="#comingUp">Pour la suite...</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="container">
+
+          <h3 id="intro" class="anchor">Comment ça marche ?</h3>
+          <p>De votre point de vue, vous jouez avec trois sliders qui modifient une couleur et la fréquence sonore qui en sort.</p>
+          <p>Vous avez sans doute remarqué que plus la couleur est présente plus le son est jouée fort tandis que plus elle sera blanche, noir ou dé-saturée (moins la couleur est présente), moins le son sera audible.</p>
+
+          <img class="container-image" srcset="assets/images/info/colorfulSound.png, assets/images/info/colorfulSound@2x.png 2x" type="image/png"/>
+          
+          <p>Ces observation permettent déjà de comprendre que la luminosité et la saturation sont directement lié à l’intensité du son. La raison de ceci est tout d’abord que le blanc et le noir ne sont pas reconnu comme étant des couleurs. Plus encore, selon cette sources par exemple, dans le domaine musical, le blanc/noir sont lié à un vide ce qui accompagne à merveille mon raisonnement.</p>
+
+          <div class="container-code container-code-shapeBig">
+            <p class="container-code-name">Démonstration de la fonction qui calcule le gain</p>
+            <script src="https://gist.github.com/Julien1227/52d1209153c4459555b15f2d62364f53.js"></script>
+          </div>
+
+          <p>Avec ces paramètres, nous arrivons à la <a target="_blank" href="https://julienscheen.be/projets/TFE-exp/exp-create-sound/">première version de mon projet</a>. Elle est intéressante mais semble incomplète n’est-ce pas ?</p>
+          <p>C’est parce qu’elle joue les fréquences des couleurs telle qu’elle sont présentée dans le spectre visible (de 428 Thz à 750 Thz), à cause de ça vous pourrez voir que nous avons aussi un seul rouge jouant deux sons différents (aux deux extrémités du slider de teinte). Cela ne semble pas fort logique étant donné que la première chose que l’on voit n’est pas une fréquence mais bien une couleur.</p>
+
+          <img class="container-image" srcset="assets/images/info/colorfulWave.png, assets/images/info/colorfulWave@2x.png 2x" type="image/png"/>
+
+          <p>Pour améliorer ceci, le code ne crée désormais plus la fréquence depuis la teinte du schéma TSL (Teinte, Saturation, Luminiosité) mais bien depuis l’addition des couleurs rouge, vert et bleu du schéma RVB.</p>
+          <p>Pour obtenir ce schéma, je convertis la couleur fournie par le schéma TSL en couleur RVB à l’aide de cette fonction “TSLToRGB(t, s, l)”, et obtiens donc les valeurs “rouge”, “vert” et “bleu” avec lesquelles je peux jongler.</p>
+
+          <div class="container-code container-code-shapeLittle">
+            <p class="container-code-name">Démonstration de la fonction qui calcule la fréquence</p>
+            <script src="https://gist.github.com/Julien1227/5eb6f3e07dcf38b1f45746140629ad66.js"></script>
+          </div>
+
+          <p>De cette manière, je peux associer une gamme de fréquence à chaque valeur du schéma RVB pour créer non seulement un mélange de couleurs mais également un mélange de ces gammes ce qui résultera d’un son plus représentatif de chaque couleur (un bleu grave, un jeune aigu, etc,…).</p>
+            
+          <h3 id="osc" class="anchor">Comment jouer les paramètres obtenu par ces méthodes ?</h3>
+          <p>Pour jouer une fréquence avec la Web audio API, il faut créer un oscillateur et le démarrer. Une fois démarré, l’oscillateur prends trois principaux paramètres en compte: le type d’oscillateur, la fréquence, et le gain. Une fois que j’ai récupéré mon gain et ma fréquence avec les fonctions vue ci-dessus, comme ceci…</p>
+          <script src="https://gist.github.com/Julien1227/2b7b050aad5b6e48155ad2600a784914.js"></script>
+          <p>Je dois les assigner à mon oscillateur. Pour ce faire, la Web audio API met à disposition “setValueAtTime” et “setTargetAtTime”. “setTargetAtTime” est très utile pour le gain car il permet de gérer des fondus pour ainsi éviter de couper le son net. Avec ces deux outils, je demande donc ceci à mon code:</p>
+          <script src="https://gist.github.com/Julien1227/e189528791f43b05c6da77ed04d2d247.js"></script>
+
+          <h3 id="piano" class="anchor">Le piano.</h3>
+          <p>Si vous êtes sur la version ordinateur du site et que vous avez fait le tour des onglets, après avoir lu ceci vous aurez compris qu’il s’agit généralement du même principe pour chaque page: récupérer une couleur, créer sa fréquence et son gain, jouer les paramètres. Cependant le piano, lui, sort du lot.</p>
+          <p>C’est le seul code auquel on donne d’abord une fréquence, et non une couleur. Cependant, le problème est que plusieurs fréquences correspondent à plusieurs couleurs et que même faire machine arrière pour calculer une couleur depuis la fréquence est alors impossible.</p>
+          <img class="container-image" srcset="assets/images/info/colorfulNote.png, assets/images/info/colorfulNote@2x.png 2x" type="image/png"/>
+          <p>La solution, c’est donc de demander au code de trouver une couleur correspondant à la fréquence demandée par le piano, et d’ensuite l’afficher à l’écran&nbsp;!</p>
+
+          <div class="container-code container-code-shapeMedium">
+            <p class="container-code-name">Démonstration du fonctionnement du piano</p>
+            <script src="https://gist.github.com/Julien1227/0df6b5e65c88e744da6b48e822adee8b.js"></script>
+          </div>
+
+          <h3 id="comingUp" class="anchor">Pour la suite.</h3>
+          <p>Les prototypes pourraient être améliorés à certains niveaux. Certaines peronnes trouvent que tout ceci pourrait être utilisé chez les personnes aveugles, il serait même possible de créer, de mes propres moyens, un petit dispositif qui permettrait d'écouter par un simple contact avec une surface !</p>
+          <p>Tout ceci n’était que le résumé du résumé d’une explication raccourcie du fonctionnement de mon code, si vous voulez découvrir les recherches qui se cachent derrière, vous pouvez consulter le medium de mes recherches !</p>
+          <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab">En savoir plus sur mes recherches.</a>
+          
+        </div>
+      </section>
   </main>
 
   <footer class="menu">
-    <button id="color" class="btn menu-btn"><svg class="menu-btn-svg"><use xlink:href="#colorSvg"/></svg></button>
-    <button id="image" class="btn menu-btn"><svg class="menu-btn-svg"><use xlink:href="#pictureSvg"/></svg></button>
-    <button id="pad" class="btn menu-btn"><svg class="menu-btn-svg"><use xlink:href="#gridSvg"/></svg></button>
-    <button id="piano" class="btn menu-btn desktop"><svg class="menu-btn-svg"><use xlink:href="#pianoSvg"/></svg></button>
+    <ul class="menu-list">
+      <li class="menu-list-el"><button class="menu-btn" id="color"><svg><use xlink:href="#colorSvg"/></svg></button>
+      </li>
+      <li class="menu-list-el"><button class="menu-btn" id="image"><svg><use xlink:href="#pictureSvg"/></svg></button>
+      </li>
+      <li class="menu-list-el"><button class="menu-btn" id="pad"><svg><use xlink:href="#gridSvg"/></svg></button>
+      </li>
+      <li class="menu-list-el desktop"><button class="menu-btn" id="piano"><svg><use xlink:href="#pianoSvg"/></svg></button>
+      </li>
+    </ul>
+    <button id="info" class="menu-btn menu-btn-info"><svg class="menu-list-btn-svg info"><use xlink:href="#infoSvg"/></svg></button>
   </footer>
 
   <div class="use-svg">
+
+    <svg id="navSvgClose" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+    </svg>  
+
+    <svg id="navSvgOpen" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+    </svg>
+
+    <svg id="infoSvg" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+      <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+    </svg>
+
     <svg id="colorSvg" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
       <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
       <path d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8zm-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7z"/>

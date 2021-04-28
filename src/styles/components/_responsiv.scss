@@ -129,18 +129,125 @@
         &-piano {
             height: 100vh;
         }
+
+        &-info {
+            .container {
+                padding: inherit;
+                &:before {height: calc(#{$h1} * 1.5);}
+                &:after {height: calc((#{$h1} * 1.5) + 100px);}
+
+                transform: translateX(50%);
+
+                &-image {
+                    margin: 0;
+                    width: 100%;
+                }
+                
+                &-code {
+                    &-name {
+                        white-space: nowrap;
+                        text-align: left;
+                        
+                        margin: -4px 0;
+                        margin-left: -3rem;
+                        border-left: none;
+
+                        padding-left: 4rem;
+                        border-radius: 0 $rounded $rounded 0;
+                    }
+    
+                    & .gist {
+                        position: absolute;
+                        margin-top: -3.5rem;
+                        max-width: 500px;
+                        margin-left: calc(-500px - 1rem);
+
+                        &-file {
+                            border-radius: $rounded 0 $rounded $rounded!important;
+                        }
+
+                        &:after {
+                            background: linear-gradient(to right, #ffffff00, #00000013);
+                            margin: 0;
+                            border-radius: 0 $round $round 0;
+                        }
+                    }
+
+                    &-shapeBig .gist:after {
+                        top: calc(-#{$codeShapeBig} / 2);
+                        height: calc(100% + #{$codeShapeBig});
+                        width: 150%;
+                    }
+                    &-shapeMedium .gist:after {
+                        top: calc(-#{$codeShapeMedium} / 2);
+                        height: calc(100% + #{$codeShapeMedium});
+                        width: 150%;
+                    }
+                    &-shapeLittle .gist:after {
+                        top: calc(-#{$codeShapeLittle} / 2);
+                        height: calc(100% + #{$codeShapeLittle});
+                        width: 150%;
+                    }
+                }
+            }
+
+            .navigation-container {
+                position: sticky;
+                top: calc((#{$h1} * 1.5) + #{$h3});
+                right: calc(50% + 2rem);
+                
+                width: 265px;
+                height: auto;
+                overflow: visible;
+                padding: 2rem 3rem;
+                padding-left: 2rem;
+                box-shadow: none;
+                text-align: right;
+                border-radius: inherit;
+                border-right: 2px solid $black02;
+                border-radius: $rounded 0 0 $rounded;
+                background-color: $white08;
+
+                .navigation {
+                    width: auto;
+                    height: auto;
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        }
     }
 
     .menu {
-        height: inherit;
-        bottom: 1rem;
         justify-content: center;
-        &-btn {
-            width: 5rem;
-            height: 5rem;
+        margin-bottom: 3rem;
+        &-list {
+            max-width:600px;
             border-radius: $rounded;
+            &-el {
+                &:nth-child(3) {
+                    border-radius: 0;
+                }
 
-            margin: 1rem;
+                &:last-child {
+                    border-radius: 0 $rounded $rounded 0;
+                }
+    
+                &:first-child {
+                    border-radius: $rounded 0 0 $rounded;
+                }
+            }
+        }
+        
+        &-btn {
+            padding: 1.5rem;
+        }
+
+        &-btn-info {
+            border-radius: $rounded;
+            padding: 2rem 3rem;
+            margin-left: 3rem;
+            box-shadow: none;
         }
     }
 }
