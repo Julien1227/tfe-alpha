@@ -201,6 +201,121 @@ for (var i = 0; i < colorInputs.length; i++) {
 
 ; ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+// VARIABLES
+
+var speed = 120;
+var playRate = document.getElementById('playRate'),
+    playRateSpan = document.getElementById('playRateSpan'),
+    colorNumberSpan = document.getElementById('colorNumberSpan'),
+    colorNumber = document.getElementById('colorNumber');
+var playImageBtn = document.getElementById('getColors'),
+    imgToListen = document.querySelector('.img'),
+    btnUpload = document.getElementById('uploadBtn'),
+    btnOpenSelection = document.getElementById('btnOpenSelection'),
+    imageSelection = document.querySelectorAll('.selection-image-el'),
+    inputUpload = document.getElementById('uploadInput'),
+    colorList = document.querySelector('.color-list'),
+    backgroundImg = document.querySelector('.container-img');
+var colorThief = new ColorThief(); // Affiche le bon message en fonction du device
+
+var deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "mon explorateur de fichiers" : "ma galerie";
+btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Réglage de la vitesse de lecture
+
+playRate.addEventListener('input', function (e) {
+  speed = playRate.value * -1;
+  playRateSpan.innerHTML = playRate.value * -1;
+}); // Réglage du nombre de couleurs
+
+colorNumber.addEventListener('input', function (e) {
+  colorNumberSpan.innerHTML = colorNumber.value;
+}); // Présélectionne une image
+
+imageSelection[0].classList.add('selected'); // Crée la palette de l'image présélectionnée
+// S'assure que l'image est chargée
+
+createPalette(imgToListen); // Ouvre la sélection
+
+btnOpenSelection.addEventListener('click', function (e) {
+  btnOpenSelection.classList.toggle('selection-open');
+}); // Change l'image avec l'image sélectionnée
+
+imageSelection.forEach(function (image) {
+  image.addEventListener('click', function (e) {
+    var currentTarget = e.currentTarget;
+    var pastTarget = document.querySelector('.selected');
+    currentTarget.classList.add('selected'); // Vérifie si ils sont null avant d'ajouter ou retirer la class
+
+    pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added'); // Children[0] car currentTarget est "li" et non "li > img"
+
+    var imgName = currentTarget.children[0].currentSrc.slice(-13);
+    imgName = imgName.slice(0, imgName.length - 4);
+    backgroundImg.setAttribute('src', 'assets/images/toListen/' + imgName + '.jpg');
+    imgToListen.setAttribute('src', 'assets/images/toListen/' + imgName + '.jpg');
+    backgroundImg.setAttribute('srcset', 'assets/images/toListen/' + imgName + '@2x.jpg 2x');
+    imgToListen.setAttribute('srcset', 'assets/images/toListen/' + imgName + '@2x.jpg 2x');
+    createPalette(imgToListen);
+  });
+}); // Upload d'une image
+
+btnUpload.addEventListener('click', function (e) {
+  inputUpload.click(); //Actualise l'image uploadée
+
+  inputUpload.addEventListener('change', function (e) {
+    // Retire la class "selected" de l'image précédement sélectionnée
+    var pastTarget = document.querySelector('.selected');
+    pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection removed');
+    var imgLink = URL.createObjectURL(e.target.files[0]);
+    console.log(imgLink);
+    backgroundImg.setAttribute('srcset', imgLink);
+    imgToListen.setAttribute('srcset', imgLink);
+    createPalette(imgToListen);
+  });
+}); //Récupère les couleurs de l'image et les joue
+
+playImageBtn.addEventListener('click', function (e) {
+  colorList.innerHTML = "";
+  var gains = [],
+      frqs = [];
+  var palette = colorThief.getPalette(imgToListen, Number(colorNumber.value));
+
+  for (var _i = 0; _i < palette.length; _i++) {
+    var hslColor = RGBToHSL(palette[_i][0], palette[_i][1], palette[_i][2]);
+    var _h = hslColor[0],
+        _s = hslColor[1],
+        _l = hslColor[2]; // Crée un élement HTML auquel il assigne la couleur
+
+    var _color = document.createElement('li');
+
+    _color.classList.add('color-list-el');
+
+    _color.style.backgroundColor = "hsl(" + _h + ", " + _s + "%, " + _l + "%)";
+    colorList.appendChild(_color); // Génère un gain et une fréquence pour chaque couleur
+
+    var _gain = setGain(_l, _s);
+
+    var _frq = setFrequency(_h, _s, _l);
+
+    gains.push(_gain);
+    frqs.push(_frq);
+  } //Joue chaque paramètre les uns après les autres
+
+
+  for (var i = 0; i < frqs.length; i++) {
+    play(i);
+  }
+
+  function play(i) {
+    setTimeout(function () {
+      g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
+      o.frequency.setValueAtTime(frqs[i], context.currentTime);
+      g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
+    }, i * speed);
+  }
+}); ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 ////////////////////////////// PAD ////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -241,9 +356,9 @@ editBtn.addEventListener('click', function (e) {
   pianoBtn[0].classList.add('pad-btn-active');
   var hslColor = getHslFromAttribute(pianoBtn[0]);
 
-  for (var _i = 0; _i < pianoFormInput.length; _i++) {
-    pianoFormInput[_i].value = hslColor[_i];
-    pianoFormSpan[_i].innerHTML = hslColor[_i];
+  for (var _i2 = 0; _i2 < pianoFormInput.length; _i2++) {
+    pianoFormInput[_i2].value = hslColor[_i2];
+    pianoFormSpan[_i2].innerHTML = hslColor[_i2];
   }
 });
 saveBtn.addEventListener('click', function (e) {
@@ -295,39 +410,39 @@ pianoBtn.forEach(function (btn) {
         hslColor = getHslFromAttribute(targetBtn);
         btnColors.push(hslColor); // Actualise les valeurs du slider avec la couleur actuelle du bouton
 
-        for (var _i2 = 0; _i2 < pianoFormInput.length; _i2++) {
-          pianoFormInput[_i2].value = hslColor[_i2];
-          pianoFormSpan[_i2].innerHTML = hslColor[_i2];
+        for (var _i3 = 0; _i3 < pianoFormInput.length; _i3++) {
+          pianoFormInput[_i3].value = hslColor[_i3];
+          pianoFormSpan[_i3].innerHTML = hslColor[_i3];
         }
       }
     }
   });
 }); // L'orsqu'un slider bouge - modifie la couleur active
 
-var _loop2 = function _loop2(_i3) {
-  pianoFormInput[_i3].addEventListener('input', function (e) {
-    var t = pianoFormInput[0].value,
+var _loop2 = function _loop2(_i4) {
+  pianoFormInput[_i4].addEventListener('input', function (e) {
+    var h = pianoFormInput[0].value,
         s = pianoFormInput[1].value,
         l = pianoFormInput[2].value;
-    pianoFormSpan[_i3].innerHTML = pianoFormInput[_i3].value;
+    pianoFormSpan[_i4].innerHTML = pianoFormInput[_i4].value;
     var actualBtn = document.querySelector('.pad-btn-active');
-    var hexColor = HSLToHex(t, s, l); // Actualise la couleur du bouton
+    var hexColor = HSLToHex(h, s, l); // Actualise la couleur du bouton
 
     actualisePadBtnColor(actualBtn, hexColor); // Défini le gain et la fréquence
 
-    var frq = setFrequency(t, s, l),
+    var frq = setFrequency(h, s, l),
         gain = setGain(l, s);
     o.frequency.setValueAtTime(frq, context.currentTime);
     g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
 
-    pianoFormInput[_i3].addEventListener(event('end'), function (e) {
+    pianoFormInput[_i4].addEventListener(event('end'), function (e) {
       g.gain.setTargetAtTime(0, context.currentTime, 0.1);
     });
   });
 };
 
-for (var _i3 = 0; _i3 < pianoFormInput.length; _i3++) {
-  _loop2(_i3);
+for (var _i4 = 0; _i4 < pianoFormInput.length; _i4++) {
+  _loop2(_i4);
 } ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 /////////////////////////// Piano/// //////////////////////////////
@@ -339,7 +454,7 @@ for (var _i3 = 0; _i3 < pianoFormInput.length; _i3++) {
 
 
 var pianoColor = document.querySelector('.piano-color');
-var t = 0,
+var h = 0,
     s = 0,
     l = 0,
     down = false; // Assiciation d'une fréquence à chaque touches
@@ -387,21 +502,21 @@ document.addEventListener('keydown', function (event) {
     down = true; // Si une fréquence est assigné à la touche, on la joue
 
     if (notes[key] != null) {
-      var _frq = notes[key],
-          _color = 0; // Assigne la valeur de gain et fréquence
+      var _frq2 = notes[key],
+          _color2 = 0; // Assigne la valeur de gain et fréquence
 
-      o.frequency.setValueAtTime(_frq, context.currentTime);
+      o.frequency.setValueAtTime(_frq2, context.currentTime);
       g.gain.setTargetAtTime(1, context.currentTime, 0.002); // Cherche une couleur correspondant à la fréquence
 
       do {
-        t = randomMinMax(0, 360);
+        h = randomMinMax(0, 360);
         s = 100;
         l = randomMinMax(50, 60);
-        _color = setFrequency(t, s, l);
-      } while (_frq != _color); // Convertis la couleur en hexadécimal pour l'assigner
+        _color2 = setFrequency(h, s, l);
+      } while (_frq2 != _color2); // Convertis la couleur en hexadécimal pour l'assigner
 
 
-      var hexColor = HSLToHex(t, s, l); // Assignation de la couleur et d'un class de transition
+      var hexColor = HSLToHex(h, s, l); // Assignation de la couleur et d'un class de transition
 
       pianoColor.style.backgroundColor = hexColor;
       pianoColor.classList.add('piano-color-active'); // Cache le message
@@ -422,115 +537,6 @@ document.addEventListener('keyup', function (event) {
   g.gain.setTargetAtTime(0, context.currentTime, 0.1);
   down = false;
 }, false); ///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-// VARIABLES
-
-var speed = 120;
-var playRate = document.getElementById('playRate'),
-    playRateSpan = document.getElementById('playRateSpan'),
-    colorNumberSpan = document.getElementById('colorNumberSpan'),
-    colorNumber = document.getElementById('colorNumber');
-var playImageBtn = document.getElementById('getColors'),
-    imgToListen = document.querySelector('.img'),
-    btnUpload = document.getElementById('uploadBtn'),
-    btnOpenSelection = document.getElementById('btnOpenSelection'),
-    imageSelection = document.querySelectorAll('.selection-image-el'),
-    inputUpload = document.getElementById('uploadInput'),
-    colorList = document.querySelector('.color-list'),
-    backgroundImg = document.querySelector('.container-img');
-var colorThief = new ColorThief(); // Affiche le bon message en fonction du device
-
-var deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "mon explorateur de fichiers" : "ma galerie";
-btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Réglage de la vitesse de lecture
-
-playRate.addEventListener('input', function (e) {
-  speed = playRate.value * -1;
-  playRateSpan.innerHTML = playRate.value * -1;
-}); // Réglage du nombre de couleurs
-
-colorNumber.addEventListener('input', function (e) {
-  colorNumberSpan.innerHTML = colorNumber.value;
-}); // Présélectionne une image
-
-imageSelection[0].classList.add('selected'); // Crée la palette de l'image présélectionnée
-// S'assure que l'image est chargée
-
-createPalette(imgToListen); // Ouvre la sélection
-
-btnOpenSelection.addEventListener('click', function (e) {
-  btnOpenSelection.classList.toggle('selection-open');
-}); // Change l'image avec l'image sélectionnée
-
-imageSelection.forEach(function (image) {
-  image.addEventListener('click', function (e) {
-    var currentTarget = e.currentTarget;
-    currentTarget.classList.add('selected'); // Vérifie si ils sont null avant d'ajouter ou retirer la class
-
-    var pastTarget = document.querySelector('.selected');
-    pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added');
-    var imgLink = currentTarget.children[0].currentSrc;
-    backgroundImg.src = imgLink;
-    imgToListen.src = imgLink;
-    createPalette(imgToListen);
-  });
-}); // Upload d'une image
-
-btnUpload.addEventListener('click', function (e) {
-  inputUpload.click(); //Actualise l'image uploadée
-
-  inputUpload.addEventListener('change', function (e) {
-    var pastTarget = document.querySelector('.selected');
-    pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection removed');
-    var imgLink = URL.createObjectURL(e.target.files[0]);
-    backgroundImg.src = imgLink;
-    imgToListen.src = imgLink;
-    createPalette(imgToListen);
-  });
-}); //Récupère les couleurs de l'image et les joue
-
-playImageBtn.addEventListener('click', function (e) {
-  colorList.innerHTML = "";
-  var gains = [],
-      frqs = [];
-  var palette = colorThief.getPalette(imgToListen, Number(colorNumber.value));
-
-  for (var _i4 = 0; _i4 < palette.length; _i4++) {
-    var hslColor = RGBToHSL(palette[_i4][0], palette[_i4][1], palette[_i4][2]);
-    var _h = hslColor[0],
-        _s = hslColor[1],
-        _l = hslColor[2]; // Crée un élement HTML auquel il assigne la couleur
-
-    var _color2 = document.createElement('li');
-
-    _color2.classList.add('color-list-el');
-
-    _color2.style.backgroundColor = "hsl(" + _h + ", " + _s + "%, " + _l + "%)";
-    colorList.appendChild(_color2); // Génère un gain et une fréquence pour chaque couleur
-
-    var _gain = setGain(_l, _s);
-
-    var _frq2 = setFrequency(_h, _s, _l);
-
-    gains.push(_gain);
-    frqs.push(_frq2);
-  } //Joue chaque paramètre les uns après les autres
-
-
-  for (var i = 0; i < frqs.length; i++) {
-    play(i);
-  }
-
-  function play(i) {
-    setTimeout(function () {
-      g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
-      o.frequency.setValueAtTime(frqs[i], context.currentTime);
-      g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
-    }, i * speed);
-  }
-}); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 //////////////////////////// INFO MENU ////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -576,7 +582,7 @@ infoSection.addEventListener('scroll', function () {
       nav.classList.add('hide');
     }
   }
-}); //SMOOTH SCROLL ONLY ON ANCHOR BUTTONS
+}); //SMOOTH SCROLL ONLY ON ANCHOR BUTTONS - Permet de reset le scroll de la page info sans l'animation du smooth scroll
 //source: https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
 
 document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {

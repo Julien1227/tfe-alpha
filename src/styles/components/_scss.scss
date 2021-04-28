@@ -39,6 +39,7 @@
         margin: 0!important;
     }
 
+    // ScrollBar des gists - plus sombre
     .blob-wrapper {        
         &::-webkit-scrollbar {
             &-track {
@@ -728,6 +729,3 @@ input[type=range]{
         }
     }
 }
-
-
-
