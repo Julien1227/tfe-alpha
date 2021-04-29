@@ -221,7 +221,7 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 0px 25px -10px #00000038;
+  box-shadow: 0px 20px 50px 0px #00000013;
   width: 100%;
   height: 2.5rem;
   background-color: #fff;
@@ -535,6 +535,7 @@ label {
   font-weight: 700;
   text-align: center;
   color: #151c29;
+  background-color: #fff;
   padding: 1rem;
   margin: 0;
   box-sizing: border-box;
@@ -545,16 +546,38 @@ label {
   border-radius: 0 0 10px 10px !important;
 }
 .section-info .container-code .gist:after {
-  z-index: -10;
   display: block;
   position: absolute;
   content: "";
   right: 0;
-  margin-top: -400px;
+  width: 150vw;
+  left: -25vw;
+  z-index: -10;
+  transform: translateY(-100%);
+  background: radial-gradient(#151c29 20%, white 70%);
+}
+.section-info .container-code .gist:before {
+  display: block;
+  position: absolute;
+  content: "";
+  right: 0;
   width: 100vw;
-  height: 300px;
-  border-radius: 0 0 1000px 1000px;
-  background: linear-gradient(to bottom, #ffffff00, #0000003b);
+  z-index: -5;
+  width: 100vw;
+  height: 175%;
+  margin-top: -50%;
+  background-size: 1rem;
+  background-repeat: repeat;
+  background-image: url("../assets/bgSvg.svg");
+}
+.section-info .container-code-1 .gist:after {
+  height: 60%;
+}
+.section-info .container-code-2 .gist:after {
+  height: 80%;
+}
+.section-info .container-code-3 .gist:after {
+  height: 60%;
 }
 .section-info .navigation-container {
   z-index: 20;
@@ -1131,24 +1154,31 @@ body[data-page=info] .menu-btn[id=info] svg {
     border-radius: 10px 0 10px 10px !important;
   }
   .section-info .container-code .gist:after {
-    background: linear-gradient(to right, #ffffff00, #00000013);
-    margin: 0;
-    border-radius: 0 1000px 1000px 0;
+    left: -25%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(#d4dbe9 0%, white 80%);
   }
-  .section-info .container-code-shapeBig .gist:after {
-    top: calc(-20rem / 2);
-    height: calc(100% + 20rem);
-    width: 150%;
+  .section-info .container-code .gist::before {
+    left: calc((100vw - 1000px) / -2);
   }
-  .section-info .container-code-shapeMedium .gist:after {
-    top: calc(-12rem / 2);
-    height: calc(100% + 12rem);
-    width: 150%;
+  .section-info .container-code-1 .gist:after {
+    left: -75%;
+    top: 100%;
+    width: 175%;
+    height: 150%;
   }
-  .section-info .container-code-shapeLittle .gist:after {
-    top: calc(-4rem / 2);
-    height: calc(100% + 4rem);
-    width: 150%;
+  .section-info .container-code-2 .gist:after {
+    left: -75%;
+    top: 105%;
+    width: 175%;
+    height: 120%;
+  }
+  .section-info .container-code-3 .gist:after {
+    left: -100%;
+    top: 150%;
+    width: 200%;
+    height: 200%;
   }
   .section-info .navigation-container {
     position: sticky;

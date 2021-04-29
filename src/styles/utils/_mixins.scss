@@ -50,3 +50,14 @@
     width: $value;
     height: $value;
 }
+
+@mixin gistGraphBase {
+    display: block;
+    position: absolute;
+    content: "";
+    right: 0;
+}
+
+@mixin gistGraphGradient($size) {
+
+}

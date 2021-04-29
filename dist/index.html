@@ -207,7 +207,7 @@
           
           <p>Ces observation permettent déjà de comprendre que la luminosité et la saturation sont directement lié à l’intensité du son. La raison de ceci est tout d’abord que le blanc et le noir ne sont pas reconnu comme étant des couleurs. Plus encore, selon cette sources par exemple, dans le domaine musical, le blanc/noir sont lié à un vide ce qui accompagne à merveille mon raisonnement.</p>
 
-          <div class="container-code container-code-shapeBig">
+          <div class="container-code container-code-1">
             <p class="container-code-name">Démonstration de la fonction qui calcule le gain</p>
             <script src="https://gist.github.com/Julien1227/52d1209153c4459555b15f2d62364f53.js"></script>
           </div>
@@ -220,7 +220,7 @@
           <p>Pour améliorer ceci, le code ne crée désormais plus la fréquence depuis la teinte du schéma TSL (Teinte, Saturation, Luminiosité) mais bien depuis l’addition des couleurs rouge, vert et bleu du schéma RVB.</p>
           <p>Pour obtenir ce schéma, je convertis la couleur fournie par le schéma TSL en couleur RVB à l’aide de cette fonction “TSLToRGB(t, s, l)”, et obtiens donc les valeurs “rouge”, “vert” et “bleu” avec lesquelles je peux jongler.</p>
 
-          <div class="container-code container-code-shapeLittle">
+          <div class="container-code container-code-2">
             <p class="container-code-name">Démonstration de la fonction qui calcule la fréquence</p>
             <script src="https://gist.github.com/Julien1227/5eb6f3e07dcf38b1f45746140629ad66.js"></script>
           </div>
@@ -239,7 +239,7 @@
           <img class="container-image" src="assets/images/info/colorfulNote.png" srcset="assets/images/info/colorfulNote@2x.png 2x" alt="Image montrant le fonctionnement du piano."/>
           <p>La solution, c’est donc de demander au code de trouver une couleur correspondant à la fréquence demandée par le piano, et d’ensuite l’afficher à l’écran&nbsp;!</p>
 
-          <div class="container-code container-code-shapeMedium">
+          <div class="container-code container-code-3">
             <p class="container-code-name">Démonstration du fonctionnement du piano</p>
             <script src="https://gist.github.com/Julien1227/0df6b5e65c88e744da6b48e822adee8b.js"></script>
           </div>

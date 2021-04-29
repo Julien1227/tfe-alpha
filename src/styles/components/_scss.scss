@@ -196,7 +196,7 @@
         z-index: 500;
 
         @include flex-center;
-        box-shadow: $shadow;
+        box-shadow: 0px 20px 50px 0px #00000013;;
 
         width: 100%;
         height: $header-height;
@@ -538,6 +538,7 @@
                     font-weight: 700;
                     text-align: center;
                     color: $gist-background;
+                    background-color: $white;
 
                     padding: 1rem;
                     margin: 0;
@@ -552,19 +553,35 @@
                     }
 
                     &:after {
-                        z-index: -10;
-                        display: block;
-                        position: absolute;
-                        content: "";
-                        right: 0;
-                        margin-top: -400px;
-                        width: 100vw;
-                        height: 300px;
-                        border-radius: 0 0 $round $round;
+                        @include gistGraphBase;
+                        width: 150vw;
+                        left: -25vw;
 
-                        background: linear-gradient(to bottom, #ffffff00, #0000003b);
+                        z-index: -10;
+                        
+                        transform: translateY(-100%);
+
+                        background: radial-gradient($gist-background 20%, lighten($gist-background, 100%) 70%);
                     }
+
+                    &:before {
+                        @include gistGraphBase;
+                        width: 100vw;
+                        z-index: -5;
+                        width: 100vw;
+                        height: 175%;
+                        margin-top: -50%;
+
+                        background-size: 1rem;
+                        background-repeat: repeat;
+                        background-image: url('../assets/bgSvg.svg');
+                    }
+
                 }
+
+                &-1 .gist:after {height: 60%;}
+                &-2 .gist:after {height: 80%;}
+                &-3 .gist:after {height: 60%;}
             }
         }
 
