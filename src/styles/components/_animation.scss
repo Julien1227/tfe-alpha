@@ -40,6 +40,7 @@ body {
     }
 
     &[data-page="piano"] {
+        .played {display: none;}
         .section-piano {display: flex;}
         .menu-btn {
             &[id="piano"] {
@@ -53,6 +54,7 @@ body {
     }
 
     &[data-page="info"] {
+        .played {display: none;}
         .section-info {display: flex;}
         .menu-btn {
             &[id="info"] {
@@ -301,6 +303,18 @@ body {
     transition: $t-fast;
     & svg{
         transition: $t-fast;
+    }
+}
+
+.played {
+    transition: $t-fast;
+    &.hide {
+        transition: $t-superslow;
+        transition-property: opacity;
+        opacity: 0;
+    }
+    &-color {
+        transition: $t-superfast;
     }
 }
 

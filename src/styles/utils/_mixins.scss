@@ -51,13 +51,45 @@
     height: $value;
 }
 
-@mixin gistGraphBase {
-    display: block;
+@mixin gistGraph {
     position: absolute;
     content: "";
-    right: 0;
+    left: calc(-1rem - 25vw);
+    top: -15%;
+    width: 150vw;
+    height: 120%;
+
+    background-size: 2rem;
+    background-repeat: repeat;
+    background-image: url('../assets/bgSvg.svg');
 }
 
-@mixin gistGraphGradient($size) {
+@mixin pseudoElement {
+    position: absolute;
+    content: "";
+}
 
+@mixin graphBackground {
+    background-size: 2rem;
+    background-repeat: repeat;
+    background-image: url('../assets/bgSvg.svg');
+}
+
+@mixin pseudoGraphBackground {
+    @include fullSize;
+    @include pseudoElement;
+    @include graphBackground;
+}
+
+@mixin fs-center {
+    @include flex-center;
+    position: absolute;
+    width: 100%;
+    height: $section-height;
+}
+
+@mixin absoluteTopLeft {
+    position: absolute;
+    top: 0;
+    left: 0;
 }

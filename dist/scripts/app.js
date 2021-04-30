@@ -176,8 +176,12 @@ colorSpan.forEach(function (colorSpan) {
 
 var _loop = function _loop(i) {
   colorInputs[i].addEventListener('input', function (e) {
-    var frq = setFrequency(colorInputs[0].value, colorInputs[1].value, colorInputs[2].value);
-    var gain = setGain(colorInputs[2].value, colorInputs[1].value); // Défini la fréquence
+    var h = colorInputs[0].value,
+        s = colorInputs[1].value,
+        l = colorInputs[2].value;
+    var frq = setFrequency(h, s, l);
+    var gain = setGain(l, s);
+    actualiseListenerColor(h, s, l, gain); // Défini la fréquence
 
     o.frequency.setValueAtTime(frq, context.currentTime); // Défini l'intensité
 
@@ -187,11 +191,8 @@ var _loop = function _loop(i) {
 
     colorSpans[i].innerHTML = colorInputs[i].value; // Affiche la couleur jouée
 
-    setColors(colorInputs[0].value, colorInputs[1].value, colorInputs[2].value); //Applique le bon event listenner (mouse ou touch)
-
-    colorInputs[i].addEventListener(event('end'), function (e) {
-      g.gain.setTargetAtTime(0, context.currentTime, 0.3);
-    });
+    setColors(h, s, l);
+    stopGain(colorInputs[i]);
   });
 };
 
@@ -278,7 +279,8 @@ btnUpload.addEventListener('click', function (e) {
 playImageBtn.addEventListener('click', function (e) {
   colorList.innerHTML = "";
   var gains = [],
-      frqs = [];
+      frqs = [],
+      hsls = [];
   var palette = colorThief.getPalette(imgToListen, Number(colorNumber.value));
 
   for (var _i = 0; _i < palette.length; _i++) {
@@ -300,17 +302,22 @@ playImageBtn.addEventListener('click', function (e) {
 
     gains.push(_gain);
     frqs.push(_frq);
+    hsls.push(hslColor);
   } //Joue chaque paramètre les uns après les autres
 
 
   for (var i = 0; i < frqs.length; i++) {
     play(i);
+    setTimeout(function () {
+      stopGain();
+    }, frqs.length * speed);
   }
 
   function play(i) {
     setTimeout(function () {
       g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
       o.frequency.setValueAtTime(frqs[i], context.currentTime);
+      actualiseListenerColor(hsls[i][0], hsls[i][1], hsls[i][2], gains[i]);
       g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
     }, i * speed);
   }
@@ -379,13 +386,12 @@ pianoBtn.forEach(function (btn) {
 
     var frq = setFrequency(h, s, l),
         gain = setGain(l, s);
+    actualiseListenerColor(h, s, l, gain);
     g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
     o.frequency.setValueAtTime(frq, context.currentTime); // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
 
     if (sectionPiano.classList.contains('pad-modify') == false) {
-      btn.addEventListener(event('end'), function (e) {
-        g.gain.setTargetAtTime(0, context.currentTime, 0.1);
-      });
+      stopGain(btn);
     } else {
       g.gain.setTargetAtTime(0, context.currentTime + 0.1, 0.3);
     }
@@ -434,10 +440,6 @@ var _loop2 = function _loop2(_i4) {
         gain = setGain(l, s);
     o.frequency.setValueAtTime(frq, context.currentTime);
     g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
-
-    pianoFormInput[_i4].addEventListener(event('end'), function (e) {
-      g.gain.setTargetAtTime(0, context.currentTime, 0.1);
-    });
   });
 };
 
@@ -534,7 +536,7 @@ document.addEventListener('keydown', function (event) {
 document.addEventListener('keyup', function (event) {
   pianoColor.classList.remove('piano-color-active');
   pianoColor.style.backgroundColor = "#fff";
-  g.gain.setTargetAtTime(0, context.currentTime, 0.1);
+  stopGain();
   down = false;
 }, false); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -597,6 +599,29 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+
+var playedColors = document.querySelector('.played');
+
+function actualiseListenerColor(h, s, l, gain) {
+  var color = HSLtoRGB(h, s, l),
+      r = color[0],
+      g = color[1],
+      b = color[2];
+  playedColors.classList.remove('hide');
+  root.style.setProperty('--played-color', 'rgba(' + r + ', ' + g + ', ' + b + ', ' + gain + ')');
+}
+
+function stopGain(elementToListen) {
+  if (elementToListen == "" || elementToListen == null || elementToListen == undefined) {
+    g.gain.setTargetAtTime(0, context.currentTime, 0.3);
+    playedColors.classList.add('hide');
+  } else {
+    elementToListen.addEventListener(event('end'), function (e) {
+      g.gain.setTargetAtTime(0, context.currentTime, 0.3);
+      playedColors.classList.add('hide');
+    });
+  }
+}
 
 function createPalette(image) {
   if (image.complete) {
@@ -873,8 +898,8 @@ function RGBToHSL(r, g, b) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

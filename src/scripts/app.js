@@ -17,6 +17,7 @@ var frq = 0,
     gain = 0;
 
 
+
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////// START API ///////////////////////////////
@@ -73,8 +74,6 @@ sliderBtn.forEach(element => {
     });
 });
 
-
-
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////// ECOUTE D'UNE COULEUR ////////////////////////
@@ -99,14 +98,18 @@ colorSpan.forEach((colorSpan) => {
 });
 
 
-
-
 //Lorsqu'un slider bouge :
 for (let i = 0; i < colorInputs.length; i++) {
     colorInputs[i].addEventListener('input', (e) => {
 
-        let frq = setFrequency(colorInputs[0].value, colorInputs[1].value, colorInputs[2].value);
-        let gain = setGain(colorInputs[2].value, colorInputs[1].value);
+        let h = colorInputs[0].value,
+            s = colorInputs[1].value,
+            l = colorInputs[2].value;
+
+        let frq = setFrequency(h, s, l);
+        let gain = setGain(l, s);
+
+        actualiseListenerColor(h,s,l ,gain)
 
         // Défini la fréquence
         o.frequency.setValueAtTime(frq, context.currentTime);
@@ -119,13 +122,9 @@ for (let i = 0; i < colorInputs.length; i++) {
         colorSpans[i].innerHTML = colorInputs[i].value;
         
         // Affiche la couleur jouée
-        setColors(colorInputs[0].value, colorInputs[1].value, colorInputs[2].value);
+        setColors(h, s, l);
 
-
-        //Applique le bon event listenner (mouse ou touch)
-        colorInputs[i].addEventListener(event('end'), (e) => {
-            g.gain.setTargetAtTime(0, context.currentTime, 0.3);
-        });
+        stopGain(colorInputs[i]);
     });
 };
 
@@ -232,7 +231,8 @@ playImageBtn.addEventListener('click', (e) => {
     colorList.innerHTML = "";
 
     let gains = [],
-        frqs = [];
+        frqs = [],
+        hsls = [];
     
     let palette = colorThief.getPalette(imgToListen, Number(colorNumber.value));
 
@@ -257,18 +257,23 @@ playImageBtn.addEventListener('click', (e) => {
 
         gains.push(gain);
         frqs.push(frq);
+        hsls.push(hslColor);
     }
     
     //Joue chaque paramètre les uns après les autres
     for(var i = 0; i < frqs.length; i++) {
         play(i);
+        setTimeout(() => {
+            stopGain();
+        }, frqs.length * speed);
     }
-
+    
     function play(i) {
         setTimeout(function() {
             g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
             o.frequency.setValueAtTime(frqs[i], context.currentTime);
-
+            actualiseListenerColor(hsls[i][0],hsls[i][1],hsls[i][2] ,gains[i])
+            
             g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
         }, i*speed);
     }
@@ -349,15 +354,15 @@ pianoBtn.forEach(btn => {
         // Défini le gain et la fréquence
         let frq = setFrequency(h, s, l),
             gain = setGain(l, s);
+
+        actualiseListenerColor(h,s,l, gain);
         
         g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
         o.frequency.setValueAtTime(frq, context.currentTime);
         
         // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
         if (sectionPiano.classList.contains('pad-modify') == false) {
-            btn.addEventListener(event('end'), (e) => {
-                g.gain.setTargetAtTime(0, context.currentTime, 0.1);
-            });
+            stopGain(btn);
         } else {
             g.gain.setTargetAtTime(0, context.currentTime+0.1, 0.3);
         }
@@ -414,17 +419,14 @@ for (let i = 0; i < pianoFormInput.length; i++) {
         
         // Actualise la couleur du bouton
         actualisePadBtnColor(actualBtn, hexColor);
+
         
         // Défini le gain et la fréquence
         let frq = setFrequency(h, s, l),
-            gain = setGain(l, s);
-
+        gain = setGain(l, s);
+        
         o.frequency.setValueAtTime(frq, context.currentTime);
         g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
-
-        pianoFormInput[i].addEventListener(event('end'), (e) => {
-            g.gain.setTargetAtTime(0, context.currentTime, 0.1);
-        });
     })
 }
 
@@ -501,7 +503,7 @@ document.addEventListener('keydown', (event) => {
             o.frequency.setValueAtTime(frq, context.currentTime);
             g.gain.setTargetAtTime(1, context.currentTime, 0.002);
             
-                
+            
             // Cherche une couleur correspondant à la fréquence
             do {
                 h = randomMinMax(0, 360);
@@ -509,6 +511,7 @@ document.addEventListener('keydown', (event) => {
                 l = randomMinMax(50, 60);
                 color = setFrequency(h, s, l);
             } while (frq != color);
+            
 
             // Convertis la couleur en hexadécimal pour l'assigner
             let hexColor = HSLToHex(h, s, l);
@@ -527,7 +530,8 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', (event) => {
     pianoColor.classList.remove('piano-color-active');
     pianoColor.style.backgroundColor = "#fff";
-    g.gain.setTargetAtTime(0, context.currentTime, 0.1);
+    
+    stopGain();
 
     down = false;
 }, false);
@@ -603,6 +607,28 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+
+const playedColors = document.querySelector('.played');
+function actualiseListenerColor(h,s,l ,gain) {
+    let color = HSLtoRGB(h,s,l),
+        r = color[0],
+        g = color[1],
+        b = color[2];
+    playedColors.classList.remove('hide');
+    root.style.setProperty('--played-color', 'rgba('+ r +', '+ g +', '+ b +', '+gain+')');
+}
+
+function stopGain(elementToListen) {
+    if (elementToListen == "" || elementToListen == null || elementToListen == undefined) {
+        g.gain.setTargetAtTime(0, context.currentTime, 0.3);
+        playedColors.classList.add('hide');
+    }else{
+        elementToListen.addEventListener(event('end'), (e) => {
+            g.gain.setTargetAtTime(0, context.currentTime, 0.3);
+            playedColors.classList.add('hide');
+        });
+    }
+}
 
 function createPalette(image) {
     if (image.complete) {
@@ -884,5 +910,3 @@ function HSLToHex(h,s,l) {
 
     return [h, s, l];
   }
-
-

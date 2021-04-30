@@ -151,41 +151,38 @@
                         margin-top: -3.5rem;
                         max-width: 500px;
                         margin-left: calc(-500px - 1rem);
-
+                        
                         &-file {
+                            box-shadow: -10px 25px 50px -10px rgba(0, 0, 0, 0.301);
                             border-radius: $rounded 0 $rounded $rounded!important;
                         }
 
                         &:after {
-                            left: -25%;
-                            width: 100%;
-                            height: 100%;
-                            background: radial-gradient(lighten($gist-background, 75%) 0%, lighten($gist-background, 100%) 80%);
-                        
-                        }
-                        &::before {
-                            left: calc((100vw - 1000px) / -2);
+                            background: radial-gradient(lighten($gist-background, 75%) 0%, lighten($gist-background, 100%) 75%);
                         }
                     }
 
-                    &-1 .gist:after {
-                        left: -75%;
-                        top: 100%;
-                        width: 175%;
+                    &-1 .gist:after, &-1 .gist:before {
+                        width: 150%;
                         height: 150%;
+                        top: -50%;
+                        left: -50%;
                     }
-                    &-2 .gist:after {
-                        left: -75%;
-                        top: 105%;
-                        width: 175%;
+
+                    &-2 .gist:after, &-2 .gist:before {
+                        width: 130%;
                         height: 120%;
+                        top: -10%;
+                        left: -30%;
                     }
-                    &-3 .gist:after {
-                        left: -100%;
-                        top: 150%;
+
+                    &-3 .gist:after, &-3 .gist:before {
                         width: 200%;
                         height: 200%;
+                        top: -50%;
+                        left: -100%;
                     }
+
                 }
             }
 

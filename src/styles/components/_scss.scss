@@ -75,13 +75,49 @@
     }
 }
 
-// Fullscreen center
-.fs-center {
-    @include flex-center;
-    z-index: 100;
-    position: absolute;
-    width: 100%;
-    height: $section-height;
+main {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.played {
+    @include fullSize;
+    @include absoluteTopLeft;
+
+    z-index: -50;
+    overflow: hidden;
+    &-color {
+        position: absolute;
+        bottom: -20%;
+
+        width: 50vw;
+        height: 25vh;
+
+        border-radius: $round;
+        background-color: var(--played-color);
+
+        filter: blur(125px);
+
+        &-1 {
+            transform: rotate(20deg);
+            left: -15%; 
+        }
+
+        &-2 {
+            transform: rotate(-20deg);
+            right: -15%;
+        }
+    }
+
+    &::after {
+        @include fullSize;
+        @include absoluteTopLeft;
+        @include graphBackground;
+
+        content: "";
+        z-index: 0;
+    }
 }
 
 // Boutons
@@ -169,6 +205,8 @@
 }
 
 .section-intro {
+    @include fs-center;
+    @include fullSize;
     z-index: 2000;
     background-color: $white;
     cursor: pointer;
@@ -212,13 +250,15 @@
         @include flex-center-y;
         align-items: flex-end;
         height: 100%;
+        &::after {
+            @include pseudoGraphBackground;
+            opacity: .025;
+        }
     }
 
     .form {
         @include flex-column-center;
         padding: 2rem;
-
-        background-color: #fff;
 
         &-el {
             @include flex-column;
@@ -242,7 +282,7 @@
 
 
     &-color {
-        .module {  
+        .module {
             &-frequency {
                 position: relative;
                 z-index: 50;
@@ -371,6 +411,7 @@
         justify-content: flex-start!important;
 
         .pad-tuto {
+            @include fs-center;
             top: 0;
             z-index: 200;
 
@@ -403,10 +444,9 @@
 
         .module {
             @include fullSize;
+            @include absoluteTopLeft;
 
-            position: absolute;
             z-index: -100;
-            top: 0;
             align-items: center;
         }
 
@@ -467,7 +507,6 @@
         }
 
         .form {
-            background: $white;
             margin-top: 1rem;
             padding-top: 2rem;
         }
@@ -487,25 +526,30 @@
         @include flex-center;
         height: 100vh;
 
-        &-fixed {
-            position: fixed;
-            top: 0;
-        }
-
         .piano-color {
-            @include fullSize;
+            width: 75%;
+            height: 75%;
 
             position: absolute;
-            top: 0;
-            left: 0;
+            z-index: -50;
+            bottom: -5%;
             border-radius: $round;
             transform: translateY(50%);
             filter: blur(200px);
 
             transition: $t-fast;
+
+            &-msg {
+                position: relative;
+            }
             &-active {
                 transition: $t-superfast;
             }
+        }
+        &::after {
+            @include pseudoGraphBackground;
+            @include fs-center;
+            z-index: -5;
         }
     }
 
@@ -518,6 +562,7 @@
             // Rajoute de l'espacement en haut et en bas pour aérer, utiliser des margin/ padding casse le "overflow: scroll", il faut utiliser des éléments.
             &:before {content: ""; display: block; height: $h3;}
             &:after {content: ""; display: block; height: $h1;}
+            
 
             @include fullSize;
 
@@ -548,40 +593,25 @@
                 }
 
                 .gist {
+                    position: relative;
+                    box-sizing: border-box;
                     &-file {
                         border-radius: 0 0 $rounded $rounded!important;
                     }
-
+                    
                     &:after {
-                        @include gistGraphBase;
-                        width: 150vw;
-                        left: -25vw;
-
-                        z-index: -10;
+                        @include gistGraph;
+                        z-index: -1000;
                         
-                        transform: translateY(-100%);
-
                         background: radial-gradient($gist-background 20%, lighten($gist-background, 100%) 70%);
                     }
 
-                    &:before {
-                        @include gistGraphBase;
-                        width: 100vw;
+                    &::before {
+                        @include gistGraph;
+
                         z-index: -5;
-                        width: 100vw;
-                        height: 175%;
-                        margin-top: -50%;
-
-                        background-size: 1rem;
-                        background-repeat: repeat;
-                        background-image: url('../assets/bgSvg.svg');
                     }
-
                 }
-
-                &-1 .gist:after {height: 60%;}
-                &-2 .gist:after {height: 80%;}
-                &-3 .gist:after {height: 60%;}
             }
         }
 
