@@ -43,6 +43,10 @@ label {
   color: inherit !important;
 }
 
+main {
+  overflow: hidden;
+}
+
 @media (min-width: 900px) {
   *::-webkit-scrollbar {
     width: 5px;
@@ -112,18 +116,12 @@ label {
   background: #384a6c;
 }
 
-main {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-
 .played {
-  width: 100%;
-  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
   z-index: -50;
   overflow: hidden;
 }
@@ -185,6 +183,7 @@ main {
   }
 }
 .menu {
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
   position: fixed;
   z-index: 200;
   bottom: 0;
@@ -201,9 +200,9 @@ main {
   display: flex;
   align-items: flex-end;
   width: 100%;
-  height: 4rem;
 }
 .menu-list-el {
+  height: 4rem;
   width: 100%;
   background-color: #eeeeee;
 }
@@ -218,7 +217,7 @@ main {
   box-shadow: none;
 }
 .menu-btn-info {
-  width: auto;
+  width: 25%;
   height: auto;
   background-color: #eeeeee;
   border-radius: 10px 0 0 0;
@@ -332,7 +331,6 @@ main {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
 }
 .section-image .module .color-list {
   display: flex;
@@ -460,11 +458,10 @@ main {
   grid-template-rows: repeat(3, 100px);
   justify-content: center;
   max-width: 100vw;
-  box-sizing: content-box;
+  box-sizing: border-box;
   margin: 1rem auto;
   border-radius: 10px;
   box-shadow: 0px 0px 25px -10px #00000038;
-  box-sizing: border-box;
 }
 .section-pad .pad-btn {
   width: 100%;
@@ -537,7 +534,6 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 }
 .section-piano .piano-color {
   width: 75%;
@@ -573,10 +569,7 @@ main {
   z-index: -5;
 }
 .section-info {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  position: relative;
   overflow-y: scroll;
 }
 .section-info .container {
@@ -895,7 +888,8 @@ body[data-page=info] .menu-btn[id=info] svg {
 }
 .section-pad .pad-btn {
   transition: all 0.1s cubic-bezier(0.33, 1, 0.68, 1);
-  transition-property: transform, opacity;
+  transition-delay: 0;
+  transition-property: transform;
 }
 .section-pad .pad-btn::after {
   transform: scale(1.1);
@@ -1286,28 +1280,31 @@ body[data-page=info] .menu-btn[id=info] svg {
 
   .menu {
     justify-content: center;
-    margin-bottom: 3rem;
   }
   .menu-list {
     max-width: 600px;
     border-radius: 10px;
   }
+  .menu-list-el {
+    height: auto;
+  }
   .menu-list-el:nth-child(3) {
     border-radius: 0;
   }
   .menu-list-el:last-child {
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 10px 0 0;
   }
   .menu-list-el:first-child {
-    border-radius: 10px 0 0 10px;
+    border-radius: 10px 0 0 0;
   }
   .menu-btn {
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
   }
   .menu-btn-info {
-    border-radius: 10px;
+    width: auto;
+    border-radius: 10px 10px 0 0;
     padding: 2rem 3rem;
-    margin-left: 3rem;
+    margin-left: 1.5rem;
     box-shadow: none;
   }
 }

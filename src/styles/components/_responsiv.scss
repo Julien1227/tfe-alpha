@@ -214,33 +214,34 @@
 
     .menu {
         justify-content: center;
-        margin-bottom: 3rem;
         &-list {
             max-width:600px;
             border-radius: $rounded;
             &-el {
+                height: auto;
                 &:nth-child(3) {
                     border-radius: 0;
                 }
 
                 &:last-child {
-                    border-radius: 0 $rounded $rounded 0;
+                    border-radius: 0 $rounded 0 0;
                 }
-    
+                
                 &:first-child {
-                    border-radius: $rounded 0 0 $rounded;
+                    border-radius: $rounded 0 0 0;
                 }
             }
         }
         
         &-btn {
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
         }
 
         &-btn-info {
-            border-radius: $rounded;
+            width: auto;
+            border-radius: $rounded $rounded 0 0;
             padding: 2rem 3rem;
-            margin-left: 3rem;
+            margin-left: 1.5rem;
             box-shadow: none;
         }
     }

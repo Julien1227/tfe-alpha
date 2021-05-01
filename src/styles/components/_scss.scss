@@ -5,6 +5,10 @@
     color: inherit!important;
 }
 
+main {
+    overflow: hidden;
+}
+
 // ScrollBar - chrome
 @media(min-width: 900px) {
     *::-webkit-scrollbar {
@@ -75,15 +79,9 @@
     }
 }
 
-main {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-}
-
 .played {
-    @include fullSize;
     @include absoluteTopLeft;
+    @include fullSize;
 
     z-index: -50;
     overflow: hidden;
@@ -154,6 +152,7 @@ main {
 
 // Menu
 .menu {
+    transition: $t-fast;
     position: fixed;
     z-index: 200;
     bottom: 0;
@@ -171,9 +170,9 @@ main {
         display: flex;
         align-items: flex-end;
         width: 100%;
-        height: $menu-height;
         
         &-el {
+            height: $menu-height;
             width: 100%;
             background-color: $light-grey;
         }
@@ -189,7 +188,7 @@ main {
         box-shadow: none;
 
         &-info {
-            width: auto;
+            width: 25%;
             height: auto;
             background-color: $light-grey;
             border-radius: $rounded 0 0 0;
@@ -312,8 +311,6 @@ main {
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-
-            height: 100%;
             
             .color-list {
                 @include flex-center-y;
@@ -463,12 +460,11 @@ main {
 
             max-width: 100vw;
             
-            box-sizing: content-box;
+            box-sizing: border-box;
             margin: 1rem auto;
             border-radius: $rounded;
             box-shadow: $shadow;
 
-            box-sizing: border-box;
             &-btn {
                 @include fullSize;
 
@@ -524,7 +520,6 @@ main {
 
     &-piano {
         @include flex-center;
-        height: 100vh;
 
         .piano-color {
             width: 75%;
@@ -554,8 +549,7 @@ main {
     }
 
     &-info {
-        @include flex-column-center-y;
-        position: relative;
+        align-items: center;
         overflow-y: scroll;
 
         .container {
