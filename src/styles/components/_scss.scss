@@ -405,46 +405,62 @@ main {
 
 
     &-pad {
-        justify-content: flex-start!important;
-
+        justify-content: center;
         .pad-tuto {
-            @include fs-center;
-            top: 0;
+            @include absoluteTopLeft;
+            @include flex-center-y;
+
+            align-items: flex-end;
+            width: 100%;
+            height: 20%;
+            padding: 0 5rem;
+            box-sizing: border-box;
+            text-align: center;
             z-index: 200;
+        }
 
-            background-color: $black02;
+        .edit {
+            @include absoluteTopLeft;
+            width: 100vw;
+            margin: 1rem;
+            margin-top: 2rem;
+            z-index: 150;
+            top: 50%;
             
-            .tuto-container {
-                align-self: flex-start;
-
-                text-align: center;
-
-                max-width: 500px;
-                padding: 2rem;
+            &-indicator {
+                @include squareSize(50px);
+                position: absolute;
+                top: -40px;
+                margin-left: 0.5rem;
+                color: $white;
+            }
+            
+            &-div {
+                @include card($rounded2);
+                @include flex-column-center-y;
+                box-sizing: border-box;
+                width: calc(100% - 2rem);
+                padding: 1.5rem;
                 padding-bottom: 0;
-                border-radius: 0 0 $rounded2 $rounded2;
-                
-                background-color: $white;
-                box-shadow: $light-shadow;
-                & .btn {
-                    align-self: center;
+                box-shadow: $shadow;
+                &-btn {
+                    @include flex-center;
+                    width: 3rem;
+                    height: 3rem;
+                    padding: 0.75rem;
+                    margin-top: 1rem;
+                    margin-bottom: -1.5rem;
+                    background-color: $white08;
+                    svg {
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
             }
-        }
+            
+            &-slider {
 
-        &.show-tuto {
-            .pad-tuto {
-                opacity: 1;
-                transition: $t-slow;
             }
-        }
-
-        .module {
-            @include fullSize;
-            @include absoluteTopLeft;
-
-            z-index: -100;
-            align-items: center;
         }
 
         .pad-container {
@@ -461,7 +477,7 @@ main {
             max-width: 100vw;
             
             box-sizing: border-box;
-            margin: 1rem auto;
+            margin: 3rem auto;
             border-radius: $rounded;
             box-shadow: $shadow;
 
@@ -471,10 +487,10 @@ main {
                 cursor: pointer;
 
                 // Arrondis les coins à chaque touches, overflow: hidden inutilisable étant donné qu'il cacherai les box shadows des boutons
-                &[id="btn-1"]{border-radius: $rounded 0 0 0;}
-                &[id="btn-3"]{border-radius: 0 $rounded 0 0;}
-                &[id="btn-7"]{border-radius: 0 0 0 $rounded;}
-                &[id="btn-9"]{border-radius: 0 0 $rounded 0;}
+                &[id="btn-1"], &[id="btn-1"]::before{border-radius: $rounded 0 0 0;}
+                &[id="btn-3"], &[id="btn-3"]::before{border-radius: 0 $rounded 0 0;}
+                &[id="btn-7"], &[id="btn-7"]::before{border-radius: 0 0 0 $rounded;}
+                &[id="btn-9"], &[id="btn-9"]::before{border-radius: 0 0 $rounded 0;}
 
                 // Effet lumineux des touches
                 &::after {
@@ -500,21 +516,6 @@ main {
                 &[id="btn-8"]::after {background-color: var(--pad-btn-color-8);}
                 &[id="btn-9"]::after {background-color: var(--pad-btn-color-9);}
             }
-        }
-
-        .form {
-            margin-top: 1rem;
-            padding-top: 2rem;
-        }
-
-        .btn-edit {
-            margin-top: 1rem;
-        }
-
-        .btn-save {
-            align-self: flex-end;
-            margin-top: -4rem!important;
-            margin-bottom: 0.5rem!important;
         }
     }
 

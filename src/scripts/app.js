@@ -292,12 +292,14 @@ const pianoBtn = document.querySelectorAll('.pad-btn'),
 
       tuto = document.querySelector('.pad-tuto'),
       closeTuto = document.getElementById('closeTuto'),
-  
-      sectionPiano = document.querySelector('.section-pad'),
-      pianoFormInput = document.querySelectorAll('.padInput'),
-      pianoFormSpan = document.querySelectorAll('.padSpan'),
+      confirmEdit = document.getElementById('confirmEdit'),
       editBtn = document.querySelector('.btn-edit'),
-      saveBtn = document.querySelector('.btn-save');
+      editDiv = document.querySelector('.edit'),
+      editDivIndicator = document.querySelector('.edit-indicator'),
+      saveBtn = document.querySelector('.btn-save'),
+      editInput = document.querySelector('.edit-slider'),
+  
+      sectionPiano = document.querySelector('.section-pad');
 
 var root = document.documentElement;
 
@@ -313,30 +315,12 @@ pianoBtn.forEach(btn => {
 
 // Permets de rentrer en mode "modification" des boutons 
 editBtn.addEventListener('click', (e) => {
-
-    // Montre le tuto
-    tuto.classList.add('show-tuto');
-
-    // Cache le tuto à jamais   
-    closeTuto.addEventListener('click', (e) => {
-        gsap.to(tuto, {duration: 0.3, opacity: 0, onComplete: hide, onCompleteParams: [tuto]});
-    });
-
-    // Sélectionne la première touche par défaut
     sectionPiano.classList.add('pad-modify');   
-    pianoBtn[0].classList.add('pad-btn-active');
-    let hslColor = getHslFromAttribute(pianoBtn[0]);
-    for (let i = 0; i < pianoFormInput.length; i++) {
-        pianoFormInput[i].value = hslColor[i];
-        pianoFormSpan[i].innerHTML = hslColor[i];
-    }
 });
 
+// Permets de quitter le mode "modification" des boutons 
 saveBtn.addEventListener('click', (e) => {
-    sectionPiano.classList.remove('pad-modify');
-    pianoBtn.forEach(btn => {
-        btn.classList.remove('pad-btn-active');
-    });
+    sectionPiano.classList.remove('pad-modify');   
 });
 
 // Pour chaque touches du piano
@@ -364,7 +348,7 @@ pianoBtn.forEach(btn => {
         if (sectionPiano.classList.contains('pad-modify') == false) {
             stopGain(btn);
         } else {
-            g.gain.setTargetAtTime(0, context.currentTime+0.1, 0.3);
+            stopGain();
         }
     });
 });
@@ -375,7 +359,17 @@ pianoBtn.forEach(btn => {
         if (sectionPiano.classList.contains('pad-modify') == true) {
             //Récupère la couleur appuyée
             let targetBtn = e.currentTarget;
-            
+
+            sectionPiano.classList.add('edition');
+
+            editDiv.style.top = (targetBtn.offsetTop + editDiv.offsetHeight) + "px";
+            editDivIndicator.style.left = targetBtn.offsetLeft + "px";
+
+            confirmEdit.addEventListener('click', (e) => {
+                sectionPiano.classList.remove('edition');
+                targetBtn.classList.remove('pad-btn-active')
+            });
+
             // Dans le cas ou l'utilisateur re sélectionne la couleur active
             if (targetBtn.classList.contains('pad-btn-active') == true) {
                 console.log('pas de double sélection possible');
@@ -385,20 +379,15 @@ pianoBtn.forEach(btn => {
 
                 // Actualise le bouton actif
                 targetBtn.classList.add('pad-btn-active');
-                pastTarget.classList.remove('pad-btn-active');
+                pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('pas de pastTarget');
 
                 let hslColor = getHslFromAttribute(targetBtn);
                 
                 // Récupère les couleurs tsl depuis l'attibut style du boutton
                 hslColor = getHslFromAttribute(targetBtn);
-                btnColors.push(hslColor);
 
                 // Actualise les valeurs du slider avec la couleur actuelle du bouton
-                for (let i = 0; i < pianoFormInput.length; i++) {
-                    pianoFormInput[i].value = hslColor[i];
-                    pianoFormSpan[i].innerHTML = hslColor[i];
-                }
-
+                editInput.value = hslColor[0];
             }
         }
     });
@@ -406,30 +395,29 @@ pianoBtn.forEach(btn => {
 
 
 // L'orsqu'un slider bouge - modifie la couleur active
-for (let i = 0; i < pianoFormInput.length; i++) {
-    pianoFormInput[i].addEventListener('input', (e) => {
-        let h = pianoFormInput[0].value,
-            s = pianoFormInput[1].value,
-            l = pianoFormInput[2].value;
 
-        pianoFormSpan[i].innerHTML = pianoFormInput[i].value;
-        
-        let actualBtn = document.querySelector('.pad-btn-active');
-        let hexColor = HSLToHex(h, s, l);
-        
-        // Actualise la couleur du bouton
-        actualisePadBtnColor(actualBtn, hexColor);
+editInput.addEventListener('input', (e) => {
+    let h = editInput.value,
+        s = 100,
+        l = 50;
+    
+    let actualBtn = document.querySelector('.pad-btn-active');
+    let hexColor = HSLToHex(h, s, l);
+    
+    // Actualise la couleur du bouton
+    actualisePadBtnColor(actualBtn, hexColor);
 
-        
-        // Défini le gain et la fréquence
-        let frq = setFrequency(h, s, l),
-        gain = setGain(l, s);
-        
-        o.frequency.setValueAtTime(frq, context.currentTime);
-        g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
-    })
-}
+    
+    // Défini le gain et la fréquence
+    let frq = setFrequency(h, s, l),
+    gain = setGain(l, s);
+    
+    o.frequency.setValueAtTime(frq, context.currentTime);
+    g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
 
+    actualiseListenerColor(h,s,l, 1);
+    stopGain(editInput);
+});
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
