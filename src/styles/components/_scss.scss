@@ -242,6 +242,16 @@ main {
             margin: 0;
             font-size: 14px;
         }
+
+        &-creditBtn {
+            position: absolute;
+            right: 1rem;
+            padding: 0.25rem;
+
+            & svg {
+                @include squareSize(14px);
+            }
+        }
     }
 
     .module {
@@ -278,7 +288,73 @@ main {
         }
     }
 
+    &-credits {
+        overflow-y: scroll;
+        position: fixed;
+        justify-content: flex-start;
+        background-color: $white;
+        z-index: calc(#{$front} + 1);
+        
+        &-title {
+            width: 100vw;
+            margin-left: -2rem;
+            padding-left: 2rem;
+            border-bottom: $border-light;
+        }
+        
+        .credits {
+            padding: 2rem;
+            &-div {
+                padding-bottom: 1.5rem;
+                border-bottom: $border-light;
+                &:last-child {
+                    border-bottom: none;
+                }
+            }
+            
+            &-title {
+                
+            }
+            
+            &-list {
+                &-el {
+                    position: relative;
+                    margin: 1rem 0;
+                    &:first-child {
+                        padding-top: 0;
+                    }
 
+                    &::before {
+                        @include pseudoElement;
+                        background-color: $black;
+                        left: -1rem;
+                        opacity: .1;
+                        width: 5px;
+                        height: 100%;
+                        border-radius: $rounded;
+                    }
+                }
+                .small {
+                    margin: 0;
+                }
+
+                .licence {
+                    margin-top: 0.5rem;
+                    position: relative;
+                    display: inline-block;
+                    vertical-align: -0.5rem;
+                    white-space: nowrap;
+                    max-width: 150px;
+                    padding:  0.25rem;
+                    border-radius: $rounded;
+                    overflow-x: scroll;
+
+                    background-color: rgba(0, 0, 0, 0.089);
+                }
+            }
+        }
+    }
+    
 
     &-color {
         .module {
@@ -355,14 +431,12 @@ main {
                 @include flex-column-center-y;
 
                 overflow: hidden;
-                z-index: $background;
+                z-index: $front;
                 
                 margin-top: 1.5rem;
                 box-sizing: border-box;
                 border-radius: $rounded2;
 
-                height: 3.5rem;
-                width: 17rem;
                 max-width: 450px;
 
                 &-btn {
@@ -533,7 +607,6 @@ main {
 
     &-piano {
         @include flex-center;
-
         .piano-color {
             width: 75%;
             height: 75%;
@@ -610,8 +683,7 @@ main {
                     &:after {
                         @include gistGraph;
                         z-index: $background;
-                        
-                        background: radial-gradient($gist-background 20%, lighten($gist-background, 100%) 70%);
+                        background: radial-gradient(lighten($gist-background, 75%) 0%, lighten($gist-background, 100%) 75%);
                     }
 
                     &::before {
@@ -688,7 +760,6 @@ main {
 
 
 // https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
-/* Css 100% responsiv des input range */
 input[type=range]{
     &::-webkit{
         &-slider-runnable-track {

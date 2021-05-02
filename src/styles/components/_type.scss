@@ -21,6 +21,10 @@ h1 {
   font-weight: 900;
 }
 
+h2 {
+  font-size: $h3;
+}
+
 h3 {
   font-size: $h3;
   margin-block-start: calc(#{$h3} * 1.5);

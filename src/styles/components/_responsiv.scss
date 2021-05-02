@@ -115,10 +115,6 @@
                 margin-top: 0rem;
             }
         }
-        
-        &-piano {
-            height: 100vh;
-        }
 
         &-info {
             .container {
@@ -155,10 +151,6 @@
                         &-file {
                             box-shadow: -10px 25px 50px -10px rgba(0, 0, 0, 0.301);
                             border-radius: $rounded 0 $rounded $rounded!important;
-                        }
-
-                        &:after {
-                            background: radial-gradient(lighten($gist-background, 75%) 0%, lighten($gist-background, 100%) 75%);
                         }
                     }
 

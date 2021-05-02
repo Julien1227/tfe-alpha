@@ -66,11 +66,14 @@ body {
             }
         }
     }
+
+    &[data-page="credits"] {
+        .played {display: none;}
+        .section-credits {display: flex;}
+    }
 }
 
 
-
-// Animations du piano
 .section-pad {
     transition: $t-slow;
     .btn {
@@ -194,6 +197,8 @@ body {
 // Bouton d'upload images
 
 .selection {
+    height: 3.5rem;
+    width: 18rem;
     &-image {
         transition: $t-superfast;
         transform: translateY(20px);

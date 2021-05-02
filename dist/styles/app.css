@@ -11,6 +11,10 @@ h1 {
   font-weight: 900;
 }
 
+h2 {
+  font-size: 36px;
+}
+
 h3 {
   font-size: 36px;
   margin-block-start: calc(36px * 1.5);
@@ -276,6 +280,15 @@ main {
   margin: 0;
   font-size: 14px;
 }
+.section-header-creditBtn {
+  position: absolute;
+  right: 1rem;
+  padding: 0.25rem;
+}
+.section-header-creditBtn svg {
+  width: 14px;
+  height: 14px;
+}
 .section .module {
   display: flex;
   justify-content: center;
@@ -315,6 +328,63 @@ main {
 .section .form .btn {
   text-align: center;
   margin: 1rem 0;
+}
+.section-credits {
+  overflow-y: scroll;
+  position: fixed;
+  justify-content: flex-start;
+  background-color: #fff;
+  z-index: calc(1000 + 1);
+}
+.section-credits-title {
+  width: 100vw;
+  margin-left: -2rem;
+  padding-left: 2rem;
+  border-bottom: 1px solid #0000001f;
+}
+.section-credits .credits {
+  padding: 2rem;
+}
+.section-credits .credits-div {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #0000001f;
+}
+.section-credits .credits-div:last-child {
+  border-bottom: none;
+}
+.section-credits .credits-list-el {
+  position: relative;
+  margin: 1rem 0;
+}
+.section-credits .credits-list-el:first-child {
+  padding-top: 0;
+}
+.section-credits .credits-list-el::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  background-color: #000000;
+  left: -1rem;
+  opacity: 0.1;
+  width: 5px;
+  height: 100%;
+  border-radius: 10px;
+}
+.section-credits .credits-list .small {
+  margin: 0;
+}
+.section-credits .credits-list .licence {
+  margin-top: 0.5rem;
+  position: relative;
+  display: inline-block;
+  vertical-align: -0.5rem;
+  white-space: nowrap;
+  max-width: 150px;
+  padding: 0.25rem;
+  border-radius: 10px;
+  overflow-x: scroll;
+  background-color: rgba(0, 0, 0, 0.089);
 }
 .section-color .module-frequency {
   position: relative;
@@ -376,12 +446,10 @@ main {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  z-index: -100;
+  z-index: 1000;
   margin-top: 1.5rem;
   box-sizing: border-box;
   border-radius: 30px;
-  height: 3.5rem;
-  width: 17rem;
   max-width: 450px;
 }
 .section-image .module .selection-btn {
@@ -667,7 +735,7 @@ main {
   background-repeat: repeat;
   background-image: url("../assets/bgSvg.svg");
   z-index: -100;
-  background: radial-gradient(#151c29 20%, white 70%);
+  background: radial-gradient(#d4dbe9 0%, white 75%);
 }
 .section-info .container-code .gist::before {
   position: absolute;
@@ -817,11 +885,15 @@ svg {
 }
 
 button, input {
+  font-family: inherit;
   background-color: transparent;
   font-size: inherit;
   color: inherit;
   font-weight: inherit;
   border: none;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
 }
 
 ul {
@@ -916,6 +988,12 @@ body[data-page=info] .menu-btn[id=info] {
 }
 body[data-page=info] .menu-btn[id=info] svg {
   opacity: 1;
+}
+body[data-page=credits] .played {
+  display: none;
+}
+body[data-page=credits] .section-credits {
+  display: flex;
 }
 
 .section-pad {
@@ -1015,6 +1093,10 @@ body[data-page=info] .menu-btn[id=info] svg {
   pointer-events: inherit;
 }
 
+.selection {
+  height: 3.5rem;
+  width: 18rem;
+}
 .selection-image {
   transition: all 0.1s cubic-bezier(0.33, 1, 0.68, 1);
   transform: translateY(20px);
@@ -1252,9 +1334,6 @@ body[data-page=info] .menu-btn[id=info] svg {
   .section-image .form {
     margin-top: 0rem;
   }
-  .section-piano {
-    height: 100vh;
-  }
   .section-info .container {
     padding: inherit;
     transform: translateX(50%);
@@ -1287,9 +1366,6 @@ body[data-page=info] .menu-btn[id=info] svg {
   .section-info .container-code .gist-file {
     box-shadow: -10px 25px 50px -10px rgba(0, 0, 0, 0.301);
     border-radius: 10px 0 10px 10px !important;
-  }
-  .section-info .container-code .gist:after {
-    background: radial-gradient(#d4dbe9 0%, white 75%);
   }
   .section-info .container-code-1 .gist:after, .section-info .container-code-1 .gist:before {
     width: 150%;

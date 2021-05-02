@@ -76,6 +76,26 @@ sliderBtn.forEach(element => {
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+///////////////////// MONTRE LES CREDITS //////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+const creditBtn = document.querySelectorAll('.section-header-creditBtn'),
+      closeCreditBtn = document.getElementById('.closeCreditSection');
+
+creditBtn.forEach(element => {
+    element.addEventListener('click',(e) => {
+        if (element.getAttribute('id') == "closeCreditSection") {
+            body.setAttribute('data-page', 'color');
+        }else{
+            body.setAttribute('data-page', 'credits');
+        }
+    });
+});
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 ///////////////////// ECOUTE D'UNE COULEUR ////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -206,8 +226,6 @@ imageSelection.forEach(image => {
     });
 });
 
-
-
 // Upload d'une image
 btnUpload.addEventListener('click', (e) => {
      inputUpload.click();
@@ -309,7 +327,7 @@ var btnColors = [];
 var h = 0;
 pianoBtn.forEach(btn => {
     h = h + 40;
-    let btnColor = HSLToHex(randomMinMax(h, h - 40), 100, 50);
+    let btnColor = HSLToHEX(randomMinMax(h, h - 40), 100, 50);
     actualisePadBtnColor(btn, btnColor);
 });
 
@@ -413,7 +431,7 @@ editInput.addEventListener('input', (e) => {
         l = 50;
     
     let actualBtn = document.querySelector('.pad-btn-active');
-    let hexColor = HSLToHex(h, s, l);
+    let hexColor = HSLToHEX(h, s, l);
     
     // Actualise la couleur du bouton
     actualisePadBtnColor(actualBtn, hexColor);
@@ -513,7 +531,7 @@ document.addEventListener('keydown', (event) => {
             
 
             // Convertis la couleur en hexadécimal pour l'assigner
-            let hexColor = HSLToHex(h, s, l);
+            let hexColor = HSLToHEX(h, s, l);
 
             // Assignation de la couleur et d'un class de transition
             pianoColor.style.backgroundColor = hexColor;
@@ -587,18 +605,6 @@ infoSection.addEventListener('scroll', () => {
             nav.classList.add('hide')
         }
     }
-});
-
-//SMOOTH SCROLL ONLY ON ANCHOR BUTTONS - Permet de reset le scroll de la page info sans l'animation du smooth scroll
-//source: https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-  
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
 });
 
 ///////////////////////////////////////////////////////////////////
@@ -681,11 +687,6 @@ function getHslFromAttribute(element) {
     return RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
 }
 
-//source: https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d
-function randomMinMax(min,max){
-    return Math.floor(Math.random()*(max-min+1)+min);
-}
-
 function deleteElement(element) {
     element.remove();
 }
@@ -704,8 +705,8 @@ function setColors(h, s, l) {
     h2 = h2 > 359 ? 359 : h2;
     l2 = l2 < 0 ? 0 : l2;
 
-    let color1 = HSLToHex(h, s, l),
-        color2 = HSLToHex(h2, s, l2);
+    let color1 = HSLToHEX(h, s, l),
+        color2 = HSLToHEX(h2, s, l2);
 
     //if(h2 > 360) {h2 = 360}
     color.setAttribute(
@@ -786,6 +787,11 @@ function event(param) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+//source: https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d
+function randomMinMax(min,max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
 // https://codepen.io/dropinks/pen/MrzPXB
 function isCollide(el1, el2) {
     var element1 = el1.getBoundingClientRect();
@@ -797,6 +803,7 @@ function isCollide(el1, el2) {
     );
 }
 
+// CSS TRICK LICENCE  -  https://css-tricks.com/license/
 //source: https://css-tricks.com/converting-color-spaces-in-javascript/
 //Convertit ma valeur HSL vers RGB
 function HSLtoRGB(h,s,l) {
@@ -830,7 +837,7 @@ function HSLtoRGB(h,s,l) {
     return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
 }
 
-function HSLToHex(h,s,l) {
+function HSLToHEX(h,s,l) {
     s /= 100;
     l /= 100;
   
@@ -916,3 +923,15 @@ function HSLToHex(h,s,l) {
 
     return [h, s, l];
   }
+
+//SMOOTH SCROLL ONLY ON ANCHOR BUTTONS - Permet de reset le scroll de la page info sans l'animation du smooth scroll
+//source: https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+  
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});

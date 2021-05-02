@@ -22,11 +22,15 @@ svg {
 }
 
 button, input {
+    font-family: inherit;
     background-color: transparent;
     font-size: inherit;
     color: inherit;
     font-weight: inherit;
     border: none;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
 }
 
 ul {

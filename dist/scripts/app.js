@@ -156,6 +156,22 @@ sliderBtn.forEach(function (element) {
   });
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+///////////////////// MONTRE LES CREDITS //////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+var creditBtn = document.querySelectorAll('.section-header-creditBtn'),
+    closeCreditBtn = document.getElementById('.closeCreditSection');
+creditBtn.forEach(function (element) {
+  element.addEventListener('click', function (e) {
+    if (element.getAttribute('id') == "closeCreditSection") {
+      body.setAttribute('data-page', 'color');
+    } else {
+      body.setAttribute('data-page', 'credits');
+    }
+  });
+}); ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 ///////////////////// ECOUTE D'UNE COULEUR ////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -344,7 +360,7 @@ var btnColors = []; // Assigne une couleur légèrement aléatoire à chaque tou
 var h = 0;
 pianoBtn.forEach(function (btn) {
   h = h + 40;
-  var btnColor = HSLToHex(randomMinMax(h, h - 40), 100, 50);
+  var btnColor = HSLToHEX(randomMinMax(h, h - 40), 100, 50);
   actualisePadBtnColor(btn, btnColor);
 }); // Permets de rentrer en mode "modification" des boutons 
 
@@ -424,7 +440,7 @@ editInput.addEventListener('input', function (e) {
       s = 100,
       l = 50;
   var actualBtn = document.querySelector('.pad-btn-active');
-  var hexColor = HSLToHex(h, s, l); // Actualise la couleur du bouton
+  var hexColor = HSLToHEX(h, s, l); // Actualise la couleur du bouton
 
   actualisePadBtnColor(actualBtn, hexColor); // Défini le gain et la fréquence
 
@@ -506,7 +522,7 @@ document.addEventListener('keydown', function (event) {
       } while (_frq3 != _color2); // Convertis la couleur en hexadécimal pour l'assigner
 
 
-      var hexColor = HSLToHex(h, s, l); // Assignation de la couleur et d'un class de transition
+      var hexColor = HSLToHEX(h, s, l); // Assignation de la couleur et d'un class de transition
 
       pianoColor.style.backgroundColor = hexColor;
       pianoColor.classList.add('piano-color-active'); // Cache le message
@@ -572,16 +588,6 @@ infoSection.addEventListener('scroll', function () {
       nav.classList.add('hide');
     }
   }
-}); //SMOOTH SCROLL ONLY ON ANCHOR BUTTONS - Permet de reset le scroll de la page info sans l'animation du smooth scroll
-//source: https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
-
-document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth'
-    });
-  });
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////// MY FUNCTIONS ////////////////////////////
@@ -659,11 +665,6 @@ function getHslFromAttribute(element) {
   var rgbColor = element.getAttribute('style').match(/\d+/g).map(Number); // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
 
   return RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
-} //source: https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d
-
-
-function randomMinMax(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 function deleteElement(element) {
@@ -681,8 +682,8 @@ function setColors(h, s, l) {
       l2 = l - 5;
   h2 = h2 > 359 ? 359 : h2;
   l2 = l2 < 0 ? 0 : l2;
-  var color1 = HSLToHex(h, s, l),
-      color2 = HSLToHex(h2, s, l2); //if(h2 > 360) {h2 = 360}
+  var color1 = HSLToHEX(h, s, l),
+      color2 = HSLToHEX(h2, s, l2); //if(h2 > 360) {h2 = 360}
 
   color.setAttribute('style', "background: linear-gradient(" + color1 + ", " + color2 + ")");
 } // Calcule le gain
@@ -745,14 +746,20 @@ function event(param) {
 ///////////////////// OTHERS FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-// https://codepen.io/dropinks/pen/MrzPXB
+//source: https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d
+
+
+function randomMinMax(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+} // https://codepen.io/dropinks/pen/MrzPXB
 
 
 function isCollide(el1, el2) {
   var element1 = el1.getBoundingClientRect();
   var element2 = el2.getBoundingClientRect();
   return !(element1.top + element1.height < element2.top + 50 || element1.top > element2.top + element2.height - 50);
-} //source: https://css-tricks.com/converting-color-spaces-in-javascript/
+} // CSS TRICK LICENCE  -  https://css-tricks.com/license/
+//source: https://css-tricks.com/converting-color-spaces-in-javascript/
 //Convertit ma valeur HSL vers RGB
 
 
@@ -796,7 +803,7 @@ function HSLtoRGB(h, s, l) {
   return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
 }
 
-function HSLToHex(h, s, l) {
+function HSLToHEX(h, s, l) {
   s /= 100;
   l /= 100;
   var c = (1 - Math.abs(2 * l - 1)) * s,
@@ -872,7 +879,18 @@ function RGBToHSL(r, g, b) {
   s = +(s * 100).toFixed(1);
   l = +(l * 100).toFixed(1);
   return [h, s, l];
-}
+} //SMOOTH SCROLL ONLY ON ANCHOR BUTTONS - Permet de reset le scroll de la page info sans l'animation du smooth scroll
+//source: https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
+
+
+document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
 
 /***/ }),
 
