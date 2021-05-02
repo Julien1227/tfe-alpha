@@ -482,6 +482,7 @@ main {
             box-shadow: $shadow;
 
             &-btn {
+                position: relative;
                 @include fullSize;
 
                 cursor: pointer;
@@ -504,6 +505,14 @@ main {
                     filter: blur(30px);
 
                     pointer-events: none;
+                }
+
+                &::before {
+                    @include pseudoElement;
+                    @include absoluteTopLeft;
+                    @include fullSize;
+                    background-color: $white;
+                    opacity: 0;
                 }
 
                 &[id="btn-1"]::after {background-color: var(--pad-btn-color-1);}

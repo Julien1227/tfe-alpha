@@ -490,6 +490,7 @@ main {
   box-shadow: 0px 0px 25px -10px #00000038;
 }
 .section-pad .pad-btn {
+  position: relative;
   width: 100%;
   height: 100%;
   cursor: pointer;
@@ -516,6 +517,17 @@ main {
   z-index: -10;
   filter: blur(30px);
   pointer-events: none;
+}
+.section-pad .pad-btn::before {
+  position: absolute;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0;
 }
 .section-pad .pad-btn[id=btn-1]::after {
   background-color: var(--pad-btn-color-1);
@@ -908,6 +920,9 @@ body[data-page=info] .menu-btn[id=info] svg {
   opacity: 0;
   pointer-events: none;
 }
+.section-pad .pad {
+  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
 .section-pad .pad-btn {
   transition: all 0.1s cubic-bezier(0.33, 1, 0.68, 1);
   transition-property: transform, border-radius, opacity;
@@ -918,6 +933,7 @@ body[data-page=info] .menu-btn[id=info] svg {
   transition-property: transform, opacity;
 }
 .section-pad .pad-btn:active {
+  z-index: 110;
   transform: scale(1.1);
   border-radius: 10px;
 }
@@ -931,21 +947,30 @@ body[data-page=info] .menu-btn[id=info] svg {
   opacity: 0;
   pointer-events: none;
 }
+.section-pad.pad-modify {
+  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+  background-color: #0000001f;
+}
 .section-pad.pad-modify .pad-btn {
-  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-  opacity: 0.6;
   position: relative;
 }
 .section-pad.pad-modify .pad-btn-active {
-  opacity: 1;
   z-index: 110;
   transform: scale(1.1);
   border-radius: 10px;
   opacity: 1 !important;
 }
 .section-pad.pad-modify .pad-btn-active::after {
-  transform: scale(1.1);
-  z-index: -10;
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  transition-property: transform;
+}
+.section-pad.pad-modify .pad-btn-active::before {
+  border-radius: 10px;
+  opacity: 0;
+}
+.section-pad.pad-modify .pad-btn:active .pad-btn::before {
+  border-radius: 10px;
+  opacity: 0.5;
 }
 .section-pad.pad-modify .pad-tuto {
   opacity: 1;

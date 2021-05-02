@@ -93,6 +93,7 @@ body {
     }
     
     .pad {
+        transition: $t-slow;
         &-btn {
             transition: $t-superfast;
             transition-property: transform, border-radius, opacity;
@@ -103,6 +104,7 @@ body {
                 transition-property: transform, opacity;
             }
             &:active {
+                z-index: 110;
                 transform: scale(1.1);
                 border-radius: $rounded;
                 &::after {
@@ -122,21 +124,29 @@ body {
 
     
     &.pad-modify {
+        transition: $t-slow;
+        background-color: $black01;
         .pad {
             &-btn {
-                transition: $t-fast;
-                opacity: .6;
                 position: relative;
                 &-active {
-                    opacity: 1;
                     z-index: 110;
                     transform: scale(1.1);
                     border-radius: $rounded;
                     opacity: 1!important;
                     &::after {
-                        transform: scale(1.1);
-                        z-index: -10;
+                        transition: $t-fast;
+                        transition-property: transform;
                     }
+
+                    &::before {
+                        border-radius: $rounded;
+                        opacity: 0;
+                    }
+                }
+                &:active .pad-btn::before {
+                    border-radius: $rounded;
+                    opacity: .5;
                 }
             }
             
