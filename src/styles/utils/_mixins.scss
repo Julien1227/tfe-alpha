@@ -50,3 +50,55 @@
     width: $value;
     height: $value;
 }
+
+@mixin gistGraph {
+    position: absolute;
+    content: "";
+    left: calc(-1rem - 25vw);
+    top: -15%;
+    width: 150vw;
+    height: 120%;
+
+    background-size: 2rem;
+    background-repeat: repeat;
+    background-image: url('../assets/bgSvg.svg');
+}
+
+@mixin pseudoElement {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+}
+
+@mixin graphBackground {
+    background-size: 2rem;
+    background-repeat: repeat;
+    background-image: url('../assets/bgSvg.svg');
+}
+
+@mixin pseudoGraphBackground {
+    @include fullSize;
+    @include pseudoElement;
+    @include graphBackground;
+}
+
+@mixin fs-center {
+    @include flex-center;
+    position: absolute;
+    width: 100%;
+    height: $section-height;
+}
+
+@mixin absoluteTopLeft {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@mixin card($radius) {
+    padding: 2rem;
+    border-radius: $radius;
+    background-color: $white;
+    max-width: 500px;
+}

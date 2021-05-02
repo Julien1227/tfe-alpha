@@ -176,8 +176,12 @@ colorSpan.forEach(function (colorSpan) {
 
 var _loop = function _loop(i) {
   colorInputs[i].addEventListener('input', function (e) {
-    var frq = setFrequency(colorInputs[0].value, colorInputs[1].value, colorInputs[2].value);
-    var gain = setGain(colorInputs[2].value, colorInputs[1].value); // Défini la fréquence
+    var h = colorInputs[0].value,
+        s = colorInputs[1].value,
+        l = colorInputs[2].value;
+    var frq = setFrequency(h, s, l);
+    var gain = setGain(l, s);
+    actualiseListenerColor(h, s, l, gain); // Défini la fréquence
 
     o.frequency.setValueAtTime(frq, context.currentTime); // Défini l'intensité
 
@@ -187,11 +191,8 @@ var _loop = function _loop(i) {
 
     colorSpans[i].innerHTML = colorInputs[i].value; // Affiche la couleur jouée
 
-    setColors(colorInputs[0].value, colorInputs[1].value, colorInputs[2].value); //Applique le bon event listenner (mouse ou touch)
-
-    colorInputs[i].addEventListener(event('end'), function (e) {
-      g.gain.setTargetAtTime(0, context.currentTime, 0.3);
-    });
+    setColors(h, s, l);
+    stopGain(colorInputs[i]);
   });
 };
 
@@ -278,7 +279,8 @@ btnUpload.addEventListener('click', function (e) {
 playImageBtn.addEventListener('click', function (e) {
   colorList.innerHTML = "";
   var gains = [],
-      frqs = [];
+      frqs = [],
+      hsls = [];
   var palette = colorThief.getPalette(imgToListen, Number(colorNumber.value));
 
   for (var _i = 0; _i < palette.length; _i++) {
@@ -300,17 +302,22 @@ playImageBtn.addEventListener('click', function (e) {
 
     gains.push(_gain);
     frqs.push(_frq);
+    hsls.push(hslColor);
   } //Joue chaque paramètre les uns après les autres
 
 
   for (var i = 0; i < frqs.length; i++) {
     play(i);
+    setTimeout(function () {
+      stopGain();
+    }, frqs.length * speed);
   }
 
   function play(i) {
     setTimeout(function () {
       g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
       o.frequency.setValueAtTime(frqs[i], context.currentTime);
+      actualiseListenerColor(hsls[i][0], hsls[i][1], hsls[i][2], gains[i]);
       g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
     }, i * speed);
   }
@@ -324,11 +331,13 @@ playImageBtn.addEventListener('click', function (e) {
 var pianoBtn = document.querySelectorAll('.pad-btn'),
     tuto = document.querySelector('.pad-tuto'),
     closeTuto = document.getElementById('closeTuto'),
-    sectionPiano = document.querySelector('.section-pad'),
-    pianoFormInput = document.querySelectorAll('.padInput'),
-    pianoFormSpan = document.querySelectorAll('.padSpan'),
+    confirmEdit = document.getElementById('confirmEdit'),
     editBtn = document.querySelector('.btn-edit'),
-    saveBtn = document.querySelector('.btn-save');
+    editDiv = document.querySelector('.edit'),
+    editDivIndicator = document.querySelector('.edit-indicator'),
+    saveBtn = document.querySelector('.btn-save'),
+    editInput = document.querySelector('.edit-slider'),
+    sectionPiano = document.querySelector('.section-pad');
 var root = document.documentElement;
 var btnColors = []; // Assigne une couleur légèrement aléatoire à chaque touche (chacune compris dans une transche de 40 deg)
 
@@ -340,32 +349,11 @@ pianoBtn.forEach(function (btn) {
 }); // Permets de rentrer en mode "modification" des boutons 
 
 editBtn.addEventListener('click', function (e) {
-  // Montre le tuto
-  tuto.classList.add('show-tuto'); // Cache le tuto à jamais   
-
-  closeTuto.addEventListener('click', function (e) {
-    gsap.to(tuto, {
-      duration: 0.3,
-      opacity: 0,
-      onComplete: hide,
-      onCompleteParams: [tuto]
-    });
-  }); // Sélectionne la première touche par défaut
-
   sectionPiano.classList.add('pad-modify');
-  pianoBtn[0].classList.add('pad-btn-active');
-  var hslColor = getHslFromAttribute(pianoBtn[0]);
+}); // Permets de quitter le mode "modification" des boutons 
 
-  for (var _i2 = 0; _i2 < pianoFormInput.length; _i2++) {
-    pianoFormInput[_i2].value = hslColor[_i2];
-    pianoFormSpan[_i2].innerHTML = hslColor[_i2];
-  }
-});
 saveBtn.addEventListener('click', function (e) {
   sectionPiano.classList.remove('pad-modify');
-  pianoBtn.forEach(function (btn) {
-    btn.classList.remove('pad-btn-active');
-  });
 }); // Pour chaque touches du piano
 
 pianoBtn.forEach(function (btn) {
@@ -379,15 +367,14 @@ pianoBtn.forEach(function (btn) {
 
     var frq = setFrequency(h, s, l),
         gain = setGain(l, s);
+    actualiseListenerColor(h, s, l, gain);
     g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
     o.frequency.setValueAtTime(frq, context.currentTime); // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
 
     if (sectionPiano.classList.contains('pad-modify') == false) {
-      btn.addEventListener(event('end'), function (e) {
-        g.gain.setTargetAtTime(0, context.currentTime, 0.1);
-      });
+      stopGain(btn);
     } else {
-      g.gain.setTargetAtTime(0, context.currentTime + 0.1, 0.3);
+      stopGain();
     }
   });
 }); //Si le piano est en mode "modification"
@@ -396,7 +383,25 @@ pianoBtn.forEach(function (btn) {
   btn.addEventListener('click', function (e) {
     if (sectionPiano.classList.contains('pad-modify') == true) {
       //Récupère la couleur appuyée
-      var targetBtn = e.currentTarget; // Dans le cas ou l'utilisateur re sélectionne la couleur active
+      var targetBtn = e.currentTarget;
+      sectionPiano.classList.add('edition');
+      editDiv.style.top = targetBtn.offsetTop + editDiv.offsetHeight + "px";
+      editDivIndicator.style.left = targetBtn.offsetLeft + "px";
+      confirmEdit.addEventListener('click', function (e) {
+        sectionPiano.classList.remove('edition');
+        targetBtn.classList.remove('pad-btn-active');
+      });
+      var hslColor = getHslFromAttribute(targetBtn),
+          _h2 = hslColor[0],
+          _s2 = hslColor[1],
+          _l2 = hslColor[2];
+
+      var _frq2 = setFrequency(_h2, _s2, _l2);
+
+      o.frequency.setValueAtTime(_frq2, context.currentTime);
+      g.gain.setTargetAtTime(1, context.currentTime, 0.002);
+      actualiseListenerColor(_h2, _s2, _l2, 1);
+      stopGain(null, null, 0.002); // Dans le cas ou l'utilisateur re sélectionne la couleur active
 
       if (targetBtn.classList.contains('pad-btn-active') == true) {
         console.log('pas de double sélection possible'); // Si il sélectionne une autre couleur
@@ -404,46 +409,32 @@ pianoBtn.forEach(function (btn) {
         var pastTarget = document.querySelector('.pad-btn-active'); // Actualise le bouton actif
 
         targetBtn.classList.add('pad-btn-active');
-        pastTarget.classList.remove('pad-btn-active');
-        var hslColor = getHslFromAttribute(targetBtn); // Récupère les couleurs tsl depuis l'attibut style du boutton
+        pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('pas de pastTarget'); // Récupère les couleurs tsl depuis l'attibut style du boutton
 
-        hslColor = getHslFromAttribute(targetBtn);
-        btnColors.push(hslColor); // Actualise les valeurs du slider avec la couleur actuelle du bouton
+        hslColor = getHslFromAttribute(targetBtn); // Actualise les valeurs du slider avec la couleur actuelle du bouton
 
-        for (var _i3 = 0; _i3 < pianoFormInput.length; _i3++) {
-          pianoFormInput[_i3].value = hslColor[_i3];
-          pianoFormSpan[_i3].innerHTML = hslColor[_i3];
-        }
+        editInput.value = hslColor[0];
       }
     }
   });
 }); // L'orsqu'un slider bouge - modifie la couleur active
 
-var _loop2 = function _loop2(_i4) {
-  pianoFormInput[_i4].addEventListener('input', function (e) {
-    var h = pianoFormInput[0].value,
-        s = pianoFormInput[1].value,
-        l = pianoFormInput[2].value;
-    pianoFormSpan[_i4].innerHTML = pianoFormInput[_i4].value;
-    var actualBtn = document.querySelector('.pad-btn-active');
-    var hexColor = HSLToHex(h, s, l); // Actualise la couleur du bouton
+editInput.addEventListener('input', function (e) {
+  var h = editInput.value,
+      s = 100,
+      l = 50;
+  var actualBtn = document.querySelector('.pad-btn-active');
+  var hexColor = HSLToHex(h, s, l); // Actualise la couleur du bouton
 
-    actualisePadBtnColor(actualBtn, hexColor); // Défini le gain et la fréquence
+  actualisePadBtnColor(actualBtn, hexColor); // Défini le gain et la fréquence
 
-    var frq = setFrequency(h, s, l),
-        gain = setGain(l, s);
-    o.frequency.setValueAtTime(frq, context.currentTime);
-    g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
-
-    pianoFormInput[_i4].addEventListener(event('end'), function (e) {
-      g.gain.setTargetAtTime(0, context.currentTime, 0.1);
-    });
-  });
-};
-
-for (var _i4 = 0; _i4 < pianoFormInput.length; _i4++) {
-  _loop2(_i4);
-} ///////////////////////////////////////////////////////////////////
+  var frq = setFrequency(h, s, l),
+      gain = setGain(l, s);
+  o.frequency.setValueAtTime(frq, context.currentTime);
+  g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
+  actualiseListenerColor(h, s, l, 1);
+  stopGain(editInput, null, 0.002);
+}); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 /////////////////////////// Piano/// //////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -451,7 +442,6 @@ for (var _i4 = 0; _i4 < pianoFormInput.length; _i4++) {
 // Empêche le "keydown" event de se répéter lorsqu'on maintiens la touche
 // https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
 // Variables
-
 
 var pianoColor = document.querySelector('.piano-color');
 var h = 0,
@@ -502,10 +492,10 @@ document.addEventListener('keydown', function (event) {
     down = true; // Si une fréquence est assigné à la touche, on la joue
 
     if (notes[key] != null) {
-      var _frq2 = notes[key],
+      var _frq3 = notes[key],
           _color2 = 0; // Assigne la valeur de gain et fréquence
 
-      o.frequency.setValueAtTime(_frq2, context.currentTime);
+      o.frequency.setValueAtTime(_frq3, context.currentTime);
       g.gain.setTargetAtTime(1, context.currentTime, 0.002); // Cherche une couleur correspondant à la fréquence
 
       do {
@@ -513,7 +503,7 @@ document.addEventListener('keydown', function (event) {
         s = 100;
         l = randomMinMax(50, 60);
         _color2 = setFrequency(h, s, l);
-      } while (_frq2 != _color2); // Convertis la couleur en hexadécimal pour l'assigner
+      } while (_frq3 != _color2); // Convertis la couleur en hexadécimal pour l'assigner
 
 
       var hexColor = HSLToHex(h, s, l); // Assignation de la couleur et d'un class de transition
@@ -534,7 +524,7 @@ document.addEventListener('keydown', function (event) {
 document.addEventListener('keyup', function (event) {
   pianoColor.classList.remove('piano-color-active');
   pianoColor.style.backgroundColor = "#fff";
-  g.gain.setTargetAtTime(0, context.currentTime, 0.1);
+  stopGain();
   down = false;
 }, false); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -562,14 +552,14 @@ navElements.forEach(function (element) {
 }); // Actualise le menu en fonction du scroll
 
 infoSection.addEventListener('scroll', function () {
-  for (var _i5 = 0; _i5 < anchors.length; _i5++) {
-    if (infoSection.scrollTop >= anchors[_i5].offsetTop - window.innerHeight / 2) {
+  for (var _i2 = 0; _i2 < anchors.length; _i2++) {
+    if (infoSection.scrollTop >= anchors[_i2].offsetTop - window.innerHeight / 2) {
       navElements.forEach(function (element) {
         element.classList.remove('current');
       });
 
-      if (navElements[_i5].classList.contains('current') == false) {
-        navElements[_i5].classList.add('current');
+      if (navElements[_i2].classList.contains('current') == false) {
+        navElements[_i2].classList.add('current');
       }
     }
   }
@@ -598,6 +588,37 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+var playedColors = document.querySelector('.played');
+
+function actualiseListenerColor(h, s, l, gain) {
+  var color = HSLtoRGB(h, s, l),
+      r = color[0],
+      g = color[1],
+      b = color[2];
+  playedColors.classList.remove('hide');
+  root.style.setProperty('--played-color', 'rgba(' + r + ', ' + g + ', ' + b + ', ' + gain + ')');
+}
+
+function stopGain(elementToListen, smoothness, timing) {
+  if (smoothness == "" || smoothness == null || smoothness == undefined) {
+    smoothness = 0.2;
+  }
+
+  if (timing == "" || timing == null || timing == undefined) {
+    timing = 0;
+  }
+
+  if (elementToListen == "" || elementToListen == null || elementToListen == undefined) {
+    g.gain.setTargetAtTime(0, context.currentTime + timing, smoothness);
+    playedColors.classList.add('hide');
+  } else {
+    elementToListen.addEventListener(event('end'), function (e) {
+      g.gain.setTargetAtTime(0, context.currentTime + timing, smoothness);
+      playedColors.classList.add('hide');
+    });
+  }
+}
+
 function createPalette(image) {
   if (image.complete) {
     createPaletteOnLoad(image);
@@ -612,17 +633,17 @@ function createPaletteOnLoad(image) {
   colorList.innerHTML = "";
   var palette = colorThief.getPalette(image, Number(colorNumber.value));
 
-  for (var _i6 = 0; _i6 < palette.length; _i6++) {
-    var hslColor = RGBToHSL(palette[_i6][0], palette[_i6][1], palette[_i6][2]);
-    var _h2 = hslColor[0],
-        _s2 = hslColor[1],
-        _l2 = hslColor[2]; // Crée un élement HTML auquel il assigne la couleur
+  for (var _i3 = 0; _i3 < palette.length; _i3++) {
+    var hslColor = RGBToHSL(palette[_i3][0], palette[_i3][1], palette[_i3][2]);
+    var _h3 = hslColor[0],
+        _s3 = hslColor[1],
+        _l3 = hslColor[2]; // Crée un élement HTML auquel il assigne la couleur
 
     var _color3 = document.createElement('li');
 
     _color3.classList.add('color-list-el');
 
-    _color3.style.backgroundColor = "hsl(" + _h2 + ", " + _s2 + "%, " + _l2 + "%)";
+    _color3.style.backgroundColor = "hsl(" + _h3 + ", " + _s3 + "%, " + _l3 + "%)";
     colorList.appendChild(_color3);
   }
 }
@@ -873,8 +894,8 @@ function RGBToHSL(r, g, b) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

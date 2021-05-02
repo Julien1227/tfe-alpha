@@ -40,6 +40,7 @@ body {
     }
 
     &[data-page="piano"] {
+        .played {display: none;}
         .section-piano {display: flex;}
         .menu-btn {
             &[id="piano"] {
@@ -53,6 +54,7 @@ body {
     }
 
     &[data-page="info"] {
+        .played {display: none;}
         .section-info {display: flex;}
         .menu-btn {
             &[id="info"] {
@@ -70,27 +72,46 @@ body {
 
 // Animations du piano
 .section-pad {
-    .btn-save {
-        pointer-events: none;
-        opacity: 0;
+    transition: $t-slow;
+    .btn {
+        margin-top: 0rem;
         transition: $t-fast;
+        &-edit {
+            margin-bottom: -5rem;
+            opacity: 1;
+            pointer-events: initial;   
+        }
+    
+        &-save {
+            margin-top: 3rem;
+            opacity: 0;
+            pointer-events: none;
+        } 
     }
 
-    .btn-edit {
-        transition: $t-fast;   
+    .edit {
+        transition: $t-fast;
+        opacity: 0;
+        pointer-events: none;
     }
     
     .pad {
         &-btn {
             transition: $t-superfast;
-            transition-property: transform, opacity;
+            transition-property: transform, border-radius, opacity;
             &::after {
                 transform: scale(1.1);
 
                 transition: $t-superfast;
                 transition-property: transform, opacity;
             }
+
+            &::before {
+                transition: $t-superfast;
+            }
+
             &:active {
+                z-index: 110;
                 transform: scale(1.1);
                 border-radius: $rounded;
                 &::after {
@@ -99,75 +120,74 @@ body {
                 }
             }
         }
-    }
-    .form {
-        margin-bottom: calc(-100vh - 4rem);
-        transition: $t-fast;
-        &-el {
+
+        &-tuto {
+            transition: $t-superfast;
+            transform: translateY(20px);
             opacity: 0;
-            transition: $t-fast;
+            pointer-events: none;
         }
     }
+
     
     &.pad-modify {
+        background-color: $black01;
         .pad {
             &-btn {
-                opacity: .2!important;
+                position: relative;
                 &-active {
-                    position: relative;
-                    z-index: 100;
+                    z-index: 110;
                     transform: scale(1.1);
                     border-radius: $rounded;
                     opacity: 1!important;
                     &::after {
-                        transform: scale(1.1);
-                        z-index: -10;
+                        transition: $t-fast;
+                        transition-property: transform;
                     }
+                    &::before {
+                        border-radius: $rounded;
+                        opacity: 0!important;
+                    }
+                }
+                &::before {
+                    opacity: .5;
+                }
+            }
+            
+            &-tuto {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        &.edition {
+            .pad-tuto {
+                opacity: 0;
+            }
+            .edit {
+                pointer-events: inherit;
+                opacity: 1;
+                &-indicator {
+                    transition: $t-fast;
                 }
             }
         }
 
-        .btn-edit {
-            margin-top: -4rem;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .btn-save {
-            transition: $t-slow;
-            opacity: 1;
-            transition-delay: 0.2s;
-            pointer-events: inherit;
-        }
-
-        .form {
-            margin-bottom: 0;
-            &-el {
+        .btn {
+            &-edit {
+                margin-top: 0rem;
+                opacity: 0;
+                pointer-events: none;
+            } 
+            
+            &-save {
+                margin-top: 0;
                 opacity: 1;
-                transition-delay: 0.2s;
-            }
+                pointer-events: inherit;
+            } 
         }
-    }
 
-    .pad-tuto {
-        transition: $t-superfast;
-        opacity: 0;
-        pointer-events: none;
-        
-        .tuto-container {
-            transition: $t-fast;
-            transition-delay: 0.1s;
-            transform: translateY(-100%);
-        }
-        &.show-tuto {
-            opacity: 1;
-            pointer-events: inherit;
-            .tuto-container {
-                transform: translateY(0);
-            }
-        }
     }
-
 }
 
 
@@ -263,6 +283,7 @@ body {
     
     &.open {
         margin: 1rem;
+        margin-bottom: 2rem;
         width: calc(100% - 2rem);
         
         height: 240px;
@@ -301,6 +322,18 @@ body {
     transition: $t-fast;
     & svg{
         transition: $t-fast;
+    }
+}
+
+.played {
+    transition: $t-fast;
+    &.hide {
+        transition: $t-superslow;
+        transition-property: opacity;
+        opacity: 0;
+    }
+    &-color {
+        transition: $t-superfast;
     }
 }
 
