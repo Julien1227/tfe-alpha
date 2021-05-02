@@ -81,9 +81,11 @@ main {
 
 .played {
     @include absoluteTopLeft;
-    @include fullSize;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+    z-index: $background;
 
-    z-index: -50;
     overflow: hidden;
     &-color {
         position: absolute;
@@ -109,12 +111,9 @@ main {
     }
 
     &::after {
+        @include pseudoElement;
         @include fullSize;
-        @include absoluteTopLeft;
         @include graphBackground;
-
-        content: "";
-        z-index: 0;
     }
 }
 
@@ -154,7 +153,7 @@ main {
 .menu {
     transition: $t-fast;
     position: fixed;
-    z-index: 200;
+    z-index: $front;
     bottom: 0;
     width: 100%;
 
@@ -192,11 +191,11 @@ main {
             height: auto;
             background-color: $light-grey;
             border-radius: $rounded 0 0 0;
-            padding: 0.75rem 2rem;
+            padding: 2rem 2rem;
             box-shadow: $shadow;
     
             & svg {
-                @include squareSize(3.5rem);
+                @include squareSize(2rem);
             }
         }
     }
@@ -206,7 +205,7 @@ main {
 .section-intro {
     @include fs-center;
     @include fullSize;
-    z-index: 2000;
+    z-index: $topOfAll;
     background-color: $white;
     cursor: pointer;
     &-msg {
@@ -230,7 +229,7 @@ main {
     &-header {
         position: fixed;
         top: 0;
-        z-index: 500;
+        z-index: $front;
 
         @include flex-center;
         box-shadow: 0px 20px 50px 0px #00000013;;
@@ -257,6 +256,7 @@ main {
 
     .form {
         @include flex-column-center;
+        z-index: $content;
         padding: 2rem;
 
         &-el {
@@ -284,7 +284,7 @@ main {
         .module {
             &-frequency {
                 position: relative;
-                z-index: 50;
+                z-index: $content;
                 margin-bottom: -10.5vw;
                 font-size: 25vw;
                 font-weight: 800;
@@ -315,7 +315,7 @@ main {
             .color-list {
                 @include flex-center-y;
 
-                z-index: 1000;
+                z-index: $content;
                 flex-wrap: wrap;
 
                 max-width: calc(100% - 3rem);
@@ -348,14 +348,14 @@ main {
                 position: absolute;
                 object-fit: cover;
                 object-position: center;
-                z-index: -20;
+                z-index: $background;
             }
             
             .selection {
                 @include flex-column-center-y;
 
                 overflow: hidden;
-                z-index: 20;
+                z-index: $background;
                 
                 margin-top: 1.5rem;
                 box-sizing: border-box;
@@ -405,46 +405,67 @@ main {
 
 
     &-pad {
-        justify-content: flex-start!important;
-
+        justify-content: center;
         .pad-tuto {
-            @include fs-center;
-            top: 0;
-            z-index: 200;
+            @include absoluteTopLeft;
+            @include flex-center-y;
 
-            background-color: $black02;
+            align-items: flex-end;
+            width: 100%;
+            height: calc(12.5% + 5vw);
+            padding: 0 5rem;
+            box-sizing: border-box;
+            text-align: center;
+            z-index: $content;
+        }
+
+        .edit {
+            @include absoluteTopLeft;
+            @include flex-center;
+            width: 100vw;
+            z-index: $front;
+            top: 50%;
             
-            .tuto-container {
-                align-self: flex-start;
-
-                text-align: center;
-
-                max-width: 500px;
-                padding: 2rem;
+            &-indicator {
+                @include squareSize(50px);
+                position: absolute;
+                top: -40px;
+                margin-left: 25px;
+                color: $white;
+            }
+            
+            &-div {
+                @include card($rounded2);
+                @include flex-column-center-y;
+                box-sizing: border-box;
+                max-width: 400px;
+                width: calc(100% - 2rem);
+                padding: 1.5rem;
                 padding-bottom: 0;
-                border-radius: 0 0 $rounded2 $rounded2;
-                
-                background-color: $white;
-                box-shadow: $light-shadow;
-                & .btn {
-                    align-self: center;
+                box-shadow: $shadow;
+                &-btn {
+                    @include flex-center;
+                    width: 3rem;
+                    height: 3rem;
+                    padding: 0.75rem;
+                    margin-top: 0.5rem!important;
+                    margin-bottom: -1.5rem;
+                    color: $valid;
+                    background-color: $white08;
+                    svg {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                &-hue {
+                    height: 0.5rem;
+                    width: 100%;
+                    border-radius: $rounded;
+                    background: $gradient360;
+                    margin-bottom: 0.5rem;
                 }
             }
-        }
-
-        &.show-tuto {
-            .pad-tuto {
-                opacity: 1;
-                transition: $t-slow;
-            }
-        }
-
-        .module {
-            @include fullSize;
-            @include absoluteTopLeft;
-
-            z-index: -100;
-            align-items: center;
         }
 
         .pad-container {
@@ -461,33 +482,40 @@ main {
             max-width: 100vw;
             
             box-sizing: border-box;
-            margin: 1rem auto;
+            margin: 3rem auto;
             border-radius: $rounded;
             box-shadow: $shadow;
 
             &-btn {
+                position: relative;
                 @include fullSize;
 
                 cursor: pointer;
 
                 // Arrondis les coins à chaque touches, overflow: hidden inutilisable étant donné qu'il cacherai les box shadows des boutons
-                &[id="btn-1"]{border-radius: $rounded 0 0 0;}
-                &[id="btn-3"]{border-radius: 0 $rounded 0 0;}
-                &[id="btn-7"]{border-radius: 0 0 0 $rounded;}
-                &[id="btn-9"]{border-radius: 0 0 $rounded 0;}
+                &[id="btn-1"], &[id="btn-1"]::before{border-radius: $rounded 0 0 0;}
+                &[id="btn-3"], &[id="btn-3"]::before{border-radius: 0 $rounded 0 0;}
+                &[id="btn-7"], &[id="btn-7"]::before{border-radius: 0 0 0 $rounded;}
+                &[id="btn-9"], &[id="btn-9"]::before{border-radius: 0 0 $rounded 0;}
 
                 // Effet lumineux des touches
                 &::after {
                     @include fullSize;
 
                     position: relative;
-                    z-index: 10;
                     content: "";
                     display: block;
-                    z-index: -10;
+                    z-index: $background;
                     filter: blur(30px);
 
                     pointer-events: none;
+                }
+
+                &::before {
+                    @include pseudoElement;
+                    @include fullSize;
+                    background-color: $white;
+                    opacity: 0;
                 }
 
                 &[id="btn-1"]::after {background-color: var(--pad-btn-color-1);}
@@ -501,21 +529,6 @@ main {
                 &[id="btn-9"]::after {background-color: var(--pad-btn-color-9);}
             }
         }
-
-        .form {
-            margin-top: 1rem;
-            padding-top: 2rem;
-        }
-
-        .btn-edit {
-            margin-top: 1rem;
-        }
-
-        .btn-save {
-            align-self: flex-end;
-            margin-top: -4rem!important;
-            margin-bottom: 0.5rem!important;
-        }
     }
 
     &-piano {
@@ -526,7 +539,7 @@ main {
             height: 75%;
 
             position: absolute;
-            z-index: -50;
+            z-index: $background;
             bottom: -5%;
             border-radius: $round;
             transform: translateY(50%);
@@ -541,6 +554,7 @@ main {
                 transition: $t-superfast;
             }
         }
+
         &::after {
             @include pseudoGraphBackground;
             @include fs-center;
@@ -595,7 +609,7 @@ main {
                     
                     &:after {
                         @include gistGraph;
-                        z-index: -1000;
+                        z-index: $background;
                         
                         background: radial-gradient($gist-background 20%, lighten($gist-background, 100%) 70%);
                     }
@@ -610,14 +624,14 @@ main {
         }
 
         .navigation-container {
-            z-index: 20;
+            z-index: $front;
             overflow: hidden;
 
             position: fixed;
             right: 0;
             bottom: calc(#{$menu-height} + 1rem);
 
-            @include squareSize(4rem);
+            @include squareSize(calc(25px + 2rem));
             
             margin: 2rem;
             border-radius: $rounded2;
@@ -627,19 +641,19 @@ main {
             text-align: center;
             
             .nav-btn {
+                @include squareSize(25px);
                 position: absolute;
                 
-                @include squareSize(30px);
 
-                svg {@include fullSize; transform: scale(2);}
+                svg {@include fullSize;}
 
                 &-open {
-                    z-index: 10;
+                    z-index: calc(#{$front} + 1);
                     opacity: 1;
                     right: 1rem; bottom: 1rem;
                 }
                 &-close {
-                    z-index: 5;
+                    z-index: calc(#{$front} - 1);
                     opacity: 0;
                     transform: scale(1.2);
                     left: 1.5rem; top: 1.5rem;
