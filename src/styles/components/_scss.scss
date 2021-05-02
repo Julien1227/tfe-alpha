@@ -192,11 +192,11 @@ main {
             height: auto;
             background-color: $light-grey;
             border-radius: $rounded 0 0 0;
-            padding: 0.75rem 2rem;
+            padding: 2rem 2rem;
             box-shadow: $shadow;
     
             & svg {
-                @include squareSize(3.5rem);
+                @include squareSize(2rem);
             }
         }
     }
@@ -421,8 +421,8 @@ main {
 
         .edit {
             @include absoluteTopLeft;
+            @include flex-center;
             width: 100vw;
-            margin: 1rem;
             margin-top: 2rem;
             z-index: 150;
             top: 50%;
@@ -431,7 +431,7 @@ main {
                 @include squareSize(50px);
                 position: absolute;
                 top: -40px;
-                margin-left: 0.5rem;
+                margin-left: 25px;
                 color: $white;
             }
             
@@ -628,11 +628,11 @@ main {
             text-align: center;
             
             .nav-btn {
+                @include squareSize(25px);
                 position: absolute;
                 
-                @include squareSize(30px);
 
-                svg {@include fullSize; transform: scale(2);}
+                svg {@include fullSize;}
 
                 &-open {
                     z-index: 10;

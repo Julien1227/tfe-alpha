@@ -94,17 +94,13 @@ body {
     
     .pad {
         &-btn {
-            transition: $t-fast;
+            transition: $t-superfast;
             transition-property: transform, border-radius, opacity;
             &::after {
                 transform: scale(1.1);
 
                 transition: $t-superfast;
                 transition-property: transform, opacity;
-            }
-            &::before {
-                transition: $t-fast;
-                opacity: 0;
             }
             &:active {
                 transform: scale(1.1);
@@ -128,8 +124,11 @@ body {
     &.pad-modify {
         .pad {
             &-btn {
+                transition: $t-fast;
+                opacity: .6;
                 position: relative;
                 &-active {
+                    opacity: 1;
                     z-index: 110;
                     transform: scale(1.1);
                     border-radius: $rounded;
@@ -148,6 +147,9 @@ body {
         }
 
         &.edition {
+            .pad-tuto {
+                opacity: 0;
+            }
             .edit {
                 pointer-events: inherit;
                 opacity: 1;
