@@ -72,19 +72,22 @@ body {
 
 // Animations du piano
 .section-pad {
-    .btn-edit {
-        opacity: 1;
+    transition: $t-slow;
+    .btn {
         margin-top: 0rem;
         transition: $t-fast;
-        pointer-events: initial;   
+        &-edit {
+            margin-bottom: -5rem;
+            opacity: 1;
+            pointer-events: initial;   
+        }
+    
+        &-save {
+            margin-top: 3rem;
+            opacity: 0;
+            pointer-events: none;
+        } 
     }
-
-    .btn-save {
-        transition: $t-fast;   
-        margin-top: -4rem;
-        opacity: 0;
-        pointer-events: none;
-    } 
 
     .edit {
         transition: $t-fast;
@@ -93,7 +96,6 @@ body {
     }
     
     .pad {
-        transition: $t-slow;
         &-btn {
             transition: $t-superfast;
             transition-property: transform, border-radius, opacity;
@@ -103,6 +105,11 @@ body {
                 transition: $t-superfast;
                 transition-property: transform, opacity;
             }
+
+            &::before {
+                transition: $t-superfast;
+            }
+
             &:active {
                 z-index: 110;
                 transform: scale(1.1);
@@ -124,7 +131,6 @@ body {
 
     
     &.pad-modify {
-        transition: $t-slow;
         background-color: $black01;
         .pad {
             &-btn {
@@ -138,14 +144,12 @@ body {
                         transition: $t-fast;
                         transition-property: transform;
                     }
-
                     &::before {
                         border-radius: $rounded;
-                        opacity: 0;
+                        opacity: 0!important;
                     }
                 }
-                &:active .pad-btn::before {
-                    border-radius: $rounded;
+                &::before {
                     opacity: .5;
                 }
             }
@@ -169,17 +173,20 @@ body {
             }
         }
 
-        .btn-edit {
-            margin-top: -4rem;
-            opacity: 0;
-            pointer-events: none;
-        } 
-        
-        .btn-save {
-            margin-top: 0rem;
-            opacity: 1;
-            pointer-events: inherit;
-        } 
+        .btn {
+            &-edit {
+                margin-top: 0rem;
+                opacity: 0;
+                pointer-events: none;
+            } 
+            
+            &-save {
+                margin-top: 0;
+                opacity: 1;
+                pointer-events: inherit;
+            } 
+        }
+
     }
 }
 
@@ -276,6 +283,7 @@ body {
     
     &.open {
         margin: 1rem;
+        margin-bottom: 2rem;
         width: calc(100% - 2rem);
         
         height: 240px;

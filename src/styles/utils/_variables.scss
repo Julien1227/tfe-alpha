@@ -7,10 +7,14 @@ $black01: #0000001f;
 $black02: #00000056;
 $black: #000000;
 
+$valid: #73b647;
+
 $light-grey: #eeeeee;
 $medium-grey: #d4d4d4;
 $grey: #353535;
 $grey-text: #6b6b6b;
+
+$gradient360: linear-gradient(to right, #FF0000, #FFF500, #00FF29, #00F0FF, #0500FF, #FF00E5, #FF0000);
 
 $lightBtn: #ffffff88;
 $darkBtn: #0000002f;
@@ -43,6 +47,11 @@ $light-shadow: 0px 0px 25px -15px #00000038;
 $menu-height: 4rem;
 $header-height: 2.5rem;
 $section-height: calc(100vh - #{$header-height});
+
+$topOfAll: 2000;
+$front: 1000;
+$content: 500;
+$background: -100;
 
 // Gist background shapes
 $codeShapeBig: 20rem;

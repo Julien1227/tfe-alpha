@@ -370,6 +370,19 @@ pianoBtn.forEach(btn => {
                 targetBtn.classList.remove('pad-btn-active')
             });
 
+            let hslColor = getHslFromAttribute(targetBtn),
+                h = hslColor[0],
+                s = hslColor[1],
+                l = hslColor[2];
+
+            let frq = setFrequency(h,s,l);
+
+            o.frequency.setValueAtTime(frq, context.currentTime);
+            g.gain.setTargetAtTime(1, context.currentTime, 0.002);
+
+            actualiseListenerColor(h,s,l,1);
+            stopGain(null, null, 0.002)
+
             // Dans le cas ou l'utilisateur re sélectionne la couleur active
             if (targetBtn.classList.contains('pad-btn-active') == true) {
                 console.log('pas de double sélection possible');
@@ -380,8 +393,6 @@ pianoBtn.forEach(btn => {
                 // Actualise le bouton actif
                 targetBtn.classList.add('pad-btn-active');
                 pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('pas de pastTarget');
-
-                let hslColor = getHslFromAttribute(targetBtn);
                 
                 // Récupère les couleurs tsl depuis l'attibut style du boutton
                 hslColor = getHslFromAttribute(targetBtn);
@@ -416,7 +427,7 @@ editInput.addEventListener('input', (e) => {
     g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
 
     actualiseListenerColor(h,s,l, 1);
-    stopGain(editInput);
+    stopGain(editInput, null, 0.002);
 });
 
 ///////////////////////////////////////////////////////////////////
@@ -606,13 +617,20 @@ function actualiseListenerColor(h,s,l ,gain) {
     root.style.setProperty('--played-color', 'rgba('+ r +', '+ g +', '+ b +', '+gain+')');
 }
 
-function stopGain(elementToListen) {
+function stopGain(elementToListen, smoothness, timing) {
+    if (smoothness == "" || smoothness == null || smoothness == undefined) {
+        smoothness = 0.2;
+    }
+    if (timing == "" || timing == null || timing == undefined) {
+        timing = 0;
+    }
+
     if (elementToListen == "" || elementToListen == null || elementToListen == undefined) {
-        g.gain.setTargetAtTime(0, context.currentTime, 0.3);
+        g.gain.setTargetAtTime(0, context.currentTime + timing, smoothness);
         playedColors.classList.add('hide');
     }else{
         elementToListen.addEventListener(event('end'), (e) => {
-            g.gain.setTargetAtTime(0, context.currentTime, 0.3);
+            g.gain.setTargetAtTime(0, context.currentTime + timing, smoothness);
             playedColors.classList.add('hide');
         });
     }

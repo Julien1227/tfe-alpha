@@ -82,7 +82,7 @@
         </header>
 
         <div class="pad-tuto">
-          <p>Sélectionnez la touche que vous voulez modifier.</p>
+          <b>Sélectionnez la touche que vous voulez modifier.</b>
         </div>
         
         <div class="pad-container">
@@ -104,9 +104,9 @@
         </div>
         
         <div class="edit">
-          <svg class="edit-indicator"><use xlink:href="#editIndicator"/></svg>
-          <div class="edit-div">
-            <label class="form-title">Teinte</label>
+          <svg class="edit-indicator" style="left: 50%;"><use xlink:href="#editIndicator"/></svg>
+          <div class="edit-div" style="top: 50%;">
+            <span class="edit-div-hue"></span>
             <input type="range" min="0" max="359" class="edit-slider">
             <button id="confirmEdit" class="btn edit-div-btn"><svg><use xlink:href="#checkSvg"/></svg></button>
           </div>
