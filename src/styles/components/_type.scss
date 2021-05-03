@@ -17,8 +17,12 @@ body {
 }
 
 h1 {
-  font-size: $h2;
+  font-size: 0;
+  white-space: nowrap;
   font-weight: 900;
+  #h1-letter {
+    font-size: 12vw;
+  }
 }
 
 h2 {
@@ -68,7 +72,11 @@ $h1-d: $h2-d * $line-height;
   }
   
   h1 {
-    font-size: $h2-d;
+    font-size: $h1-d;
+    #h1-letter {
+      font-size: $h1;
+      margin: 0 -12px;
+    }
   }
   
   h2 {

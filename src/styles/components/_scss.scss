@@ -203,13 +203,25 @@ main {
 }
 
 .section-intro {
-    @include fs-center;
+    @include absoluteTopLeft;
     @include fullSize;
-    z-index: $topOfAll;
+    @include flex-center;
     background-color: $white;
-    cursor: pointer;
-    &-msg {
-        font-size: $h4;
+    z-index: calc(#{$topOfAll} + 50);
+
+    &-message {
+        position: absolute;
+    }
+    
+    .message {
+        text-align: center;
+        cursor: pointer;
+
+        position: absolute;
+        display: block;
+        z-index: calc(#{$topOfAll} + 150);
+        font-size: $h3;
+        font-weight: 700;
     }
 }
 

@@ -106,26 +106,65 @@ o.type = "triangle";
 g.connect(context.destination);
 o.connect(g);
 var frq = 0,
-    gain = 0; ///////////////////////////////////////////////////////////////////
+    gain = 0;
+var root = document.documentElement; ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////// START API ///////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 // Variables
 
-var beginBtn = document.querySelector('.section-intro'),
-    message = document.querySelector('.section-intro-msg'); // Affiche le bon message en fonction du device
+var startBtn = document.getElementById('begin'),
+    sectionIntro = document.querySelector('.section-intro'),
+    letters = document.querySelectorAll('#h1-letter'); // Affiche le bon message en fonction du device
 
 var deviceAction = window.matchMedia("(min-width: 900px)").matches ? "Cliquez" : "Appuyez";
-message.innerHTML = deviceAction + " pour commencer."; // Lance l'API et fade out la section d'introdution
-
-beginBtn.addEventListener('click', function (e) {
+startBtn.innerHTML = deviceAction + " pour commencer.";
+var count = 1;
+var randomColorstart = randomMinMax(0, 120);
+console.log(randomColorstart);
+sectionIntro.addEventListener('click', function (event) {
+  var frqs = [],
+      gains = [],
+      hsls = [];
   o.start(0);
-  gsap.to(beginBtn, {
-    opacity: 0,
-    onComplete: hide,
-    onCompleteParams: [beginBtn]
+  sectionIntro.classList.add('play');
+  letters.forEach(function (element) {
+    //Crée la couleur en HSL pour jouer la note plus tard
+    var h = randomColorstart + count * 20,
+        s = randomMinMax(70, 100),
+        l = randomMinMax(50, 60);
+    root.style.setProperty('--h1letter-' + count, "hsl(" + h + ", " + s + "%, " + l + "%)");
+    element.addEventListener('animationend', function (e) {
+      element.style.opacity = 1;
+      element.classList.add('end');
+    });
+    var gain = setGain(l, s),
+        frq = setFrequency(h, s, l);
+    gains.push(gain);
+    frqs.push(frq);
+    hsls.push([h, s, l]);
+    count++;
   });
+
+  var _loop = function _loop(i) {
+    setTimeout(function () {
+      play(i, 110, gains, frqs, hsls);
+    }, 100);
+  };
+
+  for (var i = 1; i < letters.length; i++) {
+    _loop(i);
+  } // Après que toutes les lettres aient joué.
+
+
+  setTimeout(function () {
+    stopGain();
+    sectionIntro.classList.add('hide');
+    sectionIntro.addEventListener('animationend', function (e) {
+      sectionIntro.style.display = "none";
+    });
+  }, letters.length * 100 + 1500);
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////// GESTION DU SLIDER ///////////////////////////
@@ -190,7 +229,7 @@ colorSpan.forEach(function (colorSpan) {
   colorSpans.push(colorSpan);
 }); //Lorsqu'un slider bouge :
 
-var _loop = function _loop(i) {
+var _loop2 = function _loop2(i) {
   colorInputs[i].addEventListener('input', function (e) {
     var h = colorInputs[0].value,
         s = colorInputs[1].value,
@@ -213,7 +252,7 @@ var _loop = function _loop(i) {
 };
 
 for (var i = 0; i < colorInputs.length; i++) {
-  _loop(i);
+  _loop2(i);
 }
 
 ; ///////////////////////////////////////////////////////////////////
@@ -323,19 +362,10 @@ playImageBtn.addEventListener('click', function (e) {
 
 
   for (var i = 0; i < frqs.length; i++) {
-    play(i);
+    play(i, speed, gains, frqs, hsls);
     setTimeout(function () {
       stopGain();
     }, frqs.length * speed);
-  }
-
-  function play(i) {
-    setTimeout(function () {
-      g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
-      o.frequency.setValueAtTime(frqs[i], context.currentTime);
-      actualiseListenerColor(hsls[i][0], hsls[i][1], hsls[i][2], gains[i]);
-      g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
-    }, i * speed);
   }
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -354,7 +384,6 @@ var pianoBtn = document.querySelectorAll('.pad-btn'),
     saveBtn = document.querySelector('.btn-save'),
     editInput = document.querySelector('.edit-slider'),
     sectionPiano = document.querySelector('.section-pad');
-var root = document.documentElement;
 var btnColors = []; // Assigne une couleur légèrement aléatoire à chaque touche (chacune compris dans une transche de 40 deg)
 
 var h = 0;
@@ -593,6 +622,15 @@ infoSection.addEventListener('scroll', function () {
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+
+function play(i, speed, gains, frqs, hsls) {
+  setTimeout(function () {
+    g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
+    o.frequency.setValueAtTime(frqs[i], context.currentTime);
+    actualiseListenerColor(hsls[i][0], hsls[i][1], hsls[i][2], gains[i]);
+    g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
+  }, i * speed);
+}
 
 var playedColors = document.querySelector('.played');
 

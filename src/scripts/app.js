@@ -16,7 +16,7 @@ o.connect(g);
 var frq = 0,
     gain = 0;
 
-
+var root = document.documentElement;
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -26,18 +26,67 @@ var frq = 0,
 
 // Variables
 
-const beginBtn = document.querySelector('.section-intro'),
-      message = document.querySelector('.section-intro-msg');
-  
+const startBtn = document.getElementById('begin'),
+      sectionIntro = document.querySelector('.section-intro'),
+      letters = document.querySelectorAll('#h1-letter');
+
 // Affiche le bon message en fonction du device
 let deviceAction = window.matchMedia("(min-width: 900px)").matches ? "Cliquez" : "Appuyez";
-message.innerHTML = deviceAction + " pour commencer.";
+startBtn.innerHTML = deviceAction + " pour commencer.";
 
-// Lance l'API et fade out la section d'introdution
-beginBtn.addEventListener('click', (e) => {
+var count = 1;
+var randomColorstart = randomMinMax(0, 120);
+console.log(randomColorstart);
+sectionIntro.addEventListener('click', (event) => {
+    
+    let frqs = [],
+        gains = [],
+        hsls = [];
+
     o.start(0);
-    gsap.to(beginBtn, {opacity: 0, onComplete: hide, onCompleteParams: [beginBtn]});
+    
+    sectionIntro.classList.add('play');
+    letters.forEach(element => {
+
+        //Crée la couleur en HSL pour jouer la note plus tard
+        let h = randomColorstart + (count * 20),
+            s = randomMinMax(70, 100),
+            l = randomMinMax(50, 60);
+        
+        root.style.setProperty('--h1letter-'+count, "hsl("+ h +", "+ s +"%, "+ l +"%)");
+        
+        element.addEventListener('animationend', (e) => {
+            element.style.opacity = 1;
+            element.classList.add('end');
+        });
+
+
+        let gain = setGain(l, s),
+            frq = setFrequency(h, s, l);
+
+        gains.push(gain);
+        frqs.push(frq);
+        hsls.push([h, s, l]);
+
+        count++;
+    });
+
+    for (let i = 1; i < letters.length; i++) {
+        setTimeout(() => {
+            play(i, 110, gains, frqs, hsls);
+        }, 100);
+    }
+
+    // Après que toutes les lettres aient joué.
+    setTimeout(() => {
+        stopGain();
+        sectionIntro.classList.add('hide');
+        sectionIntro.addEventListener('animationend', (e) => {
+            sectionIntro.style.display = "none";
+        });
+    }, (letters.length * 100) + 1500);
 });
+
 
 
 ///////////////////////////////////////////////////////////////////
@@ -129,7 +178,7 @@ for (let i = 0; i < colorInputs.length; i++) {
         let frq = setFrequency(h, s, l);
         let gain = setGain(l, s);
 
-        actualiseListenerColor(h,s,l ,gain)
+        actualiseListenerColor(h,s,l ,gain);
 
         // Défini la fréquence
         o.frequency.setValueAtTime(frq, context.currentTime);
@@ -280,20 +329,10 @@ playImageBtn.addEventListener('click', (e) => {
     
     //Joue chaque paramètre les uns après les autres
     for(var i = 0; i < frqs.length; i++) {
-        play(i);
+        play(i, speed, gains, frqs, hsls);
         setTimeout(() => {
             stopGain();
         }, frqs.length * speed);
-    }
-    
-    function play(i) {
-        setTimeout(function() {
-            g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
-            o.frequency.setValueAtTime(frqs[i], context.currentTime);
-            actualiseListenerColor(hsls[i][0],hsls[i][1],hsls[i][2] ,gains[i])
-            
-            g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
-        }, i*speed);
     }
 });
 
@@ -319,7 +358,7 @@ const pianoBtn = document.querySelectorAll('.pad-btn'),
   
       sectionPiano = document.querySelector('.section-pad');
 
-var root = document.documentElement;
+
 
 var btnColors = [];
 
@@ -612,6 +651,16 @@ infoSection.addEventListener('scroll', () => {
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+
+function play(i, speed, gains, frqs, hsls) {
+    setTimeout(function() {
+        g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
+        o.frequency.setValueAtTime(frqs[i], context.currentTime);
+        actualiseListenerColor(hsls[i][0],hsls[i][1],hsls[i][2] ,gains[i])
+        
+        g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
+    }, i*speed);
+}
 
 const playedColors = document.querySelector('.played');
 function actualiseListenerColor(h,s,l ,gain) {
