@@ -261,11 +261,15 @@ imageSelection.forEach(image => {
         // Vérifie si ils sont null avant d'ajouter ou retirer la class
         pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added');
         
+        let imgName = currentTarget.children[0].currentSrc.slice(-16);
+
         // Children[0] car currentTarget est "li" et non "li > img"
-        let imgName = currentTarget.children[0].currentSrc.slice(-13);
-        imgName = imgName.slice(0, imgName.length - 4);
-
-
+        if(imgName.includes("@2x")) {
+            imgName = imgName.slice(0, imgName.length - 7);
+        }else{
+            imgName = imgName.slice(3, imgName.length - 4);
+        }
+                
         backgroundImg.setAttribute('src', 'assets/images/toListen/'+ imgName +'.jpg');
         imgToListen.setAttribute('src', 'assets/images/toListen/'+ imgName +'.jpg');
 
