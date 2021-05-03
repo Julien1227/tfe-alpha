@@ -16,7 +16,7 @@ o.connect(g);
 var frq = 0,
     gain = 0;
 
-
+var root = document.documentElement;
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -26,18 +26,67 @@ var frq = 0,
 
 // Variables
 
-const beginBtn = document.querySelector('.section-intro'),
-      message = document.querySelector('.section-intro-msg');
-  
+const startBtn = document.getElementById('begin'),
+      sectionIntro = document.querySelector('.section-intro'),
+      letters = document.querySelectorAll('#h1-letter');
+
 // Affiche le bon message en fonction du device
 let deviceAction = window.matchMedia("(min-width: 900px)").matches ? "Cliquez" : "Appuyez";
-message.innerHTML = deviceAction + " pour commencer.";
+startBtn.innerHTML = deviceAction + " pour commencer.";
 
-// Lance l'API et fade out la section d'introdution
-beginBtn.addEventListener('click', (e) => {
+var count = 1;
+var randomColorstart = randomMinMax(0, 120);
+console.log(randomColorstart);
+sectionIntro.addEventListener('click', (event) => {
+    
+    let frqs = [],
+        gains = [],
+        hsls = [];
+
     o.start(0);
-    gsap.to(beginBtn, {opacity: 0, onComplete: hide, onCompleteParams: [beginBtn]});
+    
+    sectionIntro.classList.add('play');
+    letters.forEach(element => {
+
+        //Crée la couleur en HSL pour jouer la note plus tard
+        let h = randomColorstart + (count * 20),
+            s = randomMinMax(70, 100),
+            l = randomMinMax(50, 60);
+        
+        root.style.setProperty('--h1letter-'+count, "hsl("+ h +", "+ s +"%, "+ l +"%)");
+        
+        element.addEventListener('animationend', (e) => {
+            element.style.opacity = 1;
+            element.classList.add('end');
+        });
+
+
+        let gain = setGain(l, s),
+            frq = setFrequency(h, s, l);
+
+        gains.push(gain);
+        frqs.push(frq);
+        hsls.push([h, s, l]);
+
+        count++;
+    });
+
+    for (let i = 1; i < letters.length; i++) {
+        setTimeout(() => {
+            play(i, 110, gains, frqs, hsls);
+        }, 100);
+    }
+
+    // Après que toutes les lettres aient joué.
+    setTimeout(() => {
+        stopGain();
+        sectionIntro.classList.add('hide');
+        sectionIntro.addEventListener('animationend', (e) => {
+            sectionIntro.style.display = "none";
+        });
+    }, (letters.length * 100) + 1500);
 });
+
 
 
 ///////////////////////////////////////////////////////////////////
@@ -76,6 +125,26 @@ sliderBtn.forEach(element => {
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+///////////////////// MONTRE LES CREDITS //////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+const creditBtn = document.querySelectorAll('.section-header-creditBtn'),
+      closeCreditBtn = document.getElementById('.closeCreditSection');
+
+creditBtn.forEach(element => {
+    element.addEventListener('click',(e) => {
+        if (element.getAttribute('id') == "closeCreditSection") {
+            body.setAttribute('data-page', 'color');
+        }else{
+            body.setAttribute('data-page', 'credits');
+        }
+    });
+});
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 ///////////////////// ECOUTE D'UNE COULEUR ////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -109,7 +178,7 @@ for (let i = 0; i < colorInputs.length; i++) {
         let frq = setFrequency(h, s, l);
         let gain = setGain(l, s);
 
-        actualiseListenerColor(h,s,l ,gain)
+        actualiseListenerColor(h,s,l ,gain);
 
         // Défini la fréquence
         o.frequency.setValueAtTime(frq, context.currentTime);
@@ -206,8 +275,6 @@ imageSelection.forEach(image => {
     });
 });
 
-
-
 // Upload d'une image
 btnUpload.addEventListener('click', (e) => {
      inputUpload.click();
@@ -262,20 +329,10 @@ playImageBtn.addEventListener('click', (e) => {
     
     //Joue chaque paramètre les uns après les autres
     for(var i = 0; i < frqs.length; i++) {
-        play(i);
+        play(i, speed, gains, frqs, hsls);
         setTimeout(() => {
             stopGain();
         }, frqs.length * speed);
-    }
-    
-    function play(i) {
-        setTimeout(function() {
-            g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
-            o.frequency.setValueAtTime(frqs[i], context.currentTime);
-            actualiseListenerColor(hsls[i][0],hsls[i][1],hsls[i][2] ,gains[i])
-            
-            g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
-        }, i*speed);
     }
 });
 
@@ -301,7 +358,7 @@ const pianoBtn = document.querySelectorAll('.pad-btn'),
   
       sectionPiano = document.querySelector('.section-pad');
 
-var root = document.documentElement;
+
 
 var btnColors = [];
 
@@ -309,7 +366,7 @@ var btnColors = [];
 var h = 0;
 pianoBtn.forEach(btn => {
     h = h + 40;
-    let btnColor = HSLToHex(randomMinMax(h, h - 40), 100, 50);
+    let btnColor = HSLToHEX(randomMinMax(h, h - 40), 100, 50);
     actualisePadBtnColor(btn, btnColor);
 });
 
@@ -413,7 +470,7 @@ editInput.addEventListener('input', (e) => {
         l = 50;
     
     let actualBtn = document.querySelector('.pad-btn-active');
-    let hexColor = HSLToHex(h, s, l);
+    let hexColor = HSLToHEX(h, s, l);
     
     // Actualise la couleur du bouton
     actualisePadBtnColor(actualBtn, hexColor);
@@ -513,7 +570,7 @@ document.addEventListener('keydown', (event) => {
             
 
             // Convertis la couleur en hexadécimal pour l'assigner
-            let hexColor = HSLToHex(h, s, l);
+            let hexColor = HSLToHEX(h, s, l);
 
             // Assignation de la couleur et d'un class de transition
             pianoColor.style.backgroundColor = hexColor;
@@ -589,23 +646,21 @@ infoSection.addEventListener('scroll', () => {
     }
 });
 
-//SMOOTH SCROLL ONLY ON ANCHOR BUTTONS - Permet de reset le scroll de la page info sans l'animation du smooth scroll
-//source: https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-  
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+
+function play(i, speed, gains, frqs, hsls) {
+    setTimeout(function() {
+        g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
+        o.frequency.setValueAtTime(frqs[i], context.currentTime);
+        actualiseListenerColor(hsls[i][0],hsls[i][1],hsls[i][2] ,gains[i])
+        
+        g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
+    }, i*speed);
+}
 
 const playedColors = document.querySelector('.played');
 function actualiseListenerColor(h,s,l ,gain) {
@@ -681,11 +736,6 @@ function getHslFromAttribute(element) {
     return RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
 }
 
-//source: https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d
-function randomMinMax(min,max){
-    return Math.floor(Math.random()*(max-min+1)+min);
-}
-
 function deleteElement(element) {
     element.remove();
 }
@@ -704,8 +754,8 @@ function setColors(h, s, l) {
     h2 = h2 > 359 ? 359 : h2;
     l2 = l2 < 0 ? 0 : l2;
 
-    let color1 = HSLToHex(h, s, l),
-        color2 = HSLToHex(h2, s, l2);
+    let color1 = HSLToHEX(h, s, l),
+        color2 = HSLToHEX(h2, s, l2);
 
     //if(h2 > 360) {h2 = 360}
     color.setAttribute(
@@ -786,6 +836,11 @@ function event(param) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+//source: https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d
+function randomMinMax(min,max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
 // https://codepen.io/dropinks/pen/MrzPXB
 function isCollide(el1, el2) {
     var element1 = el1.getBoundingClientRect();
@@ -797,6 +852,7 @@ function isCollide(el1, el2) {
     );
 }
 
+// CSS TRICK LICENCE  -  https://css-tricks.com/license/
 //source: https://css-tricks.com/converting-color-spaces-in-javascript/
 //Convertit ma valeur HSL vers RGB
 function HSLtoRGB(h,s,l) {
@@ -830,7 +886,7 @@ function HSLtoRGB(h,s,l) {
     return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
 }
 
-function HSLToHex(h,s,l) {
+function HSLToHEX(h,s,l) {
     s /= 100;
     l /= 100;
   
@@ -916,3 +972,15 @@ function HSLToHex(h,s,l) {
 
     return [h, s, l];
   }
+
+//SMOOTH SCROLL ONLY ON ANCHOR BUTTONS - Permet de reset le scroll de la page info sans l'animation du smooth scroll
+//source: https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+  
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});

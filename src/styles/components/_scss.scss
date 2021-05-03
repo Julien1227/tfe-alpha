@@ -203,13 +203,25 @@ main {
 }
 
 .section-intro {
-    @include fs-center;
+    @include absoluteTopLeft;
     @include fullSize;
-    z-index: $topOfAll;
+    @include flex-center;
     background-color: $white;
-    cursor: pointer;
-    &-msg {
-        font-size: $h4;
+    z-index: calc(#{$topOfAll} + 50);
+
+    &-message {
+        position: absolute;
+    }
+    
+    .message {
+        text-align: center;
+        cursor: pointer;
+
+        position: absolute;
+        display: block;
+        z-index: calc(#{$topOfAll} + 150);
+        font-size: $h3;
+        font-weight: 700;
     }
 }
 
@@ -241,6 +253,16 @@ main {
         &-title {
             margin: 0;
             font-size: 14px;
+        }
+
+        &-creditBtn {
+            position: absolute;
+            right: 1rem;
+            padding: 0.25rem;
+
+            & svg {
+                @include squareSize(14px);
+            }
         }
     }
 
@@ -278,7 +300,81 @@ main {
         }
     }
 
+    &-credits {
+        .copyright {text-align: center;}
+        overflow-y: scroll;
+        position: fixed;
+        justify-content: flex-start;
+        background-color: $white;
+        z-index: calc(#{$content} + 1);
+        
+        &-title {
+            width: 100vw;
+            margin-left: -2rem;
+            padding-left: 2rem;
+            border-bottom: $border-light;
+        }
+        
+        .credits {
+            max-width: 600px;
+            padding: 2rem;
+            &-div {
+                padding-bottom: 1.5rem;
+                border-bottom: $border-light;
+                &:last-child {
+                    border-bottom: none;
+                }
+                
+                .credits-list {
+                    &-el {
+                        position: relative;
+                        margin: 1rem;
+                        margin-right: 0;
+                        &:first-child {
+                            padding-top: 0;
+                        }
+    
+                        &::before {
+                            @include pseudoElement;
+                            background-color: $black;
+                            left: -1rem;
+                            opacity: .1;
+                            width: 5px;
+                            height: 100%;
+                            border-radius: $rounded;
+                        }
+                    }
+    
+                    .licence {
+                        margin-top: 0.5rem;
+                        position: relative;
+                        display: inline-block;
+                        vertical-align: -0.5rem;
+                        white-space: nowrap;
+                        max-width: 150px;
+                        padding:  0.25rem;
+                        border-radius: $rounded;
+                        overflow-x: scroll;
+    
+                        background-color: rgba(0, 0, 0, 0.089);
+                    }
 
+                    & p, & a {
+                        margin: 0;
+                    }
+                }
+            }
+
+            &-end {
+                margin-bottom: $h1;
+                & svg {
+                    margin: 0 50%;
+                    @include squareSize(2rem);
+                }
+            }
+        }
+    }
+    
 
     &-color {
         .module {
@@ -355,14 +451,12 @@ main {
                 @include flex-column-center-y;
 
                 overflow: hidden;
-                z-index: $background;
+                z-index: $front;
                 
                 margin-top: 1.5rem;
                 box-sizing: border-box;
                 border-radius: $rounded2;
 
-                height: 3.5rem;
-                width: 17rem;
                 max-width: 450px;
 
                 &-btn {
@@ -533,7 +627,6 @@ main {
 
     &-piano {
         @include flex-center;
-
         .piano-color {
             width: 75%;
             height: 75%;
@@ -610,8 +703,7 @@ main {
                     &:after {
                         @include gistGraph;
                         z-index: $background;
-                        
-                        background: radial-gradient($gist-background 20%, lighten($gist-background, 100%) 70%);
+                        background: radial-gradient(lighten($gist-background, 75%) 0%, lighten($gist-background, 100%) 75%);
                     }
 
                     &::before {
@@ -688,7 +780,6 @@ main {
 
 
 // https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
-/* Css 100% responsiv des input range */
 input[type=range]{
     &::-webkit{
         &-slider-runnable-track {

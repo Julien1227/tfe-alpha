@@ -115,15 +115,11 @@
                 margin-top: 0rem;
             }
         }
-        
-        &-piano {
-            height: 100vh;
-        }
 
         &-info {
             .container {
                 padding: inherit;
-                &:before {height: calc(#{$h1} * 1.5);}
+                &:before {height: $h1;}
                 &:after {height: calc((#{$h1} * 1.5) + 100px);}
 
                 transform: translateX(50%);
@@ -148,17 +144,13 @@
     
                     & .gist {
                         position: absolute;
-                        margin-top: -3.5rem;
+                        margin-top: calc(-3.5rem - 1px);
                         max-width: 500px;
                         margin-left: calc(-500px - 1rem);
                         
                         &-file {
                             box-shadow: -10px 25px 50px -10px rgba(0, 0, 0, 0.301);
                             border-radius: $rounded 0 $rounded $rounded!important;
-                        }
-
-                        &:after {
-                            background: radial-gradient(lighten($gist-background, 75%) 0%, lighten($gist-background, 100%) 75%);
                         }
                     }
 
@@ -188,10 +180,10 @@
 
             .navigation-container {
                 position: sticky;
-                top: calc((#{$h1} * 1.5) + #{$h3});
+                top: calc(#{$h1} + #{$h3});
                 right: calc(50% + 2rem);
                 
-                width: 265px;
+                width: 285px;
                 height: auto;
                 overflow: visible;
                 padding: 2rem 3rem;

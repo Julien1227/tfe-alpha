@@ -36,22 +36,123 @@
   
   <link rel="stylesheet" href="styles/app.css">
 </head>
-<body data-page="info">
+<body data-page="color">
 
   <main>
+    <section class="section-intro">
+      <span id="begin" class="message">Commencer</span>
+      <h1>
+        <span id="h1-letter">C</span>
+        <span id="h1-letter">o</span>
+        <span id="h1-letter">l</span>
+        <span id="h1-letter">o</span>
+        <span id="h1-letter">r</span>
+        <span id="h1-letter">'</span>
+        <span id="h1-letter">s</span>
+        <span id="h1-letter">o</span>
+        <span id="h1-letter">u</span>
+        <span id="h1-letter">n</span>
+        <span id="h1-letter">d</span>
+        <span id="h1-letter">s</span>
+      </h1>
+    </section>
+      <section class="section section-credits">
+        <header class="section-header">
+          <h2 class="section-header-title">Crédits</h2>
+          <button id="closeCreditSection" class="section-header-creditBtn btn"><svg><use xlink:href="#crossSvg"/></svg></button>
+        </header>
+
+        <div class="credits">
+          <p class="copyright">© 2021 - Julien Scheen</p>
+          <div class="credits-div">
+            <h4 class="credits-title">Code</h4>
+            <ul class="credits-list">
+              <li class="credits-list-el">
+                <a target="_blank" href="https://codepen.io/dropinks/pen/MrzPXB">Détecter la collision d'éléments.</a>
+                <p><small>Pen de Dropinks - <span class="licence">Copyright (c) 2021 by Dropinks (https://codepen.io/dropinks/pen/MrzPXB) Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span></small></p>
+              </li>
+              <li class="credits-list-el">
+                <a href="https://css-tricks.com/converting-color-spaces-in-javascript/">Convertion des schéma de couleurs.</a>
+                <p><small>CSS TRICKS - <a href="https://css-tricks.com/license/">Voir la licence</a></small></p>
+              </li>
+              <li class="credits-list-el">
+                <a href="https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/">Réécriture complète du css d'un input range.</a>
+                <p><small>CSS TRICKS - <a href="https://css-tricks.com/license/">Voir la licence</a></small></p>
+              </li>
+              <li class="credits-list-el">
+                <a target="_blank" href="https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d">Générer un nombre aléatoire entre deux valeurs.</a>
+                <p><small>Gist de brunomonteiro3 - Modifications effectuées</small></p>
+              </li>
+              <li class="credits-list-el">
+                <a target="_blank" href="https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link">"SmoothScroll" sur les ancres uniquement.</a>
+                <p><small>Réponse de Joseph Silber sur stackoverflow - Modifications effectuées - <a href="https://creativecommons.org/licenses/by-sa/4.0/">Voir la licence</a></small></p>
+              </li>
+              <li class="credits-list-el">
+                <a target="_blank" href="https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
+                ">Empêche la répétition de l'event "keyDown" lors d'un appuis prolongé.</a>
+                <p><small>Réponse de yckart sur stackoverflow - Modifications effectuées - <a href="https://creativecommons.org/licenses/by-sa/4.0/">Voir la licence</a></small></p>
+              </li>
+            </ul>
+          </div>
+          <div class="credits-div">
+            <h4 class="credits-title">Éléments de design</h4>
+            <ul class="credits-list">
+              <li class="credits-list-el">
+                <a target="_blank" href="https://www.pexels.com/">Images</a>
+                <p><small>Pexel - <a href="https://www.pexels.com/license/">Voir la licence</a></small></p>
+              </li>
+              <li class="credits-list-el">
+                <a target="_blank" href="https://fontawesome.com/license/free">Icônes</a>
+                <p><small>Font Awesome - <a href="https://fontawesome.com/license/free">Voir la licence</a></small></p>
+              </li>
+            </ul>
+          </div>
+          <div class="credits-div">
+            <h4 class="credits-title">Aide au dévellopement</h4>
+            <ul class="credits-list">
+              <li class="credits-list-el">
+                <p><b>Mes chers proffesseurs</b></p>
+                <p><small>M. Bourgaux, M. Marchal, M. Tournay, M. Thronte, M. Distefano, M. Hambersin</small></p>
+              </li>
+
+              <li class="credits-list-el">
+                <a target="_blank" href="https://trystanlothaire.be">Trystan Lothaire</a>
+                <p><small>À donné le concept depuis lequel tout c'est contruit.</small></p>
+              </li>
+              <li class="credits-list-el">
+                <a target="_blank" href="https://danieldepinholucas.be">Daniel Depinholucas</a>
+                <p><small>Aide au dévellopement</small></p>
+              </li>
+              <li class="credits-list-el">
+                <a target="_blank" href="https://youneshanafi.be/">Hanafi Younes</a>
+                <p><small>Présentation MVP de mon site</small></p>
+              </li>
+              <li class="credits-list-el">
+                <a target="_blank" href="http://tristandeltour.be/">Deltour Tristan</a>
+                <p><small>Aide au dévellopement</small></p>
+              </li>
+              <li class="credits-list-el">
+                <a target="_blank" href="https://olivierdenis.be/">Olivier Denis</a>
+                <p><small>Aide au dévellopement</small></p>
+              </li>
+            </ul>
+            <div class="credits-end">
+              <p>Avec cette période un peu particulière, je me suis dit que j'allais mentionné les personnes qui m'ont permis de parler un peu et d'avoir un peu de contact autre que celui de ma famille. Chaque échange que j'ai pu avoir m'a permis de me changer les idées et d'avancer un peu mieux, merci à tous !</p>
+              <svg><use xlink:href="#smileySvg"/></svg>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div class="played">
         <div class="played-color played-color-1"></div>
         <div class="played-color played-color-2"></div>
       </div>
 
-      <section class="section-intro">
-        <h2 class="section-intro-msg"></h2>
-      </section>
-
       <section class="section section-color">
         <header class="section-header">
           <h2 class="section-header-title">Le son des couleurs</h2>
+          <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
         </header>
         <div class="module" id="module-color" style="background: linear-gradient(#40bfbf, #3986ac);">
           <span class="module-frequency" id="playedColor">514 Hz</span>
@@ -79,6 +180,7 @@
       <section class="section section-pad">
         <header class="section-header">
           <h2 class="section-header-title">Pad</h2>
+          <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
         </header>
 
         <div class="pad-tuto">
@@ -116,6 +218,7 @@
       <section class="section section-piano">
         <header class="section-header">
           <h2 class="section-header-title">Piano</h2>
+          <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
         </header>
         <div class="piano-color"></div>
         <h2 class="piano-msg">Appuyez sur une touche.</h2>
@@ -124,6 +227,7 @@
       <section class="section section-image">
         <header class="section-header">
           <h2 class="section-header-title">Le son des images</h2>
+          <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
         </header>
 
         <div class="module">
@@ -173,6 +277,7 @@
       <section class="section section-info">
         <header class="section-header">
           <h2 class="section-header-title">En savoir plus</h2>
+          <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
         </header>
 
         
@@ -240,8 +345,7 @@
           <h3 id="comingUp" class="anchor">Pour la suite.</h3>
           <p>Les prototypes pourraient être améliorés à certains niveaux. Certaines peronnes trouvent que tout ceci pourrait être utilisé chez les personnes aveugles, il serait même possible de créer, de mes propres moyens, un petit dispositif qui permettrait d'écouter par un simple contact avec une surface !</p>
           <p>Tout ceci n’était que le résumé du résumé d’une explication raccourcie du fonctionnement de mon code, si vous voulez découvrir les recherches qui se cachent derrière, vous pouvez consulter le medium de mes recherches !</p>
-          <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab">En savoir plus sur mes recherches.</a>
-          
+          <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab">En savoir plus sur mes recherches.</a>          
         </div>
       </section>
   </main>
@@ -264,21 +368,25 @@
 
     <svg id="editIndicator" viewBox="0 0 32 25" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M31.6127 24.5563L16.0563 0L0.5 24.5563L31.6127 24.5563Z"/></svg>
 
-    <svg id="checkSvg" viewBox="0 0 512 512"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>
+    <svg id="checkSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" class="svg-inline--fa fa-check fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>
 
-    <svg id="crossSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
+    <svg id="crossSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
 
-    <svg id="tripleDotSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"></path></svg>
+    <svg id="tripleDotSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-v" class="svg-inline--fa fa-ellipsis-v fa-w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"></path></svg>
 
-    <svg id="infoSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M20 424.229h20V279.771H20c-11.046 0-20-8.954-20-20V212c0-11.046 8.954-20 20-20h112c11.046 0 20 8.954 20 20v212.229h20c11.046 0 20 8.954 20 20V492c0 11.046-8.954 20-20 20H20c-11.046 0-20-8.954-20-20v-47.771c0-11.046 8.954-20 20-20zM96 0C56.235 0 24 32.235 24 72s32.235 72 72 72 72-32.235 72-72S135.764 0 96 0z"></path></svg>
+    <svg id="infoSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info" class="svg-inline--fa fa-info fa-w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M20 424.229h20V279.771H20c-11.046 0-20-8.954-20-20V212c0-11.046 8.954-20 20-20h112c11.046 0 20 8.954 20 20v212.229h20c11.046 0 20 8.954 20 20V492c0 11.046-8.954 20-20 20H20c-11.046 0-20-8.954-20-20v-47.771c0-11.046 8.954-20 20-20zM96 0C56.235 0 24 32.235 24 72s32.235 72 72 72 72-32.235 72-72S135.764 0 96 0z"></path></svg>
 
-    <svg id="colorSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M204.3 5C104.9 24.4 24.8 104.3 5.2 203.4c-37 187 131.7 326.4 258.8 306.7 41.2-6.4 61.4-54.6 42.5-91.7-23.1-45.4 9.9-98.4 60.9-98.4h79.7c35.8 0 64.8-29.6 64.9-65.3C511.5 97.1 368.1-26.9 204.3 5zM96 320c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm32-128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128-64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"></path></svg>
+    <svg id="colorSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="palette" class="svg-inline--fa fa-palette fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M204.3 5C104.9 24.4 24.8 104.3 5.2 203.4c-37 187 131.7 326.4 258.8 306.7 41.2-6.4 61.4-54.6 42.5-91.7-23.1-45.4 9.9-98.4 60.9-98.4h79.7c35.8 0 64.8-29.6 64.9-65.3C511.5 97.1 368.1-26.9 204.3 5zM96 320c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm32-128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128-64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"></path></svg>
 
-    <svg id="pictureSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"></path></svg>
+    <svg id="pictureSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="image" class="svg-inline--fa fa-image fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z"></path></svg>
 
-    <svg id="gridSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H32A32 32 0 0 0 0 64v384a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32V64a32 32 0 0 0-32-32zm-32 64v128H256V96zm-192 0v128H64V96zM64 416V288h128v128zm192 0V288h128v128z"></path></svg>
+    <svg id="gridSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="border-all" class="svg-inline--fa fa-border-all fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H32A32 32 0 0 0 0 64v384a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32V64a32 32 0 0 0-32-32zm-32 64v128H256V96zm-192 0v128H64V96zM64 416V288h128v128zm192 0V288h128v128z"></path></svg>
 
-    <svg id="pianoSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM128 180v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm288 0v-40c0-6.627-5.373-12-12-12H172c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h232c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12z"></path></svg>
+    <svg id="paperClipSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paperclip" class="svg-inline--fa fa-paperclip fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M43.246 466.142c-58.43-60.289-57.341-157.511 1.386-217.581L254.392 34c44.316-45.332 116.351-45.336 160.671 0 43.89 44.894 43.943 117.329 0 162.276L232.214 383.128c-29.855 30.537-78.633 30.111-107.982-.998-28.275-29.97-27.368-77.473 1.452-106.953l143.743-146.835c6.182-6.314 16.312-6.422 22.626-.241l22.861 22.379c6.315 6.182 6.422 16.312.241 22.626L171.427 319.927c-4.932 5.045-5.236 13.428-.648 18.292 4.372 4.634 11.245 4.711 15.688.165l182.849-186.851c19.613-20.062 19.613-52.725-.011-72.798-19.189-19.627-49.957-19.637-69.154 0L90.39 293.295c-34.763 35.56-35.299 93.12-1.191 128.313 34.01 35.093 88.985 35.137 123.058.286l172.06-175.999c6.177-6.319 16.307-6.433 22.626-.256l22.877 22.364c6.319 6.177 6.434 16.307.256 22.626l-172.06 175.998c-59.576 60.938-155.943 60.216-214.77-.485z"></path></svg>
+    
+    <svg id="smileySvg" aria-hidden="true" focusable="false" data-prefix="far" data-icon="smile-beam" class="svg-inline--fa fa-smile-beam fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 448c-110.3 0-200-89.7-200-200S137.7 56 248 56s200 89.7 200 200-89.7 200-200 200zm84-143.4c-20.8 25-51.5 39.4-84 39.4s-63.2-14.3-84-39.4c-8.5-10.2-23.6-11.5-33.8-3.1-10.2 8.5-11.5 23.6-3.1 33.8 30 36 74.1 56.6 120.9 56.6s90.9-20.6 120.9-56.6c8.5-10.2 7.1-25.3-3.1-33.8-10.2-8.4-25.3-7.1-33.8 3.1zM136.5 211c7.7-13.7 19.2-21.6 31.5-21.6s23.8 7.9 31.5 21.6l9.5 17c2.1 3.7 6.2 4.7 9.3 3.7 3.6-1.1 6-4.5 5.7-8.3-3.3-42.1-32.2-71.4-56-71.4s-52.7 29.3-56 71.4c-.3 3.7 2.1 7.2 5.7 8.3 3.4 1.1 7.4-.5 9.3-3.7l9.5-17zM328 152c-23.8 0-52.7 29.3-56 71.4-.3 3.7 2.1 7.2 5.7 8.3 3.5 1.1 7.4-.5 9.3-3.7l9.5-17c7.7-13.7 19.2-21.6 31.5-21.6s23.8 7.9 31.5 21.6l9.5 17c2.1 3.7 6.2 4.7 9.3 3.7 3.6-1.1 6-4.5 5.7-8.3-3.3-42.1-32.2-71.4-56-71.4z"></path></svg>
+    
+    <svg id="pianoSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="keyboard" class="svg-inline--fa fa-keyboard fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM128 180v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm288 0v-40c0-6.627-5.373-12-12-12H172c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h232c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12z"></path></svg>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
