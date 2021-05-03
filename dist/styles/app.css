@@ -334,7 +334,10 @@ main {
   position: fixed;
   justify-content: flex-start;
   background-color: #fff;
-  z-index: calc(1000 + 1);
+  z-index: calc(500 + 1);
+}
+.section-credits .copyright {
+  text-align: center;
 }
 .section-credits-title {
   width: 100vw;
@@ -343,7 +346,13 @@ main {
   border-bottom: 1px solid #0000001f;
 }
 .section-credits .credits {
+  max-width: 600px;
   padding: 2rem;
+}
+.section-credits .credits::after {
+  content: "";
+  display: block;
+  height: 81px;
 }
 .section-credits .credits-div {
   padding-bottom: 1.5rem;
@@ -352,14 +361,15 @@ main {
 .section-credits .credits-div:last-child {
   border-bottom: none;
 }
-.section-credits .credits-list-el {
+.section-credits .credits-div .credits-list-el {
   position: relative;
-  margin: 1rem 0;
+  margin: 1rem;
+  margin-right: 0;
 }
-.section-credits .credits-list-el:first-child {
+.section-credits .credits-div .credits-list-el:first-child {
   padding-top: 0;
 }
-.section-credits .credits-list-el::before {
+.section-credits .credits-div .credits-list-el::before {
   position: absolute;
   content: "";
   top: 0;
@@ -371,10 +381,7 @@ main {
   height: 100%;
   border-radius: 10px;
 }
-.section-credits .credits-list .small {
-  margin: 0;
-}
-.section-credits .credits-list .licence {
+.section-credits .credits-div .credits-list .licence {
   margin-top: 0.5rem;
   position: relative;
   display: inline-block;
@@ -385,6 +392,15 @@ main {
   border-radius: 10px;
   overflow-x: scroll;
   background-color: rgba(0, 0, 0, 0.089);
+}
+.section-credits .credits-end {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.section-credits .credits-end svg {
+  width: 3rem;
+  height: 3rem;
 }
 .section-color .module-frequency {
   position: relative;
@@ -802,7 +818,6 @@ main {
   opacity: 0.5;
 }
 
-/* Css 100% responsiv des input range */
 input[type=range]::-webkit-slider-runnable-track {
   width: 102%;
   height: 1.3rem;
