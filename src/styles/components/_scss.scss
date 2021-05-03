@@ -304,11 +304,6 @@ main {
         }
         
         .credits {
-            &::after {
-                content: "";
-                display: block;
-                height: $h1;
-            }
             max-width: 600px;
             padding: 2rem;
             &-div {
@@ -359,10 +354,10 @@ main {
             }
 
             &-end {
-                @include flex-column-center-y;
-
+                margin-bottom: $h1;
                 & svg {
-                    @include squareSize(3rem);
+                    margin: 0 50%;
+                    @include squareSize(2rem);
                 }
             }
         }

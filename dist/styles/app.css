@@ -42,6 +42,28 @@ label {
   font-weight: 700;
 }
 
+@media (min-width: 900px) {
+  body {
+    font-size: 17px;
+  }
+
+  h1 {
+    font-size: 57.375px;
+  }
+
+  h2 {
+    font-size: 38.25px;
+  }
+
+  h3 {
+    font-size: 38.25px;
+    margin-block-start: calc(38.25px * 1.5);
+  }
+
+  h4 {
+    font-size: 25.5px;
+  }
+}
 .use-svg, #uploadInput {
   display: none;
 }
@@ -349,11 +371,6 @@ main {
   max-width: 600px;
   padding: 2rem;
 }
-.section-credits .credits::after {
-  content: "";
-  display: block;
-  height: 81px;
-}
 .section-credits .credits-div {
   padding-bottom: 1.5rem;
   border-bottom: 1px solid #0000001f;
@@ -397,13 +414,12 @@ main {
   margin: 0;
 }
 .section-credits .credits-end {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-bottom: 81px;
 }
 .section-credits .credits-end svg {
-  width: 3rem;
-  height: 3rem;
+  margin: 0 50%;
+  width: 2rem;
+  height: 2rem;
 }
 .section-color .module-frequency {
   position: relative;
@@ -1357,7 +1373,7 @@ body[data-page=credits] .section-credits {
     transform: translateX(50%);
   }
   .section-info .container:before {
-    height: calc(81px * 1.5);
+    height: 81px;
   }
   .section-info .container:after {
     height: calc((81px * 1.5) + 100px);
@@ -1377,7 +1393,7 @@ body[data-page=credits] .section-credits {
   }
   .section-info .container-code .gist {
     position: absolute;
-    margin-top: -3.5rem;
+    margin-top: calc(-3.5rem - 1px);
     max-width: 500px;
     margin-left: calc(-500px - 1rem);
   }
@@ -1405,9 +1421,9 @@ body[data-page=credits] .section-credits {
   }
   .section-info .navigation-container {
     position: sticky;
-    top: calc((81px * 1.5) + 36px);
+    top: calc(81px + 36px);
     right: calc(50% + 2rem);
-    width: 265px;
+    width: 285px;
     height: auto;
     overflow: visible;
     padding: 2rem 3rem;

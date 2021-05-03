@@ -51,3 +51,36 @@ b {
 label {
   font-weight: 700;
 }
+
+
+// Desktop
+
+$size-text-d: 17px;
+
+$h4-d: $size-text-d * $line-height;
+$h3-d: $h4-d * $line-height;
+$h2-d: $h3-d * $line-height;
+$h1-d: $h2-d * $line-height;
+
+@media (min-width: 900px) {  
+  body {
+    font-size: $size-text-d;
+  }
+  
+  h1 {
+    font-size: $h2-d;
+  }
+  
+  h2 {
+    font-size: $h3-d;
+  }
+  
+  h3 {
+    font-size: $h3-d;
+    margin-block-start: calc(#{$h3-d} * #{$line-height});
+  }
+  
+  h4 {
+    font-size: $h4-d;
+  }
+}
