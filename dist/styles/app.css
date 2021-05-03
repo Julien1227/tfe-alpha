@@ -393,6 +393,9 @@ main {
   overflow-x: scroll;
   background-color: rgba(0, 0, 0, 0.089);
 }
+.section-credits .credits-div .credits-list p, .section-credits .credits-div .credits-list a {
+  margin: 0;
+}
 .section-credits .credits-end {
   display: flex;
   flex-direction: column;
