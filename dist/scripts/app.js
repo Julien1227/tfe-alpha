@@ -238,7 +238,7 @@ sectionIntro.addEventListener('click', function (event) {
 
   var _loop = function _loop(i) {
     setTimeout(function () {
-      playWithoutColor(i, 110, gains, frqs);
+      playArrayWithoutColor(i, 110, gains, frqs);
     }, 280);
   };
 
@@ -314,7 +314,15 @@ var _loop2 = function _loop2(i) {
 
     colorSpans[i].innerHTML = colorInputs[i].value; // Affiche la couleur jouée
 
-    setColors(h, s, l);
+    h = Number(h);
+    l = Number(l);
+    var h2 = h + 20,
+        l2 = l - 5;
+    h2 = h2 > 359 ? 359 : h2;
+    l2 = l2 < 0 ? 0 : l2;
+    var color1 = HSLToHEX(h, s, l),
+        color2 = HSLToHEX(h2, s, l2);
+    color.setAttribute('style', "background: linear-gradient(" + color1 + ", " + color2 + ")");
   });
   stopGain(colorInputs[i]);
 };
@@ -532,8 +540,8 @@ var notes = {
   "=": "690"
 }; // Récupère la touche jouée et joue la fréquence qui lui est associée
 
-document.addEventListener('keydown', function (event) {
-  var key = event.key; // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
+document.addEventListener('keydown', function (e) {
+  var key = e.key; // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
 
   if (body.getAttribute('data-page') == "piano") {
     // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
@@ -552,12 +560,10 @@ document.addEventListener('keydown', function (event) {
         s = 100;
         l = randomMinMax(50, 60);
         _color2 = setFrequency(h, s, l);
-      } while (_frq2 != _color2); // Convertis la couleur en hexadécimal pour l'assigner
+      } while (_frq2 != _color2); // Assignation de la couleur et d'un class de transition
 
 
-      var hexColor = HSLToHEX(h, s, l); // Assignation de la couleur et d'un class de transition
-
-      pianoColor.style.backgroundColor = hexColor;
+      pianoColor.style.backgroundColor = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
       pianoColor.classList.add('piano-color-active'); // Cache le message
 
       pianoMsg.style.opacity = 0;
@@ -565,7 +571,7 @@ document.addEventListener('keydown', function (event) {
   }
 }, false); // Lorsqu'on lâche la touche, le son s'arrête et la couleur passe au blanc
 
-document.addEventListener('keyup', function (event) {
+document.addEventListener('keyup', function (e) {
   pianoColor.classList.remove('piano-color-active');
   pianoColor.style.backgroundColor = "#fff";
   stopGain();
@@ -615,14 +621,27 @@ infoSection.addEventListener('scroll', function () {
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+// Permet de jouer un tableau de notes sans actualiser "played color"
 
-function playWithoutColor(i, speed, gains, frqs) {
+function playArrayWithoutColor(i, speed, gains, frqs) {
   setTimeout(function () {
     g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
     o.frequency.setValueAtTime(frqs[i], context.currentTime);
     g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
   }, i * speed);
-}
+} // Permet de jouer un tableau de notes
+
+
+function playArray(i, speed, gains, frqs, hsls) {
+  setTimeout(function () {
+    g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
+    o.frequency.setValueAtTime(frqs[i], context.currentTime);
+    playedColors.classList.remove('hide');
+    root.style.setProperty('--played-color', 'hsla(' + hsls[i][0] + ', ' + hsls[i][1] + '%, ' + hsls[i][2] + '%, ' + gains[i] + ')');
+    g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
+  }, i * speed);
+} // Permet de jouer une note
+
 
 function playNote(h, s, l) {
   var frq = setFrequency(h, s, l),
@@ -633,28 +652,11 @@ function playNote(h, s, l) {
   root.style.setProperty('--played-color', 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + gain + ')');
 }
 
-function playArray(i, speed, gains, frqs, hsls) {
-  setTimeout(function () {
-    g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
-    o.frequency.setValueAtTime(frqs[i], context.currentTime);
-    actualiseListenerColor(hsls[i][0], hsls[i][1], hsls[i][2], gains[i]);
-    g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
-  }, i * speed);
-}
-
-function actualiseListenerColor(h, s, l, gain) {
-  var rgbcolor = HSLtoRGB(h, s, l),
-      r = rgbcolor[0],
-      g = rgbcolor[1],
-      b = rgbcolor[2];
-  playedColors.classList.remove('hide');
-  root.style.setProperty('--played-color', 'rgba(' + r + ', ' + g + ', ' + b + ', ' + gain + ')');
-}
-
 function actualisePadBtnColor(btn, h) {
   var id = btn.getAttribute('id').slice(-1);
   root.style.setProperty('--pad-btn-color-' + id, 'hsl(' + h + ', 100%, 50%)');
-}
+} // Stop le gain et cache "played color"
+
 
 function stopGain(elementToListen, smoothness, timing) {
   console.log("Stop Gain");
@@ -676,7 +678,8 @@ function stopGain(elementToListen, smoothness, timing) {
       playedColors.classList.add('hide');
     });
   }
-}
+} // Vérifie que l'image soit chargée avant de créer la pallette
+
 
 function createPalette(image) {
   if (image.complete) {
@@ -686,7 +689,8 @@ function createPalette(image) {
       createPaletteOnLoad(image);
     });
   }
-}
+} // Crée une pallette avec une image
+
 
 function createPaletteOnLoad(image) {
   colorList.innerHTML = "";
@@ -705,31 +709,18 @@ function createPaletteOnLoad(image) {
     _color3.style.backgroundColor = "hsl(" + _h2 + ", " + _s2 + "%, " + _l2 + "%)";
     colorList.appendChild(_color3);
   }
-}
+} // Récupère les valeurs h s et l depuis les attributs de l'élément
+
 
 function getHslFromAttribute(element) {
   var id = element.getAttribute('id').slice(-1);
   console.log('--pad-btn-color-' + id);
   var hsls = root.style.getPropertyValue('--pad-btn-color-' + id).match(/\d+/g).map(Number);
   return hsls;
-}
-
-function setColors(h, s, l) {
-  h = Number(h);
-  l = Number(l);
-  var h2 = h + 20,
-      l2 = l - 5;
-  h2 = h2 > 359 ? 359 : h2;
-  l2 = l2 < 0 ? 0 : l2;
-  var color1 = HSLToHEX(h, s, l),
-      color2 = HSLToHEX(h2, s, l2); //if(h2 > 360) {h2 = 360}
-
-  color.setAttribute('style', "background: linear-gradient(" + color1 + ", " + color2 + ")");
 } // Calcule le gain
 
 
 function setGain(lum, sat) {
-  //Si la couleur est lumineuse, alors le son s'estompe également
   if (lum >= 50) {
     lum = 100 - lum;
   }
