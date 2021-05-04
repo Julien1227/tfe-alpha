@@ -22,16 +22,15 @@ h1 {
   font-weight: 900;
   .h1-letter {
     font-size: 12vw;
+    @for $i from 1 through 12 {
+      &:nth-child(#{$i}) {
+          text-shadow:  0 0 0 var(--h1letter-#{$i});
+          color: var(--h1letter-#{$i});
+      }
+    }
   }
 }
 
-@for $i from 1 through 12 {
-  .section-intro .h1-letter:nth-child(#{$i}) {
-      animation-delay: $i * 0.1s;
-      text-shadow:  0 0 0 var(--h1letter-#{$i});
-      color: var(--h1letter-#{$i});
-  }
-}
 
 h2 {
   font-size: $h3;

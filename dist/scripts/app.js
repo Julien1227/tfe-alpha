@@ -357,15 +357,10 @@ imageSelection.forEach(function (image) {
     var pastTarget = document.querySelector('.selected');
     currentTarget.classList.add('selected'); // Vérifie si ils sont null avant d'ajouter ou retirer la class
 
-    pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added');
-    var imgName = currentTarget.children[0].currentSrc.slice(-16); // Children[0] car currentTarget est "li" et non "li > img"
+    pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added'); // Children[0] car currentTarget est "li" et non "li > img"
 
-    if (imgName.includes("@2x")) {
-      imgName = imgName.slice(0, imgName.length - 7);
-    } else {
-      imgName = imgName.slice(3, imgName.length - 4);
-    }
-
+    var imgName = currentTarget.children[0].currentSrc.slice(-13);
+    imgName = imgName.slice(0, imgName.length - 4);
     backgroundImg.setAttribute('src', 'assets/images/toListen/' + imgName + '.jpg');
     imgToListen.setAttribute('src', 'assets/images/toListen/' + imgName + '.jpg');
     backgroundImg.setAttribute('srcset', 'assets/images/toListen/' + imgName + '@2x.jpg 2x');
@@ -933,8 +928,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

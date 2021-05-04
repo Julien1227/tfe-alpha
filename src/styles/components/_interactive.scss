@@ -49,10 +49,12 @@ body {
     h1 {
         transition: $t-slow;
         transform: scale(1);
-    }
-    .h1-letter {
-        opacity: 0;
-        text-shadow: 0 0 0;
+        .h1-letter {
+            animation: none;
+            display: inline-block;
+            text-shadow: 0 0 0;
+            opacity: 0;
+        }
     }
 
     .message {
@@ -66,16 +68,18 @@ body {
             transition: $t-fast;
             transform: scale(0.2);
         }
-        .h1-letter {
-            display: inline-block;
-            animation: bounceIn 0.3s;
-            animation-timing-function: cubic-bezier(0.27, 1.53, 0.63, 2.12);
-            transform: translateY(0px);
-            &.end {
-                animation: glow 0.3s;
+        h1 {
+            .h1-letter {
+                @for $i from 1 through 12 {
+                    &:nth-child(#{$i}) {
+                        animation: bounceIn 0.3s $i * 0.1s;
+                        animation-timing-function: cubic-bezier(0.27, 1.53, 0.63, 2.12);
+                    }
+                }
+                &.end {
+                    animation: glow 0.3s;
+                }   
             }
-
-            
         }
     }
 
