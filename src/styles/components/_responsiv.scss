@@ -39,6 +39,10 @@
             }
         }
 
+        &-intro.hide h1 {
+            transform: scale(2);
+        }
+
         &-color {
             .module {
                 &-frequency {

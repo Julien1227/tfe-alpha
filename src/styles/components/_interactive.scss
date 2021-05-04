@@ -1,82 +1,38 @@
 .section {display: none;}
+.menu-btn {
+    svg {
+        opacity: .5;
+    }
+}
 body {
-    &[data-page="color"] {
-        .section-color {display: flex;}
-        .menu-btn {
-            &[id="color"] {
-                background-color: $white;
-                box-shadow: $shadow;
-                svg {
-                    opacity: 1;
-                }
-            }
-        }
-    }
+    &[data-page="color"] {.section-color {display: flex;}}
     
-    &[data-page="pad"] {
-        .section-pad {display: flex;}
-        .menu-btn {
-            &[id="pad"] {
-                background-color: $white;
-                box-shadow: $shadow;
-                svg {
-                    opacity: 1;
-                }
-            }
-        }
-    }
+    &[data-page="pad"] {.section-pad {display: flex;}}
     
-    &[data-page="image"] {
-        .section-image {display: flex;}
-        .menu-btn {
-            &[id="image"] {
-                background-color: $white;
-                box-shadow: $shadow;
-                svg {
-                    opacity: 1;
-                }
+    &[data-page="image"] {.section-image {display: flex;}}
+
+    &[data-page="piano"] {.played {display: none;}.section-piano {display: flex;}}
+
+    &[data-page="info"] {.played {display: none;}.section-info {display: flex;}}
+
+    &[data-page="credits"] {.played {display: none;}.section-credits {display: flex;}}
+
+    .menu-btn.active {
+        box-shadow: $shadow;
+        background-color: $white;
+        svg {opacity: 1;}
+        &:hover {
+            svg {
+                transform: scale(1);
             }
         }
-    }
-
-    &[data-page="piano"] {
-        .played {display: none;}
-        .section-piano {display: flex;}
-        .menu-btn {
-            &[id="piano"] {
-                background-color: $white;
-                box-shadow: $shadow;
-                svg {
-                    opacity: 1;
-                }
-            }
-        }
-    }
-
-    &[data-page="info"] {
-        .played {display: none;}
-        .section-info {display: flex;}
-        .menu-btn {
-            &[id="info"] {
-                background-color: $white;
-                box-shadow: $shadow;
-                svg {
-                    opacity: 1;
-                }
-            }
-        }
-    }
-
-    &[data-page="credits"] {
-        .played {display: none;}
-        .section-credits {display: flex;}
     }
 }
 
 
 @keyframes bounceIn {
     0% {transform: translateY(50px); opacity: 0;}
-    100% {transform: translateY(0px); opacity: 1;}
+    100% {opacity: 1; transform: translateY(0px);}
 }
 
 @keyframes glow {
@@ -90,38 +46,58 @@ body {
     to {opacity: 0;}
 }
 .section-intro {
-    #h1-letter {
+    h1 {
+        transition: $t-slow;
+        transform: scale(1);
+    }
+    .h1-letter {
         opacity: 0;
         text-shadow: 0 0 0;
+    }
+
+    .message {
+        opacity: 1;
+        transform: scale(1);
+        transition: $t-fast;
     }
     &.play {
         .message {
             opacity: 0;
+            transition: $t-fast;
+            transform: scale(0.2);
         }
-        #h1-letter {
+        .h1-letter {
             display: inline-block;
-            animation: bounceIn 0.1s;
+            animation: bounceIn 0.3s;
             animation-timing-function: cubic-bezier(0.27, 1.53, 0.63, 2.12);
             transform: translateY(0px);
             &.end {
                 animation: glow 0.3s;
             }
+
+            
         }
     }
 
     &.hide {
         opacity: 0;
         animation: hide 0.3s;
+        h1 {
+            transform: scale(1.2);
+        }
     }
 }
 
-
-
-@for $i from 1 through 12 {
-    .section-intro #h1-letter:nth-child(#{$i}) {
-        animation-delay: $i * 0.1s;
-        text-shadow:  0 0 0 var(--h1letter-#{$i});
-        color: var(--h1letter-#{$i});
+.section-piano {
+    &-color {
+        transition: $t-fast;
+        &-active {
+            transition: $t-superfast;
+        }
+    }
+    
+    &-msg {
+        transition: $t-fast;
     }
 }
 
@@ -382,14 +358,14 @@ body {
     }
 }
 
-.played {
+.played-color {
     transition: $t-fast;
     &.hide {
         transition: $t-superslow;
         transition-property: opacity;
         opacity: 0;
     }
-    &-color {
+    &-el {
         transition: $t-superfast;
     }
 }

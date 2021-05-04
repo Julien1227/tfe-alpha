@@ -18,25 +18,143 @@ var frq = 0,
 
 var root = document.documentElement;
 
+// Défini la bon event à écouter - touch ou mouse
+var eventStart = "";
+var eventEnd = "";
+if (window.matchMedia("(min-width: 900px)").matches) {
+    // Desktop - mouseevent
+    eventStart = 'mousedown';
+    eventEnd = 'mouseup';
+} else {
+    // Tablet - touchevent
+    eventStart = 'touchstart';
+    eventEnd = 'touchend';
+}
+
+
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-///////////////////////// START API ///////////////////////////////
+///////////////////////// VARIABLES ///////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-// Variables
+//////////////////////////////////////
+//////////// INTRODUCTION ////////////
+//////////////////////////////////////
 
 const startBtn = document.getElementById('begin'),
       sectionIntro = document.querySelector('.section-intro'),
-      letters = document.querySelectorAll('#h1-letter');
+      letters = document.querySelectorAll('.h1-letter');
+
+var count = 1;
+var randomColorstart = randomMinMax(0, 120);
+
+const playedColors = document.querySelector('.played-color');
+
+
+//////////////////////////////////////
+///////// GESTION DU SLIDER //////////
+//////////////////////////////////////
+
+const body = document.querySelector('body'),
+      navBtn = document.querySelectorAll('.section-header-creditBtn, .menu-btn'),
+      pianoMsg = document.querySelector('.section-piano-msg'),
+      infoSection = document.querySelector('.section-info'),
+      colorBtn = document.querySelector('.menu-btn[id="color"]'),
+      creditBtn = document.querySelectorAll('.section-header-creditBtn'),
+      closeCreditBtn = document.getElementById('.closeCreditSection');
+
+
+//////////////////////////////////////
+//////// ECOUTE D'UNE COULEUR ////////
+////////////////////////////////////// 
+
+var colorInput = document.querySelectorAll('.colorInput'),
+    colorSpan = document.querySelectorAll('.colorSpan'),
+    actualNote = document.getElementById('playedColor');
+
+const color = document.getElementById('module-color');
+
+var colorInputs = [],
+    colorSpans = [];
+
+
+//////////////////////////////////////
+//////// ECOUTE D'UNE IMAGE //////////
+//////////////////////////////////////
+
+var speed = 120;
+const playRate = document.getElementById('playRate'),
+      playRateSpan = document.getElementById('playRateSpan'),
+      colorNumberSpan = document.getElementById('colorNumberSpan'),
+      colorNumber = document.getElementById('colorNumber');
+
+const playImageBtn = document.getElementById('getColors'),
+      imgToListen = document.querySelector('.img'),
+      btnUpload = document.getElementById('uploadBtn'),
+      btnOpenSelection = document.getElementById('btnOpenSelection'),
+      imageSelection = document.querySelectorAll('.selection-image-el'),
+      inputUpload = document.getElementById('uploadInput'),
+      colorList = document.querySelector('.color-list'),
+      backgroundImg = document.querySelector('.container-img');
+
+const colorThief = new ColorThief();
+
+
+//////////////////////////////////////
+//////////////// PAD /////////////////
+////////////////////////////////////// 
+
+const pianoBtn = document.querySelectorAll('.pad-btn'),
+      tuto = document.querySelector('.pad-tuto'),
+      closeTuto = document.getElementById('closeTuto'),
+      confirmEdit = document.getElementById('confirmEdit'),
+      editBtn = document.querySelector('.btn-edit'),
+      editDiv = document.querySelector('.edit'),
+      editDivIndicator = document.querySelector('.edit-indicator'),
+      saveBtn = document.querySelector('.btn-save'),
+      editInput = document.querySelector('.edit-slider'),
+      sectionPiano = document.querySelector('.section-pad');
+      
+var btnColors = [];
+var h = 0;
+
+
+//////////////////////////////////////
+////////////// PIANO /////////////////
+////////////////////////////////////// 
+
+const pianoColor = document.querySelector('.section-piano-color');
+
+var h = 0,
+    s = 0,
+    l = 0,
+    down = false;
+
+
+//////////////////////////////////////
+////NAVIGATION DE LA SECTION INFO/////
+//////////////////////////////////////
+
+const navBtnOpen = document.querySelector('.nav-btn-open'),
+      navBtnClose = document.querySelector('.nav-btn-close'),
+      nav = document.getElementById('nav'),
+      gist = document.querySelectorAll('.container-code .gist'),
+      anchors = document.querySelectorAll('.anchor'),
+      navElements = document.querySelectorAll('.navigation-list-el');
+
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+////////////////// INTRODUCTION + START API ///////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 // Affiche le bon message en fonction du device
 let deviceAction = window.matchMedia("(min-width: 900px)").matches ? "Cliquez" : "Appuyez";
 startBtn.innerHTML = deviceAction + " pour commencer.";
 
-var count = 1;
-var randomColorstart = randomMinMax(0, 120);
-console.log(randomColorstart);
 sectionIntro.addEventListener('click', (event) => {
     
     let frqs = [],
@@ -53,14 +171,6 @@ sectionIntro.addEventListener('click', (event) => {
             s = randomMinMax(70, 100),
             l = randomMinMax(50, 60);
         
-        root.style.setProperty('--h1letter-'+count, "hsl("+ h +", "+ s +"%, "+ l +"%)");
-        
-        element.addEventListener('animationend', (e) => {
-            element.style.opacity = 1;
-            element.classList.add('end');
-        });
-
-
         let gain = setGain(l, s),
             frq = setFrequency(h, s, l);
 
@@ -68,13 +178,20 @@ sectionIntro.addEventListener('click', (event) => {
         frqs.push(frq);
         hsls.push([h, s, l]);
 
+        root.style.setProperty('--h1letter-'+count, "hsl("+ h +", "+ s +"%, "+ l +"%)");
+        
+        element.addEventListener('animationend', (e) => {
+            element.style.opacity = 1;
+            element.classList.add('end');
+        });
+
         count++;
     });
 
     for (let i = 1; i < letters.length; i++) {
         setTimeout(() => {
-            play(i, 110, gains, frqs, hsls);
-        }, 100);
+            playWithoutColor(i, 110, gains, frqs);
+        }, 280);
     }
 
     // Après que toutes les lettres aient joué.
@@ -95,16 +212,14 @@ sectionIntro.addEventListener('click', (event) => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-// VARIABLES
-const body = document.querySelector('body'),
-      sliderBtn = document.querySelectorAll('.menu-btn'),
-      pianoMsg = document.querySelector('.piano-msg'),
-      infoSection = document.querySelector('.section-info');
-
-
-sliderBtn.forEach(element => {
+navBtn.forEach(element => {
     element.addEventListener('click', (e) => {
         let target = e.currentTarget;
+        let pastTarget = document.querySelector('.menu-btn.active')
+
+        pastTarget != null ? pastTarget.classList.remove('active') : console.log('pas de pastTarget');
+        
+        target.classList.add('active');
         
         let page = target.getAttribute('id');
         body.setAttribute('data-page', page);
@@ -118,23 +233,14 @@ sliderBtn.forEach(element => {
         // Reset le scroll de la page malgré l'ancre
         if (page == "info") {
             infoSection.scrollTop = 0;
-            console.log('ok');
         }
     });
 });
 
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////// MONTRE LES CREDITS //////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-
-const creditBtn = document.querySelectorAll('.section-header-creditBtn'),
-      closeCreditBtn = document.getElementById('.closeCreditSection');
-
 creditBtn.forEach(element => {
     element.addEventListener('click',(e) => {
         if (element.getAttribute('id') == "closeCreditSection") {
+            colorBtn.classList.add('active');
             body.setAttribute('data-page', 'color');
         }else{
             body.setAttribute('data-page', 'credits');
@@ -149,19 +255,10 @@ creditBtn.forEach(element => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-// VARIABLES
-var colorInput = document.querySelectorAll('.colorInput'),
-    colorSpan = document.querySelectorAll('.colorSpan'),
-    actualNote = document.getElementById('playedColor');
-
-const color = document.getElementById('module-color');
-
-var colorInputs = [],
-    colorSpans = [];
-
 colorInput.forEach((input) => {
     colorInputs.push(input);
 });
+
 colorSpan.forEach((colorSpan) => {
     colorSpans.push(colorSpan);
 });
@@ -175,15 +272,9 @@ for (let i = 0; i < colorInputs.length; i++) {
             s = colorInputs[1].value,
             l = colorInputs[2].value;
 
-        let frq = setFrequency(h, s, l);
-        let gain = setGain(l, s);
+        // Joue les paramètres et acualise la couleur du "played-color"
+        playNote(h,s,l);
 
-        actualiseListenerColor(h,s,l ,gain);
-
-        // Défini la fréquence
-        o.frequency.setValueAtTime(frq, context.currentTime);
-        // Défini l'intensité
-        g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
         // Affiche la fréquence jouée
         actualNote.innerHTML = o.frequency.value + " Hz";
         
@@ -192,9 +283,8 @@ for (let i = 0; i < colorInputs.length; i++) {
         
         // Affiche la couleur jouée
         setColors(h, s, l);
-
-        stopGain(colorInputs[i]);
     });
+    stopGain(colorInputs[i]);
 };
 
 
@@ -205,27 +295,8 @@ for (let i = 0; i < colorInputs.length; i++) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-
-// VARIABLES
-var speed = 120;
-const playRate = document.getElementById('playRate'),
-      playRateSpan = document.getElementById('playRateSpan'),
-      colorNumberSpan = document.getElementById('colorNumberSpan'),
-      colorNumber = document.getElementById('colorNumber');
-
-const playImageBtn = document.getElementById('getColors'),
-      imgToListen = document.querySelector('.img'),
-      btnUpload = document.getElementById('uploadBtn'),
-      btnOpenSelection = document.getElementById('btnOpenSelection'),
-      imageSelection = document.querySelectorAll('.selection-image-el'),
-      inputUpload = document.getElementById('uploadInput'),
-      colorList = document.querySelector('.color-list'),
-      backgroundImg = document.querySelector('.container-img');
-
-const colorThief = new ColorThief();
-
 // Affiche le bon message en fonction du device
-let deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "mon explorateur de fichiers" : "ma galerie";
+let deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "l'explorateur de fichiers" : "ma galerie";
 btnUpload.innerHTML = "Ouvrir " + deviceAction2;
 
 // Réglage de la vitesse de lecture
@@ -329,7 +400,7 @@ playImageBtn.addEventListener('click', (e) => {
     
     //Joue chaque paramètre les uns après les autres
     for(var i = 0; i < frqs.length; i++) {
-        play(i, speed, gains, frqs, hsls);
+        playArray(i, speed, gains, frqs, hsls);
         setTimeout(() => {
             stopGain();
         }, frqs.length * speed);
@@ -344,30 +415,10 @@ playImageBtn.addEventListener('click', (e) => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-// Variables
-const pianoBtn = document.querySelectorAll('.pad-btn'),
-
-      tuto = document.querySelector('.pad-tuto'),
-      closeTuto = document.getElementById('closeTuto'),
-      confirmEdit = document.getElementById('confirmEdit'),
-      editBtn = document.querySelector('.btn-edit'),
-      editDiv = document.querySelector('.edit'),
-      editDivIndicator = document.querySelector('.edit-indicator'),
-      saveBtn = document.querySelector('.btn-save'),
-      editInput = document.querySelector('.edit-slider'),
-  
-      sectionPiano = document.querySelector('.section-pad');
-
-
-
-var btnColors = [];
-
 // Assigne une couleur légèrement aléatoire à chaque touche (chacune compris dans une transche de 40 deg)
-var h = 0;
 pianoBtn.forEach(btn => {
     h = h + 40;
-    let btnColor = HSLToHEX(randomMinMax(h, h - 40), 100, 50);
-    actualisePadBtnColor(btn, btnColor);
+    actualisePadBtnColor(btn, h);
 });
 
 // Permets de rentrer en mode "modification" des boutons 
@@ -382,72 +433,38 @@ saveBtn.addEventListener('click', (e) => {
 
 // Pour chaque touches du piano
 pianoBtn.forEach(btn => {
-    btn.addEventListener(event('start'), (e) => {
+    btn.addEventListener(eventStart, (e) => {
+        
+        //Récupère la couleur appuyée
         let targetBtn = e.currentTarget;
 
-        
         // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
         let hslColor = getHslFromAttribute(targetBtn),
             h = hslColor[0],
             s = hslColor[1],
             l = hslColor[2];
 
-        // Défini le gain et la fréquence
-        let frq = setFrequency(h, s, l),
-            gain = setGain(l, s);
-
-        actualiseListenerColor(h,s,l, gain);
-        
-        g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
-        o.frequency.setValueAtTime(frq, context.currentTime);
-        
-        // Si la modification est désactivée - ajoute la class active et coupe le son à la fin de l'event
-        if (sectionPiano.classList.contains('pad-modify') == false) {
-            stopGain(btn);
-        } else {
-            stopGain();
-        }
-    });
-});
-
-//Si le piano est en mode "modification"
-pianoBtn.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+        // LE PAD EST EN MODE "MODIFICATION"
         if (sectionPiano.classList.contains('pad-modify') == true) {
-            //Récupère la couleur appuyée
-            let targetBtn = e.currentTarget;
-
+            
+            // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
             sectionPiano.classList.add('edition');
-
             editDiv.style.top = (targetBtn.offsetTop + editDiv.offsetHeight) + "px";
             editDivIndicator.style.left = targetBtn.offsetLeft + "px";
-
+            
+            // Bouton permettant de masquer le slider
             confirmEdit.addEventListener('click', (e) => {
                 sectionPiano.classList.remove('edition');
                 targetBtn.classList.remove('pad-btn-active')
             });
 
-            let hslColor = getHslFromAttribute(targetBtn),
-                h = hslColor[0],
-                s = hslColor[1],
-                l = hslColor[2];
+            playNote(h,s,l);
+            stopGain(undefined, undefined, 0.002);
 
-            let frq = setFrequency(h,s,l);
-
-            o.frequency.setValueAtTime(frq, context.currentTime);
-            g.gain.setTargetAtTime(1, context.currentTime, 0.002);
-
-            actualiseListenerColor(h,s,l,1);
-            stopGain(null, null, 0.002)
-
-            // Dans le cas ou l'utilisateur re sélectionne la couleur active
-            if (targetBtn.classList.contains('pad-btn-active') == true) {
-                console.log('pas de double sélection possible');
-            // Si il sélectionne une autre couleur
-            }else{
-                let pastTarget = document.querySelector('.pad-btn-active');
-
+            // Sélection d'une couleur
+            if (targetBtn.classList.contains('pad-btn-active') == false) {
                 // Actualise le bouton actif
+                let pastTarget = document.querySelector('.pad-btn-active');
                 targetBtn.classList.add('pad-btn-active');
                 pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('pas de pastTarget');
                 
@@ -456,55 +473,36 @@ pianoBtn.forEach(btn => {
 
                 // Actualise les valeurs du slider avec la couleur actuelle du bouton
                 editInput.value = hslColor[0];
+            }else{
+                // Sélection de la même couleur
+                console.log('pas de double sélection possible');
             }
+
+        // LE PAD N'EST PAS EN MODE "MODIFICATION"
+        }else{
+            playNote(h,s,l);
+            stopGain(btn);
         }
     });
 });
 
-
 // L'orsqu'un slider bouge - modifie la couleur active
-
 editInput.addEventListener('input', (e) => {
-    let h = editInput.value,
-        s = 100,
-        l = 50;
-    
+    let h = editInput.value;
     let actualBtn = document.querySelector('.pad-btn-active');
-    let hexColor = HSLToHEX(h, s, l);
     
     // Actualise la couleur du bouton
-    actualisePadBtnColor(actualBtn, hexColor);
-
-    
-    // Défini le gain et la fréquence
-    let frq = setFrequency(h, s, l),
-    gain = setGain(l, s);
-    
-    o.frequency.setValueAtTime(frq, context.currentTime);
-    g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
-
-    actualiseListenerColor(h,s,l, 1);
-    stopGain(editInput, null, 0.002);
+    actualisePadBtnColor(actualBtn, h);
+    playNote(h,100,50);
 });
+stopGain(editInput, null, 0.002);
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-/////////////////////////// Piano/// //////////////////////////////
+/////////////////////////// Piano /////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-
-// Empêche le "keydown" event de se répéter lorsqu'on maintiens la touche
-// https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
-
-// Variables
-const pianoColor = document.querySelector('.piano-color');
-
-var h = 0,
-    s = 0,
-    l = 0,
-    down = false;
-    
 // Assiciation d'une fréquence à chaque touches
 var notes = {
     "a": "150",
@@ -577,7 +575,7 @@ document.addEventListener('keydown', (event) => {
             pianoColor.classList.add('piano-color-active');
 
             // Cache le message
-            gsap.to(pianoMsg, {duration: 0.3, opacity: 0, onComplete: hide, onCompleteParams: [pianoMsg]});
+            pianoMsg.style.opacity = 0;
         }
     }
 }, false);
@@ -598,13 +596,6 @@ document.addEventListener('keyup', (event) => {
 //////////////////////////// INFO MENU ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-
-const navBtnOpen = document.querySelector('.nav-btn-open'),
-      navBtnClose = document.querySelector('.nav-btn-close'),
-      nav = document.getElementById('nav'),
-      gist = document.querySelectorAll('.container-code .gist'),
-      anchors = document.querySelectorAll('.anchor'),
-      navElements = document.querySelectorAll('.navigation-list-el');
 
 // Ouvrir/fermer le menu
 navBtnOpen.addEventListener('click', (e) => {
@@ -652,7 +643,30 @@ infoSection.addEventListener('scroll', () => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-function play(i, speed, gains, frqs, hsls) {
+function playWithoutColor(i, speed, gains, frqs) {
+    setTimeout(function() {
+        g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
+        o.frequency.setValueAtTime(frqs[i], context.currentTime);
+        
+        g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
+    }, i*speed);
+}
+
+
+
+function playNote(h,s,l) {
+    let frq = setFrequency(h,s,l),
+        gain = setGain(l,s);
+
+    g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
+    o.frequency.setValueAtTime(frq, context.currentTime);
+
+    playedColors.classList.remove('hide');
+    root.style.setProperty('--played-color', 'hsla('+ h +', '+ s +'%, '+ l +'%, '+gain+')');
+}
+
+
+function playArray(i, speed, gains, frqs, hsls) {
     setTimeout(function() {
         g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
         o.frequency.setValueAtTime(frqs[i], context.currentTime);
@@ -662,29 +676,36 @@ function play(i, speed, gains, frqs, hsls) {
     }, i*speed);
 }
 
-const playedColors = document.querySelector('.played');
+
 function actualiseListenerColor(h,s,l ,gain) {
-    let color = HSLtoRGB(h,s,l),
-        r = color[0],
-        g = color[1],
-        b = color[2];
+    let rgbcolor = HSLtoRGB(h,s,l),
+        r = rgbcolor[0],
+        g = rgbcolor[1],
+        b = rgbcolor[2];
     playedColors.classList.remove('hide');
     root.style.setProperty('--played-color', 'rgba('+ r +', '+ g +', '+ b +', '+gain+')');
 }
 
+function actualisePadBtnColor(btn, h) {
+    let id = btn.getAttribute('id').slice(-1);
+    root.style.setProperty('--pad-btn-color-'+id, 'hsl('+ h +', 100%, 50%)');
+}
+
 function stopGain(elementToListen, smoothness, timing) {
-    if (smoothness == "" || smoothness == null || smoothness == undefined) {
+    console.log("Stop Gain");
+    if (smoothness == undefined) {
         smoothness = 0.2;
     }
-    if (timing == "" || timing == null || timing == undefined) {
+    if (timing == undefined) {
         timing = 0;
     }
 
-    if (elementToListen == "" || elementToListen == null || elementToListen == undefined) {
+    if (elementToListen == undefined) {
         g.gain.setTargetAtTime(0, context.currentTime + timing, smoothness);
         playedColors.classList.add('hide');
+
     }else{
-        elementToListen.addEventListener(event('end'), (e) => {
+        elementToListen.addEventListener(eventEnd, (e) => {
             g.gain.setTargetAtTime(0, context.currentTime + timing, smoothness);
             playedColors.classList.add('hide');
         });
@@ -722,26 +743,12 @@ function createPaletteOnLoad(image) {
     }
 }
 
-function actualisePadBtnColor(btn, color) {
-    btn.style.backgroundColor = color;
-    let id = btn.getAttribute('id').slice(-1);
-    root.style.setProperty('--pad-btn-color-'+id, color);
-}
-
 function getHslFromAttribute(element) {
-    //récupère les nombres (t, s et l) de l'attribu background-color
-    let rgbColor = element.getAttribute('style').match(/\d+/g).map(Number);
-                
-    // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
-    return RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
-}
+    let id = element.getAttribute('id').slice(-1);
+    console.log('--pad-btn-color-' + id);
+    let hsls = root.style.getPropertyValue('--pad-btn-color-' + id).match(/\d+/g).map(Number);
 
-function deleteElement(element) {
-    element.remove();
-}
-
-function hide(element) {
-    element.style.display = "none";
+    return hsls;
 }
 
 function setColors(h, s, l) {
@@ -804,27 +811,6 @@ function setFrequency(h, s, l) {
     }
 
     return frq;
-}
-
-// Défini la bon event à écouter - touch ou mouse
-function event(param) {
-    let event;
-    if (window.matchMedia("(min-width: 900px)").matches) {
-        // Desktop - mouseevent
-        if(param == 'start') {
-            event = 'mousedown';
-        }else if(param == 'end'){
-            event = 'mouseup';
-        }
-    } else {
-        // Tablet - touchevent
-        if(param == 'start') {
-            event = 'touchstart';
-        }else if(param == 'end'){
-            event = 'touchend';
-        }
-    }
-    return event;
 }
 
 

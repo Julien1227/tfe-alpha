@@ -38,321 +38,342 @@
 </head>
 <body data-page="color">
 
+  <div class="played-color">
+    <div class="played-color-el played-color-el1"></div>
+    <div class="played-color-el played-color-el2"></div>
+  </div>
   <main>
+    <!-- ANIMATION D'INTRODUCTION -->
     <section class="section-intro">
-      <span id="begin" class="message">Commencer</span>
+      <span id="begin" class="message"></span>
       <h1>
-        <span id="h1-letter">C</span>
-        <span id="h1-letter">o</span>
-        <span id="h1-letter">l</span>
-        <span id="h1-letter">o</span>
-        <span id="h1-letter">r</span>
-        <span id="h1-letter">'</span>
-        <span id="h1-letter">s</span>
-        <span id="h1-letter">o</span>
-        <span id="h1-letter">u</span>
-        <span id="h1-letter">n</span>
-        <span id="h1-letter">d</span>
-        <span id="h1-letter">s</span>
+        <span class="h1-letter">C</span>
+        <span class="h1-letter">o</span>
+        <span class="h1-letter">l</span>
+        <span class="h1-letter">o</span>
+        <span class="h1-letter">r</span>
+        <span class="h1-letter">'</span>
+        <span class="h1-letter">s</span>
+        <span class="h1-letter">o</span>
+        <span class="h1-letter">u</span>
+        <span class="h1-letter">n</span>
+        <span class="h1-letter">d</span>
+        <span class="h1-letter">s</span>
       </h1>
     </section>
-      <section class="section section-credits">
-        <header class="section-header">
-          <h2 class="section-header-title">Crédits</h2>
-          <button id="closeCreditSection" class="section-header-creditBtn btn"><svg><use xlink:href="#crossSvg"/></svg></button>
-        </header>
 
-        <div class="credits">
-          <p class="copyright">© 2021 - Julien Scheen</p>
-          <div class="credits-div">
-            <h4 class="credits-title">Code</h4>
-            <ul class="credits-list">
-              <li class="credits-list-el">
-                <a target="_blank" href="https://codepen.io/dropinks/pen/MrzPXB">Détecter la collision d'éléments.</a>
-                <p><small>Pen de Dropinks - <span class="licence">Copyright (c) 2021 by Dropinks (https://codepen.io/dropinks/pen/MrzPXB) Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span></small></p>
-              </li>
-              <li class="credits-list-el">
-                <a href="https://css-tricks.com/converting-color-spaces-in-javascript/">Convertion des schéma de couleurs.</a>
-                <p><small>CSS TRICKS - <a href="https://css-tricks.com/license/">Voir la licence</a></small></p>
-              </li>
-              <li class="credits-list-el">
-                <a href="https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/">Réécriture complète du css d'un input range.</a>
-                <p><small>CSS TRICKS - <a href="https://css-tricks.com/license/">Voir la licence</a></small></p>
-              </li>
-              <li class="credits-list-el">
-                <a target="_blank" href="https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d">Générer un nombre aléatoire entre deux valeurs.</a>
-                <p><small>Gist de brunomonteiro3 - Modifications effectuées</small></p>
-              </li>
-              <li class="credits-list-el">
-                <a target="_blank" href="https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link">"SmoothScroll" sur les ancres uniquement.</a>
-                <p><small>Réponse de Joseph Silber sur stackoverflow - Modifications effectuées - <a href="https://creativecommons.org/licenses/by-sa/4.0/">Voir la licence</a></small></p>
-              </li>
-              <li class="credits-list-el">
-                <a target="_blank" href="https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
-                ">Empêche la répétition de l'event "keyDown" lors d'un appuis prolongé.</a>
-                <p><small>Réponse de yckart sur stackoverflow - Modifications effectuées - <a href="https://creativecommons.org/licenses/by-sa/4.0/">Voir la licence</a></small></p>
-              </li>
-            </ul>
-          </div>
-          <div class="credits-div">
-            <h4 class="credits-title">Éléments de design</h4>
-            <ul class="credits-list">
-              <li class="credits-list-el">
-                <a target="_blank" href="https://www.pexels.com/">Images</a>
-                <p><small>Pexel - <a href="https://www.pexels.com/license/">Voir la licence</a></small></p>
-              </li>
-              <li class="credits-list-el">
-                <a target="_blank" href="https://fontawesome.com/license/free">Icônes</a>
-                <p><small>Font Awesome - <a href="https://fontawesome.com/license/free">Voir la licence</a></small></p>
-              </li>
-            </ul>
-          </div>
-          <div class="credits-div">
-            <h4 class="credits-title">Aide au dévellopement</h4>
-            <ul class="credits-list">
-              <li class="credits-list-el">
-                <p><b>Mes chers proffesseurs</b></p>
-                <p><small>M. Bourgaux, M. Marchal, M. Tournay, M. Thronte, M. Distefano, M. Hambersin</small></p>
-              </li>
-
-              <li class="credits-list-el">
-                <a target="_blank" href="https://trystanlothaire.be">Trystan Lothaire</a>
-                <p><small>À donné le concept depuis lequel tout c'est contruit.</small></p>
-              </li>
-              <li class="credits-list-el">
-                <a target="_blank" href="https://danieldepinholucas.be">Daniel Depinholucas</a>
-                <p><small>Aide au dévellopement</small></p>
-              </li>
-              <li class="credits-list-el">
-                <a target="_blank" href="https://youneshanafi.be/">Hanafi Younes</a>
-                <p><small>Présentation MVP de mon site</small></p>
-              </li>
-              <li class="credits-list-el">
-                <a target="_blank" href="http://tristandeltour.be/">Deltour Tristan</a>
-                <p><small>Aide au dévellopement</small></p>
-              </li>
-              <li class="credits-list-el">
-                <a target="_blank" href="https://olivierdenis.be/">Olivier Denis</a>
-                <p><small>Aide au dévellopement</small></p>
-              </li>
-            </ul>
-            <div class="credits-end">
-              <p>Avec cette période un peu particulière, je me suis dit que j'allais mentionné les personnes qui m'ont permis de parler un peu et d'avoir un peu de contact autre que celui de ma famille. Chaque échange que j'ai pu avoir m'a permis de me changer les idées et d'avancer un peu mieux, merci à tous !</p>
-              <svg><use xlink:href="#smileySvg"/></svg>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="played">
-        <div class="played-color played-color-1"></div>
-        <div class="played-color played-color-2"></div>
+    <!-- LE SON DES COULEURS -->
+    <section class="section section-color">
+      <header class="section-header">
+        <h2 class="section-header-title">Le son des couleurs</h2>
+        <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
+      </header>
+      <div class="module" id="module-color" style="background: linear-gradient(#40bfbf, #3986ac);">
+        <span class="module-frequency" id="playedColor">514 Hz</span>
+        <div class="module-shadow"></div>
       </div>
 
-      <section class="section section-color">
-        <header class="section-header">
-          <h2 class="section-header-title">Le son des couleurs</h2>
-          <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
-        </header>
-        <div class="module" id="module-color" style="background: linear-gradient(#40bfbf, #3986ac);">
-          <span class="module-frequency" id="playedColor">514 Hz</span>
-          <div class="module-shadow"></div>
+      <div class="form">
+        <div class="form-el">
+          <label class="form-el-title">Teinte : <span data-p="color" class="colorSpan">180</span>°</label>
+          <input class="colorInput" value="180" type="range" name="volume" min="0" max="359">
         </div>
+    
+        <div class="form-el">
+          <label class="form-el-title">Saturation : <span data-p="sat" class="colorSpan">50</span>%</label>
+          <input class="colorInput" value="50" type="range" name="volume" min="0" max="100">
+        </div>
+    
+        <div class="form-el">
+          <label class="form-el-title">Luminosité : <span data-p="lum" class="colorSpan">50</span>%</label>
+          <input class="colorInput" value="50" type="range" name="volume" min="0" max="100">
+        </div>
+      </div>
+    </section>
 
-        <div class="form">
-          <div class="form-el">
-            <label class="form-el-title">Teinte: <span data-p="color" class="colorSpan">180</span>°</label>
-            <input class="colorInput" value="180" type="range" name="volume" min="0" max="359">
-          </div>
+
+    <!-- JOUER DES COOULEURS -->
+    <section class="section section-pad">
+      <header class="section-header">
+        <h2 class="section-header-title">Pad</h2>
+        <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
+      </header>
+
+      <div class="pad-tuto">
+        <b>Sélectionnez la touche que vous voulez modifier.</b>
+      </div>
       
-          <div class="form-el">
-            <label class="form-el-title">Saturation: <span data-p="sat" class="colorSpan">50</span>%</label>
-            <input class="colorInput" value="50" type="range" name="volume" min="0" max="100">
-          </div>
-      
-          <div class="form-el">
-            <label class="form-el-title">Luminiosité: <span data-p="lum" class="colorSpan">50</span>%</label>
-            <input class="colorInput" value="50" type="range" name="volume" min="0" max="100">
-          </div>
-        </div>
-      </section>
-
-      <section class="section section-pad">
-        <header class="section-header">
-          <h2 class="section-header-title">Pad</h2>
-          <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
-        </header>
-
-        <div class="pad-tuto">
-          <b>Sélectionnez la touche que vous voulez modifier.</b>
-        </div>
+      <div class="pad-container">
         
-        <div class="pad-container">
-          
-          <ul class="pad">
-            <li><button id="btn-1" class="pad-btn"></button></li>
-            <li><button id="btn-2" class="pad-btn"></button></li>
-            <li><button id="btn-3" class="pad-btn"></button></li>
-            <li><button id="btn-4" class="pad-btn"></button></li>
-            <li><button id="btn-5" class="pad-btn"></button></li>
-            <li><button id="btn-6" class="pad-btn"></button></li>
-            <li><button id="btn-7" class="pad-btn"></button></li>
-            <li><button id="btn-8" class="pad-btn"></button></li>
-            <li><button id="btn-9" class="pad-btn"></button></li>
+        <ul class="pad">
+          <li><button id="btn-1" class="pad-btn"></button></li>
+          <li><button id="btn-2" class="pad-btn"></button></li>
+          <li><button id="btn-3" class="pad-btn"></button></li>
+          <li><button id="btn-4" class="pad-btn"></button></li>
+          <li><button id="btn-5" class="pad-btn"></button></li>
+          <li><button id="btn-6" class="pad-btn"></button></li>
+          <li><button id="btn-7" class="pad-btn"></button></li>
+          <li><button id="btn-8" class="pad-btn"></button></li>
+          <li><button id="btn-9" class="pad-btn"></button></li>
+        </ul>
+        
+        <button class="btn btn-edit">Modifier</button>
+        <button class="btn btn-save">Enregistrer</button>
+      </div>
+      
+      <div class="edit">
+        <svg class="edit-indicator" style="left: 50%;"><use xlink:href="#editIndicator"/></svg>
+        <div class="edit-div" style="top: 50%;">
+          <span class="edit-div-hue"></span>
+          <input type="range" min="0" max="359" class="edit-slider">
+          <button id="confirmEdit" class="btn edit-div-btn"><svg><use xlink:href="#checkSvg"/></svg></button>
+        </div>
+      </div>
+    </section>
+    
+
+    <!-- JOUER DES COULEURS (PIANO) -->
+    <section class="section section-piano">
+      <header class="section-header">
+        <h2 class="section-header-title">Piano</h2>
+        <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
+      </header>
+      <div class="section-piano-color"></div>
+      <span class="section-piano-msg span-title">Appuyez sur une touche.</span>
+    </section>
+    
+
+    <!-- LE SON DES IMAGES -->
+    <section class="section section-image">
+      <header class="section-header">
+        <h2 class="section-header-title">Le son des images</h2>
+        <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
+      </header>
+
+      <div class="module">
+        <input id="uploadInput" type="file" accept=".jpeg, .jpg, .png">
+
+
+        <div id="btnOpenSelection" class="btn selection">
+          <button class="selection-btn">Choisir une autre image</button>
+          <ul class="selection-image">
+            <!-- Photo de Steve Johnson provenant de Pexels -->
+            <li class="selection-image-el"><img src="assets/images/toListen/tumbnail/toListen1.jpg" srcset="assets/images/toListen/tumbnail/toListen1@2x.jpg 2x" alt="Image 1"></li>
+            <!-- Photo de Steve Johnson provenant de Pexels -->
+            <li class="selection-image-el"><img src="assets/images/toListen/tumbnail/toListen2.jpg" srcset="assets/images/toListen/tumbnail/toListen2@2x.jpg 2x" alt="Image 2"></li>
+            <!-- Photo de Sharon Mccutcheon provenant de Pexels -->
+            <li class="selection-image-el desktop"><img src="assets/images/toListen/tumbnail/toListen5.jpg" srcset="assets/images/toListen/tumbnail/toListen5@2x.jpg 2x" alt="Image 3"></li>
+            <!-- Photo de 𝐕𝐞𝐧𝐮𝐬 𝐇𝐃 𝐌𝐚𝐤𝐞- 𝐮𝐩 & 𝐏𝐞𝐫𝐟𝐮𝐦𝐞 provenant de Pexels -->
+            <li class="selection-image-el"><img src="assets/images/toListen/tumbnail/toListen3.jpg" srcset="assets/images/toListen/tumbnail/toListen3@2x.jpg 2x" alt="Image 3"></li>
+            <!-- Photo de Sharon Mccutcheon provenant de Pexels -->
+            <li class="selection-image-el desktop"><img src="assets/images/toListen/tumbnail/toListen4.jpg" srcset="assets/images/toListen/tumbnail/toListen4@2x.jpg 2x" alt="Image 3"></li>
           </ul>
-          
-          <button class="btn btn-edit">Modifier</button>
-          <button class="btn btn-save">Enregistrer</button>
+          <button id="uploadBtn" class="btn btn-bottom btn-upload"></button>
+        </div>
+
+        <img class="img" src="assets/images/toListen/toListen1.jpg" srcset="assets/images/toListen/toListen1@2x.jpg 2x" alt="L'image n'a pas pu charger">
+        
+        <div class="background-container">
+          <img class="container-img" src="assets/images/toListen/toListen1.jpg" srcset="assets/images/toListen/toListen1@2x.jpg 2x" alt="L'image n'a pas pu charger">
         </div>
         
-        <div class="edit">
-          <svg class="edit-indicator" style="left: 50%;"><use xlink:href="#editIndicator"/></svg>
-          <div class="edit-div" style="top: 50%;">
-            <span class="edit-div-hue"></span>
-            <input type="range" min="0" max="359" class="edit-slider">
-            <button id="confirmEdit" class="btn edit-div-btn"><svg><use xlink:href="#checkSvg"/></svg></button>
-          </div>
+        <div class="module-shadow"></div>
+        <ul class="color-list"></ul>
+      </div>
+
+      <div class="form">
+        <div class="form-el">
+          <label>Vitesse de lecture : <span id="playRateSpan">150</span>ms</label>
+          <input id="playRate" type="range" value="-150" min="-500" max="-50">
         </div>
-      </section>
+        <div class="form-el">
+          <label>Nombre de couleurs : <span id="colorNumberSpan">5</span></label>
+          <input id="colorNumber" type="range" value="5" min="2" max="10">
+        </div>
+        <button id="getColors" class="btn">Jouer la mélodie</button>
+      </div>
+    </section>
+
+
+    <!-- INFORMATIVE SECTION -->
+    <section class="section section-info">
+      <header class="section-header">
+        <h2 class="section-header-title">En savoir plus</h2>
+        <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
+      </header>
+
       
-      <section class="section section-piano">
-        <header class="section-header">
-          <h2 class="section-header-title">Piano</h2>
-          <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
-        </header>
-        <div class="piano-color"></div>
-        <h2 class="piano-msg">Appuyez sur une touche.</h2>
-      </section>
-      
-      <section class="section section-image">
-        <header class="section-header">
-          <h2 class="section-header-title">Le son des images</h2>
-          <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
-        </header>
-
-        <div class="module">
-
-          <div id="btnOpenSelection" class="btn selection">
-            <button class="selection-btn">Choisir une autre image</button>
-            <ul class="selection-image">
-              <!-- Photo de Steve Johnson provenant de Pexels -->
-              <li class="selection-image-el"><img src="assets/images/toListen/tumbnail/toListen1.jpg" srcset="assets/images/toListen/tumbnail/toListen1@2x.jpg 2x" alt="Image 1"></li>
-              <!-- Photo de Steve Johnson provenant de Pexels -->
-              <li class="selection-image-el"><img src="assets/images/toListen/tumbnail/toListen2.jpg" srcset="assets/images/toListen/tumbnail/toListen2@2x.jpg 2x" alt="Image 2"></li>
-              <!-- Photo de Sharon Mccutcheon provenant de Pexels -->
-              <li class="selection-image-el desktop"><img src="assets/images/toListen/tumbnail/toListen5.jpg" srcset="assets/images/toListen/tumbnail/toListen5@2x.jpg 2x" alt="Image 3"></li>
-              <!-- Photo de 𝐕𝐞𝐧𝐮𝐬 𝐇𝐃 𝐌𝐚𝐤𝐞- 𝐮𝐩 & 𝐏𝐞𝐫𝐟𝐮𝐦𝐞 provenant de Pexels -->
-              <li class="selection-image-el"><img src="assets/images/toListen/tumbnail/toListen3.jpg" srcset="assets/images/toListen/tumbnail/toListen3@2x.jpg 2x" alt="Image 3"></li>
-              <!-- Photo de Sharon Mccutcheon provenant de Pexels -->
-              <li class="selection-image-el desktop"><img src="assets/images/toListen/tumbnail/toListen4.jpg" srcset="assets/images/toListen/tumbnail/toListen4@2x.jpg 2x" alt="Image 3"></li>
-            </ul>
-            <button id="uploadBtn" class="btn btn-bottom btn-upload"></button>
-          </div>
-
-          <img class="img" src="assets/images/toListen/toListen1.jpg" srcset="assets/images/toListen/toListen1@2x.jpg 2x" alt="L'image n'a pas pu charger">
-          <div class="background-container">
-            <img class="container-img" src="assets/images/toListen/toListen1.jpg" srcset="assets/images/toListen/toListen1@2x.jpg 2x" alt="L'image n'a pas pu charger">
-          </div>
-
-          <input id="uploadInput" type="file" accept=".jpeg, .jpg, .png">
-
-          <div class="module-shadow"></div>
-
-          <ul class="color-list"></ul>
-        </div>
-
-        <div class="form">
-          <div class="form-el">
-            <label>Vitesse de lecture: <span id="playRateSpan">150</span>ms</label>
-            <input id="playRate" type="range" value="-150" min="-500" max="-50">
-          </div>
-          <div class="form-el">
-            <label>Nombre de couleurs: <span id="colorNumberSpan">5</span></label>
-            <input id="colorNumber" type="range" value="5" min="2" max="10">
-          </div>
-          <button id="getColors" class="btn">Jouer la mélodie</button>
-        </div>
-      </section>
-
-      <section class="section section-info">
-        <header class="section-header">
-          <h2 class="section-header-title">En savoir plus</h2>
-          <button class="section-header-creditBtn btn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
-        </header>
-
+      <div id="nav" class="navigation-container">
+        <button class="mobile nav-btn nav-btn-open"><svg><use xlink:href="#tripleDotSvg"/></svg></button>
+          <button class="mobile nav-btn nav-btn-close"><svg><use xlink:href="#crossSvg"/></svg></button>
         
-        <div id="nav" class="navigation-container">
-          <button class="mobile nav-btn nav-btn-open"><svg><use xlink:href="#tripleDotSvg"/></svg></button>
-           <button class="mobile nav-btn nav-btn-close"><svg><use xlink:href="#crossSvg"/></svg></button>
+        <div class="navigation">
+          <span class="navigation-title span-title">Navigation</span>
+          <ul class="navigation-list">
+            <li><a class="navigation-list-el current" href="#intro">Comment ça marche ?</a></li>
+            <li><a class="navigation-list-el" href="#osc">Comment utiliser l'oscillateur ?</a></li>
+            <li><a class="navigation-list-el" href="#pianoInfo">Le piano</a></li>
+            <li><a class="navigation-list-el" href="#comingUp">Pour la suite</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="container">
+
+        <h3 id="intro" class="anchor">Comment ça marche&nbsp;?</h3>
+        <p>De votre point de vue, vous jouez avec trois sliders qui modifient la couleur et la fréquence sonore qui en sort.</p>
+        <p>Vous avez sans doute remarqué que plus la couleur est présente, plus le son joué est fort. À l’inverse, plus elle est blanche, noire ou désaturée (c.-à-d. moins la couleur est présente), moins le son est audible.</p>
+
+        <img class="container-image" src="assets/images/info/colorfulSound.png" srcset="assets/images/info/colorfulSound@2x.png 2x" alt="Démontration de l'intensité du don provenant d'une couleur."/>
+        
+        <p>Ces observations permettent déjà de comprendre que la luminosité et la saturation sont directement liées à l’intensité du son. Cela s’explique par le fait que le blanc et le noir ne sont pas reconnus comme étant des couleurs. Plus encore, dans le domaine musical, le blanc et le noir sont liés à un vide, ce qui est en accord avec mon raisonement mon raisonnement.</p>
+
+        <div class="container-code container-code-1">
+          <p class="container-code-name">Démonstration de la fonction qui calcule le gain</p>
+          <script src="https://gist.github.com/Julien1227/52d1209153c4459555b15f2d62364f53.js"></script>
+        </div>
+
+        <p>Avec ces paramètres, nous arrivons à <a target="_blank" href="https://julienscheen.be/projets/TFE-exp/exp-create-sound/">la première version de mon projet</a>. Elle est intéressante, mais semble incomplète, n’est-ce pas ?</p>
+        <p>C’est parce qu’elle joue les fréquences des couleurs telles qu’elles sont présentées dans le spectre visible (de 428 Thz à 750 Thz). Cela explique pourquoi un seul rouge joue deux sons différents aux deux extrémités du slider de teintes. Cela peut sembler étonnant car nous voyons la même couleur: pourquoi devrait-il s'agir de fréquences différentes ?</p>
+
+        <img class="container-image" src="assets/images/info/colorfulWave.png" srcset="assets/images/info/colorfulWave@2x.png 2x" alt="Répartition des fréquences à travers le spectre lumineux."/>
+
+        <p>Pour résoudre ce problème, le code ne crée désormais plus la fréquence depuis la teinte du <a target="_blank" href="https://fr.wikipedia.org/wiki/Teinte_saturation_lumi%C3%A8re">schéma TSL</a> (Teinte, Saturation, Luminosité), mais bien depuis l’addition des couleurs rouge, vert et bleu du <a target="_blank" href="https://fr.wikipedia.org/wiki/Rouge_vert_bleu">schéma RVB</a>.</p>
+        <p>Pour obtenir ce schéma, je convertis la couleur fournie par le schéma TSL en couleur RVB à l’aide de <a target="_blank" href="https://css-tricks.com/converting-color-spaces-in-javascript/">la fonction “TSLToRGB(t, s, l)</a>” et j’obtiens donc les valeurs “rouge”, “vert” et “bleu” avec lesquelles je peux jongler.</p>
+
+        <div class="container-code container-code-2">
+          <p class="container-code-name">Démonstration de la fonction qui calcule la fréquence</p>
+          <script src="https://gist.github.com/Julien1227/5eb6f3e07dcf38b1f45746140629ad66.js"></script>
+        </div>
+
+        <p>Grâce à ce code, je peux associer une gamme de fréquences à chaque valeur du schéma RVB pour créer non seulement un mélange de couleurs, mais également un mélange de ces gammes. Il en résulte un son plus représentatif de chaque couleur (un bleu grave, un jaune aigu, …).</p>
           
-          <div class="navigation">
-            <h4 class="navigation-title">Navigation</h4>
-            <ul class="navigation-list">
-              <li><a class="navigation-list-el current" href="#intro">Comment ça marche ?</a></li>
-              <li><a class="navigation-list-el" href="#osc">Comment utiliser l'oscillateur ?</a></li>
-              <li><a class="navigation-list-el" href="#pianoInfo">Le piano.</a></li>
-              <li><a class="navigation-list-el" href="#comingUp">Pour la suite...</a></li>
-            </ul>
+        <h3 id="osc" class="anchor">Comment jouer les paramètres obtenu par ces méthodes ?</h3>
+        <p>Pour jouer une fréquence avec la Web audio API, il faut créer un oscillateur et le démarrer. Une fois démarré, l’oscillateur prend trois paramètres principaux en compte : le type d’oscillateur, la fréquence, et le gain. Une fois que j’ai récupéré mon gain et ma fréquence avec les fonctions citées ci-dessus, voir :</p>
+        <script src="https://gist.github.com/Julien1227/2b7b050aad5b6e48155ad2600a784914.js"></script>
+        <p>Ensuite je dois les assigner à mon oscillateur. Pour ce faire, la Web audio API met à disposition “setValueAtTime” et “setTargetAtTime”. Le code “setTargetAtTime” est très utile pour le gain car il permet de gérer le son de manière plus fluide et d’ainsi éviter les grésillements. Avec ces deux outils, je formule la demande suivante :</p>
+        <script src="https://gist.github.com/Julien1227/e189528791f43b05c6da77ed04d2d247.js"></script>
+
+        <h3 id="pianoInfo" class="anchor">Le piano</h3>
+        <p>Si vous êtes sur la version ordinateur du site et que vous avez parcouru tous les onglets, vous aurez compris qu’il s’agit généralement du même principe pour chaque page : (1) récupérer une couleur, (2) créer sa fréquence et son gain, (3) jouer les paramètres.</p>
+        <p>Cependant le piano, lui, sort du lot. C’est le seul code auquel on donne d’abord une fréquence, et non une couleur. Toutefois, deux problèmes se posent : d’une part, plusieurs fréquences correspondent à plusieurs couleurs, d’autre part, il est impossible de calculer une couleur sur la base d’une fréquence.</p>
+        <img class="container-image" src="assets/images/info/colorfulNote.png" srcset="assets/images/info/colorfulNote@2x.png 2x" alt="Image montrant le fonctionnement du piano."/>
+        <p>La solution, c’est donc de demander au code de trouver une couleur correspondant à la fréquence déclenchée par le piano, et ensuite de l’afficher à l’écran.</p>
+
+        <div class="container-code container-code-3">
+          <p class="container-code-name">Démonstration du fonctionnement du piano</p>
+          <script src="https://gist.github.com/Julien1227/0df6b5e65c88e744da6b48e822adee8b.js"></script>
+        </div>
+
+        <h3 id="comingUp" class="anchor">Pour la suite</h3>
+        <p>Les prototypes pourraient être plus développés. Certaines personnes trouvent que ce système pourrait être utilisé par les personnes non voyantes, il serait même possible de créer un petit dispositif qui permettrait d'écouter une couleur par un simple contact avec une surface !</p>
+        <p>Il s’agit ici d’un bref aperçu du fonctionnement de mon code et des mes recherches. Pour en découvrir la totalité, vous pouvez consulter cet <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab">article Medium</a>.</p>   
+      </div>
+    </section>
+
+    <!-- CREDITS -->
+    <section class="section section-credits">
+      <header class="section-header">
+        <h2 class="section-header-title">Crédits</h2>
+        <button id="closeCreditSection" class="section-header-creditBtn btn"><svg><use xlink:href="#crossSvg"/></svg></button>
+      </header>
+
+      <div class="credits">
+        <p class="copyright">© 2021 - Julien Scheen</p>
+        <div class="credits-div">
+          <h3 class="credits-title">Code</h3>
+          <ul class="credits-list">
+            <li class="credits-list-el">
+              <a target="_blank" href="https://codepen.io/dropinks/pen/MrzPXB">Détecter la collision d'éléments.</a>
+              <p><small>Pen de Dropinks - <span class="licence">Copyright (c) 2021 by Dropinks (https://codepen.io/dropinks/pen/MrzPXB) Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span></small></p>
+            </li>
+            <li class="credits-list-el">
+              <a href="https://css-tricks.com/converting-color-spaces-in-javascript/">Convertion des schémas de couleurs.</a>
+              <p><small>CSS TRICKS - <a href="https://css-tricks.com/license/">Voir la licence</a></small></p>
+            </li>
+            <li class="credits-list-el">
+              <a href="https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/">Réécriture complète du css d'un input range.</a>
+              <p><small>CSS TRICKS - <a href="https://css-tricks.com/license/">Voir la licence</a></small></p>
+            </li>
+            <li class="credits-list-el">
+              <a target="_blank" href="https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d">Générer un nombre aléatoire entre deux valeurs.</a>
+              <p><small>Gist de brunomonteiro3 - Modifications effectuées</small></p>
+            </li>
+            <li class="credits-list-el">
+              <a target="_blank" href="https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link">"SmoothScroll" sur les ancres uniquement.</a>
+              <p><small>Réponse de Joseph Silber sur stackoverflow - Modifications effectuées - <a href="https://creativecommons.org/licenses/by-sa/4.0/">Voir la licence</a></small></p>
+            </li>
+            <li class="credits-list-el">
+              <a target="_blank" href="https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
+              ">Empêche la répétition de l'évenement "keyDown" lors d'un appui prolongé.</a>
+              <p><small>Réponse de yckart sur stackoverflow - Modifications effectuées - <a href="https://creativecommons.org/licenses/by-sa/4.0/">Voir la licence</a></small></p>
+            </li>
+          </ul>
+        </div>
+        <div class="credits-div">
+          <h3 class="credits-title">Éléments de design</h3>
+          <ul class="credits-list">
+            <li class="credits-list-el">
+              <a target="_blank" href="https://www.pexels.com/">Images</a>
+              <p><small>Pexel - <a href="https://www.pexels.com/license/">Voir la licence</a></small></p>
+            </li>
+            <li class="credits-list-el">
+              <a target="_blank" href="https://fontawesome.com/license/free">Icônes</a>
+              <p><small>Font Awesome - <a href="https://fontawesome.com/license/free">Voir la licence</a></small></p>
+            </li>
+          </ul>
+        </div>
+        <div class="credits-div">
+          <h3 class="credits-title">Pages wikipedia partagées</h3>
+          <ul class="credits-list">
+            <li class="credits-list-el">
+              <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.fr">Contenu soumis à la licence CC-BY-SA</a>. Source : Article <em><a href="http://fr.wikipedia.org/wiki/Rouge_vert_bleu">Rouge vert bleu</a></em> de <a href="http://fr.wikipedia.org/">Wikipédia en français</a> (<a href="http://fr.wikipedia.org/w/index.php?title=Rouge_vert_bleu&action=history">auteurs</a>)
+            </li>
+            <li class="credits-list-el">
+              <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.fr">Contenu soumis à la licence CC-BY-SA</a>. Source : Article <em><a href="http://fr.wikipedia.org/wiki/Teinte_saturation_lumi%C3%A8re">Teinte saturation lumière</a></em> de <a href="http://fr.wikipedia.org/">Wikipédia en français</a> (<a href="http://fr.wikipedia.org/w/index.php?title=Teinte_saturation_lumi%C3%A8re&action=history">auteurs</a>)
+            </li>
+          </ul>
+        </div>
+        <div class="credits-div">
+          <h3 class="credits-title">Aide au développement</h3>
+          <ul class="credits-list">
+            <li class="credits-list-el">
+              <p><b>Mes chers professeurs</b></p>
+              <p><small>M. Bourgaux, M. Marchal, M. Tournay, M. Thronte, M. Distefano, M. Hambersin</small></p>
+            </li>
+
+            <li class="credits-list-el">
+              <a target="_blank" href="https://trystanlothaire.be">Trystan Lothaire</a>
+              <p><small>Développement du concept initial.</small></p>
+            </li>
+            <li class="credits-list-el">
+              <a target="_blank" href="https://danieldepinholucas.be">Daniel Depinholucas</a>
+              <p><small>Aide au développement</small></p>
+            </li>
+            <li class="credits-list-el">
+              <a target="_blank" href="https://youneshanafi.be/">Hanafi Younes</a>
+              <p><small>Présentation MVP de mon site</small></p>
+            </li>
+            <li class="credits-list-el">
+              <a target="_blank" href="http://tristandeltour.be/">Deltour Tristan</a>
+              <p><small>Aide au développement</small></p>
+            </li>
+            <li class="credits-list-el">
+              <a target="_blank" href="https://olivierdenis.be/">Olivier Denis</a>
+              <p><small>Aide au développement</small></p>
+            </li>
+          </ul>
+          <div class="credits-end">
+            <p>En raison de cette période un peu particulière, j'ai voulu mentionner les personnes qui m'ont soutenu au cours de ce projet. Chaque échange m'a beaucoup aidé et m'a fait avancer, merci à tous !</p>
+            <svg><use xlink:href="#smileySvg"/></svg>
           </div>
         </div>
-        <div class="container">
-
-          <h3 id="intro" class="anchor">Comment ça marche&nbsp;?</h3>
-          <p>De votre point de vue, vous jouez avec trois sliders qui modifient une couleur et la fréquence sonore qui en sort.</p>
-          <p>Vous avez sans doute remarqué que plus la couleur est présente plus le son est jouée fort tandis que plus elle sera blanche, noir ou dé-saturée (moins la couleur est présente), moins le son sera audible.</p>
-
-          <img class="container-image" src="assets/images/info/colorfulSound.png" srcset="assets/images/info/colorfulSound@2x.png 2x" alt="Démontration de l'intensité du don provenant d'une couleur."/>
-          
-          <p>Ces observation permettent déjà de comprendre que la luminosité et la saturation sont directement lié à l’intensité du son. La raison de ceci est tout d’abord que le blanc et le noir ne sont pas reconnu comme étant des couleurs. Plus encore, selon cette sources par exemple, dans le domaine musical, le blanc/noir sont lié à un vide ce qui accompagne à merveille mon raisonnement.</p>
-
-          <div class="container-code container-code-1">
-            <p class="container-code-name">Démonstration de la fonction qui calcule le gain</p>
-            <script src="https://gist.github.com/Julien1227/52d1209153c4459555b15f2d62364f53.js"></script>
-          </div>
-
-          <p>Avec ces paramètres, nous arrivons à la <a target="_blank" href="https://julienscheen.be/projets/TFE-exp/exp-create-sound/">première version de mon projet</a>. Elle est intéressante mais semble incomplète n’est-ce pas ?</p>
-          <p>C’est parce qu’elle joue les fréquences des couleurs telle qu’elle sont présentée dans le spectre visible (de 428 Thz à 750 Thz), à cause de ça vous pourrez voir que nous avons aussi un seul rouge jouant deux sons différents (aux deux extrémités du slider de teinte). Cela ne semble pas fort logique étant donné que la première chose que l’on voit n’est pas une fréquence mais bien une couleur.</p>
-
-          <img class="container-image" src="assets/images/info/colorfulWave.png" srcset="assets/images/info/colorfulWave@2x.png 2x" alt="Répartition des fréquences à travers le spectre lumineux."/>
-
-          <p>Pour améliorer ceci, le code ne crée désormais plus la fréquence depuis la teinte du schéma TSL (Teinte, Saturation, Luminiosité) mais bien depuis l’addition des couleurs rouge, vert et bleu du schéma RVB.</p>
-          <p>Pour obtenir ce schéma, je convertis la couleur fournie par le schéma TSL en couleur RVB à l’aide de cette fonction “TSLToRGB(t, s, l)”, et obtiens donc les valeurs “rouge”, “vert” et “bleu” avec lesquelles je peux jongler.</p>
-
-          <div class="container-code container-code-2">
-            <p class="container-code-name">Démonstration de la fonction qui calcule la fréquence</p>
-            <script src="https://gist.github.com/Julien1227/5eb6f3e07dcf38b1f45746140629ad66.js"></script>
-          </div>
-
-          <p>De cette manière, je peux associer une gamme de fréquence à chaque valeur du schéma RVB pour créer non seulement un mélange de couleurs mais également un mélange de ces gammes ce qui résultera d’un son plus représentatif de chaque couleur (un bleu grave, un jeune aigu, etc,…).</p>
-            
-          <h3 id="osc" class="anchor">Comment jouer les paramètres obtenu par ces méthodes ?</h3>
-          <p>Pour jouer une fréquence avec la Web audio API, il faut créer un oscillateur et le démarrer. Une fois démarré, l’oscillateur prends trois principaux paramètres en compte: le type d’oscillateur, la fréquence, et le gain. Une fois que j’ai récupéré mon gain et ma fréquence avec les fonctions vue ci-dessus, comme ceci…</p>
-          <script src="https://gist.github.com/Julien1227/2b7b050aad5b6e48155ad2600a784914.js"></script>
-          <p>Je dois les assigner à mon oscillateur. Pour ce faire, la Web audio API met à disposition “setValueAtTime” et “setTargetAtTime”. “setTargetAtTime” est très utile pour le gain car il permet de gérer des fondus pour ainsi éviter de couper le son net. Avec ces deux outils, je demande donc ceci à mon code:</p>
-          <script src="https://gist.github.com/Julien1227/e189528791f43b05c6da77ed04d2d247.js"></script>
-
-          <h3 id="pianoInfo" class="anchor">Le piano.</h3>
-          <p>Si vous êtes sur la version ordinateur du site et que vous avez fait le tour des onglets, après avoir lu ceci vous aurez compris qu’il s’agit généralement du même principe pour chaque page: récupérer une couleur, créer sa fréquence et son gain, jouer les paramètres. Cependant le piano, lui, sort du lot.</p>
-          <p>C’est le seul code auquel on donne d’abord une fréquence, et non une couleur. Cependant, le problème est que plusieurs fréquences correspondent à plusieurs couleurs et que même faire machine arrière pour calculer une couleur depuis la fréquence est alors impossible.</p>
-          <img class="container-image" src="assets/images/info/colorfulNote.png" srcset="assets/images/info/colorfulNote@2x.png 2x" alt="Image montrant le fonctionnement du piano."/>
-          <p>La solution, c’est donc de demander au code de trouver une couleur correspondant à la fréquence demandée par le piano, et d’ensuite l’afficher à l’écran&nbsp;!</p>
-
-          <div class="container-code container-code-3">
-            <p class="container-code-name">Démonstration du fonctionnement du piano</p>
-            <script src="https://gist.github.com/Julien1227/0df6b5e65c88e744da6b48e822adee8b.js"></script>
-          </div>
-
-          <h3 id="comingUp" class="anchor">Pour la suite.</h3>
-          <p>Les prototypes pourraient être améliorés à certains niveaux. Certaines peronnes trouvent que tout ceci pourrait être utilisé chez les personnes aveugles, il serait même possible de créer, de mes propres moyens, un petit dispositif qui permettrait d'écouter par un simple contact avec une surface !</p>
-          <p>Tout ceci n’était que le résumé du résumé d’une explication raccourcie du fonctionnement de mon code, si vous voulez découvrir les recherches qui se cachent derrière, vous pouvez consulter le medium de mes recherches !</p>
-          <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab">En savoir plus sur mes recherches.</a>          
-        </div>
-      </section>
+      </div>
+    </section>
   </main>
 
   <footer class="menu">
     <ul class="menu-list">
-      <li class="menu-list-el"><button class="menu-btn" id="color"><svg><use xlink:href="#colorSvg"/></svg></button>
+      <li class="menu-list-el"><button class="menu-btn active" id="color"><svg><use xlink:href="#colorSvg"/></svg></button>
       </li>
       <li class="menu-list-el"><button class="menu-btn" id="image"><svg><use xlink:href="#pictureSvg"/></svg></button>
       </li>
@@ -390,7 +411,6 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
   <script src="scripts/app.js"></script>
 </body>
 </html>
