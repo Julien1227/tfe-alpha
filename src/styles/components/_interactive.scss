@@ -238,11 +238,27 @@ body {
     .module {
         .color-list.edition {
             .color-list-el {
-                background-color: $grey-text;
-                animation: colorLoading 1s;
-                animation-iteration-count: infinite;
-                animation-timing-function: $t-slow;
+                &::before {
+                    @include pseudoGraphBackground;
+                    z-index: $front;
+                }
+
+                &::after {
+                    @include pseudoElement;
+                    @include fullSize;
+
+                    z-index: $content;
+                    transform: scale(0.99);
+                    background: linear-gradient(to right, $white, lighten($gist-background, 75%), $white);
+                    animation: colorLoading 1s;
+                    animation-iteration-count: infinite;
+                }
+                
+                position: relative;
+                background-color: transparent;
+                animation: none;
                 opacity: 1;
+                overflow: hidden;
             }
         }
         .selection.selection-open {
