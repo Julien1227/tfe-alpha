@@ -217,7 +217,7 @@ navBtn.forEach(element => {
         let target = e.currentTarget;
         let pastTarget = document.querySelector('.menu-btn.active')
 
-        pastTarget != null ? pastTarget.classList.remove('active') : console.log('pas de pastTarget');
+        pastTarget != null ? pastTarget.classList.remove('active') : console.log('No pastTarget');
         
         target.classList.add('active');
         
@@ -320,6 +320,27 @@ playRate.addEventListener('input', (e) => {
 // Réglage du nombre de couleurs
 colorNumber.addEventListener('input', (e) => {
     colorNumberSpan.innerHTML = colorNumber.value;
+    if (window.matchMedia("(min-width: 900px)").matches) {
+        // Desktop
+        colorList.style.width = "calc("+ (0.5 * colorNumber.value) +'rem + '+  60 * colorNumber.value +'px';
+        colorList.style.height = "calc(60px + 0.45rem)";
+    }
+});
+
+colorNumber.addEventListener(eventEnd, (e) => {
+    createPalette(imgToListen);
+    colorList.classList.remove('edition');
+});
+
+colorNumber.addEventListener(eventStart, (e) => {
+    colorList.innerHTML = "";
+    colorList.classList.add('edition');
+
+    for (let i = 0; i < 10; i++) {
+        let color = document.createElement('li');
+            color.classList.add('color-list-el');
+        colorList.appendChild(color);
+    }
 });
 
 // Présélectionne une image
@@ -378,45 +399,26 @@ btnUpload.addEventListener('click', (e) => {
 
 //Récupère les couleurs de l'image et les joue
 playImageBtn.addEventListener('click', (e) => {
-    colorList.innerHTML = "";
-
     let gains = [],
         frqs = [],
         hsls = [];
-    
-    let palette = colorThief.getPalette(imgToListen, Number(colorNumber.value));
 
-    for (let i = 0; i < palette.length; i++) {
-
-        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);
-
-        let h = hslColor[0],
-            s = hslColor[1],
-            l = hslColor[2];           
+    for (let i = 0; i < colorList.childNodes.length; i++) {
+        let color = root.style.getPropertyValue('--palette-color-' + (i+1)).match(/\d+/g).map(Number);
+        hsls.push(color);
         
-        // Crée un élement HTML auquel il assigne la couleur
-        let color = document.createElement('li');
-        color.classList.add('color-list-el');
-        color.style.backgroundColor = "hsl("+ h +", "+ s +"%, "+ l +"%)";
-        
-        colorList.appendChild(color);
-
-        // Génère un gain et une fréquence pour chaque couleur
-        let gain = setGain(l, s);
-        let frq = setFrequency(h, s, l);
-
+        let gain = setGain(color[1],color[2])
+            frq = setFrequency(color[0],color[1],color[2])
         gains.push(gain);
         frqs.push(frq);
-        hsls.push(hslColor);
-    }
-    
-    //Joue chaque paramètre les uns après les autres
-    for(var i = 0; i < frqs.length; i++) {
-        playArray(i, speed, gains, frqs, hsls);
+
         setTimeout(() => {
-            stopGain();
-        }, frqs.length * speed);
+            playArray(i, speed, gains, frqs, hsls);
+        }, 280);
     }
+
+    //stopGain();
+    console.log(gains, frqs, hsls);
 });
 
 
@@ -471,25 +473,21 @@ pianoBtn.forEach(btn => {
             });
 
             playNote(h,s,l);
-            stopGain(undefined, undefined, 0.002);
+            stopGain();
 
             // Sélection d'une couleur
             if (targetBtn.classList.contains('pad-btn-active') == false) {
                 // Actualise le bouton actif
                 let pastTarget = document.querySelector('.pad-btn-active');
                 targetBtn.classList.add('pad-btn-active');
-                pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('pas de pastTarget');
+                pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('No pastTarget');
                 
                 // Récupère les couleurs tsl depuis l'attibut style du boutton
                 hslColor = getHslFromAttribute(targetBtn);
 
                 // Actualise les valeurs du slider avec la couleur actuelle du bouton
                 editInput.value = hslColor[0];
-            }else{
-                // Sélection de la même couleur
-                console.log('pas de double sélection possible');
             }
-
         // LE PAD N'EST PAS EN MODE "MODIFICATION"
         }else{
             playNote(h,s,l);
@@ -507,7 +505,7 @@ editInput.addEventListener('input', (e) => {
     actualisePadBtnColor(actualBtn, h);
     playNote(h,100,50);
 });
-stopGain(editInput, null, 0.002);
+stopGain(editInput);
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -662,15 +660,17 @@ function playArrayWithoutColor(i, speed, gains, frqs) {
 
 // Permet de jouer un tableau de notes
 function playArray(i, speed, gains, frqs, hsls) {
+
     setTimeout(function() {
         g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
         o.frequency.setValueAtTime(frqs[i], context.currentTime);
-        
+
         playedColors.classList.remove('hide');
         root.style.setProperty('--played-color', 'hsla('+ hsls[i][0] +', '+ hsls[i][1] +'%, '+ hsls[i][2] +'%, '+gains[i]+')');
         
         g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
     }, i*speed);
+    
 }
 
 // Permet de jouer une note
@@ -691,22 +691,14 @@ function actualisePadBtnColor(btn, h) {
 }
 
 // Stop le gain et cache "played color"
-function stopGain(elementToListen, smoothness, timing) {
-    console.log("Stop Gain");
-    if (smoothness == undefined) {
-        smoothness = 0.2;
-    }
-    if (timing == undefined) {
-        timing = 0;
-    }
-
+function stopGain(elementToListen) {
     if (elementToListen == undefined) {
-        g.gain.setTargetAtTime(0, context.currentTime + timing, smoothness);
+        g.gain.setTargetAtTime(0, context.currentTime, 0.2);
         playedColors.classList.add('hide');
 
     }else{
         elementToListen.addEventListener(eventEnd, (e) => {
-            g.gain.setTargetAtTime(0, context.currentTime + timing, smoothness);
+            g.gain.setTargetAtTime(0, context.currentTime, 0.2);
             playedColors.classList.add('hide');
         });
     }
@@ -726,21 +718,22 @@ function createPalette(image) {
 // Crée une pallette avec une image
 function createPaletteOnLoad(image) {
     colorList.innerHTML = "";
+    
     const palette = colorThief.getPalette(image, Number(colorNumber.value));
     
     for (let i = 0; i < palette.length; i++) {
     
-        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);
-    
-        let h = hslColor[0],
-            s = hslColor[1],
-            l = hslColor[2];           
+        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);    
         
         // Crée un élement HTML auquel il assigne la couleur
         let color = document.createElement('li');
         color.classList.add('color-list-el');
-        color.style.backgroundColor = "hsl("+ h +", "+ s +"%, "+ l +"%)";
+        root.style.setProperty('--palette-color-'+(i+1), 'hsl('+ hslColor[0] +', '+ hslColor[1] +'%, '+ hslColor[2] +'%)');
         
+        color.addEventListener('animationend', (e) => {
+            color.style.opacity = 1;
+        });
+
         colorList.appendChild(color);
     }
 }
@@ -748,7 +741,6 @@ function createPaletteOnLoad(image) {
 // Récupère les valeurs h s et l depuis les attributs de l'élément
 function getHslFromAttribute(element) {
     let id = element.getAttribute('id').slice(-1);
-    console.log('--pad-btn-color-' + id);
     let hsls = root.style.getPropertyValue('--pad-btn-color-' + id).match(/\d+/g).map(Number);
     return hsls;
 }
@@ -888,7 +880,7 @@ function HSLToHEX(h,s,l) {
     if (b.length == 1)
       b = "0" + b;
   
-    return "#" + r + g + b;
+    return "#" + Math.round(r) + Math.round(g) + Math.round(b);
   }
 
   function RGBToHSL(r,g,b) {
@@ -935,7 +927,7 @@ function HSLToHEX(h,s,l) {
     s = +(s * 100).toFixed(1);
     l = +(l * 100).toFixed(1);
 
-    return [h, s, l];
+    return [Math.round(h), Math.round(s), Math.round(l)];
   }
 
 //SMOOTH SCROLL ONLY ON ANCHOR BUTTONS - Permet de reset le scroll de la page info sans l'animation du smooth scroll

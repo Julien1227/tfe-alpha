@@ -30,21 +30,6 @@ body {
 }
 
 
-@keyframes bounceIn {
-    0% {transform: translateY(50px); opacity: 0;}
-    100% {opacity: 1; transform: translateY(0px);}
-}
-
-@keyframes glow {
-    0% {text-shadow: 0 0 0; transform: scale(1);}
-    20% {text-shadow: 0 0 20px; transform: scale(0.9);}
-    100% {text-shadow: 0 0 0; transform: scale(1);}
-}
-
-@keyframes hide {
-    from {opacity: 1;}
-    to {opacity: 0;}
-}
 .section-intro {
     h1 {
         transition: $t-slow;
@@ -251,6 +236,15 @@ body {
 
 .section-image {
     .module {
+        .color-list.edition {
+            .color-list-el {
+                background-color: $grey-text;
+                animation: colorLoading 1s;
+                animation-iteration-count: infinite;
+                animation-timing-function: $t-slow;
+                opacity: 1;
+            }
+        }
         .selection.selection-open {
             overflow: visible;
             

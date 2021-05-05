@@ -264,7 +264,7 @@ navBtn.forEach(function (element) {
   element.addEventListener('click', function (e) {
     var target = e.currentTarget;
     var pastTarget = document.querySelector('.menu-btn.active');
-    pastTarget != null ? pastTarget.classList.remove('active') : console.log('pas de pastTarget');
+    pastTarget != null ? pastTarget.classList.remove('active') : console.log('No pastTarget');
     target.classList.add('active');
     var page = target.getAttribute('id');
     body.setAttribute('data-page', page); // Refais apparaître le message du piano
@@ -348,6 +348,28 @@ playRate.addEventListener('input', function (e) {
 
 colorNumber.addEventListener('input', function (e) {
   colorNumberSpan.innerHTML = colorNumber.value;
+
+  if (window.matchMedia("(min-width: 900px)").matches) {
+    // Desktop
+    colorList.style.width = "calc(" + 0.5 * colorNumber.value + 'rem + ' + 60 * colorNumber.value + 'px';
+    colorList.style.height = "calc(60px + 0.45rem)";
+  }
+});
+colorNumber.addEventListener(eventEnd, function (e) {
+  createPalette(imgToListen);
+  colorList.classList.remove('edition');
+});
+colorNumber.addEventListener(eventStart, function (e) {
+  colorList.innerHTML = "";
+  colorList.classList.add('edition');
+
+  for (var _i = 0; _i < 10; _i++) {
+    var _color = document.createElement('li');
+
+    _color.classList.add('color-list-el');
+
+    colorList.appendChild(_color);
+  }
 }); // Présélectionne une image
 
 imageSelection[0].classList.add('selected'); // Crée la palette de l'image présélectionnée
@@ -393,41 +415,28 @@ btnUpload.addEventListener('click', function (e) {
 }); //Récupère les couleurs de l'image et les joue
 
 playImageBtn.addEventListener('click', function (e) {
-  colorList.innerHTML = "";
   var gains = [],
       frqs = [],
       hsls = [];
-  var palette = colorThief.getPalette(imgToListen, Number(colorNumber.value));
 
-  for (var _i = 0; _i < palette.length; _i++) {
-    var hslColor = RGBToHSL(palette[_i][0], palette[_i][1], palette[_i][2]);
-    var _h = hslColor[0],
-        _s = hslColor[1],
-        _l = hslColor[2]; // Crée un élement HTML auquel il assigne la couleur
-
-    var _color = document.createElement('li');
-
-    _color.classList.add('color-list-el');
-
-    _color.style.backgroundColor = "hsl(" + _h + ", " + _s + "%, " + _l + "%)";
-    colorList.appendChild(_color); // Génère un gain et une fréquence pour chaque couleur
-
-    var _gain = setGain(_l, _s);
-
-    var _frq = setFrequency(_h, _s, _l);
-
-    gains.push(_gain);
-    frqs.push(_frq);
-    hsls.push(hslColor);
-  } //Joue chaque paramètre les uns après les autres
-
-
-  for (var i = 0; i < frqs.length; i++) {
-    playArray(i, speed, gains, frqs, hsls);
+  var _loop3 = function _loop3(_i2) {
+    var color = root.style.getPropertyValue('--palette-color-' + (_i2 + 1)).match(/\d+/g).map(Number);
+    hsls.push(color);
+    var gain = setGain(color[1], color[2]);
+    frq = setFrequency(color[0], color[1], color[2]);
+    gains.push(gain);
+    frqs.push(frq);
     setTimeout(function () {
-      stopGain();
-    }, frqs.length * speed);
-  }
+      playArray(_i2, speed, gains, frqs, hsls);
+    }, 280);
+  };
+
+  for (var _i2 = 0; _i2 < colorList.childNodes.length; _i2++) {
+    _loop3(_i2);
+  } //stopGain();
+
+
+  console.log(gains, frqs, hsls);
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ////////////////////////////// PAD ////////////////////////////////
@@ -469,20 +478,17 @@ pianoBtn.forEach(function (btn) {
         targetBtn.classList.remove('pad-btn-active');
       });
       playNote(h, s, l);
-      stopGain(undefined, undefined, 0.002); // Sélection d'une couleur
+      stopGain(); // Sélection d'une couleur
 
       if (targetBtn.classList.contains('pad-btn-active') == false) {
         // Actualise le bouton actif
         var pastTarget = document.querySelector('.pad-btn-active');
         targetBtn.classList.add('pad-btn-active');
-        pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('pas de pastTarget'); // Récupère les couleurs tsl depuis l'attibut style du boutton
+        pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('No pastTarget'); // Récupère les couleurs tsl depuis l'attibut style du boutton
 
         hslColor = getHslFromAttribute(targetBtn); // Actualise les valeurs du slider avec la couleur actuelle du bouton
 
         editInput.value = hslColor[0];
-      } else {
-        // Sélection de la même couleur
-        console.log('pas de double sélection possible');
       } // LE PAD N'EST PAS EN MODE "MODIFICATION"
 
     } else {
@@ -499,7 +505,7 @@ editInput.addEventListener('input', function (e) {
   actualisePadBtnColor(actualBtn, h);
   playNote(h, 100, 50);
 });
-stopGain(editInput, null, 0.002); ///////////////////////////////////////////////////////////////////
+stopGain(editInput); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 /////////////////////////// Piano /////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -549,10 +555,10 @@ document.addEventListener('keydown', function (e) {
     down = true; // Si une fréquence est assigné à la touche, on la joue
 
     if (notes[key] != null) {
-      var _frq2 = notes[key],
+      var _frq = notes[key],
           _color2 = 0; // Assigne la valeur de gain et fréquence
 
-      o.frequency.setValueAtTime(_frq2, context.currentTime);
+      o.frequency.setValueAtTime(_frq, context.currentTime);
       g.gain.setTargetAtTime(1, context.currentTime, 0.002); // Cherche une couleur correspondant à la fréquence
 
       do {
@@ -560,7 +566,7 @@ document.addEventListener('keydown', function (e) {
         s = 100;
         l = randomMinMax(50, 60);
         _color2 = setFrequency(h, s, l);
-      } while (_frq2 != _color2); // Assignation de la couleur et d'un class de transition
+      } while (_frq != _color2); // Assignation de la couleur et d'un class de transition
 
 
       pianoColor.style.backgroundColor = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
@@ -596,14 +602,14 @@ navElements.forEach(function (element) {
 }); // Actualise le menu en fonction du scroll
 
 infoSection.addEventListener('scroll', function () {
-  for (var _i2 = 0; _i2 < anchors.length; _i2++) {
-    if (infoSection.scrollTop >= anchors[_i2].offsetTop - window.innerHeight / 2) {
+  for (var _i3 = 0; _i3 < anchors.length; _i3++) {
+    if (infoSection.scrollTop >= anchors[_i3].offsetTop - window.innerHeight / 2) {
       navElements.forEach(function (element) {
         element.classList.remove('current');
       });
 
-      if (navElements[_i2].classList.contains('current') == false) {
-        navElements[_i2].classList.add('current');
+      if (navElements[_i3].classList.contains('current') == false) {
+        navElements[_i3].classList.add('current');
       }
     }
   }
@@ -658,23 +664,13 @@ function actualisePadBtnColor(btn, h) {
 } // Stop le gain et cache "played color"
 
 
-function stopGain(elementToListen, smoothness, timing) {
-  console.log("Stop Gain");
-
-  if (smoothness == undefined) {
-    smoothness = 0.2;
-  }
-
-  if (timing == undefined) {
-    timing = 0;
-  }
-
+function stopGain(elementToListen) {
   if (elementToListen == undefined) {
-    g.gain.setTargetAtTime(0, context.currentTime + timing, smoothness);
+    g.gain.setTargetAtTime(0, context.currentTime, 0.2);
     playedColors.classList.add('hide');
   } else {
     elementToListen.addEventListener(eventEnd, function (e) {
-      g.gain.setTargetAtTime(0, context.currentTime + timing, smoothness);
+      g.gain.setTargetAtTime(0, context.currentTime, 0.2);
       playedColors.classList.add('hide');
     });
   }
@@ -696,25 +692,26 @@ function createPaletteOnLoad(image) {
   colorList.innerHTML = "";
   var palette = colorThief.getPalette(image, Number(colorNumber.value));
 
-  for (var _i3 = 0; _i3 < palette.length; _i3++) {
-    var hslColor = RGBToHSL(palette[_i3][0], palette[_i3][1], palette[_i3][2]);
-    var _h2 = hslColor[0],
-        _s2 = hslColor[1],
-        _l2 = hslColor[2]; // Crée un élement HTML auquel il assigne la couleur
+  var _loop4 = function _loop4(_i4) {
+    var hslColor = RGBToHSL(palette[_i4][0], palette[_i4][1], palette[_i4][2]); // Crée un élement HTML auquel il assigne la couleur
 
-    var _color3 = document.createElement('li');
+    var color = document.createElement('li');
+    color.classList.add('color-list-el');
+    root.style.setProperty('--palette-color-' + (_i4 + 1), 'hsl(' + hslColor[0] + ', ' + hslColor[1] + '%, ' + hslColor[2] + '%)');
+    color.addEventListener('animationend', function (e) {
+      color.style.opacity = 1;
+    });
+    colorList.appendChild(color);
+  };
 
-    _color3.classList.add('color-list-el');
-
-    _color3.style.backgroundColor = "hsl(" + _h2 + ", " + _s2 + "%, " + _l2 + "%)";
-    colorList.appendChild(_color3);
+  for (var _i4 = 0; _i4 < palette.length; _i4++) {
+    _loop4(_i4);
   }
 } // Récupère les valeurs h s et l depuis les attributs de l'élément
 
 
 function getHslFromAttribute(element) {
   var id = element.getAttribute('id').slice(-1);
-  console.log('--pad-btn-color-' + id);
   var hsls = root.style.getPropertyValue('--pad-btn-color-' + id).match(/\d+/g).map(Number);
   return hsls;
 } // Calcule le gain
@@ -854,7 +851,7 @@ function HSLToHEX(h, s, l) {
   if (r.length == 1) r = "0" + r;
   if (g.length == 1) g = "0" + g;
   if (b.length == 1) b = "0" + b;
-  return "#" + r + g + b;
+  return "#" + Math.round(r) + Math.round(g) + Math.round(b);
 }
 
 function RGBToHSL(r, g, b) {
@@ -885,7 +882,7 @@ function RGBToHSL(r, g, b) {
 
   s = +(s * 100).toFixed(1);
   l = +(l * 100).toFixed(1);
-  return [h, s, l];
+  return [Math.round(h), Math.round(s), Math.round(l)];
 } //SMOOTH SCROLL ONLY ON ANCHOR BUTTONS - Permet de reset le scroll de la page info sans l'animation du smooth scroll
 //source: https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
 

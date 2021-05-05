@@ -223,6 +223,18 @@ main {
         font-size: $h3;
         font-weight: 700;
     }
+
+    &::after {
+        @include pseudoElement;
+        @include fullSize;
+        z-index: $background;
+        background: radial-gradient($white, lighten($gist-background, 80%) 150%);
+    }
+
+    &::before {
+        @include pseudoGraphBackground;
+        z-index: calc(#{$background} + 1);
+    }
 }
 
 .section {
@@ -422,8 +434,20 @@ main {
                 border-radius: 9vw;
                 background-color: $white;
                 box-shadow: $shadow;
+                transition: $t-fast;
+
+                overflow: hidden;
     
                 &-el {
+                    opacity: 0;
+                    animation-timing-function: $t-fast;
+                    animation: fadeInTop 0.3s;
+                    @for $i from 1 through 10 {
+                        &:nth-child(#{$i}) {
+                            animation-delay: $i * 0.025s;
+                            background-color: var(--palette-color-#{$i});
+                        }
+                    }
                     @include squareSize(14.5vw);
 
                     border-radius: $round;
@@ -456,10 +480,12 @@ main {
                 margin-top: 1.5rem;
                 box-sizing: border-box;
                 border-radius: $rounded2;
-
+                
                 max-width: 450px;
-
+                
                 &-btn {
+                    cursor: pointer;
+                    font-weight: 700;
                     margin-bottom: 1rem;
                 }
 
@@ -753,7 +779,7 @@ main {
                 &-list {
                     line-height: calc(#{$line-height} * 1.5);
                     &-el {
-                        font-weight: 400;
+                        font-weight: 600;
                         text-decoration: none;
                         cursor: pointer;
                         opacity: 0.5;
