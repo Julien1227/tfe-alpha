@@ -348,11 +348,22 @@ playRate.addEventListener('input', function (e) {
 
 colorNumber.addEventListener('input', function (e) {
   colorNumberSpan.innerHTML = colorNumber.value;
+  colorList.style.height = "calc(60px + 0.45rem)";
 
   if (window.matchMedia("(min-width: 900px)").matches) {
     // Desktop
     colorList.style.width = "calc(" + 0.5 * colorNumber.value + 'rem + ' + 60 * colorNumber.value + 'px';
     colorList.style.height = "calc(60px + 0.45rem)";
+  } else {
+    colorList.style.maxWidth = "calc(" + 0.5 * 5 + 'rem + ' + 60 * 5 + 'px';
+
+    if (colorNumber.value > 5) {
+      colorList.style.width = "calc(" + 0.5 * colorNumber.value + 'rem + ' + 60 * colorNumber.value + 'px';
+      colorList.style.height = "calc(120px + 1rem)";
+    } else {
+      colorList.style.width = "calc(" + 0.5 * colorNumber.value + 'rem + ' + 60 * colorNumber.value + 'px';
+      colorList.style.height = "calc(60px + 0.45rem)";
+    }
   }
 });
 colorNumber.addEventListener(eventEnd, function (e) {
@@ -389,8 +400,14 @@ imageSelection.forEach(function (image) {
 
     pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added'); // Children[0] car currentTarget est "li" et non "li > img"
 
-    var imgName = currentTarget.children[0].currentSrc.slice(-13);
-    imgName = imgName.slice(0, imgName.length - 4);
+    var imgName = currentTarget.children[0].currentSrc.slice(-16);
+
+    if (imgName.includes("@2x") == true) {
+      imgName = imgName.slice(0, imgName.length - 7);
+    } else {
+      imgName = imgName.slice(3, imgName.length - 4);
+    }
+
     backgroundImg.setAttribute('src', 'assets/images/toListen/' + imgName + '.jpg');
     imgToListen.setAttribute('src', 'assets/images/toListen/' + imgName + '.jpg');
     backgroundImg.setAttribute('srcset', 'assets/images/toListen/' + imgName + '@2x.jpg 2x');
@@ -916,8 +933,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })
