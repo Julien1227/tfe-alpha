@@ -544,7 +544,7 @@ main {
   padding: 0.2rem;
   transform: translateY(50%);
   text-align: center;
-  border-radius: 9vw;
+  border-radius: 2.3rem;
   background-color: #fff;
   box-shadow: 0px 0px 25px -10px #00000038;
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
@@ -554,8 +554,8 @@ main {
   opacity: 0;
   animation-timing-function: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
   animation: fadeInTop 0.3s;
-  width: 14.5vw;
-  height: 14.5vw;
+  width: 100%;
+  height: 100%;
   border-radius: 1000px;
   max-width: 60px;
   max-height: 60px;
@@ -957,8 +957,8 @@ main {
   text-align: center;
 }
 .section-info .navigation-container .nav-btn {
-  width: 25px;
-  height: 25px;
+  width: 1.5rem;
+  height: 1.5rem;
   position: absolute;
 }
 .section-info .navigation-container .nav-btn svg {
@@ -974,7 +974,6 @@ main {
 .section-info .navigation-container .nav-btn-close {
   z-index: calc(1000 - 1);
   opacity: 0;
-  transform: scale(1.2);
   left: 1.5rem;
   top: 1.5rem;
 }
@@ -986,6 +985,7 @@ main {
   margin-top: 0;
 }
 .section-info .navigation-container .navigation-list {
+  margin-top: 1.5rem;
   line-height: calc(1.5 * 1.5);
 }
 .section-info .navigation-container .navigation-list-el {
@@ -1240,7 +1240,7 @@ body .menu-btn.active:hover svg {
 }
 .section-intro.hide {
   opacity: 0;
-  animation: hide 0.3s;
+  animation: fadeOut 0.3s;
 }
 .section-intro.hide h1 {
   transform: scale(1.2);
@@ -1372,6 +1372,62 @@ body .menu-btn.active:hover svg {
   transition-delay: 0s;
 }
 
+.section-image .module.change .img {
+  animation: fadeOut 0.2s;
+}
+.section-image .module.change .background-container {
+  animation: fadeOut 0.2s;
+}
+.section-image .module.loading .img, .section-image .module.loading .color-list-el {
+  background-color: transparent;
+  animation: none;
+  opacity: 1;
+  overflow: hidden;
+}
+.section-image .module.loading .img::before, .section-image .module.loading .color-list-el::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  z-index: 500;
+  transform: scale(0.99);
+  background: linear-gradient(to right, #fff, #d4dbe9, #fff);
+  animation: loading 1s;
+  animation-iteration-count: infinite;
+}
+.section-image .module.loading .img::after, .section-image .module.loading .color-list-el::after {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  background-size: 2rem;
+  background-repeat: repeat;
+  background-image: url("../assets/bgSvg.svg");
+  z-index: 1000;
+}
+.section-image .module.loading .color-list {
+  position: relative;
+}
+.section-image .module.loading .color-list-el {
+  background-color: transparent;
+}
+.section-image .module.loading .background-container {
+  opacity: 0;
+}
+.section-image .module.changeDone .img {
+  animation: bounceIn 0.2s;
+}
+.section-image .module.changeDone .background-container {
+  animation: fadeIn 0.2s;
+}
+.section-image .module.changeDone .color-list-el {
+  animation: fadeOut 0.2s;
+}
 .section-image .module .color-list.edition .color-list-el {
   position: relative;
   background-color: transparent;
@@ -1398,10 +1454,11 @@ body .menu-btn.active:hover svg {
   left: 0;
   width: 100%;
   height: 100%;
+  background-color: transparent;
   z-index: 500;
   transform: scale(0.99);
   background: linear-gradient(to right, #fff, #d4dbe9, #fff);
-  animation: colorLoading 1s;
+  animation: loading 1s;
   animation-iteration-count: infinite;
 }
 .section-image .module .selection.selection-open {
@@ -1460,7 +1517,7 @@ body .menu-btn.active:hover svg {
   margin: 1rem;
   margin-bottom: 2rem;
   width: calc(100% - 2rem);
-  height: 240px;
+  height: 12.5rem;
   padding-bottom: 36px;
   padding-top: 36px;
 }
@@ -1486,6 +1543,7 @@ body .menu-btn.active:hover svg {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
 .btn:active {
+  transform: scale(0.8);
   opacity: 0.6;
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
@@ -1559,7 +1617,7 @@ body .menu-btn.active:hover svg {
     transform: scale(1);
   }
 }
-@keyframes colorLoading {
+@keyframes loading {
   0% {
     transform: translateX(-100%);
   }
@@ -1567,12 +1625,20 @@ body .menu-btn.active:hover svg {
     transform: translateX(100%);
   }
 }
-@keyframes hide {
+@keyframes fadeOut {
   from {
     opacity: 1;
   }
   to {
     opacity: 0;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 .desktop {

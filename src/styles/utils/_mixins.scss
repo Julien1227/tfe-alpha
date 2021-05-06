@@ -102,3 +102,20 @@
     background-color: $white;
     max-width: 500px;
 }
+
+@mixin loadingGradient {
+    @include pseudoElement;
+    @include fullSize;
+
+    background-color: transparent;
+    z-index: $content;
+    transform: scale(0.99);
+    background: linear-gradient(to right, $white, lighten($gist-background, 75%), $white);
+    animation: loading 1s;
+    animation-iteration-count: infinite;
+}
+
+@mixin loadingGraph {
+    @include pseudoGraphBackground;
+    z-index: $front;
+}

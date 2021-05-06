@@ -70,7 +70,7 @@ body {
 
     &.hide {
         opacity: 0;
-        animation: hide 0.3s;
+        animation: fadeOut 0.3s;
         h1 {
             transform: scale(1.2);
         }
@@ -236,22 +236,61 @@ body {
 
 .section-image {
     .module {
+        &.change {
+            .img{
+                animation: fadeOut 0.2s;
+            } 
+            
+            .background-container {
+                animation: fadeOut 0.2s;
+            }
+        }
+
+        &.loading {
+            .img, .color-list-el{
+                background-color: transparent;
+                animation: none;
+                opacity: 1;
+                overflow: hidden;
+                &::before {
+                    @include loadingGradient;
+                }
+                &::after {
+                    @include loadingGraph;
+                }
+            }
+            .color-list {
+                position: relative;
+            }
+            .color-list-el {
+                background-color: transparent;
+            }
+            
+            .background-container {
+                opacity: 0;
+            }
+        }
+
+        &.changeDone {
+            .img{
+                animation: bounceIn 0.2s;
+            } 
+            
+            .background-container {
+                animation: fadeIn 0.2s;
+            }
+            .color-list-el {
+                animation: fadeOut 0.2s;
+            }
+        }
         .color-list.edition {
             .color-list-el {
                 &::before {
-                    @include pseudoGraphBackground;
-                    z-index: $front;
+                    @include loadingGraph;
                 }
 
                 &::after {
-                    @include pseudoElement;
-                    @include fullSize;
-
-                    z-index: $content;
-                    transform: scale(0.99);
-                    background: linear-gradient(to right, $white, lighten($gist-background, 75%), $white);
-                    animation: colorLoading 1s;
-                    animation-iteration-count: infinite;
+                    @include loadingGradient;
                 }
                 
                 position: relative;
@@ -333,7 +372,7 @@ body {
         margin-bottom: 2rem;
         width: calc(100% - 2rem);
         
-        height: 240px;
+        height: 12.5rem;
         padding-bottom: $h3;
         padding-top: $h3;
         
@@ -360,6 +399,7 @@ body {
 .btn {
     transition: $t-fast;
     &:active {
+        transform: scale(0.8);
         opacity: .6;
         transition: $t-fast;
     }

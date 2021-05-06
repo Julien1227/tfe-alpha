@@ -91,6 +91,7 @@ const playRate = document.getElementById('playRate'),
 
 const playImageBtn = document.getElementById('getColors'),
       imgToListen = document.querySelector('.img'),
+      imageModule = document.querySelector('.section-image .module'),
       btnUpload = document.getElementById('uploadBtn'),
       btnOpenSelection = document.getElementById('btnOpenSelection'),
       imageSelection = document.querySelectorAll('.selection-image-el'),
@@ -291,10 +292,7 @@ for (let i = 0; i < colorInputs.length; i++) {
         h2 = h2 > 359 ? 359 : h2;
         l2 = l2 < 0 ? 0 : l2;
 
-        let color1 = HSLToHEX(h, s, l),
-            color2 = HSLToHEX(h2, s, l2);
-
-        color.setAttribute('style', "background: linear-gradient("+color1+", "+color2+")");
+        color.style.background = "linear-gradient(hsl("+h+", "+s+"%, "+l+"%), hsl("+h2+", "+s+"%, "+l2+"%))";
     });
     stopGain(colorInputs[i]);
 };
@@ -325,7 +323,7 @@ colorNumber.addEventListener('input', (e) => {
     if (window.matchMedia("(min-width: 900px)").matches) {
         // Desktop
         colorList.style.width = "calc("+ (0.5 * colorNumber.value) +'rem + '+  60 * colorNumber.value +'px';
-        colorList.style.height = "calc(60px + 0.45rem)";
+        colorList.style.height = "calc(60px + 0.5rem)";
     }else {
         colorList.style.maxWidth = "calc("+ (0.5 * 5) +'rem + '+  60 * 5 +'px';
         if (colorNumber.value > 5) {
@@ -344,6 +342,8 @@ colorNumber.addEventListener(eventEnd, (e) => {
 });
 
 colorNumber.addEventListener(eventStart, (e) => {
+    colorList.style.width = "calc("+ (0.5 * colorNumber.value) +'rem + '+  60 * colorNumber.value +'px';
+    colorList.style.height = "calc(60px + 0.50rem)";
     colorList.innerHTML = "";
     colorList.classList.add('edition');
 
@@ -356,9 +356,6 @@ colorNumber.addEventListener(eventStart, (e) => {
 
 // Présélectionne une image
 imageSelection[0].classList.add('selected');
-
-// Crée la palette de l'image présélectionnée
-// S'assure que l'image est chargée
 createPalette(imgToListen);
 
 // Ouvre la sélection
@@ -385,12 +382,7 @@ imageSelection.forEach(image => {
             imgName = imgName.slice(3, imgName.length - 4);
         }
 
-        backgroundImg.setAttribute('src', 'assets/images/toListen/'+ imgName +'.jpg');
-        imgToListen.setAttribute('src', 'assets/images/toListen/'+ imgName +'.jpg');
-
-        backgroundImg.setAttribute('srcset', 'assets/images/toListen/'+ imgName +'@2x.jpg 2x');
-        imgToListen.setAttribute('srcset', 'assets/images/toListen/'+ imgName +'@2x.jpg 2x');
-        createPalette(imgToListen);
+        changeImageToListen(imgName, false);
     });
 });
 
@@ -403,13 +395,10 @@ btnUpload.addEventListener('click', (e) => {
         let pastTarget = document.querySelector('.selected');
         pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection removed');
 
-        let imgLink = URL.createObjectURL(e.target.files[0]);
-        console.log(imgLink);
-        backgroundImg.setAttribute('srcset', imgLink);
-        imgToListen.setAttribute('srcset', imgLink);
+        let imgLink = URL.createObjectURL(e.target.files[0]);        
 
-        createPalette(imgToListen);
-     });
+        changeImageToListen(imgLink, true);
+    });
 });
 
 //Récupère les couleurs de l'image et les joue
@@ -422,8 +411,9 @@ playImageBtn.addEventListener('click', (e) => {
         let color = root.style.getPropertyValue('--palette-color-' + (i+1)).match(/\d+/g).map(Number);
         hsls.push(color);
         
-        let gain = setGain(color[1],color[2])
-            frq = setFrequency(color[0],color[1],color[2])
+        let gain = setGain(color[1],color[2]),
+            frq = setFrequency(color[0],color[1],color[2]);
+
         gains.push(gain);
         frqs.push(frq);
 
@@ -431,9 +421,10 @@ playImageBtn.addEventListener('click', (e) => {
             playArray(i, speed, gains, frqs, hsls);
         }, 280);
     }
-
-    //stopGain();
-    console.log(gains, frqs, hsls);
+    setTimeout(() => {
+        stopGain();
+    }, colorList.childNodes.length * 280);
+    console.log(colorList.childNodes.length * 280);
 });
 
 
@@ -663,6 +654,50 @@ infoSection.addEventListener('scroll', () => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+function changeImageToListen(imgLink, external) {
+    // animations
+    imageModule.classList.add('change');
+    imgToListen.addEventListener('animationend', (e) => {
+        // à la fin du fadeOut on change l'image
+        if(e.animationName === 'fadeOut'){
+            if (external == false) {  
+                backgroundImg.setAttribute('src', 'assets/images/toListen/'+ imgLink +'.jpg');
+                imgToListen.setAttribute('src', 'assets/images/toListen/'+ imgLink +'.jpg');
+        
+                backgroundImg.setAttribute('srcset', 'assets/images/toListen/'+ imgLink +'@2x.jpg 2x');
+                imgToListen.setAttribute('srcset', 'assets/images/toListen/'+ imgLink +'@2x.jpg 2x');
+                imageModule.classList.remove('change');
+                imageModule.classList.add('loading');  
+            }else{
+                backgroundImg.setAttribute('src', imgLink);
+                imgToListen.setAttribute('src', imgLink);
+                backgroundImg.setAttribute('srcset', "");
+                imgToListen.setAttribute('srcset', "");
+                imageModule.classList.remove('change');
+                imageModule.classList.add('loading');
+            }
+        }
+
+        if (imgToListen.complete) {
+            createPaletteOnLoad(imgToListen);
+            imageModule.classList.remove('loading');
+            imageModule.classList.add('changeDone');
+        }else {
+            imgToListen.addEventListener('load', function() {
+                createPaletteOnLoad(imgToListen);
+                imageModule.classList.remove('loading');
+                imageModule.classList.add('changeDone');
+            });
+        }
+
+        // retire les classes d'animations lorsqu'elles sont terminées
+        if(e.animationName === 'bounceIn'){
+            imageModule.classList.remove('changeDone');
+            createPalette(imgToListen);
+        }
+    });
+}
+
 // Permet de jouer un tableau de notes sans actualiser "played color"
 function playArrayWithoutColor(i, speed, gains, frqs) {
     setTimeout(function() {
@@ -675,7 +710,6 @@ function playArrayWithoutColor(i, speed, gains, frqs) {
 
 // Permet de jouer un tableau de notes
 function playArray(i, speed, gains, frqs, hsls) {
-
     setTimeout(function() {
         g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
         o.frequency.setValueAtTime(frqs[i], context.currentTime);
@@ -857,46 +891,6 @@ function HSLtoRGB(h,s,l) {
 
     return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
 }
-
-function HSLToHEX(h,s,l) {
-    s /= 100;
-    l /= 100;
-  
-    let c = (1 - Math.abs(2 * l - 1)) * s,
-        x = c * (1 - Math.abs((h / 60) % 2 - 1)),
-        m = l - c/2,
-        r = 0,
-        g = 0, 
-        b = 0; 
-  
-    if (0 <= h && h < 60) {
-      r = c; g = x; b = 0;
-    } else if (60 <= h && h < 120) {
-      r = x; g = c; b = 0;
-    } else if (120 <= h && h < 180) {
-      r = 0; g = c; b = x;
-    } else if (180 <= h && h < 240) {
-      r = 0; g = x; b = c;
-    } else if (240 <= h && h < 300) {
-      r = x; g = 0; b = c;
-    } else if (300 <= h && h < 360) {
-      r = c; g = 0; b = x;
-    }
-    // Having obtained RGB, convert channels to hex
-    r = Math.round((r + m) * 255).toString(16);
-    g = Math.round((g + m) * 255).toString(16);
-    b = Math.round((b + m) * 255).toString(16);
-  
-    // Prepend 0s, if necessary
-    if (r.length == 1)
-      r = "0" + r;
-    if (g.length == 1)
-      g = "0" + g;
-    if (b.length == 1)
-      b = "0" + b;
-  
-    return "#" + Math.round(r) + Math.round(g) + Math.round(b);
-  }
 
   function RGBToHSL(r,g,b) {
     // Make r, g, and b fractions of 1

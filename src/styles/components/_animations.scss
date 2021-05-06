@@ -14,12 +14,17 @@
     100% {text-shadow: 0 0 0; transform: scale(1);}
 }
 
-@keyframes colorLoading {
+@keyframes loading {
     0% {transform: translateX(-100%);}
     100% {transform: translateX(100%);}
 }
 
-@keyframes hide {
+@keyframes fadeOut {
     from {opacity: 1;}
     to {opacity: 0;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
