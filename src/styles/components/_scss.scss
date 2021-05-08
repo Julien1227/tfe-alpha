@@ -482,6 +482,11 @@ main {
                 border-radius: $rounded2;
                 
                 max-width: 450px;
+
+                backdrop-filter: none;
+                &:active{
+                    transform: scale(1);
+                }
                 
                 &-btn {
                     cursor: pointer;

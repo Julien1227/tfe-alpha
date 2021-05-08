@@ -622,6 +622,10 @@ main {
   box-sizing: border-box;
   border-radius: 30px;
   max-width: 450px;
+  backdrop-filter: none;
+}
+.section-image .module .selection:active {
+  transform: scale(1);
 }
 .section-image .module .selection-btn {
   cursor: pointer;
