@@ -680,6 +680,13 @@ main {
             @include fs-center;
             z-index: -5;
         }
+
+        &::before {
+            @include pseudoElement;
+            @include fullSize;
+            z-index: $background;
+            background: radial-gradient($white, lighten($gist-background, 80%) 150%);
+        }
     }
 
     &-info {
