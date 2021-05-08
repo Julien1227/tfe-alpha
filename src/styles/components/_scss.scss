@@ -483,15 +483,19 @@ main {
                 
                 max-width: 450px;
 
-                backdrop-filter: none;
                 &:active{
                     transform: scale(1);
                 }
                 
-                &-btn {
-                    cursor: pointer;
-                    font-weight: 700;
-                    margin-bottom: 1rem;
+                .btn {
+                    &-upload {
+                        background-color: $white!important;
+                    }
+                    &-selection {
+                        cursor: pointer;
+                        font-weight: 700;
+                        margin-bottom: 1rem;
+                    }
                 }
 
                 &-image {
@@ -657,16 +661,18 @@ main {
 
     &-piano {
         @include flex-center;
-        &-color {
-            width: 75%;
-            height: 75%;
-
-            position: absolute;
-            z-index: $background;
-            bottom: -5%;
-            border-radius: $round;
-            transform: translateY(50%);
-            filter: blur(200px);
+        .piano-color {
+            @include fullSize;
+            &-el {
+                position: absolute!important;
+                z-index: $background;
+                border-radius: $round;
+                animation: fadeIn 0.1s;
+    
+                &-fadeOut {
+                    animation: fadeOut 1s;
+                }
+            }
         }
 
         &::after {
