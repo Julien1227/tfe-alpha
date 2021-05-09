@@ -210,18 +210,11 @@ main {
     z-index: calc(#{$topOfAll} + 50);
 
     &-message {
-        position: absolute;
-    }
-    
-    .message {
         text-align: center;
         cursor: pointer;
 
         position: absolute;
-        display: block;
         z-index: calc(#{$topOfAll} + 150);
-        font-size: $h3;
-        font-weight: 700;
     }
 
     &::after {

@@ -42,7 +42,7 @@ if (window.matchMedia("(min-width: 900px)").matches) {
 //////////// INTRODUCTION ////////////
 //////////////////////////////////////
 
-const startBtn = document.getElementById('begin'),
+const startBtn = document.querySelector('.section-intro-message'),
       sectionIntro = document.querySelector('.section-intro'),
       letters = document.querySelectorAll('.h1-letter');
 

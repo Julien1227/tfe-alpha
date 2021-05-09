@@ -42,17 +42,19 @@ body {
         }
     }
 
-    .message {
+    &-message {
         opacity: 1;
         transform: scale(1);
         transition: $t-fast;
     }
+
     &.play {
-        .message {
+        .section-intro-message {
             opacity: 0;
             transition: $t-fast;
             transform: scale(0.2);
         }
+        
         h1 {
             .h1-letter {
                 @for $i from 1 through 12 {

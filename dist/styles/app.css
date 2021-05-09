@@ -333,16 +333,10 @@ main {
   z-index: calc(2000 + 50);
 }
 .section-intro-message {
-  position: absolute;
-}
-.section-intro .message {
   text-align: center;
   cursor: pointer;
   position: absolute;
-  display: block;
   z-index: calc(2000 + 150);
-  font-size: 36px;
-  font-weight: 700;
 }
 .section-intro::after {
   position: absolute;
@@ -1196,12 +1190,12 @@ body .menu-btn.active:hover svg {
   text-shadow: 0 0 0;
   opacity: 0;
 }
-.section-intro .message {
+.section-intro-message {
   opacity: 1;
   transform: scale(1);
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
-.section-intro.play .message {
+.section-intro.play .section-intro-message {
   opacity: 0;
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
   transform: scale(0.2);

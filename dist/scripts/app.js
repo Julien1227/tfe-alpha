@@ -130,7 +130,7 @@ if (window.matchMedia("(min-width: 900px)").matches) {
 //////////////////////////////////////
 
 
-var startBtn = document.getElementById('begin'),
+var startBtn = document.querySelector('.section-intro-message'),
     sectionIntro = document.querySelector('.section-intro'),
     letters = document.querySelectorAll('.h1-letter');
 var count = 1;
