@@ -580,19 +580,32 @@ document.addEventListener('keydown', function (e) {
       } while (_frq != _color2); // Assignation de la couleur et d'un class de transition
 
 
-      pianoColor.style.backgroundColor = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
-      pianoColor.classList.add('piano-color-active'); // Cache le message
+      var size = randomMinMax(20, 50),
+          blur = size * 3,
+          top = randomMinMax(size, 100) - size,
+          left = randomMinMax(size, 100) - size;
+      var colorDiv = document.createElement('div');
+      colorDiv.style.backgroundColor = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
+      colorDiv.style.filter = 'blur(' + blur + 'px)';
+      colorDiv.style.left = left + 'vw';
+      colorDiv.style.bottom = top + 'vh';
+      colorDiv.style.width = size + 'vw';
+      colorDiv.style.height = size + 'vw';
+      colorDiv.classList.add('piano-color-el', 'piano-color-el-fadeIn');
+      pianoColor.appendChild(colorDiv); // Cache le message
 
-      pianoMsg.style.opacity = 0;
+      pianoMsg.style.opacity = 0; // Lorsqu'on lâche la touche, le son s'arrête et la couleur passe au blanc
+
+      document.addEventListener('keyup', function (e) {
+        colorDiv.classList.add('piano-color-el-fadeOut');
+        colorDiv.addEventListener('animationend', function (e) {
+          colorDiv.remove();
+        });
+        stopGain();
+        down = false;
+      }, false);
     }
   }
-}, false); // Lorsqu'on lâche la touche, le son s'arrête et la couleur passe au blanc
-
-document.addEventListener('keyup', function (e) {
-  pianoColor.classList.remove('piano-color-active');
-  pianoColor.style.backgroundColor = "#fff";
-  stopGain();
-  down = false;
 }, false); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 //////////////////////////// INFO MENU ////////////////////////////

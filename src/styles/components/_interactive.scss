@@ -80,6 +80,7 @@ body {
 .section-piano {
     &-color {
         transition: $t-fast;
+        transition-property: opacity, background-color;
         &-active {
             transition: $t-superfast;
         }
