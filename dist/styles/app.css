@@ -1753,7 +1753,7 @@ body .menu-btn.active:hover svg {
   .section-image .section-module-image1 {
     top: 3rem;
     width: 500px;
-    height: 300px;
+    height: 100%;
     border-radius: 10px;
     object-fit: cover;
     z-index: 10;
