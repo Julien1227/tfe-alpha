@@ -185,7 +185,7 @@ var pianoBtn = document.querySelectorAll('.pad-btn'),
     editDivIndicator = document.querySelector('.editor-indicator'),
     saveBtn = document.querySelector('.btn-save'),
     editInput = document.querySelector('.editor-slider'),
-    sectionPiano = document.querySelector('.section-pad');
+    sectionPad = document.querySelector('.section-pad');
 var btnColors = [];
 var h = 0; //////////////////////////////////////
 ////////////// PIANO /////////////////
@@ -439,10 +439,10 @@ pianoBtn.forEach(function (btn) {
 }); // Permets de rentreret sortir en mode "modification" des boutons 
 
 editBtn.addEventListener('click', function (e) {
-  sectionPiano.classList.add('pad-modify');
+  sectionPad.classList.add('pad-modify');
 });
 saveBtn.addEventListener('click', function (e) {
-  sectionPiano.classList.remove('pad-modify');
+  sectionPad.classList.remove('pad-modify');
 }); // Pour chaque touches du piano
 
 pianoBtn.forEach(function (btn) {
@@ -455,16 +455,16 @@ pianoBtn.forEach(function (btn) {
         s = hslColor[1],
         l = hslColor[2]; // LE PAD EST EN MODE "MODIFICATION"
 
-    if (sectionPiano.classList.contains('pad-modify') == true) {
+    if (sectionPad.classList.contains('pad-modify') == true) {
       playNote(h, s, l);
       stopGain(0.2); // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
 
-      sectionPiano.classList.add('edition');
+      sectionPad.classList.add('edition');
       editDiv.style.top = targetBtn.offsetTop + editDiv.offsetHeight + "px";
       editDivIndicator.style.left = targetBtn.offsetLeft + "px"; // Bouton permettant de masquer le slider
 
       confirmEdit.addEventListener('click', function (e) {
-        sectionPiano.classList.remove('edition');
+        sectionPad.classList.remove('edition');
         targetBtn.classList.remove('pad-btn-active');
       }); // Sélection d'une couleur
 
