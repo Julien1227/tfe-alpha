@@ -38,12 +38,13 @@ if (window.matchMedia("(min-width: 900px)").matches) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+var defaultEase = 0.1;
+
 //////////////////////////////////////
 //////////// INTRODUCTION ////////////
 //////////////////////////////////////
 
-const startBtn = document.querySelector('.section-intro-message'),
-      sectionIntro = document.querySelector('.section-intro'),
+const sectionIntro = document.querySelector('.section-intro'),
       letters = document.querySelectorAll('.h1-letter');
 
 var count = 1;
@@ -58,7 +59,7 @@ const playedColors = document.querySelector('.played-color');
 
 const body = document.querySelector('body'),
       navBtn = document.querySelectorAll('.section-header-creditBtn, .menu-btn'),
-      pianoMsg = document.querySelector('.section-piano-msg'),
+      pianoSvg = document.querySelector('.section-piano-svg'),
       infoSection = document.querySelector('.section-info'),
       colorBtn = document.querySelector('.menu-btn[id="color"]'),
       creditBtn = document.querySelectorAll('.section-header-creditBtn'),
@@ -90,14 +91,14 @@ const playRate = document.getElementById('playRate'),
       colorNumber = document.getElementById('colorNumber');
 
 const playImageBtn = document.getElementById('getColors'),
-      imgToListen = document.querySelector('.img'),
-      imageModule = document.querySelector('.section-image .module'),
+      imgToListen = document.querySelector('.section-module-image1'),
+      backgroundImg = document.querySelector('.section-module-image2'),
+      imageModule = document.querySelector('.section-image .section-module'),
       btnUpload = document.getElementById('uploadBtn'),
       btnOpenSelection = document.getElementById('btnOpenSelection'),
       imageSelection = document.querySelectorAll('.selection-image-el'),
       inputUpload = document.getElementById('uploadInput'),
-      colorList = document.querySelector('.color-list'),
-      backgroundImg = document.querySelector('.container-img');
+      colorList = document.querySelector('.color-list');
 
 const colorThief = new ColorThief();
 
@@ -111,10 +112,10 @@ const pianoBtn = document.querySelectorAll('.pad-btn'),
       closeTuto = document.getElementById('closeTuto'),
       confirmEdit = document.getElementById('confirmEdit'),
       editBtn = document.querySelector('.btn-edit'),
-      editDiv = document.querySelector('.edit'),
-      editDivIndicator = document.querySelector('.edit-indicator'),
+      editDiv = document.querySelector('.pad-editor'),
+      editDivIndicator = document.querySelector('.editor-indicator'),
       saveBtn = document.querySelector('.btn-save'),
-      editInput = document.querySelector('.edit-slider'),
+      editInput = document.querySelector('.editor-slider'),
       sectionPiano = document.querySelector('.section-pad');
       
 var btnColors = [];
@@ -151,10 +152,6 @@ const navBtnOpen = document.querySelector('.nav-btn-open'),
 ////////////////// INTRODUCTION + START API ///////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-
-// Affiche le bon message en fonction du device
-let deviceAction = window.matchMedia("(min-width: 900px)").matches ? "Cliquez" : "Appuyez";
-startBtn.innerHTML = deviceAction + " pour commencer.";
 
 sectionIntro.addEventListener('click', (event) => {
     
@@ -197,7 +194,7 @@ sectionIntro.addEventListener('click', (event) => {
 
     // Après que toutes les lettres aient joué.
     setTimeout(() => {
-        stopGain();
+        stopGain(defaultEase);
         sectionIntro.classList.add('hide');
         sectionIntro.addEventListener('animationend', (e) => {
             sectionIntro.style.display = "none";
@@ -216,35 +213,29 @@ sectionIntro.addEventListener('click', (event) => {
 navBtn.forEach(element => {
     element.addEventListener('click', (e) => {
         let target = e.currentTarget;
-        let pastTarget = document.querySelector('.menu-btn.active')
+        
+        var pastTarget = document.querySelector('.menu-btn.active');
 
-        pastTarget != null ? pastTarget.classList.remove('active') : console.log('No pastTarget');
+        pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
         
         target.classList.add('active');
         
         let page = target.getAttribute('id');
         body.setAttribute('data-page', page);
 
+        if (page == 'closeCreditSection') {
+            body.setAttribute('data-page', 'color');
+        }
+
         // Refais apparaître le message du piano
         if (page != "piano") {
-            pianoMsg.style.opacity = "1";
-            pianoMsg.style.display = "inherit";
+            pianoSvg.style.opacity = "1";
+            pianoSvg.style.display = "inherit";
         }
 
         // Reset le scroll de la page malgré l'ancre
         if (page == "info") {
             infoSection.scrollTop = 0;
-        }
-    });
-});
-
-creditBtn.forEach(element => {
-    element.addEventListener('click',(e) => {
-        if (element.getAttribute('id') == "closeCreditSection") {
-            colorBtn.classList.add('active');
-            body.setAttribute('data-page', 'color');
-        }else{
-            body.setAttribute('data-page', 'credits');
         }
     });
 });
@@ -294,7 +285,10 @@ for (let i = 0; i < colorInputs.length; i++) {
 
         color.style.background = "linear-gradient(hsl("+h+", "+s+"%, "+l+"%), hsl("+h2+", "+s+"%, "+l2+"%))";
     });
-    stopGain(colorInputs[i]);
+
+    colorInputs[i].addEventListener(eventEnd, (e) => {
+        stopGain(defaultEase);
+    });
 };
 
 
@@ -309,31 +303,41 @@ for (let i = 0; i < colorInputs.length; i++) {
 let deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "l'explorateur de fichiers" : "ma galerie";
 btnUpload.innerHTML = "Ouvrir " + deviceAction2;
 
+
+
+// Présélectionne une image
+imageSelection[0].classList.add('selected');
+createPalette(imgToListen);
+
+root.style.setProperty('--colorNumber', colorNumber.value);
+
+
+
 // Réglage de la vitesse de lecture
 playRate.addEventListener('input', (e) => {
     speed = playRate.value * -1;
     playRateSpan.innerHTML = playRate.value * -1;
 });
 
+
+
 // Réglage du nombre de couleurs
+colorNumber.addEventListener(eventStart, (e) => {
+    colorList.classList.add('edition');
+});
+
 colorNumber.addEventListener('input', (e) => {
     colorNumberSpan.innerHTML = colorNumber.value;
-    colorList.style.height = "calc(60px + 0.45rem)";
 
-    if (window.matchMedia("(min-width: 900px)").matches) {
-        // Desktop
-        colorList.style.width = "calc("+ (0.5 * colorNumber.value) +'rem + '+  60 * colorNumber.value +'px';
-        colorList.style.height = "calc(60px + 0.5rem)";
-    }else {
-        colorList.style.maxWidth = "calc("+ (0.5 * 5) +'rem + '+  60 * 5 +'px';
+    if (window.matchMedia("(min-width: 900px)").matches == false) {
         if (colorNumber.value > 5) {
-            colorList.style.width = "calc("+ (0.5 * colorNumber.value) +'rem + '+  60 * colorNumber.value +'px';
-            colorList.style.height = "calc(120px + 1rem)";
+            colorList.classList.add('big');
         }else {
-            colorList.style.width = "calc("+ (0.5 * colorNumber.value) +'rem + '+  60 * colorNumber.value +'px';
-            colorList.style.height = "calc(60px + 0.45rem)";
+            colorList.classList.remove('big');
         }
     }
+
+    root.style.setProperty('--colorNumber', colorNumber.value);
 });
 
 colorNumber.addEventListener(eventEnd, (e) => {
@@ -341,27 +345,14 @@ colorNumber.addEventListener(eventEnd, (e) => {
     colorList.classList.remove('edition');
 });
 
-colorNumber.addEventListener(eventStart, (e) => {
-    colorList.style.width = "calc("+ (0.5 * colorNumber.value) +'rem + '+  60 * colorNumber.value +'px';
-    colorList.style.height = "calc(60px + 0.50rem)";
-    colorList.innerHTML = "";
-    colorList.classList.add('edition');
 
-    for (let i = 0; i < 10; i++) {
-        let color = document.createElement('li');
-            color.classList.add('color-list-el');
-        colorList.appendChild(color);
-    }
-});
-
-// Présélectionne une image
-imageSelection[0].classList.add('selected');
-createPalette(imgToListen);
 
 // Ouvre la sélection
 btnOpenSelection.addEventListener('click', (e) => {
     btnOpenSelection.classList.toggle('selection-open');
 });
+
+
 
 // Change l'image avec l'image sélectionnée
 imageSelection.forEach(image => {
@@ -382,9 +373,12 @@ imageSelection.forEach(image => {
             imgName = imgName.slice(3, imgName.length - 4);
         }
 
+        // Change les liens et crée une palette - (nom de l'image, image externe)
         changeImageToListen(imgName, false);
     });
 });
+
+
 
 // Upload d'une image
 btnUpload.addEventListener('click', (e) => {
@@ -397,9 +391,12 @@ btnUpload.addEventListener('click', (e) => {
 
         let imgLink = URL.createObjectURL(e.target.files[0]);        
 
+        // Change les liens et crée une palette - (nom de l'image, image externe)
         changeImageToListen(imgLink, true);
     });
 });
+
+
 
 //Récupère les couleurs de l'image et les joue
 playImageBtn.addEventListener('click', (e) => {
@@ -419,12 +416,12 @@ playImageBtn.addEventListener('click', (e) => {
 
         setTimeout(() => {
             playArray(i, speed, gains, frqs, hsls);
-        }, 280);
+        }, speed);
     }
+
     setTimeout(() => {
-        stopGain();
-    }, colorList.childNodes.length * 280);
-    console.log(colorList.childNodes.length * 280);
+        stopGain(defaultEase);
+    }, (speed * colorList.childNodes.length) + speed);
 });
 
 
@@ -435,18 +432,17 @@ playImageBtn.addEventListener('click', (e) => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-// Assigne une couleur légèrement aléatoire à chaque touche (chacune compris dans une transche de 40 deg)
+// Assigne une couleur à chaque touche
 pianoBtn.forEach(btn => {
-    h = h + 40;
+    h = h + 39;
     actualisePadBtnColor(btn, h);
 });
 
-// Permets de rentrer en mode "modification" des boutons 
+// Permets de rentreret sortir en mode "modification" des boutons 
 editBtn.addEventListener('click', (e) => {
     sectionPiano.classList.add('pad-modify');   
 });
 
-// Permets de quitter le mode "modification" des boutons 
 saveBtn.addEventListener('click', (e) => {
     sectionPiano.classList.remove('pad-modify');   
 });
@@ -458,7 +454,7 @@ pianoBtn.forEach(btn => {
         //Récupère la couleur appuyée
         let targetBtn = e.currentTarget;
 
-        // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
+        // Récupère la couleur de la touche
         let hslColor = getHslFromAttribute(targetBtn),
             h = hslColor[0],
             s = hslColor[1],
@@ -466,6 +462,8 @@ pianoBtn.forEach(btn => {
 
         // LE PAD EST EN MODE "MODIFICATION"
         if (sectionPiano.classList.contains('pad-modify') == true) {
+            playNote(h,s,l);
+            stopGain(0.2);
             
             // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
             sectionPiano.classList.add('edition');
@@ -478,9 +476,6 @@ pianoBtn.forEach(btn => {
                 targetBtn.classList.remove('pad-btn-active')
             });
 
-            playNote(h,s,l);
-            stopGain();
-
             // Sélection d'une couleur
             if (targetBtn.classList.contains('pad-btn-active') == false) {
                 // Actualise le bouton actif
@@ -488,18 +483,19 @@ pianoBtn.forEach(btn => {
                 targetBtn.classList.add('pad-btn-active');
                 pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('No pastTarget');
                 
-                // Récupère les couleurs tsl depuis l'attibut style du boutton
-                hslColor = getHslFromAttribute(targetBtn);
-
                 // Actualise les valeurs du slider avec la couleur actuelle du bouton
+                hslColor = getHslFromAttribute(targetBtn);
                 editInput.value = hslColor[0];
             }
         // LE PAD N'EST PAS EN MODE "MODIFICATION"
         }else{
             playNote(h,s,l);
-            stopGain(btn);
+            btn.addEventListener(eventEnd, (e) => {
+                stopGain(defaultEase);
+            });
         }
     });
+    
 });
 
 // L'orsqu'un slider bouge - modifie la couleur active
@@ -511,7 +507,10 @@ editInput.addEventListener('input', (e) => {
     actualisePadBtnColor(actualBtn, h);
     playNote(h,100,50);
 });
-stopGain(editInput);
+
+editInput.addEventListener(eventEnd, (e) => {
+    stopGain(defaultEase);
+});
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -583,10 +582,10 @@ document.addEventListener('keydown', (e) => {
             } while (frq != color);
 
             // Assignation de la couleur et d'un class de transition
-            let size = randomMinMax(20, 50),
+            let size = randomMinMax(25, 60),
                 blur = size * 3,
-                top = randomMinMax(size, 100) - size,
-                left = randomMinMax(size, 100) - size;
+                top = randomMinMax((size/-2), 100) - (size/2),
+                left = randomMinMax((size/-2), 100) - (size/2);
 
             let colorDiv = document.createElement('div');
 
@@ -598,11 +597,11 @@ document.addEventListener('keydown', (e) => {
 
             colorDiv.style.width = size + 'vw';
             colorDiv.style.height = size + 'vw';
-            colorDiv.classList.add('piano-color-el', 'piano-color-el-fadeIn');
+            colorDiv.classList.add('piano-color-el');
             pianoColor.appendChild(colorDiv);
 
             // Cache le message
-            pianoMsg.style.opacity = 0;
+            pianoSvg.style.opacity = 0;
 
 
             // Lorsqu'on lâche la touche, le son s'arrête et la couleur passe au blanc
@@ -612,7 +611,7 @@ document.addEventListener('keydown', (e) => {
                     colorDiv.remove();
                 });
 
-                stopGain();
+                stopGain(0.2);
             
                 down = false;
             }, false);
@@ -680,6 +679,7 @@ function changeImageToListen(imgLink, external) {
     imgToListen.addEventListener('animationend', (e) => {
         // à la fin du fadeOut on change l'image
         if(e.animationName === 'fadeOut'){
+            console.log(imgLink);
             if (external == false) {  
                 backgroundImg.setAttribute('src', 'assets/images/toListen/'+ imgLink +'.jpg');
                 imgToListen.setAttribute('src', 'assets/images/toListen/'+ imgLink +'.jpg');
@@ -739,7 +739,6 @@ function playArray(i, speed, gains, frqs, hsls) {
         
         g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
     }, i*speed);
-    
 }
 
 // Permet de jouer une note
@@ -760,17 +759,9 @@ function actualisePadBtnColor(btn, h) {
 }
 
 // Stop le gain et cache "played color"
-function stopGain(elementToListen) {
-    if (elementToListen == undefined) {
-        g.gain.setTargetAtTime(0, context.currentTime, 0.2);
-        playedColors.classList.add('hide');
-
-    }else{
-        elementToListen.addEventListener(eventEnd, (e) => {
-            g.gain.setTargetAtTime(0, context.currentTime, 0.2);
-            playedColors.classList.add('hide');
-        });
-    }
+function stopGain(ease) {
+    g.gain.setTargetAtTime(0, context.currentTime, ease);
+    playedColors.classList.add('hide');
 }
 
 // Vérifie que l'image soit chargée avant de créer la pallette
