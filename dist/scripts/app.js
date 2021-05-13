@@ -125,13 +125,13 @@ if (window.matchMedia("(min-width: 900px)").matches) {
 ///////////////////////// VARIABLES ///////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-//////////////////////////////////////
+
+
+var defaultEase = 0.1; //////////////////////////////////////
 //////////// INTRODUCTION ////////////
 //////////////////////////////////////
 
-
-var startBtn = document.getElementById('begin'),
-    sectionIntro = document.querySelector('.section-intro'),
+var sectionIntro = document.querySelector('.section-intro'),
     letters = document.querySelectorAll('.h1-letter');
 var count = 1;
 var randomColorstart = randomMinMax(0, 120);
@@ -141,7 +141,7 @@ var playedColors = document.querySelector('.played-color'); ////////////////////
 
 var body = document.querySelector('body'),
     navBtn = document.querySelectorAll('.section-header-creditBtn, .menu-btn'),
-    pianoMsg = document.querySelector('.section-piano-msg'),
+    pianoSvg = document.querySelector('.section-piano-svg'),
     infoSection = document.querySelector('.section-info'),
     colorBtn = document.querySelector('.menu-btn[id="color"]'),
     creditBtn = document.querySelectorAll('.section-header-creditBtn'),
@@ -164,14 +164,14 @@ var playRate = document.getElementById('playRate'),
     colorNumberSpan = document.getElementById('colorNumberSpan'),
     colorNumber = document.getElementById('colorNumber');
 var playImageBtn = document.getElementById('getColors'),
-    imgToListen = document.querySelector('.img'),
-    imageModule = document.querySelector('.section-image .module'),
+    imgToListen = document.querySelector('.section-module-image1'),
+    backgroundImg = document.querySelector('.section-module-image2'),
+    imageModule = document.querySelector('.section-image .section-module'),
     btnUpload = document.getElementById('uploadBtn'),
     btnOpenSelection = document.getElementById('btnOpenSelection'),
     imageSelection = document.querySelectorAll('.selection-image-el'),
     inputUpload = document.getElementById('uploadInput'),
-    colorList = document.querySelector('.color-list'),
-    backgroundImg = document.querySelector('.container-img');
+    colorList = document.querySelector('.color-list');
 var colorThief = new ColorThief(); //////////////////////////////////////
 //////////////// PAD /////////////////
 ////////////////////////////////////// 
@@ -181,10 +181,10 @@ var pianoBtn = document.querySelectorAll('.pad-btn'),
     closeTuto = document.getElementById('closeTuto'),
     confirmEdit = document.getElementById('confirmEdit'),
     editBtn = document.querySelector('.btn-edit'),
-    editDiv = document.querySelector('.edit'),
-    editDivIndicator = document.querySelector('.edit-indicator'),
+    editDiv = document.querySelector('.pad-editor'),
+    editDivIndicator = document.querySelector('.editor-indicator'),
     saveBtn = document.querySelector('.btn-save'),
-    editInput = document.querySelector('.edit-slider'),
+    editInput = document.querySelector('.editor-slider'),
     sectionPiano = document.querySelector('.section-pad');
 var btnColors = [];
 var h = 0; //////////////////////////////////////
@@ -209,10 +209,7 @@ var navBtnOpen = document.querySelector('.nav-btn-open'),
 ////////////////// INTRODUCTION + START API ///////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-// Affiche le bon message en fonction du device
 
-var deviceAction = window.matchMedia("(min-width: 900px)").matches ? "Cliquez" : "Appuyez";
-startBtn.innerHTML = deviceAction + " pour commencer.";
 sectionIntro.addEventListener('click', function (event) {
   var frqs = [],
       gains = [],
@@ -249,7 +246,7 @@ sectionIntro.addEventListener('click', function (event) {
 
 
   setTimeout(function () {
-    stopGain();
+    stopGain(defaultEase);
     sectionIntro.classList.add('hide');
     sectionIntro.addEventListener('animationend', function (e) {
       sectionIntro.style.display = "none";
@@ -265,29 +262,24 @@ navBtn.forEach(function (element) {
   element.addEventListener('click', function (e) {
     var target = e.currentTarget;
     var pastTarget = document.querySelector('.menu-btn.active');
-    pastTarget != null ? pastTarget.classList.remove('active') : console.log('No pastTarget');
+    pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
     target.classList.add('active');
     var page = target.getAttribute('id');
-    body.setAttribute('data-page', page); // Refais apparaître le message du piano
+    body.setAttribute('data-page', page);
+
+    if (page == 'closeCreditSection') {
+      body.setAttribute('data-page', 'color');
+    } // Refais apparaître le message du piano
+
 
     if (page != "piano") {
-      pianoMsg.style.opacity = "1";
-      pianoMsg.style.display = "inherit";
+      pianoSvg.style.opacity = "1";
+      pianoSvg.style.display = "inherit";
     } // Reset le scroll de la page malgré l'ancre
 
 
     if (page == "info") {
       infoSection.scrollTop = 0;
-    }
-  });
-});
-creditBtn.forEach(function (element) {
-  element.addEventListener('click', function (e) {
-    if (element.getAttribute('id') == "closeCreditSection") {
-      colorBtn.classList.add('active');
-      body.setAttribute('data-page', 'color');
-    } else {
-      body.setAttribute('data-page', 'credits');
     }
   });
 }); ///////////////////////////////////////////////////////////////////
@@ -323,7 +315,9 @@ var _loop2 = function _loop2(i) {
     l2 = l2 < 0 ? 0 : l2;
     color.style.background = "linear-gradient(hsl(" + h + ", " + s + "%, " + l + "%), hsl(" + h2 + ", " + s + "%, " + l2 + "%))";
   });
-  stopGain(colorInputs[i]);
+  colorInputs[i].addEventListener(eventEnd, function (e) {
+    stopGain(defaultEase);
+  });
 };
 
 for (var i = 0; i < colorInputs.length; i++) {
@@ -338,54 +332,37 @@ for (var i = 0; i < colorInputs.length; i++) {
 // Affiche le bon message en fonction du device
 
 var deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "l'explorateur de fichiers" : "ma galerie";
-btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Réglage de la vitesse de lecture
+btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Présélectionne une image
+
+imageSelection[0].classList.add('selected');
+createPalette(imgToListen);
+root.style.setProperty('--colorNumber', colorNumber.value); // Réglage de la vitesse de lecture
 
 playRate.addEventListener('input', function (e) {
   speed = playRate.value * -1;
   playRateSpan.innerHTML = playRate.value * -1;
 }); // Réglage du nombre de couleurs
 
+colorNumber.addEventListener(eventStart, function (e) {
+  colorList.classList.add('edition');
+});
 colorNumber.addEventListener('input', function (e) {
   colorNumberSpan.innerHTML = colorNumber.value;
-  colorList.style.height = "calc(60px + 0.45rem)";
 
-  if (window.matchMedia("(min-width: 900px)").matches) {
-    // Desktop
-    colorList.style.width = "calc(" + 0.5 * colorNumber.value + 'rem + ' + 60 * colorNumber.value + 'px';
-    colorList.style.height = "calc(60px + 0.5rem)";
-  } else {
-    colorList.style.maxWidth = "calc(" + 0.5 * 5 + 'rem + ' + 60 * 5 + 'px';
-
+  if (window.matchMedia("(min-width: 900px)").matches == false) {
     if (colorNumber.value > 5) {
-      colorList.style.width = "calc(" + 0.5 * colorNumber.value + 'rem + ' + 60 * colorNumber.value + 'px';
-      colorList.style.height = "calc(120px + 1rem)";
+      colorList.classList.add('big');
     } else {
-      colorList.style.width = "calc(" + 0.5 * colorNumber.value + 'rem + ' + 60 * colorNumber.value + 'px';
-      colorList.style.height = "calc(60px + 0.45rem)";
+      colorList.classList.remove('big');
     }
   }
+
+  root.style.setProperty('--colorNumber', colorNumber.value);
 });
 colorNumber.addEventListener(eventEnd, function (e) {
   createPalette(imgToListen);
   colorList.classList.remove('edition');
-});
-colorNumber.addEventListener(eventStart, function (e) {
-  colorList.style.width = "calc(" + 0.5 * colorNumber.value + 'rem + ' + 60 * colorNumber.value + 'px';
-  colorList.style.height = "calc(60px + 0.50rem)";
-  colorList.innerHTML = "";
-  colorList.classList.add('edition');
-
-  for (var _i = 0; _i < 10; _i++) {
-    var _color = document.createElement('li');
-
-    _color.classList.add('color-list-el');
-
-    colorList.appendChild(_color);
-  }
-}); // Présélectionne une image
-
-imageSelection[0].classList.add('selected');
-createPalette(imgToListen); // Ouvre la sélection
+}); // Ouvre la sélection
 
 btnOpenSelection.addEventListener('click', function (e) {
   btnOpenSelection.classList.toggle('selection-open');
@@ -405,7 +382,8 @@ imageSelection.forEach(function (image) {
       imgName = imgName.slice(0, imgName.length - 7);
     } else {
       imgName = imgName.slice(3, imgName.length - 4);
-    }
+    } // Change les liens et crée une palette - (nom de l'image, image externe)
+
 
     changeImageToListen(imgName, false);
   });
@@ -418,7 +396,8 @@ btnUpload.addEventListener('click', function (e) {
     // Retire la class "selected" de l'image précédement sélectionnée
     var pastTarget = document.querySelector('.selected');
     pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection removed');
-    var imgLink = URL.createObjectURL(e.target.files[0]);
+    var imgLink = URL.createObjectURL(e.target.files[0]); // Change les liens et crée une palette - (nom de l'image, image externe)
+
     changeImageToListen(imgLink, true);
   });
 }); //Récupère les couleurs de l'image et les joue
@@ -428,42 +407,40 @@ playImageBtn.addEventListener('click', function (e) {
       frqs = [],
       hsls = [];
 
-  var _loop3 = function _loop3(_i2) {
-    var color = root.style.getPropertyValue('--palette-color-' + (_i2 + 1)).match(/\d+/g).map(Number);
+  var _loop3 = function _loop3(_i) {
+    var color = root.style.getPropertyValue('--palette-color-' + (_i + 1)).match(/\d+/g).map(Number);
     hsls.push(color);
     var gain = setGain(color[1], color[2]),
         frq = setFrequency(color[0], color[1], color[2]);
     gains.push(gain);
     frqs.push(frq);
     setTimeout(function () {
-      playArray(_i2, speed, gains, frqs, hsls);
-    }, 280);
+      playArray(_i, speed, gains, frqs, hsls);
+    }, speed);
   };
 
-  for (var _i2 = 0; _i2 < colorList.childNodes.length; _i2++) {
-    _loop3(_i2);
+  for (var _i = 0; _i < colorList.childNodes.length; _i++) {
+    _loop3(_i);
   }
 
   setTimeout(function () {
-    stopGain();
-  }, colorList.childNodes.length * 280);
-  console.log(colorList.childNodes.length * 280);
+    stopGain(defaultEase);
+  }, speed * colorList.childNodes.length + speed);
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ////////////////////////////// PAD ////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-// Assigne une couleur légèrement aléatoire à chaque touche (chacune compris dans une transche de 40 deg)
+// Assigne une couleur à chaque touche
 
 pianoBtn.forEach(function (btn) {
-  h = h + 40;
+  h = h + 39;
   actualisePadBtnColor(btn, h);
-}); // Permets de rentrer en mode "modification" des boutons 
+}); // Permets de rentreret sortir en mode "modification" des boutons 
 
 editBtn.addEventListener('click', function (e) {
   sectionPiano.classList.add('pad-modify');
-}); // Permets de quitter le mode "modification" des boutons 
-
+});
 saveBtn.addEventListener('click', function (e) {
   sectionPiano.classList.remove('pad-modify');
 }); // Pour chaque touches du piano
@@ -471,7 +448,7 @@ saveBtn.addEventListener('click', function (e) {
 pianoBtn.forEach(function (btn) {
   btn.addEventListener(eventStart, function (e) {
     //Récupère la couleur appuyée
-    var targetBtn = e.currentTarget; // Convertis les valeurs rgb en tsl pour les rendre utilisable par mes fonctions
+    var targetBtn = e.currentTarget; // Récupère la couleur de la touche
 
     var hslColor = getHslFromAttribute(targetBtn),
         h = hslColor[0],
@@ -479,7 +456,9 @@ pianoBtn.forEach(function (btn) {
         l = hslColor[2]; // LE PAD EST EN MODE "MODIFICATION"
 
     if (sectionPiano.classList.contains('pad-modify') == true) {
-      // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
+      playNote(h, s, l);
+      stopGain(0.2); // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
+
       sectionPiano.classList.add('edition');
       editDiv.style.top = targetBtn.offsetTop + editDiv.offsetHeight + "px";
       editDivIndicator.style.left = targetBtn.offsetLeft + "px"; // Bouton permettant de masquer le slider
@@ -487,24 +466,23 @@ pianoBtn.forEach(function (btn) {
       confirmEdit.addEventListener('click', function (e) {
         sectionPiano.classList.remove('edition');
         targetBtn.classList.remove('pad-btn-active');
-      });
-      playNote(h, s, l);
-      stopGain(); // Sélection d'une couleur
+      }); // Sélection d'une couleur
 
       if (targetBtn.classList.contains('pad-btn-active') == false) {
         // Actualise le bouton actif
         var pastTarget = document.querySelector('.pad-btn-active');
         targetBtn.classList.add('pad-btn-active');
-        pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('No pastTarget'); // Récupère les couleurs tsl depuis l'attibut style du boutton
+        pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('No pastTarget'); // Actualise les valeurs du slider avec la couleur actuelle du bouton
 
-        hslColor = getHslFromAttribute(targetBtn); // Actualise les valeurs du slider avec la couleur actuelle du bouton
-
+        hslColor = getHslFromAttribute(targetBtn);
         editInput.value = hslColor[0];
       } // LE PAD N'EST PAS EN MODE "MODIFICATION"
 
     } else {
       playNote(h, s, l);
-      stopGain(btn);
+      btn.addEventListener(eventEnd, function (e) {
+        stopGain(defaultEase);
+      });
     }
   });
 }); // L'orsqu'un slider bouge - modifie la couleur active
@@ -516,7 +494,9 @@ editInput.addEventListener('input', function (e) {
   actualisePadBtnColor(actualBtn, h);
   playNote(h, 100, 50);
 });
-stopGain(editInput); ///////////////////////////////////////////////////////////////////
+editInput.addEventListener(eventEnd, function (e) {
+  stopGain(defaultEase);
+}); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 /////////////////////////// Piano /////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -567,7 +547,7 @@ document.addEventListener('keydown', function (e) {
 
     if (notes[key] != null) {
       var _frq = notes[key],
-          _color2 = 0; // Assigne la valeur de gain et fréquence
+          _color = 0; // Assigne la valeur de gain et fréquence
 
       o.frequency.setValueAtTime(_frq, context.currentTime);
       g.gain.setTargetAtTime(1, context.currentTime, 0.002); // Cherche une couleur correspondant à la fréquence
@@ -576,14 +556,14 @@ document.addEventListener('keydown', function (e) {
         h = randomMinMax(0, 360);
         s = 100;
         l = randomMinMax(50, 60);
-        _color2 = setFrequency(h, s, l);
-      } while (_frq != _color2); // Assignation de la couleur et d'un class de transition
+        _color = setFrequency(h, s, l);
+      } while (_frq != _color); // Assignation de la couleur et d'un class de transition
 
 
-      var size = randomMinMax(20, 50),
+      var size = randomMinMax(25, 60),
           blur = size * 3,
-          top = randomMinMax(size, 100) - size,
-          left = randomMinMax(size, 100) - size;
+          top = randomMinMax(size / -2, 100) - size / 2,
+          left = randomMinMax(size / -2, 100) - size / 2;
       var colorDiv = document.createElement('div');
       colorDiv.style.backgroundColor = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
       colorDiv.style.filter = 'blur(' + blur + 'px)';
@@ -591,17 +571,17 @@ document.addEventListener('keydown', function (e) {
       colorDiv.style.bottom = top + 'vh';
       colorDiv.style.width = size + 'vw';
       colorDiv.style.height = size + 'vw';
-      colorDiv.classList.add('piano-color-el', 'piano-color-el-fadeIn');
+      colorDiv.classList.add('piano-color-el');
       pianoColor.appendChild(colorDiv); // Cache le message
 
-      pianoMsg.style.opacity = 0; // Lorsqu'on lâche la touche, le son s'arrête et la couleur passe au blanc
+      pianoSvg.style.opacity = 0; // Lorsqu'on lâche la touche, le son s'arrête et la couleur passe au blanc
 
       document.addEventListener('keyup', function (e) {
         colorDiv.classList.add('piano-color-el-fadeOut');
         colorDiv.addEventListener('animationend', function (e) {
           colorDiv.remove();
         });
-        stopGain();
+        stopGain(0.2);
         down = false;
       }, false);
     }
@@ -626,14 +606,14 @@ navElements.forEach(function (element) {
 }); // Actualise le menu en fonction du scroll
 
 infoSection.addEventListener('scroll', function () {
-  for (var _i3 = 0; _i3 < anchors.length; _i3++) {
-    if (infoSection.scrollTop >= anchors[_i3].offsetTop - window.innerHeight / 2) {
+  for (var _i2 = 0; _i2 < anchors.length; _i2++) {
+    if (infoSection.scrollTop >= anchors[_i2].offsetTop - window.innerHeight / 2) {
       navElements.forEach(function (element) {
         element.classList.remove('current');
       });
 
-      if (navElements[_i3].classList.contains('current') == false) {
-        navElements[_i3].classList.add('current');
+      if (navElements[_i2].classList.contains('current') == false) {
+        navElements[_i2].classList.add('current');
       }
     }
   }
@@ -658,6 +638,8 @@ function changeImageToListen(imgLink, external) {
   imgToListen.addEventListener('animationend', function (e) {
     // à la fin du fadeOut on change l'image
     if (e.animationName === 'fadeOut') {
+      console.log(imgLink);
+
       if (external == false) {
         backgroundImg.setAttribute('src', 'assets/images/toListen/' + imgLink + '.jpg');
         imgToListen.setAttribute('src', 'assets/images/toListen/' + imgLink + '.jpg');
@@ -731,16 +713,9 @@ function actualisePadBtnColor(btn, h) {
 } // Stop le gain et cache "played color"
 
 
-function stopGain(elementToListen) {
-  if (elementToListen == undefined) {
-    g.gain.setTargetAtTime(0, context.currentTime, 0.2);
-    playedColors.classList.add('hide');
-  } else {
-    elementToListen.addEventListener(eventEnd, function (e) {
-      g.gain.setTargetAtTime(0, context.currentTime, 0.2);
-      playedColors.classList.add('hide');
-    });
-  }
+function stopGain(ease) {
+  g.gain.setTargetAtTime(0, context.currentTime, ease);
+  playedColors.classList.add('hide');
 } // Vérifie que l'image soit chargée avant de créer la pallette
 
 
@@ -759,20 +734,20 @@ function createPaletteOnLoad(image) {
   colorList.innerHTML = "";
   var palette = colorThief.getPalette(image, Number(colorNumber.value));
 
-  var _loop4 = function _loop4(_i4) {
-    var hslColor = RGBToHSL(palette[_i4][0], palette[_i4][1], palette[_i4][2]); // Crée un élement HTML auquel il assigne la couleur
+  var _loop4 = function _loop4(_i3) {
+    var hslColor = RGBToHSL(palette[_i3][0], palette[_i3][1], palette[_i3][2]); // Crée un élement HTML auquel il assigne la couleur
 
     var color = document.createElement('li');
     color.classList.add('color-list-el');
-    root.style.setProperty('--palette-color-' + (_i4 + 1), 'hsl(' + hslColor[0] + ', ' + hslColor[1] + '%, ' + hslColor[2] + '%)');
+    root.style.setProperty('--palette-color-' + (_i3 + 1), 'hsl(' + hslColor[0] + ', ' + hslColor[1] + '%, ' + hslColor[2] + '%)');
     color.addEventListener('animationend', function (e) {
       color.style.opacity = 1;
     });
     colorList.appendChild(color);
   };
 
-  for (var _i4 = 0; _i4 < palette.length; _i4++) {
-    _loop4(_i4);
+  for (var _i3 = 0; _i3 < palette.length; _i3++) {
+    _loop4(_i3);
   }
 } // Récupère les valeurs h s et l depuis les attributs de l'élément
 

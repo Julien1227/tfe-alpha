@@ -9,26 +9,6 @@ main {
     overflow: hidden;
 }
 
-// ScrollBar - chrome
-@media(min-width: 900px) {
-    *::-webkit-scrollbar {
-        @include squareSize(5px);
-    
-        &-track {
-            background: #f1f1f1; 
-        }
-        
-        &-thumb {
-            background: #888;
-            border-radius: $round;
-        }
-        
-        &-thumb:hover {
-            background: #555; 
-        }
-    }
-}
-
 .gist {
     &-file {
         border-radius: $rounded!important;
@@ -120,38 +100,26 @@ main {
 // Boutons
 .btn {
     cursor: pointer;
-    color: $grey;
+    color: $c-text;
     background-color: $white08;
-    padding: 1rem;
     border-radius: $round;
-    font-weight: 700;
-    font-size: 20px;
     box-shadow: $shadow;
+
+    margin: 1rem 0;
+    padding: 1rem;
+
+    font-size: 20px;
+    font-weight: 700;
     text-decoration: none;
 
     &-bottom {
         display: block;
-        margin: 0 auto -1.5rem auto;
-    }
-}
-
-// Si le navigateur ne supporte pas la "backdrop filter", on remplace avec un fond plus opaque
-@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-    .btn, .navigation-container {
-        backdrop-filter: blur(20px);
-    }
-}
-  
-/* slightly transparent fallback for Firefox (not supporting backdrop-filter) */
-@supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-    .btn {
-        background-color: $white09;
+        margin: 1.5rem auto 0 auto;
     }
 }
 
 // Menu
 .menu {
-    transition: $t-fast;
     position: fixed;
     z-index: $front;
     bottom: 0;
@@ -202,28 +170,7 @@ main {
 
 }
 
-.section-intro {
-    @include absoluteTopLeft;
-    @include fullSize;
-    @include flex-center;
-    background-color: $white;
-    z-index: calc(#{$topOfAll} + 50);
-
-    &-message {
-        position: absolute;
-    }
-    
-    .message {
-        text-align: center;
-        cursor: pointer;
-
-        position: absolute;
-        display: block;
-        z-index: calc(#{$topOfAll} + 150);
-        font-size: $h3;
-        font-weight: 700;
-    }
-
+.pretty-background {
     &::after {
         @include pseudoElement;
         @include fullSize;
@@ -237,10 +184,46 @@ main {
     }
 }
 
-.section {
-    overflow: hidden;
-    position: relative;
 
+
+.svg-animate {
+    @include squareSize(4rem);
+    overflow: visible;
+    #action {
+        animation: touchActionTraits 1.5s;
+        animation-iteration-count: infinite;
+        transform-origin: center;
+    }
+
+    #keyboard {
+        animation: touchActionHand 1.5s;
+        animation-delay: 0.05s;
+        animation-iteration-count: infinite;
+        transform-origin: center;
+    }
+
+    #hand {
+        animation: touchActionHand 1.5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: cubic-bezier(0.25, 1.32, 0.83, 1.25);
+        transform-origin: center;
+    } 
+}
+
+.section-intro {
+    @include fullSize;
+    @include flex-center;
+    position: absolute;
+    z-index: calc(#{$topOfAll} + 50);
+    cursor: pointer;
+
+    &-svg {
+        position: absolute;
+        z-index: calc(#{$topOfAll} + 150);
+    }
+}
+
+.section {
     @include flex-column;
     justify-content: flex-end;
 
@@ -271,14 +254,15 @@ main {
             position: absolute;
             right: 1rem;
             padding: 0.25rem;
+            cursor: pointer;
 
             & svg {
-                @include squareSize(14px);
+                @include squareSize(0.75rem);
             }
         }
     }
 
-    .module {
+    &-module {
         @include flex-center-y;
         align-items: flex-end;
         height: 100%;
@@ -288,108 +272,29 @@ main {
         }
     }
 
-    .form {
+    &-form {
         @include flex-column-center;
         z-index: $content;
-        padding: 2rem;
+        padding: 3rem 2rem;
+        padding-top: 2rem;
 
-        &-el {
+        .form-slider {
             @include flex-column;
 
             margin: 0.5rem 0;
             width: 100%;
 
-            label {
+            &-title {
                 margin-left: 3px;
                 margin-bottom: 0.5rem;
             }
 
         }
-
-        .btn {
-            text-align: center;
-            margin: 1rem 0;
-        }
     }
 
-    &-credits {
-        .copyright {text-align: center;}
-        overflow-y: scroll;
-        position: fixed;
-        justify-content: flex-start;
-        background-color: $white;
-        z-index: calc(#{$content} + 1);
-        
-        &-title {
-            width: 100vw;
-            margin-left: -2rem;
-            padding-left: 2rem;
-            border-bottom: $border-light;
-        }
-        
-        .credits {
-            max-width: 600px;
-            padding: 2rem;
-            &-div {
-                padding-bottom: 1.5rem;
-                border-bottom: $border-light;
-                &:last-child {
-                    border-bottom: none;
-                }
-                
-                .credits-list {
-                    &-el {
-                        position: relative;
-                        margin: 1rem;
-                        margin-right: 0;
-                        &:first-child {
-                            padding-top: 0;
-                        }
-    
-                        &::before {
-                            @include pseudoElement;
-                            background-color: $black;
-                            left: -1rem;
-                            opacity: .1;
-                            width: 5px;
-                            height: 100%;
-                            border-radius: $rounded;
-                        }
-                    }
-    
-                    .licence {
-                        margin-top: 0.5rem;
-                        position: relative;
-                        display: inline-block;
-                        vertical-align: -0.5rem;
-                        white-space: nowrap;
-                        max-width: 150px;
-                        padding:  0.25rem;
-                        border-radius: $rounded;
-                        overflow-x: scroll;
-    
-                        background-color: rgba(0, 0, 0, 0.089);
-                    }
-
-                    & p, & a {
-                        margin: 0;
-                    }
-                }
-            }
-
-            &-end {
-                margin-bottom: $h1;
-                & svg {
-                    margin: 0 50%;
-                    @include squareSize(2rem);
-                }
-            }
-        }
-    }
-    
-
+    // SECTION COLOR
     &-color {
-        .module {
+        .section-module {
             &-frequency {
                 position: relative;
                 z-index: $content;
@@ -399,6 +304,7 @@ main {
                 letter-spacing: -0.3rem;
                 color: $white;
                 pointer-events: none;
+                //font-family: 'Source Code Pro', monospace;
             }
 
             &-shadow {
@@ -412,10 +318,10 @@ main {
         }
     }
 
+    //SECTION IMAGE
     &-image {
-        .module {
+        .section-module {
             position: relative;
-
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
@@ -426,7 +332,6 @@ main {
                 z-index: $content;
                 flex-wrap: wrap;
 
-                max-width: calc(100% - 3rem);
                 padding: 0.2rem;
                 transform: translateY(50%);
                 text-align: center;
@@ -437,47 +342,61 @@ main {
                 transition: $t-fast;
 
                 overflow: hidden;
+                height: calc(60px + 0.5rem);
+
+                width: calc(var(--colorNumber) * (60px + 0.5rem));
+
+                &.big {
+                    width: calc((60px + 0.5rem) * 5);
+                    height: calc(120px + 1rem);
+                }
     
                 &-el {
                     opacity: 0;
-                    animation-timing-function: $t-fast;
                     animation: fadeInTop 0.3s;
+
+                    border-radius: $round;
+                    margin: 0.25rem;
+                    width: 60px;
+                    height: 60px;
+
                     @for $i from 1 through 10 {
                         &:nth-child(#{$i}) {
                             animation-delay: $i * 0.025s;
                             background-color: var(--palette-color-#{$i});
                         }
                     }
-                    @include squareSize(100%);
-
-                    border-radius: $round;
-                    max-width: 60px;
-                    max-height: 60px;
-                    margin: 0.25rem;
                 }
             }
             
-            .background-container {
-                display: none;
-            }
-            
-
-            .img {
+            &-image {        
                 @include fullSize;
-        
                 position: absolute;
-                object-fit: cover;
-                object-position: center;
                 z-index: $background;
+                &1 {
+                    @include fullSize;
+        
+                    position: absolute;
+                    object-fit: cover;
+                    object-position: center;
+                    z-index: $background;
+                }
+    
+                &2 {
+                    display: none;
+                }
             }
+
             
             .selection {
                 @include flex-column-center-y;
-
+                max-height: 15rem;
+                position: absolute;
+                top: 0;
                 overflow: hidden;
                 z-index: $front;
                 
-                margin-top: 1.5rem;
+                padding-top: 0;
                 box-sizing: border-box;
                 border-radius: $rounded2;
                 
@@ -487,14 +406,18 @@ main {
                     transform: scale(1);
                 }
                 
-                .btn {
+                &-btn {
                     &-upload {
                         background-color: $white!important;
                     }
-                    &-selection {
+                    &-open {
+                        width: 150%;
                         cursor: pointer;
                         font-weight: 700;
-                        margin-bottom: 1rem;
+                        margin: 0!important;
+                        background-color: transparent!important;
+                        backdrop-filter: none;
+                        box-shadow: none;
                     }
                 }
 
@@ -510,7 +433,7 @@ main {
                         height: 25vw;
                         max-height: 130px;
                         
-                        &:nth-child(3) {margin-right: 0;}
+                        &:last-child {margin-right: 0;}
 
                         & img{
                             @include fullSize;
@@ -527,125 +450,50 @@ main {
             }
         }
 
-        .form {
-            padding-top: 5rem;
+        .section-form {
+            padding-top: 6rem;
         }
     }
 
     &-pad {
         justify-content: center;
-        .pad-tuto {
-            @include absoluteTopLeft;
-            @include flex-center-y;
-
-            align-items: flex-end;
-            width: 100%;
-            height: calc(12.5% + 5vw);
-            padding: 0 5rem;
-            box-sizing: border-box;
-            text-align: center;
-            z-index: $content;
-        }
-
-        .edit {
-            @include absoluteTopLeft;
-            @include flex-center;
-            width: 100vw;
-            z-index: $front;
-            top: 50%;
-            
-            &-indicator {
-                @include squareSize(50px);
-                position: absolute;
-                top: -40px;
-                margin-left: 25px;
-                color: $white;
-            }
-            
-            &-div {
-                @include card($rounded2);
-                @include flex-column-center-y;
-                box-sizing: border-box;
-                max-width: 400px;
-                width: calc(100% - 2rem);
-                padding: 1.5rem;
-                padding-bottom: 0;
-                box-shadow: $shadow;
-                &-btn {
-                    @include flex-center;
-                    width: 3rem;
-                    height: 3rem;
-                    padding: 0.75rem;
-                    margin-top: 0.5rem!important;
-                    margin-bottom: -1.5rem;
-                    color: $valid;
-                    background-color: $white08;
-                    svg {
-                        width: 100%;
-                        height: 100%;
-                    }
-                }
-
-                &-hue {
-                    height: 0.5rem;
-                    width: 100%;
-                    border-radius: $rounded;
-                    background: $gradient360;
-                    margin-bottom: 0.5rem;
-                }
-            }
-        }
-
-        .pad-container {
-            @include flex-column-center;
-            height: 100%;
-        }
-
         .pad {
             display: grid;
             grid-template-columns: repeat(3, 100px);
             grid-template-rows: repeat(3, 100px);
             justify-content: center;
-
+    
             max-width: 100vw;
             
             box-sizing: border-box;
             margin: 3rem auto;
             border-radius: $rounded;
             box-shadow: $shadow;
-
+    
             &-btn {
                 position: relative;
                 @include fullSize;
-
+    
                 cursor: pointer;
-
+    
                 // Arrondis les coins à chaque touches, overflow: hidden inutilisable étant donné qu'il cacherai les box shadows des boutons
                 &[id="btn-1"], &[id="btn-1"]::before{border-radius: $rounded 0 0 0;}
                 &[id="btn-3"], &[id="btn-3"]::before{border-radius: 0 $rounded 0 0;}
                 &[id="btn-7"], &[id="btn-7"]::before{border-radius: 0 0 0 $rounded;}
                 &[id="btn-9"], &[id="btn-9"]::before{border-radius: 0 0 $rounded 0;}
-
+    
                 // Effet lumineux des touches
                 &::after {
                     @include fullSize;
-
+    
                     position: relative;
                     content: "";
                     display: block;
                     z-index: $background;
                     filter: blur(30px);
-
-                    pointer-events: none;
+                    z-index: $background;
                 }
-
-                &::before {
-                    @include pseudoElement;
-                    @include fullSize;
-                    background-color: $white;
-                    opacity: 0;
-                }
-
+    
                 @for $i from 1 through 9 {
                     &[id="btn-#{$i}"] {
                         background-color: var(--pad-btn-color-#{$i});
@@ -656,14 +504,87 @@ main {
                 }
             }
 
+            &-tuto {
+                position: absolute;
+                top: 15%;
+                padding: 0 2rem;
+                text-align: center;
+                z-index: $content;
+            }
+    
+            &-editor {
+                @include absoluteTopLeft;
+                @include flex-center;
+                width: 100vw;
+                z-index: $front;
+                top: 50%;
+    
+                .editor {
+                    &-indicator {
+                        @include squareSize(50px);
+                        position: absolute;
+                        top: -40px;
+                        margin-left: 25px;
+                        color: $white;
+                    }
+                    
+                    &-div {
+                        @include card($rounded2);
+                        @include flex-column-center-y;
+                        box-sizing: border-box;
+                        max-width: 400px;
+                        width: calc(100% - 2rem);
+                        padding: 1.5rem;
+                        padding-bottom: 0;
+                        box-shadow: $shadow;
+                        
+                        &-btn {
+                            @include flex-center;
+                            width: 3rem;
+                            height: 3rem;
+                            padding: 0.75rem;
+                            margin-top: 0.5rem!important;
+                            margin-bottom: -1.5rem;
+                            color: $c-text;
+                            background-color: $white08;
+                            svg {
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+        
+                        &-hue {
+                            height: 0.5rem;
+                            width: 100%;
+                            border-radius: $rounded;
+                            background: $gradient360;
+                            margin-bottom: 0.5rem;
+                        }
+                    }
+                }
+            }
+    
+            &-container {
+                @include flex-column-center;
+                height: 100%;
+            }
+            
         }
     }
 
     &-piano {
         @include flex-center;
-        .piano-color {
-            @include fullSize;
-            &-el {
+
+        position: relative;
+        overflow: hidden!important;
+
+        .section-piano-color {
+            // Enlève le fond blanc de "pretty-background"
+            &::after {
+                background: radial-gradient(transparent, lighten($gist-background, 80%) 150%);
+            }
+
+            .piano-color-el {
                 position: absolute!important;
                 z-index: $background;
                 border-radius: $round;
@@ -674,24 +595,16 @@ main {
                 }
             }
         }
-
-        &::after {
-            @include pseudoGraphBackground;
-            @include fs-center;
-            z-index: -5;
-        }
-
-        &::before {
-            @include pseudoElement;
-            @include fullSize;
-            z-index: $background;
-            background: radial-gradient($white, lighten($gist-background, 80%) 150%);
+        
+        &-svg {    
+            z-index: calc(#{$topOfAll} + 150);
         }
     }
 
     &-info {
         align-items: center;
         overflow-y: scroll;
+        overflow-x: hidden;
 
         .container {
             // Rajoute de l'espacement en haut et en bas pour aérer, utiliser des margin/ padding casse le "overflow: scroll", il faut utiliser des éléments.
@@ -717,7 +630,7 @@ main {
                 &-name {
                     font-weight: 700;
                     text-align: center;
-                    color: $gist-background;
+                    color: $c-text;
                     background-color: $white;
 
                     padding: 1rem;
@@ -804,6 +717,81 @@ main {
                     }
                 }
             } 
+        }
+    }
+
+    &-credits {
+        .copyright {text-align: center;}
+        overflow-y: scroll;
+        position: fixed;
+        justify-content: flex-start;
+        background-color: $white;
+        z-index: calc(#{$content} + 1);
+        
+        &-title {
+            width: 100vw;
+            margin-left: -2rem;
+            padding-left: 2rem;
+            border-bottom: $border-light;
+        }
+        
+        .credits {
+            max-width: 600px;
+            padding: 2rem;
+            &-div {
+                padding-bottom: 1.5rem;
+                border-bottom: $border-light;
+                &:last-child {
+                    border-bottom: none;
+                }
+                
+                .credits-list {
+                    &-el {
+                        position: relative;
+                        margin: 1rem;
+                        margin-right: 0;
+                        &:first-child {
+                            padding-top: 0;
+                        }
+    
+                        &::before {
+                            @include pseudoElement;
+                            background-color: $black;
+                            left: -1rem;
+                            opacity: .1;
+                            width: 5px;
+                            height: 100%;
+                            border-radius: $rounded;
+                        }
+                    }
+    
+                    .licence {
+                        margin-top: 0.5rem;
+                        position: relative;
+                        display: inline-block;
+                        vertical-align: -0.5rem;
+                        white-space: nowrap;
+                        max-width: 150px;
+                        padding:  0.25rem;
+                        border-radius: $rounded;
+                        overflow-x: scroll;
+    
+                        background-color: rgba(0, 0, 0, 0.089);
+                    }
+
+                    & p, & a {
+                        margin: 0;
+                    }
+                }
+            }
+
+            &-end {
+                margin-bottom: $h1;
+                & svg {
+                    margin: 0 50%;
+                    @include squareSize(2rem);
+                }
+            }
         }
     }
 }

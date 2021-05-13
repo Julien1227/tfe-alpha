@@ -42,17 +42,13 @@ body {
         }
     }
 
-    .message {
-        opacity: 1;
-        transform: scale(1);
-        transition: $t-fast;
-    }
     &.play {
-        .message {
+        .section-intro-svg {
             opacity: 0;
             transition: $t-fast;
             transform: scale(0.2);
         }
+        
         h1 {
             .h1-letter {
                 @for $i from 1 through 12 {
@@ -86,17 +82,14 @@ body {
         }
     }
     
-    &-msg {
+    &-svg {
         transition: $t-fast;
     }
 }
 
 
 .section-pad {
-    transition: $t-slow;
     .btn {
-        margin-top: 0rem;
-        transition: $t-fast;
         &-edit {
             margin-bottom: -5rem;
             opacity: 1;
@@ -110,7 +103,7 @@ body {
         } 
     }
 
-    .edit {
+    .pad-editor {
         transition: $t-fast;
         opacity: 0;
         pointer-events: none;
@@ -118,27 +111,12 @@ body {
     
     .pad {
         &-btn {
+            transition-property: transform;
             transition: $t-superfast;
-            transition-property: transform, border-radius, opacity;
-            &::after {
-                transform: scale(1.1);
-
-                transition: $t-superfast;
-                transition-property: transform, opacity;
-            }
-
-            &::before {
-                transition: $t-superfast;
-            }
-
             &:active {
-                z-index: 110;
                 transform: scale(1.1);
                 border-radius: $rounded;
-                &::after {
-                    filter: blur(35px);
-                    transform: scale(1.5);
-                }
+                z-index: $front;
             }
         }
 
@@ -157,17 +135,13 @@ body {
             &-btn {
                 position: relative;
                 &-active {
-                    z-index: 110;
+                    z-index: $front;
                     transform: scale(1.1);
                     border-radius: $rounded;
                     opacity: 1!important;
                     &::after {
                         transition: $t-fast;
                         transition-property: transform;
-                    }
-                    &::before {
-                        border-radius: $rounded;
-                        opacity: 0!important;
                     }
                 }
                 &::before {
@@ -185,10 +159,10 @@ body {
             .pad-tuto {
                 opacity: 0;
             }
-            .edit {
+            .pad-editor {
                 pointer-events: inherit;
                 opacity: 1;
-                &-indicator {
+                .editor-indicator {
                     transition: $t-fast;
                 }
             }
@@ -213,7 +187,6 @@ body {
 
 
 // Bouton d'upload images
-
 .selection {
     height: 3.5rem;
     width: 18rem;
@@ -227,7 +200,7 @@ body {
         }
     }
     
-    .btn-upload {
+    .selection-btn-upload {
         transform: translateY(20px);
         opacity: 0;
         transition: $t-fast;
@@ -236,83 +209,99 @@ body {
 }
 
 .section-image {
-    .module {
+    .section-module {
+
+        // Chagement effectué, on masque l'image
         &.change {
-            .img{
-                animation: fadeOut 0.2s;
-            } 
-            
-            .background-container {
-                animation: fadeOut 0.2s;
+            .section-module-image {
+                &1 {
+                    animation: fadeOut 0.2s;
+                } 
+                
+                &2 {
+                    animation: fadeOut 0.2s;
+                }
             }
         }
 
+        // L'image charge
         &.loading {
-            .img, .color-list-el{
-                background-color: transparent;
+            .section-module-image1 {
+                opacity: 0;
                 animation: none;
-                opacity: 1;
-                overflow: hidden;
-                &::before {
-                    @include loadingGradient;
-                }
-                &::after {
-                    @include loadingGraph;
-                }
             }
             .color-list {
-                position: relative;
+                &::before {
+                    @include loadingGradient;
+                }
+
+                &::after {
+                    @include loadingGraph;
+                }
+
+                &-el {
+                    background-color: transparent;
+                }
             }
-            .color-list-el {
-                background-color: transparent;
+
+            .section-module-image {
+                &::before {
+                    @include absoluteTopLeft;
+                    @include fullSize;
+                    @include flex-center;
+
+                    content: "Chargement de l'image...";
+                    font-weight: 700;
+                    color: $grey-text;
+                    text-align: center;
+                }
+                
             }
-            
-            .background-container {
-                opacity: 0;
-            }
+
         }
 
+        // L'image est chargée, affiche le contenu
         &.changeDone {
-            .img{
-                animation: bounceIn 0.2s;
-            } 
-            
-            .background-container {
-                animation: fadeIn 0.2s;
+            .section-module-image {
+                &1 {
+                    animation: bounceIn 0.2s;
+                } 
+                
+                &2 {
+                    animation: fadeIn 0.2s;
+                }
             }
             .color-list-el {
                 animation: fadeOut 0.2s;
             }
         }
+        
+        // Chagement du nombre de couleur à écouter
         .color-list.edition {
             .color-list-el {
-                &::before {
-                    @include loadingGraph;
-                }
-
-                &::after {
-                    @include loadingGradient;
-                }
-                
-                position: relative;
                 background-color: transparent;
-                animation: none;
-                opacity: 1;
-                overflow: hidden;
+            }
+
+            &::before {
+                @include loadingGraph;
+            }
+
+            &::after {
+                @include loadingGradient;
             }
         }
+
+        // Ouverture de la sélection d'images
         .selection.selection-open {
             overflow: visible;
             
             height: calc(29vw + 6rem);
             width: calc(100vw - 2rem);
-            
-            max-height: 15rem;
 
-            // transition en "étapes"
+            // transition en étapes - (1) width (2) height
             transition: 
             width      0.3s,
-            height 0.3s 0s;
+            height 0.3s 0.05s;
             
             
             .selection-image {
@@ -333,11 +322,10 @@ body {
                 cursor: inherit;
             }
 
-            .btn-upload {
+            .selection-btn-upload {
                 transform: translateY(0);
                 transition-delay: 0.2s;
                 opacity: 1;
-                margin-top: 1.5rem;
             }
         }
     }
