@@ -506,7 +506,9 @@ main {
 
             &-tuto {
                 position: absolute;
-                top: 15%;
+                width: 100%;
+                box-sizing: border-box;
+                margin-bottom: 500px;
                 padding: 0 2rem;
                 text-align: center;
                 z-index: $content;
