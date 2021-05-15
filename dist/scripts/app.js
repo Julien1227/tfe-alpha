@@ -144,7 +144,8 @@ var body = document.querySelector('body'),
     infoSection = document.querySelector('.section-info'),
     colorBtn = document.querySelector('.menu-btn[id="color"]'),
     creditBtn = document.querySelectorAll('.section-header-creditBtn'),
-    closeCreditBtn = document.getElementById('.closeCreditSection'); //////////////////////////////////////
+    closeCreditBtn = document.getElementById('.closeCreditSection');
+var page = ""; //////////////////////////////////////
 //////// ECOUTE D'UNE COULEUR ////////
 ////////////////////////////////////// 
 
@@ -255,21 +256,32 @@ sectionIntro.addEventListener('click', function (event) {
   }, letters.length * 100 + 1500);
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-///////////////////// GESTION DU SLIDER ///////////////////////////
+/////////////////////////// NAVIGUATION ///////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
 navBtn.forEach(function (element) {
   element.addEventListener('click', function (e) {
+    body.classList.remove('show-credits');
     var target = e.currentTarget;
     var pastTarget = document.querySelector('.menu-btn.active');
     pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
     target.classList.add('active');
-    var page = target.getAttribute('id');
-    body.setAttribute('data-page', page);
+    page = target.getAttribute('id');
+    var actualSection = document.querySelector('.section-' + page);
+    var pastSection = document.querySelector('.section.active');
 
-    if (page == 'closeCreditSection') {
-      body.setAttribute('data-page', 'color');
+    if (pastSection != null) {
+      var pastPage = pastSection.getAttribute('id');
+
+      if (pastPage != page) {
+        actualSection.classList.add('active');
+        pastSection.classList.remove('active');
+      } else {
+        console.log('La page est déjà ouverte !');
+      }
+    } else {
+      actualSection.classList.add('active');
     } // Refais apparaître le message du piano
 
 
@@ -568,7 +580,7 @@ var notes = {
 document.addEventListener('keydown', function (e) {
   var key = e.key; // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
 
-  if (body.getAttribute('data-page') == "piano") {
+  if (page == 'piano') {
     // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
     if (down) return;
     down = true; // Si une fréquence est assigné à la touche, on la joue
@@ -939,8 +951,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

@@ -54,6 +54,14 @@
     .mobile {display: none;}
 
     .section {
+
+        
+    &-color {clip-path: ellipse(0px 0px at $cpD-color $cp-y); &.active{clip-path: ellipse(2000px 2000px at $cpD-color $cp-y);}}
+    &-image {clip-path: ellipse(0px 0px at $cpD-image $cp-y); &.active{clip-path: ellipse(2000px 2000px at $cpD-image $cp-y);}}
+    &-pad {clip-path: ellipse(0px 0px at $cpD-pad $cp-y); &.active{clip-path: ellipse(2000px 2000px at $cpD-pad $cp-y);}}
+    &-info {clip-path: ellipse(0px 0px at $cpD-info $cp-y); &.active{clip-path: ellipse(2000px 2000px at $cpD-info $cp-y);}}
+
+
         height: $section-height;
         align-items: center;
         

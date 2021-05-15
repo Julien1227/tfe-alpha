@@ -64,6 +64,8 @@ const body = document.querySelector('body'),
       creditBtn = document.querySelectorAll('.section-header-creditBtn'),
       closeCreditBtn = document.getElementById('.closeCreditSection');
 
+var page = "";
+
 
 //////////////////////////////////////
 //////// ECOUTE D'UNE COULEUR ////////
@@ -207,12 +209,13 @@ sectionIntro.addEventListener('click', (event) => {
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-///////////////////// GESTION DU SLIDER ///////////////////////////
+/////////////////////////// NAVIGUATION ///////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
 navBtn.forEach(element => {
     element.addEventListener('click', (e) => {
+        body.classList.remove('show-credits');
         let target = e.currentTarget;
         
         var pastTarget = document.querySelector('.menu-btn.active');
@@ -221,11 +224,20 @@ navBtn.forEach(element => {
         
         target.classList.add('active');
         
-        let page = target.getAttribute('id');
-        body.setAttribute('data-page', page);
+        page = target.getAttribute('id');
+        let actualSection = document.querySelector('.section-'+page);
+        let pastSection = document.querySelector('.section.active');
 
-        if (page == 'closeCreditSection') {
-            body.setAttribute('data-page', 'color');
+        if(pastSection != null) {
+            let pastPage = pastSection.getAttribute('id');
+            if (pastPage != page) {
+                actualSection.classList.add('active');
+                pastSection.classList.remove('active');
+            }else{
+                console.log('La page est déjà ouverte !')
+            }
+        }else{
+            actualSection.classList.add('active');
         }
 
         // Refais apparaître le message du piano
@@ -585,7 +597,7 @@ document.addEventListener('keydown', (e) => {
     let key = e.key;
 
     // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
-    if(body.getAttribute('data-page') == "piano") {
+    if(page == 'piano') {
 
         // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
         if(down) return;

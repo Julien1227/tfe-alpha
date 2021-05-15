@@ -6,7 +6,9 @@
 }
 
 main {
+    position: relative;
     overflow: hidden;
+    height: 100vh;
 }
 
 .gist {
@@ -121,7 +123,7 @@ main {
 // Menu
 .menu {
     position: fixed;
-    z-index: $front;
+    z-index: calc(#{$topOfAll} + 50);
     bottom: 0;
     width: 100%;
 
@@ -195,10 +197,11 @@ main {
 }
 
 .section-intro {
-    @include fullSize;
     @include flex-center;
+    width: 100vw;
+    height: 100vh;
     position: absolute;
-    z-index: calc(#{$topOfAll} + 50);
+    z-index: calc(#{$topOfAll} + 500);
     cursor: pointer;
 
     &-svg {
@@ -208,6 +211,9 @@ main {
 }
 
 .section {
+    position: absolute;
+    top: 0;
+    left: 0;
     @include flex-column;
     justify-content: flex-end;
 
@@ -223,7 +229,7 @@ main {
         z-index: $front;
 
         @include flex-center;
-        box-shadow: 0px 20px 50px 0px #00000013;;
+        box-shadow: 0px 0px 20px 0px #00000013;;
 
         width: 100%;
         height: $header-height;
@@ -326,13 +332,13 @@ main {
                 transition: $t-fast;
 
                 overflow: hidden;
-                height: calc(60px + 0.5rem);
+                height: calc(#{$imageColorSize} + 0.5rem);
 
-                width: calc(var(--colorNumber) * (60px + 0.5rem));
+                width: calc(var(--colorNumber) * (#{$imageColorSize} + 0.5rem));
 
                 &.big {
-                    width: calc((60px + 0.5rem) * 5);
-                    height: calc(120px + 1rem);
+                    width: calc((#{$imageColorSize} + 0.5rem) * 5);
+                    height: calc((#{$imageColorSize} * 2) + 1rem);
                 }
     
                 &-el {
@@ -341,8 +347,8 @@ main {
 
                     border-radius: $round;
                     margin: 0.25rem;
-                    width: 60px;
-                    height: 60px;
+                    width: $imageColorSize;
+                    height: $imageColorSize;
 
                     @for $i from 1 through 10 {
                         &:nth-child(#{$i}) {
@@ -602,12 +608,16 @@ main {
         }
     }
 
+    
     &-info {
+        display: block;
         align-items: center;
         overflow-y: scroll;
         overflow-x: hidden;
 
         .container {
+            position: absolute;
+            top: $header-height;
             // Rajoute de l'espacement en haut et en bas pour aérer, utiliser des margin/ padding casse le "overflow: scroll", il faut utiliser des éléments.
             &:before {content: ""; display: block; height: $h3;}
             &:after {content: ""; display: block; height: $h1;}
