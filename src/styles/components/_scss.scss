@@ -723,11 +723,14 @@ main {
 
     &-credits {
         .copyright {text-align: center;}
+
+        display: flex!important;
         overflow-y: scroll;
-        position: fixed;
+        position: absolute;
+        top: 0;
         justify-content: flex-start;
         background-color: $white;
-        z-index: calc(#{$content} + 1);
+        z-index: $topOfAll;
         
         &-title {
             width: 100vw;
@@ -737,9 +740,13 @@ main {
         }
         
         .credits {
-            max-width: 600px;
+            @include flex-column-center-y;
+            width: 100%;
+            box-sizing: border-box;
             padding: 2rem;
             &-div {
+                width: 100%;
+                max-width: 600px;
                 padding-bottom: 1.5rem;
                 border-bottom: $border-light;
                 &:last-child {

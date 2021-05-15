@@ -57,7 +57,7 @@ const playedColors = document.querySelector('.played-color');
 //////////////////////////////////////
 
 const body = document.querySelector('body'),
-      navBtn = document.querySelectorAll('.section-header-creditBtn, .menu-btn'),
+      navBtn = document.querySelectorAll('.menu-btn'),
       pianoSvg = document.querySelector('.section-piano-svg'),
       infoSection = document.querySelector('.section-info'),
       colorBtn = document.querySelector('.menu-btn[id="color"]'),
@@ -171,7 +171,7 @@ sectionIntro.addEventListener('click', (event) => {
             l = randomMinMax(50, 60);
                 
         let gain = setGain(l, s),
-            frq = setFrequency(h, s, l);
+            frq = setFrequency( h, s, l);
 
         gains.push(gain);
         frqs.push(frq);
@@ -238,6 +238,12 @@ navBtn.forEach(element => {
         if (page == "info") {
             infoSection.scrollTop = 0;
         }
+    });
+});
+
+creditBtn.forEach(btn => { 
+    btn.addEventListener('click', (e) => {
+        body.classList.toggle('show-credits');
     });
 });
 
@@ -513,7 +519,20 @@ editInput.addEventListener(eventEnd, (e) => {
     stopGain(defaultEase);
 });
 
+if (window.matchMedia("(min-width: 900px)").matches) {
+    randomBtn.addEventListener("mouseenter", (e) => {
+        randomBtn.classList.add('hover');
+        randomBtn.addEventListener('animationend', (e) => {
+            randomBtn.classList.remove('hover');
+        });
+    });
+}
+
 randomBtn.addEventListener("click", (e) => {
+    randomBtn.classList.add('spin');
+    randomBtn.addEventListener('animationend', (e) => {
+        randomBtn.classList.remove('spin');
+    });
     let h = randomMinMax(0, 360);
     padBtn.forEach(btn => {
         h = h + randomMinMax(30, 50)%360;

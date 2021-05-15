@@ -5,18 +5,19 @@
         opacity: .5;
     }
 }
+
+.section-credits {
+    opacity: 0;
+    transition: $t-fast;
+    pointer-events: none;
+}
+
 body {
     &[data-page="color"] {.section-color {display: flex;}}
-    
     &[data-page="pad"] {.section-pad {display: flex;}}
-    
     &[data-page="image"] {.section-image {display: flex;}}
-
     &[data-page="piano"] {.played {display: none;}.section-piano {display: flex;}}
-
     &[data-page="info"] {.played {display: none;}.section-info {display: flex;}}
-
-    &[data-page="credits"] {.played {display: none;}.section-credits {display: flex;}}
 
     .menu-btn.active {
         box-shadow: $shadow;
@@ -26,6 +27,13 @@ body {
             svg {
                 transform: scale(1);
             }
+        }
+    }
+
+    &.show-credits {
+        .section-credits {
+            opacity: 1;
+            pointer-events: inherit;
         }
     }
 }
@@ -106,6 +114,17 @@ body {
 
         &-random {
             opacity: 1;
+            &:hover {
+                opacity: inherit;
+            }
+
+            &.hover {
+                animation: spin 0.3s;
+            }
+
+            &.spin {
+                animation: spinFull 0.45s;
+            }
         }
     }
 

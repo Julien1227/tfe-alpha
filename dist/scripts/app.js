@@ -139,7 +139,7 @@ var playedColors = document.querySelector('.played-color'); ////////////////////
 //////////////////////////////////////
 
 var body = document.querySelector('body'),
-    navBtn = document.querySelectorAll('.section-header-creditBtn, .menu-btn'),
+    navBtn = document.querySelectorAll('.menu-btn'),
     pianoSvg = document.querySelector('.section-piano-svg'),
     infoSection = document.querySelector('.section-info'),
     colorBtn = document.querySelector('.menu-btn[id="color"]'),
@@ -282,6 +282,11 @@ navBtn.forEach(function (element) {
     if (page == "info") {
       infoSection.scrollTop = 0;
     }
+  });
+});
+creditBtn.forEach(function (btn) {
+  btn.addEventListener('click', function (e) {
+    body.classList.toggle('show-credits');
   });
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -499,7 +504,21 @@ editInput.addEventListener('input', function (e) {
 editInput.addEventListener(eventEnd, function (e) {
   stopGain(defaultEase);
 });
+
+if (window.matchMedia("(min-width: 900px)").matches) {
+  randomBtn.addEventListener("mouseenter", function (e) {
+    randomBtn.classList.add('hover');
+    randomBtn.addEventListener('animationend', function (e) {
+      randomBtn.classList.remove('hover');
+    });
+  });
+}
+
 randomBtn.addEventListener("click", function (e) {
+  randomBtn.classList.add('spin');
+  randomBtn.addEventListener('animationend', function (e) {
+    randomBtn.classList.remove('spin');
+  });
   var h = randomMinMax(0, 360);
   padBtn.forEach(function (btn) {
     h = h + randomMinMax(30, 50) % 360;
@@ -920,8 +939,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })
