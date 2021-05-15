@@ -134,7 +134,6 @@ var defaultEase = 0.1; //////////////////////////////////////
 var sectionIntro = document.querySelector('.section-intro'),
     letters = document.querySelectorAll('.h1-letter');
 var count = 1;
-var randomColorstart = randomMinMax(0, 120);
 var playedColors = document.querySelector('.played-color'); //////////////////////////////////////
 ///////// GESTION DU SLIDER //////////
 //////////////////////////////////////
@@ -176,11 +175,12 @@ var colorThief = new ColorThief(); //////////////////////////////////////
 //////////////// PAD /////////////////
 ////////////////////////////////////// 
 
-var pianoBtn = document.querySelectorAll('.pad-btn'),
+var padBtn = document.querySelectorAll('.pad-btn'),
     tuto = document.querySelector('.pad-tuto'),
     closeTuto = document.getElementById('closeTuto'),
     confirmEdit = document.getElementById('confirmEdit'),
     editBtn = document.querySelector('.btn-edit'),
+    randomBtn = document.querySelector('.btn-random'),
     editDiv = document.querySelector('.pad-editor'),
     editDivIndicator = document.querySelector('.editor-indicator'),
     saveBtn = document.querySelector('.btn-save'),
@@ -216,10 +216,11 @@ sectionIntro.addEventListener('click', function (event) {
       hsls = [];
   o.start(0);
   sectionIntro.classList.add('play');
+  var randomH = randomMinMax(0, 360);
   letters.forEach(function (element) {
     //Crée la couleur en HSL pour jouer la note plus tard
-    var h = randomColorstart + count * 20,
-        s = randomMinMax(70, 100),
+    var h = randomH + randomMinMax(30, 40) * count % 360,
+        s = randomMinMax(80, 100),
         l = randomMinMax(50, 60);
     var gain = setGain(l, s),
         frq = setFrequency(h, s, l);
@@ -433,7 +434,7 @@ playImageBtn.addEventListener('click', function (e) {
 ///////////////////////////////////////////////////////////////////
 // Assigne une couleur à chaque touche
 
-pianoBtn.forEach(function (btn) {
+padBtn.forEach(function (btn) {
   h = h + 39;
   actualisePadBtnColor(btn, h);
 }); // Permets de rentreret sortir en mode "modification" des boutons 
@@ -445,7 +446,7 @@ saveBtn.addEventListener('click', function (e) {
   sectionPad.classList.remove('pad-modify');
 }); // Pour chaque touches du piano
 
-pianoBtn.forEach(function (btn) {
+padBtn.forEach(function (btn) {
   btn.addEventListener(eventStart, function (e) {
     //Récupère la couleur appuyée
     var targetBtn = e.currentTarget; // Récupère la couleur de la touche
@@ -461,7 +462,8 @@ pianoBtn.forEach(function (btn) {
 
       sectionPad.classList.add('edition');
       editDiv.style.top = targetBtn.offsetTop + editDiv.offsetHeight + "px";
-      editDivIndicator.style.left = targetBtn.offsetLeft + "px"; // Bouton permettant de masquer le slider
+      editDivIndicator.style.left = targetBtn.offsetLeft + "px";
+      console.log(targetBtn.offsetTop, targetBtn.offsetLeft); // Bouton permettant de masquer le slider
 
       confirmEdit.addEventListener('click', function (e) {
         sectionPad.classList.remove('edition');
@@ -496,6 +498,13 @@ editInput.addEventListener('input', function (e) {
 });
 editInput.addEventListener(eventEnd, function (e) {
   stopGain(defaultEase);
+});
+randomBtn.addEventListener("click", function (e) {
+  var h = randomMinMax(0, 360);
+  padBtn.forEach(function (btn) {
+    h = h + randomMinMax(30, 50) % 360;
+    actualisePadBtnColor(btn, h);
+  });
 }); ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 /////////////////////////// Piano /////////////////////////////////

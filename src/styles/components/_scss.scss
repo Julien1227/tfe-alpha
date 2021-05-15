@@ -456,7 +456,21 @@ main {
     }
 
     &-pad {
+        align-items: center;
         justify-content: center;
+        
+        .btn-random {
+            @include flex-center;
+            @include squareSize(4rem);
+            align-self: flex-end;
+            z-index: $front;
+            margin-right: -2rem;
+            margin-bottom: -5rem;
+            svg {
+                @include squareSize(1.5rem);
+            }
+        }
+
         .pad {
             display: grid;
             grid-template-columns: repeat(3, 100px);
@@ -508,16 +522,17 @@ main {
                 position: absolute;
                 width: 100%;
                 box-sizing: border-box;
-                margin-bottom: 500px;
+                margin-bottom: 600px;
                 padding: 0 2rem;
                 text-align: center;
                 z-index: $content;
             }
     
             &-editor {
-                @include absoluteTopLeft;
+                position: absolute;
                 @include flex-center;
                 width: 100vw;
+                height: auto;
                 z-index: $front;
                 top: 50%;
     

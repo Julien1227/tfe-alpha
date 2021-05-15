@@ -44,6 +44,9 @@ body {
     }
 
     &.play {
+
+        pointer-events: none;
+
         .section-intro-svg {
             opacity: 0;
             transition: $t-fast;
@@ -92,16 +95,18 @@ body {
 .section-pad {
     .btn {
         &-edit {
-            margin-bottom: -5rem;
             opacity: 1;
             pointer-events: initial;   
         }
     
         &-save {
-            margin-top: 3rem;
             opacity: 0;
             pointer-events: none;
         } 
+
+        &-random {
+            opacity: 1;
+        }
     }
 
     .pad-editor {
@@ -117,7 +122,7 @@ body {
             &:active {
                 transform: scale(1.1);
                 border-radius: $rounded;
-                z-index: $front;
+                z-index: $content;
             }
         }
 
@@ -181,6 +186,11 @@ body {
                 opacity: 1;
                 pointer-events: inherit;
             } 
+
+            &-random {
+                opacity: 0;
+                pointer-events: none;
+            }
         }
 
     }

@@ -48,7 +48,6 @@ const sectionIntro = document.querySelector('.section-intro'),
       letters = document.querySelectorAll('.h1-letter');
 
 var count = 1;
-var randomColorstart = randomMinMax(0, 120);
 
 const playedColors = document.querySelector('.played-color');
 
@@ -107,11 +106,12 @@ const colorThief = new ColorThief();
 //////////////// PAD /////////////////
 ////////////////////////////////////// 
 
-const pianoBtn = document.querySelectorAll('.pad-btn'),
+const padBtn = document.querySelectorAll('.pad-btn'),
       tuto = document.querySelector('.pad-tuto'),
       closeTuto = document.getElementById('closeTuto'),
       confirmEdit = document.getElementById('confirmEdit'),
       editBtn = document.querySelector('.btn-edit'),
+      randomBtn = document.querySelector('.btn-random'),
       editDiv = document.querySelector('.pad-editor'),
       editDivIndicator = document.querySelector('.editor-indicator'),
       saveBtn = document.querySelector('.btn-save'),
@@ -162,13 +162,14 @@ sectionIntro.addEventListener('click', (event) => {
     o.start(0);
     
     sectionIntro.classList.add('play');
+    let randomH = randomMinMax(0, 360);
     letters.forEach(element => {
 
         //Crée la couleur en HSL pour jouer la note plus tard
-        let h = randomColorstart + (count * 20),
-            s = randomMinMax(70, 100),
+        let h = randomH + (randomMinMax(30, 40) * count)%360,
+            s = randomMinMax(80, 100),
             l = randomMinMax(50, 60);
-        
+                
         let gain = setGain(l, s),
             frq = setFrequency(h, s, l);
 
@@ -303,8 +304,6 @@ for (let i = 0; i < colorInputs.length; i++) {
 let deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "l'explorateur de fichiers" : "ma galerie";
 btnUpload.innerHTML = "Ouvrir " + deviceAction2;
 
-
-
 // Présélectionne une image
 imageSelection[0].classList.add('selected');
 createPalette(imgToListen);
@@ -433,7 +432,7 @@ playImageBtn.addEventListener('click', (e) => {
 ///////////////////////////////////////////////////////////////////
 
 // Assigne une couleur à chaque touche
-pianoBtn.forEach(btn => {
+padBtn.forEach(btn => {
     h = h + 39;
     actualisePadBtnColor(btn, h);
 });
@@ -448,7 +447,7 @@ saveBtn.addEventListener('click', (e) => {
 });
 
 // Pour chaque touches du piano
-pianoBtn.forEach(btn => {
+padBtn.forEach(btn => {
     btn.addEventListener(eventStart, (e) => {
         
         //Récupère la couleur appuyée
@@ -469,6 +468,8 @@ pianoBtn.forEach(btn => {
             sectionPad.classList.add('edition');
             editDiv.style.top = (targetBtn.offsetTop + editDiv.offsetHeight) + "px";
             editDivIndicator.style.left = targetBtn.offsetLeft + "px";
+
+            console.log(targetBtn.offsetTop, targetBtn.offsetLeft);
             
             // Bouton permettant de masquer le slider
             confirmEdit.addEventListener('click', (e) => {
@@ -510,6 +511,14 @@ editInput.addEventListener('input', (e) => {
 
 editInput.addEventListener(eventEnd, (e) => {
     stopGain(defaultEase);
+});
+
+randomBtn.addEventListener("click", (e) => {
+    let h = randomMinMax(0, 360);
+    padBtn.forEach(btn => {
+        h = h + randomMinMax(30, 50)%360;
+        actualisePadBtnColor(btn, h);
+    });
 });
 
 ///////////////////////////////////////////////////////////////////
