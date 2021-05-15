@@ -254,21 +254,15 @@ main {
   width: 100%;
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-}
-.menu svg {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-.menu-list {
-  display: flex;
-  align-items: flex-end;
-  width: 100%;
-}
-.menu-list-el {
   height: 4rem;
+}
+.menu-li {
   width: 100%;
-  background-color: #eeeeee;
+  height: 100%;
+}
+.menu-li-info {
+  height: calc(100% + 1rem);
+  box-shadow: 0px 0px 25px -10px #00000038;
 }
 .menu-btn {
   display: flex;
@@ -277,20 +271,13 @@ main {
   width: 100%;
   height: 100%;
   cursor: pointer;
+  background-color: #eeeeee;
   padding: 1.25rem 0.5rem;
   box-shadow: none;
 }
-.menu-btn-info {
-  width: 25%;
-  height: auto;
-  background-color: #eeeeee;
-  border-radius: 10px 0 0 0;
-  padding: 2rem 2rem;
-  box-shadow: 0px 0px 25px -10px #00000038;
-}
-.menu-btn-info svg {
-  width: 2rem;
-  height: 2rem;
+.menu-btn svg {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .pretty-background::after {
@@ -1775,13 +1762,13 @@ body .menu-btn.active:hover svg {
   .section-image .section-module-image1 {
     top: 3rem;
     width: 500px;
-    height: 100%;
+    height: 30vh;
     border-radius: 10px;
     object-fit: cover;
     z-index: 10;
   }
-  .section-image .form {
-    margin-top: 0rem;
+  .section-image .section-form {
+    padding-top: 10vh;
   }
   .section-info .container {
     padding: inherit;
@@ -1853,32 +1840,26 @@ body .menu-btn.active:hover svg {
 
   .menu {
     justify-content: center;
+    height: 10vh;
   }
-  .menu-list {
-    max-width: 600px;
-    border-radius: 10px;
+  .menu-li {
+    min-width: 150px;
+    width: 9vw;
   }
-  .menu-list-el {
-    height: auto;
+  .menu-li-info {
+    margin-left: 2rem;
   }
-  .menu-list-el:nth-child(3) {
-    border-radius: 0;
-  }
-  .menu-list-el:last-child {
-    border-radius: 0 10px 0 0;
-  }
-  .menu-list-el:first-child {
+  .menu-li:first-child .menu-btn {
     border-radius: 10px 0 0 0;
   }
-  .menu-btn {
-    padding: 2rem 1.5rem;
+  .menu-li:nth-child(4) .menu-btn {
+    border-radius: 0 10px 0 0;
   }
-  .menu-btn-info {
-    width: auto;
-    border-radius: 10px 10px 0 0;
-    padding: 2rem 3rem;
-    margin-left: 1.5rem;
+  .menu-li-info {
     box-shadow: none;
+  }
+  .menu-li-info .menu-btn {
+    border-radius: 10px 10px 0 0;
   }
 }
 @media (max-height: 750px) {
@@ -1887,6 +1868,10 @@ body .menu-btn.active:hover svg {
   }
   .section-piano.piano-modify .piano-btn {
     width: 100%;
+  }
+
+  .section-module-image1 {
+    min-height: 100%;
   }
 }
 /*# sourceMappingURL=app.css.map*/

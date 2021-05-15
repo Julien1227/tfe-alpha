@@ -127,21 +127,14 @@ main {
 
     display: flex;
     align-items: flex-end;
-    justify-content: space-between;
-
-    svg {
-        @include squareSize(1.5rem);
-    }
+    height: $menu-height;
     
-    &-list {
-        display: flex;
-        align-items: flex-end;
-        width: 100%;
-        
-        &-el {
-            height: $menu-height;
-            width: 100%;
-            background-color: $light-grey;
+    &-li {
+        @include fullSize;
+
+        &-info {
+            height: calc(100% + 1rem);
+            box-shadow: $shadow;
         }
     }
     
@@ -150,24 +143,15 @@ main {
         @include fullSize;
         cursor: pointer;
 
+        background-color: $light-grey;
         padding: 1.25rem 0.5rem;
 
         box-shadow: none;
 
-        &-info {
-            width: 25%;
-            height: auto;
-            background-color: $light-grey;
-            border-radius: $rounded 0 0 0;
-            padding: 2rem 2rem;
-            box-shadow: $shadow;
-    
-            & svg {
-                @include squareSize(2rem);
-            }
+        & svg {
+            @include squareSize(1.5rem);
         }
     }
-
 }
 
 .pretty-background {
