@@ -434,6 +434,8 @@ playImageBtn.addEventListener('click', function (e) {
     frqs.push(frq);
     setTimeout(function () {
       playArray(_i, speed, gains, frqs, hsls);
+
+      colorList.children[_i].classList.add('played');
     }, speed);
   };
 
@@ -731,8 +733,7 @@ function playArray(i, speed, gains, frqs, hsls) {
   setTimeout(function () {
     g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
     o.frequency.setValueAtTime(frqs[i], context.currentTime);
-    playedColors.classList.remove('hide');
-    root.style.setProperty('--played-color', 'hsla(' + hsls[i][0] + ', ' + hsls[i][1] + '%, ' + hsls[i][2] + '%, ' + gains[i] + ')');
+    actualisePlayedColor(hsls[i][0], hsls[i][1], hsls[i][2], gains[i]);
     g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
   }, i * speed);
 } // Permet de jouer une note
@@ -743,8 +744,15 @@ function playNote(h, s, l) {
       gain = setGain(l, s);
   g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
   o.frequency.setValueAtTime(frq, context.currentTime);
-  playedColors.classList.remove('hide');
-  root.style.setProperty('--played-color', 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + gain + ')');
+  actualisePlayedColor(h, s, l, gain);
+}
+
+function actualisePlayedColor(h, s, l, gain) {
+  if (window.matchMedia("(min-width: 900px)").matches) {
+    playedColors.classList.remove('hide');
+    playedColors.children[0].style.backgroundColor = 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + gain + ')';
+    playedColors.children[1].style.backgroundColor = 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + gain + ')';
+  }
 }
 
 function actualisePadBtnColor(btn, h) {
