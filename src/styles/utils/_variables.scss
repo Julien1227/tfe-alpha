@@ -63,6 +63,8 @@ $front: 1000;
 $content: 500;
 $background: -100;
 
+$imageColorSize: 15vw;
+
 // Gist background shapes
 $codeShapeBig: 20rem;
 $codeShapeMedium: 12rem;
@@ -74,3 +76,18 @@ $input-thumb-size: 1.3rem;
 $input-thumb-border: none;
 $input-thumb-color: $grey-text;
 $input-width: 102%;
+
+// Section clip-path
+
+$cp-y: 97%;
+
+$cp-color:8%;
+$cp-image:40%;
+$cp-pad:65%;
+$cp-piano:65%;
+$cp-info:85%;
+
+$cpD-color:25%;
+$cpD-image:38%;
+$cpD-pad:48%;
+$cpD-info:58%;

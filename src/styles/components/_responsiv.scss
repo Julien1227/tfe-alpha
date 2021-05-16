@@ -54,6 +54,15 @@
     .mobile {display: none;}
 
     .section {
+        
+        &-color {clip-path: ellipse(0px 0px at $cpD-color $cp-y)};
+        &-image {clip-path: ellipse(0px 0px at $cpD-image $cp-y)};
+        &-pad {clip-path: ellipse(0px 0px at $cpD-pad $cp-y)};
+        &-piano {clip-path: ellipse(0px 0px at $cp-piano $cp-y)};
+        &-info {clip-path: ellipse(0px 0px at $cpD-info $cp-y)};
+        &.active {clip-path: ellipse(2000px 2000px)}
+
+
         height: $section-height;
         align-items: center;
         
@@ -87,10 +96,6 @@
         &-pad {
             &.pad-modify {
                 .pad-container {
-                    height: 50vh;
-                }
-
-                .form {
                     height: 50vh;
                 }
             }
@@ -135,7 +140,7 @@
                     &1 {
                         top: 3rem;
                         width: 500px;
-                        height: 100%;
+                        height: 30vh;
                         border-radius: $rounded;
         
                         object-fit: cover;
@@ -143,11 +148,10 @@
                         z-index: 10;
                     }
                 }
-
             }
 
-            .form {
-                margin-top: 0rem;
+            .section-form {
+                padding-top: 10vh;
             }
         }
 
@@ -212,9 +216,9 @@
             }
 
             .navigation-container {
-                position: sticky;
                 top: calc(#{$h1} + #{$h3});
-                right: calc(50% + 2rem);
+                right: 50%;
+                bottom: inherit;
                 
                 width: 285px;
                 height: auto;
@@ -237,38 +241,26 @@
         }
     }
 
+// Menu
     .menu {
         justify-content: center;
-        &-list {
-            max-width:600px;
-            border-radius: $rounded;
-            &-el {
-                height: auto;
-                &:nth-child(3) {
-                    border-radius: 0;
-                }
-
-                &:last-child {
-                    border-radius: 0 $rounded 0 0;
-                }
-                
-                &:first-child {
-                    border-radius: $rounded 0 0 0;
-                }
+        height: 10vh;
+        &-li {
+            min-width: 150px;
+            width: 9vw;
+            &-info {
+                margin-left: 2rem;
             }
-        }
-        
-        &-btn {
-            padding: 2rem 1.5rem;
-        }
 
-        &-btn-info {
-            width: auto;
-            border-radius: $rounded $rounded 0 0;
-            padding: 2rem 3rem;
-            margin-left: 1.5rem;
-            box-shadow: none;
-        }
+        
+            &:first-child .menu-btn{border-radius: $rounded 0 0 0;}
+            &:nth-child(4) .menu-btn{border-radius: 0 $rounded 0 0;}
+
+            &-info {
+                box-shadow: none;
+                .menu-btn{border-radius: $rounded $rounded 0 0;}
+            }
+        }       
     }
 }
 
@@ -280,5 +272,9 @@
                 width: 100%;
             }
         }
+    }
+
+    .section-module-image1 {
+        min-height: 100%;
     }
 }

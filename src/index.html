@@ -64,7 +64,7 @@
     </section>
 
     <!-- LE SON DES COULEURS -->
-    <section class="section section-color">
+    <section class="section section-color active" id="color">
       <header class="section-header">
         <h2 class="section-header-title">Color'sounds</h2>
         <button class="section-header-creditBtn" id="credits"><svg><use xlink:href="#paperClipSvg"/></svg></button>
@@ -94,7 +94,7 @@
 
 
     <!-- LE SON DES IMAGES -->
-    <section class="section section-image">
+    <section class="section section-image" id="image">
       <header class="section-header">
         <h2 class="section-header-title">Image'sounds</h2>
         <button class="section-header-creditBtn" id="credits"><svg><use xlink:href="#paperClipSvg"/></svg></button>
@@ -144,18 +144,19 @@
 
 
     <!-- JOUER DES COULEURS -->
-    <section class="section section-pad">
+    <section class="section section-pad" id="pad">
       <header class="section-header">
         <h2 class="section-header-title">SoundBoard</h2>
         <button class="section-header-creditBtn" id="credits"><svg><use xlink:href="#paperClipSvg"/></svg></button>
       </header>
 
       <div class="pad-tuto">
-        <b>Sélectionnez la touche que vous voulez modifier.</b>
+        <p><b>Sélectionnez la touche que vous voulez modifier.</b></p>
       </div>
       
       <div class="pad-container">
         
+        <button class="btn btn-random"><svg><use xlink:href="#refreshSvg"/></svg></button>
         <ul class="pad">
           <li><button id="btn-1" class="pad-btn"></button></li>
           <li><button id="btn-2" class="pad-btn"></button></li>
@@ -184,7 +185,7 @@
     
 
     <!-- JOUER DES COULEURS (PIANO) -->
-    <section class="section section-piano">
+    <section class="section section-piano" id="piano">
       <header class="section-header">
         <h2 class="section-header-title">Piano</h2>
         <button class="section-header-creditBtn" id="credits"><svg><use xlink:href="#paperClipSvg"/></svg></button>
@@ -208,7 +209,7 @@
 
 
     <!-- INFORMATIVE SECTION -->
-    <section class="section section-info">
+    <section class="section section-info" id="info">
       <header class="section-header">
         <h2 class="section-header-title">Fonctionnement de Color'sounds</h2>
         <button class="section-header-creditBtn" id="credits"><svg><use xlink:href="#paperClipSvg"/></svg></button>
@@ -229,6 +230,7 @@
           </ul>
         </div>
       </div>
+      
       <div class="container">
 
         <h3 id="intro" class="anchor">Comment ça marche&nbsp;?</h3>
@@ -283,7 +285,7 @@
     </section>
 
     <!-- CREDITS -->
-    <section class="section section-credits">
+    <section class="section section-credits" id="credits">
       <header class="section-header">
         <h2 class="section-header-title">Crédits</h2>
         <button id="closeCreditSection" class="section-header-creditBtn"><svg><use xlink:href="#crossSvg"/></svg></button>
@@ -371,6 +373,10 @@
               <p><small>Aide au développement</small></p>
             </li>
             <li class="credits-list-el">
+              <p><b>Manon Hermann</b></p>
+              <p><small>Aide au développement - Contenu</small></p>
+            </li>
+            <li class="credits-list-el">
               <a target="_blank" href="https://youneshanafi.be/">Hanafi Younes</a>
               <p><small>Présentation MVP de mon site</small></p>
             </li>
@@ -392,21 +398,22 @@
     </section>
   </main>
 
-  <footer class="menu">
-    <ul class="menu-list">
-      <li class="menu-list-el"><button class="menu-btn active" id="color"><svg><use xlink:href="#colorSvg"/></svg></button>
+  <footer>
+    <ul class="menu">
+      <li class="menu-li"><button class="menu-btn active" id="color"><svg><use xlink:href="#colorSvg"/></svg></button>
       </li>
-      <li class="menu-list-el"><button class="menu-btn" id="image"><svg><use xlink:href="#pictureSvg"/></svg></button>
+      <li class="menu-li"><button class="menu-btn" id="image"><svg><use xlink:href="#pictureSvg"/></svg></button>
       </li>
-      <li class="menu-list-el"><button class="menu-btn" id="pad"><svg><use xlink:href="#gridSvg"/></svg></button>
+      <li class="menu-li"><button class="menu-btn" id="pad"><svg><use xlink:href="#gridSvg"/></svg></button>
       </li>
-      <li class="menu-list-el desktop"><button class="menu-btn" id="piano"><svg><use xlink:href="#pianoSvg"/></svg></button>
+      <li class="menu-li desktop"><button class="menu-btn" id="piano"><svg><use xlink:href="#pianoSvg"/></svg></button>
       </li>
+      <li class="menu-li menu-li-info"><button class="menu-btn" id="info"><svg><use xlink:href="#infoSvg"/></svg></button></li>
     </ul>
-    <button id="info" class="menu-btn menu-btn-info"><svg class="menu-list-btn-svg info"><use xlink:href="#infoSvg"/></svg></button>
   </footer>
 
   <div class="use-svg">
+    <svg id="refreshSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sync-alt" class="svg-inline--fa fa-sync-alt fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M370.72 133.28C339.458 104.008 298.888 87.962 255.848 88c-77.458.068-144.328 53.178-162.791 126.85-1.344 5.363-6.122 9.15-11.651 9.15H24.103c-7.498 0-13.194-6.807-11.807-14.176C33.933 94.924 134.813 8 256 8c66.448 0 126.791 26.136 171.315 68.685L463.03 40.97C478.149 25.851 504 36.559 504 57.941V192c0 13.255-10.745 24-24 24H345.941c-21.382 0-32.09-25.851-16.971-40.971l41.75-41.749zM32 296h134.059c21.382 0 32.09 25.851 16.971 40.971l-41.75 41.75c31.262 29.273 71.835 45.319 114.876 45.28 77.418-.07 144.315-53.144 162.787-126.849 1.344-5.363 6.122-9.15 11.651-9.15h57.304c7.498 0 13.194 6.807 11.807 14.176C478.067 417.076 377.187 504 256 504c-66.448 0-126.791-26.136-171.315-68.685L48.97 471.03C33.851 486.149 8 475.441 8 454.059V320c0-13.255 10.745-24 24-24z"></path></svg>
 
     <svg id="editIndicator" viewBox="0 0 32 25" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M31.6127 24.5563L16.0563 0L0.5 24.5563L31.6127 24.5563Z"/></svg>
 

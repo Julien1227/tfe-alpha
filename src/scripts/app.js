@@ -48,7 +48,6 @@ const sectionIntro = document.querySelector('.section-intro'),
       letters = document.querySelectorAll('.h1-letter');
 
 var count = 1;
-var randomColorstart = randomMinMax(0, 120);
 
 const playedColors = document.querySelector('.played-color');
 
@@ -58,12 +57,14 @@ const playedColors = document.querySelector('.played-color');
 //////////////////////////////////////
 
 const body = document.querySelector('body'),
-      navBtn = document.querySelectorAll('.section-header-creditBtn, .menu-btn'),
+      navBtn = document.querySelectorAll('.menu-btn'),
       pianoSvg = document.querySelector('.section-piano-svg'),
       infoSection = document.querySelector('.section-info'),
       colorBtn = document.querySelector('.menu-btn[id="color"]'),
       creditBtn = document.querySelectorAll('.section-header-creditBtn'),
       closeCreditBtn = document.getElementById('.closeCreditSection');
+
+var page = "";
 
 
 //////////////////////////////////////
@@ -107,11 +108,12 @@ const colorThief = new ColorThief();
 //////////////// PAD /////////////////
 ////////////////////////////////////// 
 
-const pianoBtn = document.querySelectorAll('.pad-btn'),
+const padBtn = document.querySelectorAll('.pad-btn'),
       tuto = document.querySelector('.pad-tuto'),
       closeTuto = document.getElementById('closeTuto'),
       confirmEdit = document.getElementById('confirmEdit'),
       editBtn = document.querySelector('.btn-edit'),
+      randomBtn = document.querySelector('.btn-random'),
       editDiv = document.querySelector('.pad-editor'),
       editDivIndicator = document.querySelector('.editor-indicator'),
       saveBtn = document.querySelector('.btn-save'),
@@ -162,15 +164,16 @@ sectionIntro.addEventListener('click', (event) => {
     o.start(0);
     
     sectionIntro.classList.add('play');
+    let randomH = randomMinMax(0, 360);
     letters.forEach(element => {
 
         //Crée la couleur en HSL pour jouer la note plus tard
-        let h = randomColorstart + (count * 20),
-            s = randomMinMax(70, 100),
+        let h = randomH + (randomMinMax(30, 40) * count) % 360,
+            s = randomMinMax(80, 100),
             l = randomMinMax(50, 60);
-        
+                
         let gain = setGain(l, s),
-            frq = setFrequency(h, s, l);
+            frq = setFrequency( h, s, l);
 
         gains.push(gain);
         frqs.push(frq);
@@ -206,12 +209,13 @@ sectionIntro.addEventListener('click', (event) => {
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-///////////////////// GESTION DU SLIDER ///////////////////////////
+/////////////////////////// NAVIGUATION ///////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
 navBtn.forEach(element => {
     element.addEventListener('click', (e) => {
+        body.classList.remove('show-credits');
         let target = e.currentTarget;
         
         var pastTarget = document.querySelector('.menu-btn.active');
@@ -220,11 +224,20 @@ navBtn.forEach(element => {
         
         target.classList.add('active');
         
-        let page = target.getAttribute('id');
-        body.setAttribute('data-page', page);
+        page = target.getAttribute('id');
+        let actualSection = document.querySelector('.section-'+page);
+        let pastSection = document.querySelector('.section.active');
 
-        if (page == 'closeCreditSection') {
-            body.setAttribute('data-page', 'color');
+        if(pastSection != null) {
+            let pastPage = pastSection.getAttribute('id');
+            if (pastPage != page) {
+                actualSection.classList.add('active');
+                pastSection.classList.remove('active');
+            }else{
+                console.log('La page est déjà ouverte !')
+            }
+        }else{
+            actualSection.classList.add('active');
         }
 
         // Refais apparaître le message du piano
@@ -237,6 +250,12 @@ navBtn.forEach(element => {
         if (page == "info") {
             infoSection.scrollTop = 0;
         }
+    });
+});
+
+creditBtn.forEach(btn => { 
+    btn.addEventListener('click', (e) => {
+        body.classList.toggle('show-credits');
     });
 });
 
@@ -302,8 +321,6 @@ for (let i = 0; i < colorInputs.length; i++) {
 // Affiche le bon message en fonction du device
 let deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "l'explorateur de fichiers" : "ma galerie";
 btnUpload.innerHTML = "Ouvrir " + deviceAction2;
-
-
 
 // Présélectionne une image
 imageSelection[0].classList.add('selected');
@@ -433,7 +450,7 @@ playImageBtn.addEventListener('click', (e) => {
 ///////////////////////////////////////////////////////////////////
 
 // Assigne une couleur à chaque touche
-pianoBtn.forEach(btn => {
+padBtn.forEach(btn => {
     h = h + 39;
     actualisePadBtnColor(btn, h);
 });
@@ -448,7 +465,7 @@ saveBtn.addEventListener('click', (e) => {
 });
 
 // Pour chaque touches du piano
-pianoBtn.forEach(btn => {
+padBtn.forEach(btn => {
     btn.addEventListener(eventStart, (e) => {
         
         //Récupère la couleur appuyée
@@ -469,6 +486,8 @@ pianoBtn.forEach(btn => {
             sectionPad.classList.add('edition');
             editDiv.style.top = (targetBtn.offsetTop + editDiv.offsetHeight) + "px";
             editDivIndicator.style.left = targetBtn.offsetLeft + "px";
+
+            console.log(targetBtn.offsetTop, targetBtn.offsetLeft);
             
             // Bouton permettant de masquer le slider
             confirmEdit.addEventListener('click', (e) => {
@@ -510,6 +529,27 @@ editInput.addEventListener('input', (e) => {
 
 editInput.addEventListener(eventEnd, (e) => {
     stopGain(defaultEase);
+});
+
+if (window.matchMedia("(min-width: 900px)").matches) {
+    randomBtn.addEventListener("mouseenter", (e) => {
+        randomBtn.classList.add('hover');
+        randomBtn.addEventListener('animationend', (e) => {
+            randomBtn.classList.remove('hover');
+        });
+    });
+}
+
+randomBtn.addEventListener("click", (e) => {
+    randomBtn.classList.add('spin');
+    randomBtn.addEventListener('animationend', (e) => {
+        randomBtn.classList.remove('spin');
+    });
+    let h = randomMinMax(0, 360);
+    padBtn.forEach(btn => {
+        h = (h + randomMinMax(30, 50)) % 360;
+        actualisePadBtnColor(btn, h);
+    });
 });
 
 ///////////////////////////////////////////////////////////////////
@@ -557,7 +597,7 @@ document.addEventListener('keydown', (e) => {
     let key = e.key;
 
     // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
-    if(body.getAttribute('data-page') == "piano") {
+    if(page == 'piano') {
 
         // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
         if(down) return;
