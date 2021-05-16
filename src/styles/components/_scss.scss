@@ -327,7 +327,7 @@ main {
                 transform: translateY(50%);
                 text-align: center;
 
-                border-radius: 2.3rem;
+                border-radius: calc(#{$imageColorSize} / 1.6);
                 background-color: $white;
                 box-shadow: $shadow;
                 transition: $t-fast;
@@ -513,7 +513,7 @@ main {
                 position: absolute;
                 width: 100%;
                 box-sizing: border-box;
-                margin-bottom: 600px;
+                margin-bottom: 550px;
                 padding: 0 2rem;
                 text-align: center;
                 z-index: $content;

@@ -168,7 +168,7 @@ sectionIntro.addEventListener('click', (event) => {
     letters.forEach(element => {
 
         //Crée la couleur en HSL pour jouer la note plus tard
-        let h = randomH + (randomMinMax(30, 40) * count)%360,
+        let h = randomH + (randomMinMax(30, 40) * count) % 360,
             s = randomMinMax(80, 100),
             l = randomMinMax(50, 60);
                 
@@ -547,7 +547,7 @@ randomBtn.addEventListener("click", (e) => {
     });
     let h = randomMinMax(0, 360);
     padBtn.forEach(btn => {
-        h = h + randomMinMax(30, 50)%360;
+        h = (h + randomMinMax(30, 50)) % 360;
         actualisePadBtnColor(btn, h);
     });
 });

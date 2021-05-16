@@ -533,7 +533,7 @@ randomBtn.addEventListener("click", function (e) {
   });
   var h = randomMinMax(0, 360);
   padBtn.forEach(function (btn) {
-    h = h + randomMinMax(30, 50) % 360;
+    h = (h + randomMinMax(30, 50)) % 360;
     actualisePadBtnColor(btn, h);
   });
 }); ///////////////////////////////////////////////////////////////////

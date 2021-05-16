@@ -21,9 +21,6 @@
     transition: $t-slow;
     transition-delay: 0s;
 
-    transition-property: clip-path opacity;
-    will-change: clip-path opacity;
-
     opacity: 0;
 
     &.active {
@@ -133,6 +130,7 @@ body {
         &-edit {
             opacity: 1;
             pointer-events: initial;   
+            margin-bottom: -3.5rem;
         }
     
         &-save {
@@ -460,13 +458,13 @@ body {
 }
 
 .played-color {
-    transition: $t-fast;
     &.hide {
         transition: $t-superslow;
         transition-property: opacity;
         opacity: 0;
     }
     &-el {
+        will-change: background-color;
         transition: $t-superfast;
     }
 }

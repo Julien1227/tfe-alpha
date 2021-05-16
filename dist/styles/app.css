@@ -451,25 +451,25 @@ main {
   padding: 0.2rem;
   transform: translateY(50%);
   text-align: center;
-  border-radius: 2.3rem;
+  border-radius: calc(15vw / 1.6);
   background-color: #fff;
   box-shadow: 0px 0px 25px -10px #00000038;
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
   overflow: hidden;
-  height: calc(40px + 0.5rem);
-  width: calc(var(--colorNumber) * (40px + 0.5rem));
+  height: calc(15vw + 0.5rem);
+  width: calc(var(--colorNumber) * (15vw + 0.5rem));
 }
 .section-image .section-module .color-list.big {
-  width: calc((40px + 0.5rem) * 5);
-  height: calc((40px * 2) + 1rem);
+  width: calc((15vw + 0.5rem) * 5);
+  height: calc((15vw * 2) + 1rem);
 }
 .section-image .section-module .color-list-el {
   opacity: 0;
   animation: fadeInTop 0.3s;
   border-radius: 1000px;
   margin: 0.25rem;
-  width: 40px;
-  height: 40px;
+  width: 15vw;
+  height: 15vw;
 }
 .section-image .section-module .color-list-el:nth-child(1) {
   animation-delay: 0.025s;
@@ -698,7 +698,7 @@ main {
   position: absolute;
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 600px;
+  margin-bottom: 550px;
   padding: 0 2rem;
   text-align: center;
   z-index: 500;
@@ -1141,8 +1141,6 @@ input[type=range]::-ms-track {
   z-index: -100;
   transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
   transition-delay: 0s;
-  transition-property: clip-path opacity;
-  will-change: clip-path opacity;
   opacity: 0;
 }
 .section.active {
@@ -1262,6 +1260,7 @@ body.show-credits .section-credits .section-header {
 .section-pad .btn-edit {
   opacity: 1;
   pointer-events: initial;
+  margin-bottom: -3.5rem;
 }
 .section-pad .btn-save {
   opacity: 0;
@@ -1549,15 +1548,13 @@ body.show-credits .section-credits .section-header {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-.played-color {
-  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-}
 .played-color.hide {
   transition: all 1s cubic-bezier(0.33, 1, 0.68, 1);
   transition-property: opacity;
   opacity: 0;
 }
 .played-color-el {
+  will-change: background-color;
   transition: all 0.1s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
