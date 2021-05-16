@@ -266,6 +266,9 @@ main {
   height: calc(100% + 1rem);
   box-shadow: 0px 0px 25px -10px #00000038;
 }
+.menu-li-info .menu-btn {
+  border-radius: 10px 0 0 0;
+}
 .menu-btn {
   display: flex;
   align-items: center;
@@ -786,7 +789,7 @@ main {
   z-index: calc(2000 + 150);
 }
 .section-info {
-  display: block;
+  display: flex;
   align-items: center;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -1123,6 +1126,7 @@ input[type=range]::-ms-track {
 }
 
 .section-credits {
+  z-index: 2000 !important;
   transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
   pointer-events: none;
   clip-path: ellipse(0px 0px at 99% -5%);
@@ -1132,65 +1136,19 @@ input[type=range]::-ms-track {
   transition-delay: 0s;
   transform: translateY(-100%);
 }
-.section-credits:after {
-  display: none;
-}
 
 .section {
+  z-index: -100;
   transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
   transition-delay: 0s;
-}
-.section:after {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: 2rem;
-  background-repeat: repeat;
-  background-image: url("../assets/bgSvg.svg");
-  opacity: 0.2;
-  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
-  z-index: 2000;
-  pointer-events: none;
+  transition-property: clip-path opacity;
+  will-change: clip-path opacity;
+  opacity: 0;
 }
 .section.active {
+  z-index: 500;
   transition-delay: 0.2s;
-}
-.section.active:after {
-  opacity: 0;
-  z-index: 2000;
-}
-.section-color {
-  clip-path: ellipse(0px 0px at 8% 97%);
-}
-.section-color.active {
-  clip-path: ellipse(2000px 2000px at 8% 97%);
-}
-.section-image {
-  clip-path: ellipse(0px 0px at 40% 97%);
-}
-.section-image.active {
-  clip-path: ellipse(2000px 2000px at 40% 97%);
-}
-.section-pad {
-  clip-path: ellipse(0px 0px at 65% 97%);
-}
-.section-pad.active {
-  clip-path: ellipse(2000px 2000px at 65% 97%);
-}
-.section-piano {
-  clip-path: ellipse(0px 0px at 65% 97%);
-}
-.section-piano.active {
-  clip-path: ellipse(2000px 2000px at 65% 97%);
-}
-.section-info {
-  clip-path: ellipse(0px 0px at 85% 97%);
-}
-.section-info.active {
-  clip-path: ellipse(2000px 2000px at 85% 97%);
+  opacity: 1;
 }
 
 body .menu-btn.active {
@@ -1799,26 +1757,20 @@ body.show-credits .section-credits .section-header {
   .section-color {
     clip-path: ellipse(0px 0px at 25% 97%);
   }
-  .section-color.active {
-    clip-path: ellipse(2000px 2000px at 25% 97%);
-  }
   .section-image {
     clip-path: ellipse(0px 0px at 38% 97%);
-  }
-  .section-image.active {
-    clip-path: ellipse(2000px 2000px at 38% 97%);
   }
   .section-pad {
     clip-path: ellipse(0px 0px at 48% 97%);
   }
-  .section-pad.active {
-    clip-path: ellipse(2000px 2000px at 48% 97%);
+  .section-piano {
+    clip-path: ellipse(0px 0px at 65% 97%);
   }
   .section-info {
     clip-path: ellipse(0px 0px at 58% 97%);
   }
-  .section-info.active {
-    clip-path: ellipse(2000px 2000px at 58% 97%);
+  .section.active {
+    clip-path: ellipse(2000px 2000px);
   }
   .section-module {
     width: 100%;
@@ -1930,9 +1882,9 @@ body.show-credits .section-credits .section-header {
     left: -100%;
   }
   .section-info .navigation-container {
-    position: sticky;
     top: calc(81px + 36px);
-    right: calc(50% + 2rem);
+    right: 50%;
+    bottom: inherit;
     width: 285px;
     height: auto;
     overflow: visible;

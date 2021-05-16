@@ -137,6 +137,7 @@ main {
         &-info {
             height: calc(100% + 1rem);
             box-shadow: $shadow;
+            .menu-btn{border-radius: $rounded 0 0 0;}
         }
     }
     
@@ -610,7 +611,7 @@ main {
 
     
     &-info {
-        display: block;
+        display: flex;
         align-items: center;
         overflow-y: scroll;
         overflow-x: hidden;
