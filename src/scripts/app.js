@@ -168,10 +168,11 @@ sectionIntro.addEventListener('click', (event) => {
     letters.forEach(element => {
 
         //Crée la couleur en HSL pour jouer la note plus tard
-        let h = randomH + (randomMinMax(30, 40) * count) % 360,
+        let 
+        h = (randomH + (randomMinMax(30, 40) * count)) % 360,
             s = randomMinMax(80, 100),
             l = randomMinMax(50, 60);
-                
+                        
         let gain = setGain(l, s),
             frq = setFrequency( h, s, l);
 
@@ -225,7 +226,7 @@ navBtn.forEach(element => {
         target.classList.add('active');
         
         page = target.getAttribute('id');
-        let actualSection = document.querySelector('.section-'+page);
+        let actualSection = document.getElementById('page-'+page);
         let pastSection = document.querySelector('.section.active');
 
         if(pastSection != null) {
@@ -287,7 +288,7 @@ for (let i = 0; i < colorInputs.length; i++) {
         playNote(h,s,l);
 
         // Affiche la fréquence jouée
-        actualNote.innerHTML = o.frequency.value + " Hz";
+        actualNote.innerHTML = setFrequency(h,s,l) + "Hz";
         
         // Affiche la valeur du slider 
         colorSpans[i].innerHTML = colorInputs[i].value;
@@ -624,8 +625,8 @@ document.addEventListener('keydown', (e) => {
             // Assignation de la couleur et d'un class de transition
             let size = randomMinMax(25, 60),
                 blur = size * 3,
-                top = randomMinMax((size/-2), 100) - (size/2),
-                left = randomMinMax((size/-2), 100) - (size/2);
+                top = randomMinMax(-(size/2), (100 - (size/2))),
+                left = randomMinMax(-(size/2), (100 - (size/2)));
 
             let colorDiv = document.createElement('div');
 
@@ -872,18 +873,18 @@ function setFrequency(h, s, l) {
     l = Number(l);
     
     // Convertis la couleur HSL en RGB sans tenir compte de la saturation - celle-ci est gérée apprès
-    let rgbColor = HSLtoRGB(h, 80, l);
+    let rgbColor = HSLtoRGB(h, 75, l);
     
     // Donne une ordre d'importance au R G et B
     frq = Math.round(rgbColor[0]*0.9 + rgbColor[1]*2 + rgbColor[2]*0.3);
 
     // Prise en compte de la saturation - elle influe sur le gain et s'ajoute à la valeur de la fréquence
-    frq = frq - 100 + s;
+    frq = (frq * (s/100));
 
     frq = Math.round(frq);
 
     // Empêche de descendre dans des valeurs négatives
-    if (frq < 0) {
+    if (frq < 0 || s == 0 || l == 0) {
         frq = 0;
     }
 

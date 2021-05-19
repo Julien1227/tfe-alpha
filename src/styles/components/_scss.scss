@@ -176,20 +176,20 @@ main {
 .svg-animate {
     @include squareSize(4rem);
     overflow: visible;
-    #action {
+    .action {
         animation: touchActionTraits 1.5s;
         animation-iteration-count: infinite;
         transform-origin: center;
     }
 
-    #keyboard {
+    .keyboard {
         animation: touchActionHand 1.5s;
         animation-delay: 0.05s;
         animation-iteration-count: infinite;
         transform-origin: center;
     }
 
-    #hand {
+    .hand {
         animation: touchActionHand 1.5s;
         animation-iteration-count: infinite;
         animation-timing-function: cubic-bezier(0.25, 1.32, 0.83, 1.25);
@@ -295,7 +295,10 @@ main {
                 letter-spacing: -0.3rem;
                 color: $white;
                 pointer-events: none;
-                //font-family: 'Source Code Pro', monospace;
+
+                font-family: 'Source Code Pro', monospace;
+
+                -webkit-text-stroke: 3px $white;
             }
 
             &-shadow {

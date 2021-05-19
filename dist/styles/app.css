@@ -313,18 +313,18 @@ main {
   height: 4rem;
   overflow: visible;
 }
-.svg-animate #action {
+.svg-animate .action {
   animation: touchActionTraits 1.5s;
   animation-iteration-count: infinite;
   transform-origin: center;
 }
-.svg-animate #keyboard {
+.svg-animate .keyboard {
   animation: touchActionHand 1.5s;
   animation-delay: 0.05s;
   animation-iteration-count: infinite;
   transform-origin: center;
 }
-.svg-animate #hand {
+.svg-animate .hand {
   animation: touchActionHand 1.5s;
   animation-iteration-count: infinite;
   animation-timing-function: cubic-bezier(0.25, 1.32, 0.83, 1.25);
@@ -429,6 +429,8 @@ main {
   letter-spacing: -0.3rem;
   color: #fff;
   pointer-events: none;
+  font-family: "Source Code Pro", monospace;
+  -webkit-text-stroke: 3px #fff;
 }
 .section-color .section-module-shadow {
   position: absolute;
@@ -1767,7 +1769,7 @@ body.show-credits .section-credits .section-header {
     clip-path: ellipse(0px 0px at 58% 97%);
   }
   .section.active {
-    clip-path: ellipse(2000px 2000px);
+    clip-path: ellipse(120vw 120vw);
   }
   .section-module {
     width: 100%;

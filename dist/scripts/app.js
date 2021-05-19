@@ -220,7 +220,7 @@ sectionIntro.addEventListener('click', function (event) {
   var randomH = randomMinMax(0, 360);
   letters.forEach(function (element) {
     //Crée la couleur en HSL pour jouer la note plus tard
-    var h = randomH + randomMinMax(30, 40) * count % 360,
+    var h = (randomH + randomMinMax(30, 40) * count) % 360,
         s = randomMinMax(80, 100),
         l = randomMinMax(50, 60);
     var gain = setGain(l, s),
@@ -268,7 +268,7 @@ navBtn.forEach(function (element) {
     pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
     target.classList.add('active');
     page = target.getAttribute('id');
-    var actualSection = document.querySelector('.section-' + page);
+    var actualSection = document.getElementById('page-' + page);
     var pastSection = document.querySelector('.section.active');
 
     if (pastSection != null) {
@@ -321,7 +321,7 @@ var _loop2 = function _loop2(i) {
 
     playNote(h, s, l); // Affiche la fréquence jouée
 
-    actualNote.innerHTML = o.frequency.value + " Hz"; // Affiche la valeur du slider 
+    actualNote.innerHTML = setFrequency(h, s, l) + "Hz"; // Affiche la valeur du slider 
 
     colorSpans[i].innerHTML = colorInputs[i].value; // Affiche la couleur jouée
 
@@ -434,8 +434,6 @@ playImageBtn.addEventListener('click', function (e) {
     frqs.push(frq);
     setTimeout(function () {
       playArray(_i, speed, gains, frqs, hsls);
-
-      colorList.children[_i].classList.add('played');
     }, speed);
   };
 
@@ -604,8 +602,8 @@ document.addEventListener('keydown', function (e) {
 
       var size = randomMinMax(25, 60),
           blur = size * 3,
-          top = randomMinMax(size / -2, 100) - size / 2,
-          left = randomMinMax(size / -2, 100) - size / 2;
+          top = randomMinMax(-(size / 2), 100 - size / 2),
+          left = randomMinMax(-(size / 2), 100 - size / 2);
       var colorDiv = document.createElement('div');
       colorDiv.style.backgroundColor = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
       colorDiv.style.filter = 'blur(' + blur + 'px)';
@@ -823,14 +821,14 @@ function setFrequency(h, s, l) {
   s = Number(s);
   l = Number(l); // Convertis la couleur HSL en RGB sans tenir compte de la saturation - celle-ci est gérée apprès
 
-  var rgbColor = HSLtoRGB(h, 80, l); // Donne une ordre d'importance au R G et B
+  var rgbColor = HSLtoRGB(h, 75, l); // Donne une ordre d'importance au R G et B
 
   frq = Math.round(rgbColor[0] * 0.9 + rgbColor[1] * 2 + rgbColor[2] * 0.3); // Prise en compte de la saturation - elle influe sur le gain et s'ajoute à la valeur de la fréquence
 
-  frq = frq - 100 + s;
+  frq = frq * (s / 100);
   frq = Math.round(frq); // Empêche de descendre dans des valeurs négatives
 
-  if (frq < 0) {
+  if (frq < 0 || s == 0 || l == 0) {
     frq = 0;
   }
 
@@ -959,8 +957,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

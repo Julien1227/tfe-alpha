@@ -60,7 +60,7 @@
         &-pad {clip-path: ellipse(0px 0px at $cpD-pad $cp-y)};
         &-piano {clip-path: ellipse(0px 0px at $cp-piano $cp-y)};
         &-info {clip-path: ellipse(0px 0px at $cpD-info $cp-y)};
-        &.active {clip-path: ellipse(2000px 2000px)}
+        &.active {clip-path: ellipse(120vw 120vw)}
 
 
         height: $section-height;
