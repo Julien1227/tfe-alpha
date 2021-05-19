@@ -643,58 +643,58 @@ main {
   z-index: -100;
 }
 .section-pad .pad-btn[id=btn-1] {
-  background-color: var(--pad-btn-color-1);
+  background-color: hsl(var(--pB-1), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-1]::after {
-  background-color: var(--pad-btn-color-1);
+  background-color: hsl(var(--pB-1), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-2] {
-  background-color: var(--pad-btn-color-2);
+  background-color: hsl(var(--pB-2), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-2]::after {
-  background-color: var(--pad-btn-color-2);
+  background-color: hsl(var(--pB-2), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-3] {
-  background-color: var(--pad-btn-color-3);
+  background-color: hsl(var(--pB-3), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-3]::after {
-  background-color: var(--pad-btn-color-3);
+  background-color: hsl(var(--pB-3), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-4] {
-  background-color: var(--pad-btn-color-4);
+  background-color: hsl(var(--pB-4), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-4]::after {
-  background-color: var(--pad-btn-color-4);
+  background-color: hsl(var(--pB-4), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-5] {
-  background-color: var(--pad-btn-color-5);
+  background-color: hsl(var(--pB-5), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-5]::after {
-  background-color: var(--pad-btn-color-5);
+  background-color: hsl(var(--pB-5), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-6] {
-  background-color: var(--pad-btn-color-6);
+  background-color: hsl(var(--pB-6), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-6]::after {
-  background-color: var(--pad-btn-color-6);
+  background-color: hsl(var(--pB-6), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-7] {
-  background-color: var(--pad-btn-color-7);
+  background-color: hsl(var(--pB-7), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-7]::after {
-  background-color: var(--pad-btn-color-7);
+  background-color: hsl(var(--pB-7), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-8] {
-  background-color: var(--pad-btn-color-8);
+  background-color: hsl(var(--pB-8), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-8]::after {
-  background-color: var(--pad-btn-color-8);
+  background-color: hsl(var(--pB-8), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-9] {
-  background-color: var(--pad-btn-color-9);
+  background-color: hsl(var(--pB-9), 100%, 50%);
 }
 .section-pad .pad-btn[id=btn-9]::after {
-  background-color: var(--pad-btn-color-9);
+  background-color: hsl(var(--pB-9), 100%, 50%);
 }
 .section-pad .pad-tuto {
   position: absolute;
@@ -1790,6 +1790,7 @@ body.show-credits .section-credits .section-header {
     font-size: 165px;
     line-height: 115px;
     margin-bottom: inherit;
+    -webkit-text-stroke: 5px #fff;
   }
   .section-pad.pad-modify .pad-container {
     height: 50vh;

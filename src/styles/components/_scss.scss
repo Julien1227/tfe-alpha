@@ -504,10 +504,10 @@ main {
     
                 @for $i from 1 through 9 {
                     &[id="btn-#{$i}"] {
-                        background-color: var(--pad-btn-color-#{$i});
+                        background-color: hsl(var(--pB-#{$i}), 100%, 50%);
                     }
                     &[id="btn-#{$i}"]::after {
-                        background-color: var(--pad-btn-color-#{$i});
+                        background-color: hsl(var(--pB-#{$i}), 100%, 50%);
                     }
                 }
             }

@@ -450,12 +450,6 @@ playImageBtn.addEventListener('click', (e) => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-// Assigne une couleur à chaque touche
-padBtn.forEach(btn => {
-    h = h + 39;
-    actualisePadBtnColor(btn, h);
-});
-
 // Permets de rentreret sortir en mode "modification" des boutons 
 editBtn.addEventListener('click', (e) => {
     sectionPad.classList.add('pad-modify');   
@@ -467,6 +461,10 @@ saveBtn.addEventListener('click', (e) => {
 
 // Pour chaque touches du piano
 padBtn.forEach(btn => {
+    // Assigne une couleur à chaque touche
+    h = h + 39;
+    actualisePadBtnColor(btn, h);
+
     btn.addEventListener(eventStart, (e) => {
         
         //Récupère la couleur appuyée
@@ -489,12 +487,6 @@ padBtn.forEach(btn => {
             editDivIndicator.style.left = targetBtn.offsetLeft + "px";
 
             console.log(targetBtn.offsetTop, targetBtn.offsetLeft);
-            
-            // Bouton permettant de masquer le slider
-            confirmEdit.addEventListener('click', (e) => {
-                sectionPad.classList.remove('edition');
-                targetBtn.classList.remove('pad-btn-active')
-            });
 
             // Sélection d'une couleur
             if (targetBtn.classList.contains('pad-btn-active') == false) {
@@ -523,9 +515,17 @@ editInput.addEventListener('input', (e) => {
     let h = editInput.value;
     let actualBtn = document.querySelector('.pad-btn-active');
     
-    // Actualise la couleur du bouton
-    actualisePadBtnColor(actualBtn, h);
-    playNote(h,100,50);
+    actualBtn.style.backgroundColor = "hsl("+h+", 100%, 50%)";
+
+    playNote(h, 100, 50);
+    
+    // Bouton permettant de masquer le slider et changer la variable de couleur
+    confirmEdit.addEventListener('click', (e) => {
+        sectionPad.classList.remove('edition');
+        targetBtn.classList.remove('pad-btn-active');
+    
+        actualisePadBtnColor(actualBtn, h);
+    });
 });
 
 editInput.addEventListener(eventEnd, (e) => {
@@ -802,7 +802,7 @@ function actualisePlayedColor(h, s, l, gain) {
 
 function actualisePadBtnColor(btn, h) {
     let id = btn.getAttribute('id').slice(-1);
-    root.style.setProperty('--pad-btn-color-'+id, 'hsl('+ h +', 100%, 50%)');
+    root.style.setProperty('--pB-'+id, h);
 }
 
 // Stop le gain et cache "played color"
