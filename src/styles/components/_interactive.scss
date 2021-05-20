@@ -18,16 +18,12 @@
 
 .section {
     z-index: $background;
-    transition: $t-slow;
-    transition-delay: 0s;
 
-    opacity: 0;
+    display: none;
 
     &.active {
+        display: flex;
         z-index: $content;
-        transition-delay: 0.2s;
-        opacity: 1;
-        //clip-path: ellipse(110vh 110vh);
     }
 
 

@@ -267,28 +267,17 @@ sectionIntro.addEventListener('click', function (event) {
 
 navBtn.forEach(function (element) {
   element.addEventListener('click', function (e) {
-    body.classList.remove('show-credits');
+    body.classList.remove('show-credits'); // Actualise le bouton du menu
+
     var target = e.currentTarget;
     var pastTarget = document.querySelector('.menu-btn.active');
     pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
     target.classList.add('active');
     page = target.getAttribute('id');
-    var actualSection = document.getElementById('page-' + page);
-    var pastSection = document.querySelector('.section.active');
-
-    if (pastSection != null) {
-      var pastPage = pastSection.getAttribute('id');
-
-      if (pastPage != page) {
-        actualSection.classList.add('active');
-        pastSection.classList.remove('active');
-      } else {
-        console.log('La page est déjà ouverte !');
-      }
-    } else {
-      actualSection.classList.add('active');
-    } // Refais apparaître le message du piano
-
+    var toShowSection = document.getElementById('page-' + page);
+    var actualSection = document.querySelector('.section.active');
+    actualSection.classList.remove('active');
+    toShowSection.classList.add('active'); // Refais apparaître le message du piano
 
     if (page != "piano") {
       pianoSvg.style.opacity = "1";
@@ -785,7 +774,11 @@ function createPaletteOnLoad(image) {
   var palette = colorThief.getPalette(image, Number(colorNumber.value));
 
   var _loop4 = function _loop4(_i4) {
-    var hslColor = RGBToHSL(palette[_i4][0], palette[_i4][1], palette[_i4][2]); // Crée un élement HTML auquel il assigne la couleur
+    var hslColor = RGBToHSL(palette[_i4][0], palette[_i4][1], palette[_i4][2]); // Création de la fréquence à l'interieur de la couleur
+
+    var frequency = document.createElement('p');
+    frequency.classList.add('color-list-el-frq');
+    frequency.innerHTML = setFrequency(hslColor[0], hslColor[1], hslColor[2]) + "Hz"; // Crée un élement HTML auquel il assigne la couleur
 
     var color = document.createElement('li');
     color.classList.add('color-list-el');
@@ -793,6 +786,7 @@ function createPaletteOnLoad(image) {
     color.addEventListener('animationend', function (e) {
       color.classList.add('animationend');
     });
+    color.appendChild(frequency);
     colorList.appendChild(color);
   };
 
@@ -966,8 +960,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

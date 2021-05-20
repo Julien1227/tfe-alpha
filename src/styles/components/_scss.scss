@@ -295,8 +295,7 @@ main {
                 color: $white;
                 pointer-events: none;
 
-                font-family: 'Source Code Pro', monospace;
-
+                font-family: $type-number;
                 -webkit-text-stroke: 0.5vw $white;
             }
 
@@ -342,6 +341,7 @@ main {
                 }
     
                 &-el {
+                    @include flex-center;
                     opacity: 0;
                     animation: fadeInTop 0.3s;
 
@@ -358,6 +358,13 @@ main {
 
                     &.animationend {
                         opacity: 1;
+                    }
+
+                    &-frq {
+                        font-family: $type-number;
+                        font-weight: 600;
+                        color: $white;
+                        opacity: .8;
                     }
                 }
             }

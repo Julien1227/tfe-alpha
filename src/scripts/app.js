@@ -221,29 +221,21 @@ sectionIntro.addEventListener('click', (event) => {
 navBtn.forEach(element => {
     element.addEventListener('click', (e) => {
         body.classList.remove('show-credits');
-        let target = e.currentTarget;
-        
-        var pastTarget = document.querySelector('.menu-btn.active');
 
+        // Actualise le bouton du menu
+        let target = e.currentTarget;
+        var pastTarget = document.querySelector('.menu-btn.active');
         pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
-        
         target.classList.add('active');
         
-        page = target.getAttribute('id');
-        let actualSection = document.getElementById('page-'+page);
-        let pastSection = document.querySelector('.section.active');
 
-        if(pastSection != null) {
-            let pastPage = pastSection.getAttribute('id');
-            if (pastPage != page) {
-                actualSection.classList.add('active');
-                pastSection.classList.remove('active');
-            }else{
-                console.log('La page est déjà ouverte !')
-            }
-        }else{
-            actualSection.classList.add('active');
-        }
+        page = target.getAttribute('id');
+        
+        let toShowSection = document.getElementById('page-'+page);
+        let actualSection = document.querySelector('.section.active');
+
+        actualSection.classList.remove('active');
+        toShowSection.classList.add('active');
 
         // Refais apparaître le message du piano
         if (page != "piano") {
@@ -842,8 +834,13 @@ function createPaletteOnLoad(image) {
     
     for (let i = 0; i < colorNumber.value; i++) {
 
-        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);    
+        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);
         
+        // Création de la fréquence à l'interieur de la couleur
+        let frequency = document.createElement('p');
+        frequency.classList.add('color-list-el-frq');
+        frequency.innerHTML = setFrequency(hslColor[0], hslColor[1], hslColor[2]) + "Hz";
+
         // Crée un élement HTML auquel il assigne la couleur
         let color = document.createElement('li');
         color.classList.add('color-list-el');
@@ -853,6 +850,7 @@ function createPaletteOnLoad(image) {
             color.classList.add('animationend');
         });
 
+        color.appendChild(frequency);
         colorList.appendChild(color);
     }
 }

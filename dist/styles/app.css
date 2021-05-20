@@ -463,6 +463,9 @@ main {
   height: calc((15vw * 2) + 1rem);
 }
 .section-image .section-module .color-list-el {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
   animation: fadeInTop 0.3s;
   border-radius: 1000px;
@@ -502,6 +505,12 @@ main {
 }
 .section-image .section-module .color-list-el.animationend {
   opacity: 1;
+}
+.section-image .section-module .color-list-el-frq {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 600;
+  color: #fff;
+  opacity: 0.8;
 }
 .section-image .section-module-image {
   width: 100%;
@@ -1130,14 +1139,11 @@ input[type=range]::-ms-track {
 
 .section {
   z-index: -100;
-  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
-  transition-delay: 0s;
-  opacity: 0;
+  display: none;
 }
 .section.active {
+  display: flex;
   z-index: 500;
-  transition-delay: 0.2s;
-  opacity: 1;
 }
 
 body .menu-btn.active {
@@ -1687,6 +1693,22 @@ body.show-credits .section-credits .section-header {
     transform: rotate(360deg);
   }
 }
+@keyframes sectionHide {
+  from {
+    clip-path: circle(110vw 110vw 50% 50%);
+  }
+  to {
+    clip-path: circle(0vw 0vw 50% 50%);
+  }
+}
+@keyframes sectionShow {
+  from {
+    clip-path: circle(0vw 0vw 50% 50%);
+  }
+  to {
+    clip-path: circle(110vw 110vw 50% 50%);
+  }
+}
 .desktop {
   display: none;
 }
@@ -1742,26 +1764,16 @@ body.show-credits .section-credits .section-header {
   }
 
   .section {
+    /*
+    &-color {clip-path: ellipse(0px 0px at $cpD-color $cp-y)};
+    &-image {clip-path: ellipse(0px 0px at $cpD-image $cp-y)};
+    &-pad {clip-path: ellipse(0px 0px at $cpD-pad $cp-y)};
+    &-piano {clip-path: ellipse(0px 0px at $cp-piano $cp-y)};
+    &-info {clip-path: ellipse(0px 0px at $cpD-info $cp-y)};
+    &.active {clip-path: ellipse(120vw 120vw)}
+    */
     height: calc(100vh - 2.5rem);
     align-items: center;
-  }
-  .section-color {
-    clip-path: ellipse(0px 0px at 25% 97%);
-  }
-  .section-image {
-    clip-path: ellipse(0px 0px at 38% 97%);
-  }
-  .section-pad {
-    clip-path: ellipse(0px 0px at 48% 97%);
-  }
-  .section-piano {
-    clip-path: ellipse(0px 0px at 65% 97%);
-  }
-  .section-info {
-    clip-path: ellipse(0px 0px at 58% 97%);
-  }
-  .section.active {
-    clip-path: ellipse(120vw 120vw);
   }
   .section-module {
     width: 100%;
