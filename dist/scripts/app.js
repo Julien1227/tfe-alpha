@@ -500,7 +500,13 @@ padBtn.forEach(function (btn) {
       playNote(h, s, l);
       btn.addEventListener(eventEnd, function (e) {
         stopGain(defaultEase);
-      });
+      }); // Vérifie que l'on soit sur desktop et ue le bouton appuyé soit bien une touche du pad
+
+      if (window.matchMedia("(min-width: 900px)").matches && btn.classList.contains('pad-btn')) {
+        body.addEventListener("mouseup", function (e) {
+          stopGain(defaultEase);
+        });
+      }
     }
   });
 }); // L'orsqu'un slider bouge - modifie la couleur active

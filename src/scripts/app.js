@@ -506,6 +506,13 @@ padBtn.forEach(btn => {
             btn.addEventListener(eventEnd, (e) => {
                 stopGain(defaultEase);
             });
+
+            // Vérifie que l'on soit sur desktop et ue le bouton appuyé soit bien une touche du pad
+            if (window.matchMedia("(min-width: 900px)").matches && btn.classList.contains('pad-btn')) {                    
+                body.addEventListener("mouseup", (e) => {
+                    stopGain(defaultEase);
+                });
+            }
         }
     });
     
