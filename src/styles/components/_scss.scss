@@ -77,7 +77,6 @@ main {
         height: 25vh;
 
         border-radius: $round;
-        background-color: var(--played-color);
 
         filter: blur(125px);
 
@@ -338,10 +337,7 @@ main {
                 overflow: hidden;
                 height: calc(#{$imageColorSize} + 0.5rem);
 
-                width: calc(var(--colorNumber) * (#{$imageColorSize} + 0.5rem));
-
                 &.big {
-                    width: calc((#{$imageColorSize} + 0.5rem) * 5);
                     height: calc((#{$imageColorSize} * 2) + 1rem);
                 }
     
@@ -357,8 +353,11 @@ main {
                     @for $i from 1 through 10 {
                         &:nth-child(#{$i}) {
                             animation-delay: $i * 0.025s;
-                            background-color: var(--palette-color-#{$i});
                         }
+                    }
+
+                    &.animationend {
+                        opacity: 1;
                     }
                 }
             }
@@ -499,15 +498,14 @@ main {
                     display: block;
                     z-index: $background;
                     filter: blur(30px);
-                    z-index: $background;
                 }
     
                 @for $i from 1 through 9 {
                     &[id="btn-#{$i}"] {
-                        background-color: hsl(var(--pB-#{$i}), 100%, 50%);
+                        background-color: hsl(var(--pb-#{$i}), 100%, 50%);
                     }
                     &[id="btn-#{$i}"]::after {
-                        background-color: hsl(var(--pB-#{$i}), 100%, 50%);
+                        background-color: hsl(var(--pb-#{$i}), 100%, 50%);
                     }
                 }
             }

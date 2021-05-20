@@ -228,7 +228,7 @@ sectionIntro.addEventListener('click', function (event) {
     gains.push(gain);
     frqs.push(frq);
     hsls.push([h, s, l]);
-    root.style.setProperty('--h1letter-' + count, "hsl(" + h + ", " + s + "%, " + l + "%)");
+    root.style.setProperty('--h1l-' + count, "hsl(" + h + ", " + s + "%, " + l + "%)");
     element.addEventListener('animationend', function (e) {
       element.style.opacity = 1;
       element.classList.add('end');
@@ -252,6 +252,10 @@ sectionIntro.addEventListener('click', function (event) {
     sectionIntro.classList.add('hide');
     sectionIntro.addEventListener('animationend', function (e) {
       sectionIntro.style.display = "none";
+
+      for (var _i = 1; _i < letters.length; _i++) {
+        root.style.removeProperty('--h1l-' + _i);
+      }
     });
   }, letters.length * 100 + 1500);
 }); ///////////////////////////////////////////////////////////////////
@@ -353,8 +357,7 @@ var deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "l'explora
 btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Présélectionne une image
 
 imageSelection[0].classList.add('selected');
-createPalette(imgToListen);
-root.style.setProperty('--colorNumber', colorNumber.value); // Réglage de la vitesse de lecture
+createPalette(imgToListen); // Réglage de la vitesse de lecture
 
 playRate.addEventListener('input', function (e) {
   speed = playRate.value * -1;
@@ -366,16 +369,19 @@ colorNumber.addEventListener(eventStart, function (e) {
 });
 colorNumber.addEventListener('input', function (e) {
   colorNumberSpan.innerHTML = colorNumber.value;
+  var width = 'calc((5rem + 0.5rem) * ' + colorNumber.value + ')';
 
   if (window.matchMedia("(min-width: 900px)").matches == false) {
     if (colorNumber.value > 5) {
+      width = 'calc((15vw + 0.5rem) * 5)';
       colorList.classList.add('big');
     } else {
+      width = 'calc(' + colorNumber.value + ' * (15vw + 0.5rem))';
       colorList.classList.remove('big');
     }
   }
 
-  root.style.setProperty('--colorNumber', colorNumber.value);
+  colorList.style.width = width;
 });
 colorNumber.addEventListener(eventEnd, function (e) {
   createPalette(imgToListen);
@@ -425,20 +431,22 @@ playImageBtn.addEventListener('click', function (e) {
       frqs = [],
       hsls = [];
 
-  var _loop3 = function _loop3(_i) {
-    var color = root.style.getPropertyValue('--palette-color-' + (_i + 1)).match(/\d+/g).map(Number);
-    hsls.push(color);
-    var gain = setGain(color[1], color[2]),
-        frq = setFrequency(color[0], color[1], color[2]);
+  var _loop3 = function _loop3(_i2) {
+    var htmlEl = colorList.childNodes[_i2],
+        rgbColor = htmlEl.getAttribute('style').match(/\d+/g).map(Number),
+        hslColor = RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
+    hsls.push(hslColor);
+    var gain = setGain(hslColor[1], hslColor[2]),
+        frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
     gains.push(gain);
     frqs.push(frq);
     setTimeout(function () {
-      playArray(_i, speed, gains, frqs, hsls);
+      playArray(_i2, speed, gains, frqs, hsls);
     }, speed);
   };
 
-  for (var _i = 0; _i < colorList.childNodes.length; _i++) {
-    _loop3(_i);
+  for (var _i2 = 0; _i2 < colorList.childNodes.length; _i2++) {
+    _loop3(_i2);
   }
 
   setTimeout(function () {
@@ -455,6 +463,7 @@ editBtn.addEventListener('click', function (e) {
   sectionPad.classList.add('pad-modify');
 });
 saveBtn.addEventListener('click', function (e) {
+  confirmEdit.click();
   sectionPad.classList.remove('pad-modify');
 }); // Pour chaque touches du piano
 
@@ -466,19 +475,15 @@ padBtn.forEach(function (btn) {
     //Récupère la couleur appuyée
     var targetBtn = e.currentTarget; // Récupère la couleur de la touche
 
-    var hslColor = getHslFromAttribute(targetBtn),
-        h = hslColor[0],
-        s = hslColor[1],
-        l = hslColor[2]; // LE PAD EST EN MODE "MODIFICATION"
+    var h = getColorFromAttribute(targetBtn),
+        s = 100,
+        l = 50; // LE PAD EST EN MODE "MODIFICATION"
 
     if (sectionPad.classList.contains('pad-modify') == true) {
-      playNote(h, s, l);
-      stopGain(0.2); // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
-
+      // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
       sectionPad.classList.add('edition');
       editDiv.style.top = targetBtn.offsetTop + editDiv.offsetHeight + "px";
-      editDivIndicator.style.left = targetBtn.offsetLeft + "px";
-      console.log(targetBtn.offsetTop, targetBtn.offsetLeft); // Sélection d'une couleur
+      editDivIndicator.style.left = targetBtn.offsetLeft + "px"; // Sélection d'une couleur
 
       if (targetBtn.classList.contains('pad-btn-active') == false) {
         // Actualise le bouton actif
@@ -486,8 +491,8 @@ padBtn.forEach(function (btn) {
         targetBtn.classList.add('pad-btn-active');
         pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('No pastTarget'); // Actualise les valeurs du slider avec la couleur actuelle du bouton
 
-        hslColor = getHslFromAttribute(targetBtn);
-        editInput.value = hslColor[0];
+        h = getColorFromAttribute(targetBtn);
+        editInput.value = h;
       } // LE PAD N'EST PAS EN MODE "MODIFICATION"
 
     } else {
@@ -507,7 +512,8 @@ editInput.addEventListener('input', function (e) {
 
   confirmEdit.addEventListener('click', function (e) {
     sectionPad.classList.remove('edition');
-    targetBtn.classList.remove('pad-btn-active');
+    actualBtn.classList.remove('pad-btn-active');
+    actualBtn.removeAttribute('style');
     actualisePadBtnColor(actualBtn, h);
   });
 });
@@ -644,14 +650,14 @@ navElements.forEach(function (element) {
 }); // Actualise le menu en fonction du scroll
 
 infoSection.addEventListener('scroll', function () {
-  for (var _i2 = 0; _i2 < anchors.length; _i2++) {
-    if (infoSection.scrollTop >= anchors[_i2].offsetTop - window.innerHeight / 2) {
+  for (var _i3 = 0; _i3 < anchors.length; _i3++) {
+    if (infoSection.scrollTop >= anchors[_i3].offsetTop - window.innerHeight / 2) {
       navElements.forEach(function (element) {
         element.classList.remove('current');
       });
 
-      if (navElements[_i2].classList.contains('current') == false) {
-        navElements[_i2].classList.add('current');
+      if (navElements[_i3].classList.contains('current') == false) {
+        navElements[_i3].classList.add('current');
       }
     }
   }
@@ -669,52 +675,7 @@ infoSection.addEventListener('scroll', function () {
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-
-function changeImageToListen(imgLink, external) {
-  // animations
-  imageModule.classList.add('change');
-  imgToListen.addEventListener('animationend', function (e) {
-    // à la fin du fadeOut on change l'image
-    if (e.animationName === 'fadeOut') {
-      console.log(imgLink);
-
-      if (external == false) {
-        backgroundImg.setAttribute('src', 'assets/images/toListen/' + imgLink + '.jpg');
-        imgToListen.setAttribute('src', 'assets/images/toListen/' + imgLink + '.jpg');
-        backgroundImg.setAttribute('srcset', 'assets/images/toListen/' + imgLink + '@2x.jpg 2x');
-        imgToListen.setAttribute('srcset', 'assets/images/toListen/' + imgLink + '@2x.jpg 2x');
-        imageModule.classList.remove('change');
-        imageModule.classList.add('loading');
-      } else {
-        backgroundImg.setAttribute('src', imgLink);
-        imgToListen.setAttribute('src', imgLink);
-        backgroundImg.setAttribute('srcset', "");
-        imgToListen.setAttribute('srcset', "");
-        imageModule.classList.remove('change');
-        imageModule.classList.add('loading');
-      }
-    }
-
-    if (imgToListen.complete) {
-      createPaletteOnLoad(imgToListen);
-      imageModule.classList.remove('loading');
-      imageModule.classList.add('changeDone');
-    } else {
-      imgToListen.addEventListener('load', function () {
-        createPaletteOnLoad(imgToListen);
-        imageModule.classList.remove('loading');
-        imageModule.classList.add('changeDone');
-      });
-    } // retire les classes d'animations lorsqu'elles sont terminées
-
-
-    if (e.animationName === 'bounceIn') {
-      imageModule.classList.remove('changeDone');
-      createPalette(imgToListen);
-    }
-  });
-} // Permet de jouer un tableau de notes sans actualiser "played color"
-
+// Permet de jouer un tableau de notes sans actualiser "played color"
 
 function playArrayWithoutColor(i, speed, gains, frqs) {
   setTimeout(function () {
@@ -753,53 +714,20 @@ function actualisePlayedColor(h, s, l, gain) {
 
 function actualisePadBtnColor(btn, h) {
   var id = btn.getAttribute('id').slice(-1);
-  root.style.setProperty('--pB-' + id, h);
+  root.style.setProperty('--pb-' + id, h);
 } // Stop le gain et cache "played color"
 
 
 function stopGain(ease) {
   g.gain.setTargetAtTime(0, context.currentTime, ease);
   playedColors.classList.add('hide');
-} // Vérifie que l'image soit chargée avant de créer la pallette
-
-
-function createPalette(image) {
-  if (image.complete) {
-    createPaletteOnLoad(image);
-  } else {
-    image.addEventListener('load', function () {
-      createPaletteOnLoad(image);
-    });
-  }
-} // Crée une pallette avec une image
-
-
-function createPaletteOnLoad(image) {
-  colorList.innerHTML = "";
-  var palette = colorThief.getPalette(image, Number(colorNumber.value));
-
-  var _loop4 = function _loop4(_i3) {
-    var hslColor = RGBToHSL(palette[_i3][0], palette[_i3][1], palette[_i3][2]); // Crée un élement HTML auquel il assigne la couleur
-
-    var color = document.createElement('li');
-    color.classList.add('color-list-el');
-    root.style.setProperty('--palette-color-' + (_i3 + 1), 'hsl(' + hslColor[0] + ', ' + hslColor[1] + '%, ' + hslColor[2] + '%)');
-    color.addEventListener('animationend', function (e) {
-      color.style.opacity = 1;
-    });
-    colorList.appendChild(color);
-  };
-
-  for (var _i3 = 0; _i3 < palette.length; _i3++) {
-    _loop4(_i3);
-  }
 } // Récupère les valeurs h s et l depuis les attributs de l'élément
 
 
-function getHslFromAttribute(element) {
+function getColorFromAttribute(element) {
   var id = element.getAttribute('id').slice(-1);
-  var hsls = root.style.getPropertyValue('--pad-btn-color-' + id).match(/\d+/g).map(Number);
-  return hsls;
+  var h = root.style.getPropertyValue('--pb-' + id);
+  return h;
 } // Calcule le gain
 
 
@@ -831,6 +759,82 @@ function setFrequency(h, s, l) {
   }
 
   return frq;
+} // Vérifie que l'image soit chargée avant de créer la pallette
+
+
+function createPalette(image) {
+  if (image.complete) {
+    createPaletteOnLoad(image);
+  } else {
+    image.addEventListener('load', function () {
+      createPaletteOnLoad(image);
+    });
+  }
+} // Crée une pallette avec une image
+
+
+function createPaletteOnLoad(image) {
+  colorList.innerHTML = "";
+  var palette = colorThief.getPalette(image, Number(colorNumber.value));
+
+  var _loop4 = function _loop4(_i4) {
+    var hslColor = RGBToHSL(palette[_i4][0], palette[_i4][1], palette[_i4][2]); // Crée un élement HTML auquel il assigne la couleur
+
+    var color = document.createElement('li');
+    color.classList.add('color-list-el');
+    color.style.backgroundColor = 'hsl(' + hslColor[0] + ', ' + hslColor[1] + '%, ' + hslColor[2] + '%)';
+    color.addEventListener('animationend', function (e) {
+      color.classList.add('animationend');
+    });
+    colorList.appendChild(color);
+  };
+
+  for (var _i4 = 0; _i4 < colorNumber.value; _i4++) {
+    _loop4(_i4);
+  }
+}
+
+function changeImageToListen(imgLink, external) {
+  // animations
+  imageModule.classList.add('change');
+  imgToListen.addEventListener('animationend', function (e) {
+    // à la fin du fadeOut on change l'image
+    if (e.animationName === 'fadeOut') {
+      if (external == false) {
+        backgroundImg.setAttribute('src', 'assets/images/toListen/' + imgLink + '.jpg');
+        imgToListen.setAttribute('src', 'assets/images/toListen/' + imgLink + '.jpg');
+        backgroundImg.setAttribute('srcset', 'assets/images/toListen/' + imgLink + '@2x.jpg 2x');
+        imgToListen.setAttribute('srcset', 'assets/images/toListen/' + imgLink + '@2x.jpg 2x');
+        imageModule.classList.remove('change');
+        imageModule.classList.add('loading');
+      } else {
+        backgroundImg.setAttribute('src', imgLink);
+        imgToListen.setAttribute('src', imgLink);
+        backgroundImg.setAttribute('srcset', "");
+        imgToListen.setAttribute('srcset', "");
+        imageModule.classList.remove('change');
+        imageModule.classList.add('loading');
+      }
+    }
+
+    if (imgToListen.complete) {
+      createPaletteOnLoad(imgToListen);
+      imageModule.classList.remove('loading');
+      imageModule.classList.add('changeDone');
+    } else {
+      imgToListen.addEventListener('load', function () {
+        createPaletteOnLoad(imgToListen);
+        imageModule.classList.remove('loading');
+        imageModule.classList.add('changeDone');
+      });
+    } // retire les classes d'animations lorsqu'elles sont terminées
+
+
+    if (e.animationName === 'bounceIn') {
+      imageModule.classList.remove('changeDone');
+      createPalette(imgToListen);
+    }
+  });
 } ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////// OTHERS FUNCTIONS ////////////////////////////

@@ -168,8 +168,7 @@ sectionIntro.addEventListener('click', (event) => {
     letters.forEach(element => {
 
         //Crée la couleur en HSL pour jouer la note plus tard
-        let 
-        h = (randomH + (randomMinMax(30, 40) * count)) % 360,
+        let h = (randomH + (randomMinMax(30, 40) * count)) % 360,
             s = randomMinMax(80, 100),
             l = randomMinMax(50, 60);
                         
@@ -180,7 +179,7 @@ sectionIntro.addEventListener('click', (event) => {
         frqs.push(frq);
         hsls.push([h, s, l]);
 
-        root.style.setProperty('--h1letter-'+count, "hsl("+ h +", "+ s +"%, "+ l +"%)");
+        root.style.setProperty('--h1l-'+count, "hsl("+ h +", "+ s +"%, "+ l +"%)");
         
         element.addEventListener('animationend', (e) => {
             element.style.opacity = 1;
@@ -202,9 +201,13 @@ sectionIntro.addEventListener('click', (event) => {
         sectionIntro.classList.add('hide');
         sectionIntro.addEventListener('animationend', (e) => {
             sectionIntro.style.display = "none";
+            for (let i = 1; i < letters.length; i++) {
+                root.style.removeProperty('--h1l-'+i);
+            }
         });
     }, (letters.length * 100) + 1500);
 });
+
 
 
 
@@ -327,10 +330,6 @@ btnUpload.innerHTML = "Ouvrir " + deviceAction2;
 imageSelection[0].classList.add('selected');
 createPalette(imgToListen);
 
-root.style.setProperty('--colorNumber', colorNumber.value);
-
-
-
 // Réglage de la vitesse de lecture
 playRate.addEventListener('input', (e) => {
     speed = playRate.value * -1;
@@ -346,16 +345,19 @@ colorNumber.addEventListener(eventStart, (e) => {
 
 colorNumber.addEventListener('input', (e) => {
     colorNumberSpan.innerHTML = colorNumber.value;
+    let width = 'calc((5rem + 0.5rem) * '+colorNumber.value+')';
 
     if (window.matchMedia("(min-width: 900px)").matches == false) {
         if (colorNumber.value > 5) {
+            width = 'calc((15vw + 0.5rem) * 5)';
             colorList.classList.add('big');
         }else {
+            width = 'calc('+colorNumber.value+' * (15vw + 0.5rem))';
             colorList.classList.remove('big');
         }
     }
 
-    root.style.setProperty('--colorNumber', colorNumber.value);
+    colorList.style.width = width;
 });
 
 colorNumber.addEventListener(eventEnd, (e) => {
@@ -423,11 +425,14 @@ playImageBtn.addEventListener('click', (e) => {
         hsls = [];
 
     for (let i = 0; i < colorList.childNodes.length; i++) {
-        let color = root.style.getPropertyValue('--palette-color-' + (i+1)).match(/\d+/g).map(Number);
-        hsls.push(color);
+        let htmlEl = colorList.childNodes[i],
+            rgbColor = htmlEl.getAttribute('style').match(/\d+/g).map(Number),
+            hslColor = RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
+
+        hsls.push(hslColor);
         
-        let gain = setGain(color[1],color[2]),
-            frq = setFrequency(color[0],color[1],color[2]);
+        let gain = setGain(hslColor[1],hslColor[2]),
+            frq = setFrequency(hslColor[0],hslColor[1],hslColor[2]);
 
         gains.push(gain);
         frqs.push(frq);
@@ -443,7 +448,6 @@ playImageBtn.addEventListener('click', (e) => {
 });
 
 
-
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ////////////////////////////// PAD ////////////////////////////////
@@ -456,7 +460,8 @@ editBtn.addEventListener('click', (e) => {
 });
 
 saveBtn.addEventListener('click', (e) => {
-    sectionPad.classList.remove('pad-modify');   
+    confirmEdit.click();
+    sectionPad.classList.remove('pad-modify');
 });
 
 // Pour chaque touches du piano
@@ -471,22 +476,17 @@ padBtn.forEach(btn => {
         let targetBtn = e.currentTarget;
 
         // Récupère la couleur de la touche
-        let hslColor = getHslFromAttribute(targetBtn),
-            h = hslColor[0],
-            s = hslColor[1],
-            l = hslColor[2];
+        let h = getColorFromAttribute(targetBtn),
+            s = 100,
+            l = 50;
 
         // LE PAD EST EN MODE "MODIFICATION"
         if (sectionPad.classList.contains('pad-modify') == true) {
-            playNote(h,s,l);
-            stopGain(0.2);
             
             // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
             sectionPad.classList.add('edition');
             editDiv.style.top = (targetBtn.offsetTop + editDiv.offsetHeight) + "px";
             editDivIndicator.style.left = targetBtn.offsetLeft + "px";
-
-            console.log(targetBtn.offsetTop, targetBtn.offsetLeft);
 
             // Sélection d'une couleur
             if (targetBtn.classList.contains('pad-btn-active') == false) {
@@ -496,8 +496,8 @@ padBtn.forEach(btn => {
                 pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('No pastTarget');
                 
                 // Actualise les valeurs du slider avec la couleur actuelle du bouton
-                hslColor = getHslFromAttribute(targetBtn);
-                editInput.value = hslColor[0];
+                h = getColorFromAttribute(targetBtn);
+                editInput.value = h;
             }
         // LE PAD N'EST PAS EN MODE "MODIFICATION"
         }else{
@@ -522,7 +522,9 @@ editInput.addEventListener('input', (e) => {
     // Bouton permettant de masquer le slider et changer la variable de couleur
     confirmEdit.addEventListener('click', (e) => {
         sectionPad.classList.remove('edition');
-        targetBtn.classList.remove('pad-btn-active');
+        actualBtn.classList.remove('pad-btn-active');
+
+        actualBtn.removeAttribute('style');
     
         actualisePadBtnColor(actualBtn, h);
     });
@@ -714,51 +716,6 @@ infoSection.addEventListener('scroll', () => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-function changeImageToListen(imgLink, external) {
-    // animations
-    imageModule.classList.add('change');
-    imgToListen.addEventListener('animationend', (e) => {
-        // à la fin du fadeOut on change l'image
-        if(e.animationName === 'fadeOut'){
-            console.log(imgLink);
-            if (external == false) {  
-                backgroundImg.setAttribute('src', 'assets/images/toListen/'+ imgLink +'.jpg');
-                imgToListen.setAttribute('src', 'assets/images/toListen/'+ imgLink +'.jpg');
-        
-                backgroundImg.setAttribute('srcset', 'assets/images/toListen/'+ imgLink +'@2x.jpg 2x');
-                imgToListen.setAttribute('srcset', 'assets/images/toListen/'+ imgLink +'@2x.jpg 2x');
-                imageModule.classList.remove('change');
-                imageModule.classList.add('loading');  
-            }else{
-                backgroundImg.setAttribute('src', imgLink);
-                imgToListen.setAttribute('src', imgLink);
-                backgroundImg.setAttribute('srcset', "");
-                imgToListen.setAttribute('srcset', "");
-                imageModule.classList.remove('change');
-                imageModule.classList.add('loading');
-            }
-        }
-
-        if (imgToListen.complete) {
-            createPaletteOnLoad(imgToListen);
-            imageModule.classList.remove('loading');
-            imageModule.classList.add('changeDone');
-        }else {
-            imgToListen.addEventListener('load', function() {
-                createPaletteOnLoad(imgToListen);
-                imageModule.classList.remove('loading');
-                imageModule.classList.add('changeDone');
-            });
-        }
-
-        // retire les classes d'animations lorsqu'elles sont terminées
-        if(e.animationName === 'bounceIn'){
-            imageModule.classList.remove('changeDone');
-            createPalette(imgToListen);
-        }
-    });
-}
-
 // Permet de jouer un tableau de notes sans actualiser "played color"
 function playArrayWithoutColor(i, speed, gains, frqs) {
     setTimeout(function() {
@@ -802,7 +759,7 @@ function actualisePlayedColor(h, s, l, gain) {
 
 function actualisePadBtnColor(btn, h) {
     let id = btn.getAttribute('id').slice(-1);
-    root.style.setProperty('--pB-'+id, h);
+    root.style.setProperty('--pb-'+id, h);
 }
 
 // Stop le gain et cache "played color"
@@ -811,45 +768,12 @@ function stopGain(ease) {
     playedColors.classList.add('hide');
 }
 
-// Vérifie que l'image soit chargée avant de créer la pallette
-function createPalette(image) {
-    if (image.complete) {
-        createPaletteOnLoad(image);
-    }else {
-        image.addEventListener('load', function() {
-            createPaletteOnLoad(image);
-        });
-    }
-}
-
-// Crée une pallette avec une image
-function createPaletteOnLoad(image) {
-    colorList.innerHTML = "";
-    
-    const palette = colorThief.getPalette(image, Number(colorNumber.value));
-    
-    for (let i = 0; i < palette.length; i++) {
-    
-        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);    
-        
-        // Crée un élement HTML auquel il assigne la couleur
-        let color = document.createElement('li');
-        color.classList.add('color-list-el');
-        root.style.setProperty('--palette-color-'+(i+1), 'hsl('+ hslColor[0] +', '+ hslColor[1] +'%, '+ hslColor[2] +'%)');
-        
-        color.addEventListener('animationend', (e) => {
-            color.style.opacity = 1;
-        });
-
-        colorList.appendChild(color);
-    }
-}
 
 // Récupère les valeurs h s et l depuis les attributs de l'élément
-function getHslFromAttribute(element) {
+function getColorFromAttribute(element) {
     let id = element.getAttribute('id').slice(-1);
-    let hsls = root.style.getPropertyValue('--pad-btn-color-' + id).match(/\d+/g).map(Number);
-    return hsls;
+    let h = root.style.getPropertyValue('--pb-' + id);
+    return h;
 }
 
 // Calcule le gain
@@ -891,7 +815,83 @@ function setFrequency(h, s, l) {
     return frq;
 }
 
+// Vérifie que l'image soit chargée avant de créer la pallette
+function createPalette(image) {
+    if (image.complete) {
+        createPaletteOnLoad(image);
+    }else {
+        image.addEventListener('load', function() {
+            createPaletteOnLoad(image);
+        });
+    }
+}
 
+// Crée une pallette avec une image
+function createPaletteOnLoad(image) {
+    colorList.innerHTML = "";
+    
+    const palette = colorThief.getPalette(image, Number(colorNumber.value));
+    
+    for (let i = 0; i < colorNumber.value; i++) {
+
+        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);    
+        
+        // Crée un élement HTML auquel il assigne la couleur
+        let color = document.createElement('li');
+        color.classList.add('color-list-el');
+        color.style.backgroundColor = 'hsl('+ hslColor[0] +', '+ hslColor[1] +'%, '+ hslColor[2] +'%)';
+        
+        color.addEventListener('animationend', (e) => {
+            color.classList.add('animationend');
+        });
+
+        colorList.appendChild(color);
+    }
+}
+
+function changeImageToListen(imgLink, external) {
+    // animations
+    imageModule.classList.add('change');
+    imgToListen.addEventListener('animationend', (e) => {
+        // à la fin du fadeOut on change l'image
+        if(e.animationName === 'fadeOut'){
+            if (external == false) {  
+                backgroundImg.setAttribute('src', 'assets/images/toListen/'+ imgLink +'.jpg');
+                imgToListen.setAttribute('src', 'assets/images/toListen/'+ imgLink +'.jpg');
+        
+                backgroundImg.setAttribute('srcset', 'assets/images/toListen/'+ imgLink +'@2x.jpg 2x');
+                imgToListen.setAttribute('srcset', 'assets/images/toListen/'+ imgLink +'@2x.jpg 2x');
+                imageModule.classList.remove('change');
+                imageModule.classList.add('loading');  
+            }else{
+                backgroundImg.setAttribute('src', imgLink);
+                imgToListen.setAttribute('src', imgLink);
+                backgroundImg.setAttribute('srcset', "");
+                imgToListen.setAttribute('srcset', "");
+                imageModule.classList.remove('change');
+                imageModule.classList.add('loading');
+            }
+        }
+
+        if (imgToListen.complete) {
+            createPaletteOnLoad(imgToListen);
+            imageModule.classList.remove('loading');
+            imageModule.classList.add('changeDone');
+        }else {
+            imgToListen.addEventListener('load', function() {
+                createPaletteOnLoad(imgToListen);
+                imageModule.classList.remove('loading');
+                imageModule.classList.add('changeDone');
+            });
+        }
+
+        // retire les classes d'animations lorsqu'elles sont terminées
+        if(e.animationName === 'bounceIn'){
+            imageModule.classList.remove('changeDone');
+            createPalette(imgToListen);
+        }
+    });
+}
 
 
 ///////////////////////////////////////////////////////////////////
