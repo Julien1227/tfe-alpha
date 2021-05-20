@@ -201,8 +201,9 @@ sectionIntro.addEventListener('click', (event) => {
         sectionIntro.classList.add('hide');
         sectionIntro.addEventListener('animationend', (e) => {
             sectionIntro.style.display = "none";
-            for (let i = 1; i < letters.length; i++) {
+            for (let i = 1; i < letters.length+1; i++) {
                 root.style.removeProperty('--h1l-'+i);
+                console.log(i);
             }
         });
     }, (letters.length * 100) + 1500);

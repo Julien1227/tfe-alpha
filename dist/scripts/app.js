@@ -253,8 +253,9 @@ sectionIntro.addEventListener('click', function (event) {
     sectionIntro.addEventListener('animationend', function (e) {
       sectionIntro.style.display = "none";
 
-      for (var _i = 1; _i < letters.length; _i++) {
+      for (var _i = 1; _i < letters.length + 1; _i++) {
         root.style.removeProperty('--h1l-' + _i);
+        console.log(_i);
       }
     });
   }, letters.length * 100 + 1500);
