@@ -28,6 +28,11 @@
 
 @media(min-width: 900px) {
 
+    .transition {
+        width: 190vw;
+        transform: skew(45deg) translateX(-130%);
+    }
+
     *::-webkit-scrollbar {
         @include squareSize(5px);
     

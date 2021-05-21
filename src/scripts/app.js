@@ -223,31 +223,23 @@ navBtn.forEach(element => {
         pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
         target.classList.add('active');
 
-        console.log(target.getAttribute('id'));
         let page = target.getAttribute('id');
 
         // Change la page
 
         body.classList.add('hiding');
-        let h = randomMinMax(randomTransitionStart, 360);
+        let h = randomMinMax(0, 360);
         
         transition.style.backgroundColor = "hsl("+h+", 100%, 50%)"
 
         body.addEventListener('animationend', (e) => {
-
             if(e.animationName === 'sectionHide'){
-
                 body.classList.remove('hiding');
                 body.setAttribute('data-page', page);
                 body.classList.add('showing');
-
             } else if(e.animationName === 'sectionShow'){
-                console.log('show done');
-
                 body.classList.remove('showing');
-
             }
-            
         });
 
         // Refais apparaître le message du piano

@@ -270,11 +270,10 @@ navBtn.forEach(function (element) {
     var pastTarget = document.querySelector('.menu-btn.active');
     pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
     target.classList.add('active');
-    console.log(target.getAttribute('id'));
     var page = target.getAttribute('id'); // Change la page
 
     body.classList.add('hiding');
-    var h = randomMinMax(randomTransitionStart, 360);
+    var h = randomMinMax(0, 360);
     transition.style.backgroundColor = "hsl(" + h + ", 100%, 50%)";
     body.addEventListener('animationend', function (e) {
       if (e.animationName === 'sectionHide') {
@@ -282,7 +281,6 @@ navBtn.forEach(function (element) {
         body.setAttribute('data-page', page);
         body.classList.add('showing');
       } else if (e.animationName === 'sectionShow') {
-        console.log('show done');
         body.classList.remove('showing');
       }
     }); // Refais apparaître le message du piano

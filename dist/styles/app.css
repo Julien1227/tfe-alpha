@@ -196,8 +196,8 @@ main {
 .transition {
   position: absolute;
   display: block;
-  z-index: 2000;
-  width: 175vw;
+  z-index: calc(2000 + 49);
+  width: 250vw;
   height: 100vh;
   transform: skew(45deg) translateX(-130%);
 }
@@ -795,7 +795,7 @@ main {
   animation: fadeOut 1s;
 }
 .section-piano-svg {
-  z-index: calc(2000 + 150);
+  z-index: calc(2000 + 30);
 }
 .section-info {
   display: flex;
@@ -1135,40 +1135,29 @@ input[type=range]::-ms-track {
 }
 
 .section {
-  opacity: 0;
-  z-index: -100;
+  display: none;
 }
 
 body.hiding .transition {
   animation: sectionHide 0.3s;
 }
 body.showing .transition {
-  animation: sectionShow 0.3s;
+  animation: sectionShow 0.5s;
 }
 body[data-page=color] .section-color {
-  opacity: 1;
-  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
-  z-index: 500;
+  display: flex;
 }
 body[data-page=image] .section-image {
-  opacity: 1;
-  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
-  z-index: 500;
+  display: flex;
 }
 body[data-page=pad] .section-pad {
-  opacity: 1;
-  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
-  z-index: 500;
+  display: flex;
 }
 body[data-page=piano] .section-piano {
-  opacity: 1;
-  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
-  z-index: 500;
+  display: flex;
 }
 body[data-page=info] .section-info {
-  opacity: 1;
-  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
-  z-index: 500;
+  display: flex;
 }
 
 .section-credits {
@@ -1735,12 +1724,12 @@ body.show-credits .section-credits .section-header {
     transform: skew(45deg) translateX(-130%);
   }
   to {
-    transform: skew(45deg) translateX(-20%);
+    transform: skew(45deg) translateX(-30%);
   }
 }
 @keyframes sectionShow {
   from {
-    transform: skew(45deg) translateX(-20%);
+    transform: skew(45deg) translateX(-30%);
   }
   to {
     transform: skew(45deg) translateX(130%);
@@ -1772,6 +1761,11 @@ body.show-credits .section-credits .section-header {
   }
 }
 @media (min-width: 900px) {
+  .transition {
+    width: 190vw;
+    transform: skew(45deg) translateX(-130%);
+  }
+
   *::-webkit-scrollbar {
     width: 5px;
     height: 5px;

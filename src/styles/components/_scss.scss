@@ -64,8 +64,8 @@ main {
 .transition {
     position: absolute;
     display: block;
-    z-index: $topOfAll;
-    width: 175vw;
+    z-index: calc(#{$topOfAll} + 49);
+    width: 250vw;
     height: 100vh;
     transform: skew(45deg) translateX(-130%);
 }
@@ -622,7 +622,7 @@ main {
         }
         
         &-svg {    
-            z-index: calc(#{$topOfAll} + 150);
+            z-index: calc(#{$topOfAll} + 30);
         }
     }
 

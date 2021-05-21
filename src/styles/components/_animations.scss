@@ -65,10 +65,10 @@
 // Section transitions
 @keyframes sectionHide {
     from {transform: skew(45deg) translateX(-130%);}
-    to {transform: skew(45deg) translateX(-20%);}
+    to {transform: skew(45deg) translateX(-30%);}
 }
 
 @keyframes sectionShow {
-    from {transform: skew(45deg) translateX(-20%);}
+    from {transform: skew(45deg) translateX(-30%);}
     to {transform: skew(45deg) translateX(130%);}
 }

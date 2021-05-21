@@ -5,11 +5,11 @@
 }
 
 .section {
-    @include hidenPage;
+    display: none;
 }
 
-
 body {
+
     &.hiding {
         .transition {
             animation: sectionHide 0.3s;
@@ -18,14 +18,15 @@ body {
     
     &.showing {
         .transition {
-            animation: sectionShow 0.3s;
+            animation: sectionShow 0.5s;
         }
     }
-    &[data-page="color"] {.section-color {@include activePage;}}
-    &[data-page="image"] {.section-image {@include activePage;}}
-    &[data-page="pad"] {.section-pad {@include activePage;}}
-    &[data-page="piano"] {.section-piano {@include activePage;}}
-    &[data-page="info"] {.section-info {@include activePage;}}
+
+    &[data-page="color"] {.section-color {display: flex;}}
+    &[data-page="image"] {.section-image {display: flex;}}
+    &[data-page="pad"] {.section-pad {display: flex;}}
+    &[data-page="piano"] {.section-piano {display: flex;}}
+    &[data-page="info"] {.section-info {display: flex;}}
 }
 
 .section-credits {
