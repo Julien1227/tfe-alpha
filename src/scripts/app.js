@@ -557,9 +557,9 @@ randomBtn.addEventListener("click", (e) => {
 
 // Assiciation d'une fréquence à chaque touches
 var notes = {
-    "a": "150",
-    "z": "170",
-    "e": "190",
+    "a": "210",
+    "z": "210",
+    "e": "210",
     "r": "210",
     "t": "230",
     "y": "250",
