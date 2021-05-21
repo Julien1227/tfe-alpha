@@ -60,9 +60,7 @@ const body = document.querySelector('body'),
       navBtn = document.querySelectorAll('.menu-btn'),
       pianoSvg = document.querySelector('.section-piano-svg'),
       infoSection = document.querySelector('.section-info'),
-      creditBtn = document.querySelectorAll('.section-header-creditBtn'),
-      closeCreditBtn = document.getElementById('.closeCreditSection');
-
+      creditBtn = document.querySelectorAll('.section-header-creditBtn');
 
 //////////////////////////////////////
 //////// ECOUTE D'UNE COULEUR ////////
@@ -117,7 +115,6 @@ const padBtn = document.querySelectorAll('.pad-btn'),
       editInput = document.querySelector('.editor-slider'),
       sectionPad = document.querySelector('.section-pad');
       
-var btnColors = [];
 var h = 0;
 
 

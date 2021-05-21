@@ -142,8 +142,7 @@ var body = document.querySelector('body'),
     navBtn = document.querySelectorAll('.menu-btn'),
     pianoSvg = document.querySelector('.section-piano-svg'),
     infoSection = document.querySelector('.section-info'),
-    creditBtn = document.querySelectorAll('.section-header-creditBtn'),
-    closeCreditBtn = document.getElementById('.closeCreditSection'); //////////////////////////////////////
+    creditBtn = document.querySelectorAll('.section-header-creditBtn'); //////////////////////////////////////
 //////// ECOUTE D'UNE COULEUR ////////
 ////////////////////////////////////// 
 
@@ -185,7 +184,6 @@ var padBtn = document.querySelectorAll('.pad-btn'),
     saveBtn = document.querySelector('.btn-save'),
     editInput = document.querySelector('.editor-slider'),
     sectionPad = document.querySelector('.section-pad');
-var btnColors = [];
 var h = 0; //////////////////////////////////////
 ////////////// PIANO /////////////////
 ////////////////////////////////////// 
