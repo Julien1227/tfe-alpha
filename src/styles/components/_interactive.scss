@@ -4,6 +4,18 @@
     }
 }
 
+.section {
+    @include hidenPage;
+}
+
+body {
+    &[data-page="color"] {.section-color {@include activePage;}}
+    &[data-page="image"] {.section-image {@include activePage;}}
+    &[data-page="pad"] {.section-pad {@include activePage;}}
+    &[data-page="piano"] {.section-piano {@include activePage;}}
+    &[data-page="info"] {.section-info {@include activePage;}}
+}
+
 .section-credits {
     z-index: $topOfAll!important;
     transition: $t-slow;
@@ -14,24 +26,6 @@
         transition-delay: 0s;
         transform: translateY(-100%);
     }
-}
-
-.section {
-    z-index: $background;
-
-    display: none;
-
-    &.active {
-        display: flex;
-        z-index: $content;
-    }
-
-
-    //&-color {clip-path: ellipse(0px 0px at $cp-color $cp-y);}
-    //&-image {clip-path: ellipse(0px 0px at $cp-image $cp-y);}
-    //&-pad {clip-path: ellipse(0px 0px at $cp-pad $cp-y);}
-    //&-piano {clip-path: ellipse(0px 0px at $cp-piano $cp-y);}
-    //&-info {clip-path: ellipse(0px 0px at $cp-info $cp-y);}
 }
 
 body {

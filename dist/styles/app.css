@@ -1125,6 +1125,37 @@ input[type=range]::-ms-track {
   opacity: 0.5;
 }
 
+.section {
+  opacity: 0;
+  z-index: -100;
+}
+
+body[data-page=color] .section-color {
+  opacity: 1;
+  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+  z-index: 500;
+}
+body[data-page=image] .section-image {
+  opacity: 1;
+  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+  z-index: 500;
+}
+body[data-page=pad] .section-pad {
+  opacity: 1;
+  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+  z-index: 500;
+}
+body[data-page=piano] .section-piano {
+  opacity: 1;
+  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+  z-index: 500;
+}
+body[data-page=info] .section-info {
+  opacity: 1;
+  transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+  z-index: 500;
+}
+
 .section-credits {
   z-index: 2000 !important;
   transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
@@ -1135,15 +1166,6 @@ input[type=range]::-ms-track {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
   transition-delay: 0s;
   transform: translateY(-100%);
-}
-
-.section {
-  z-index: -100;
-  display: none;
-}
-.section.active {
-  display: flex;
-  z-index: 500;
 }
 
 body .menu-btn.active {

@@ -60,11 +60,8 @@ const body = document.querySelector('body'),
       navBtn = document.querySelectorAll('.menu-btn'),
       pianoSvg = document.querySelector('.section-piano-svg'),
       infoSection = document.querySelector('.section-info'),
-      colorBtn = document.querySelector('.menu-btn[id="color"]'),
       creditBtn = document.querySelectorAll('.section-header-creditBtn'),
       closeCreditBtn = document.getElementById('.closeCreditSection');
-
-var page = "";
 
 
 //////////////////////////////////////
@@ -227,15 +224,12 @@ navBtn.forEach(element => {
         var pastTarget = document.querySelector('.menu-btn.active');
         pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
         target.classList.add('active');
-        
 
-        page = target.getAttribute('id');
-        
-        let toShowSection = document.getElementById('page-'+page);
-        let actualSection = document.querySelector('.section.active');
+        console.log(target.getAttribute('id'));
+        let page = target.getAttribute('id');
 
-        actualSection.classList.remove('active');
-        toShowSection.classList.add('active');
+        // Change la page
+        body.setAttribute('data-page', page);
 
         // Refais apparaître le message du piano
         if (page != "piano") {
@@ -600,7 +594,7 @@ document.addEventListener('keydown', (e) => {
     let key = e.key;
 
     // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
-    if(page == 'piano') {
+    if(body.getAttribute('data-page') == 'piano') {
 
         // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
         if(down) return;

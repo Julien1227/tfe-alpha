@@ -142,10 +142,8 @@ var body = document.querySelector('body'),
     navBtn = document.querySelectorAll('.menu-btn'),
     pianoSvg = document.querySelector('.section-piano-svg'),
     infoSection = document.querySelector('.section-info'),
-    colorBtn = document.querySelector('.menu-btn[id="color"]'),
     creditBtn = document.querySelectorAll('.section-header-creditBtn'),
-    closeCreditBtn = document.getElementById('.closeCreditSection');
-var page = ""; //////////////////////////////////////
+    closeCreditBtn = document.getElementById('.closeCreditSection'); //////////////////////////////////////
 //////// ECOUTE D'UNE COULEUR ////////
 ////////////////////////////////////// 
 
@@ -273,11 +271,10 @@ navBtn.forEach(function (element) {
     var pastTarget = document.querySelector('.menu-btn.active');
     pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
     target.classList.add('active');
-    page = target.getAttribute('id');
-    var toShowSection = document.getElementById('page-' + page);
-    var actualSection = document.querySelector('.section.active');
-    actualSection.classList.remove('active');
-    toShowSection.classList.add('active'); // Refais apparaître le message du piano
+    console.log(target.getAttribute('id'));
+    var page = target.getAttribute('id'); // Change la page
+
+    body.setAttribute('data-page', page); // Refais apparaître le message du piano
 
     if (page != "piano") {
       pianoSvg.style.opacity = "1";
@@ -580,7 +577,7 @@ var notes = {
 document.addEventListener('keydown', function (e) {
   var key = e.key; // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
 
-  if (page == 'piano') {
+  if (body.getAttribute('data-page') == 'piano') {
     // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
     if (down) return;
     down = true; // Si une fréquence est assigné à la touche, on la joue

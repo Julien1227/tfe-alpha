@@ -119,3 +119,14 @@
     @include pseudoGraphBackground;
     z-index: $front;
 }
+
+@mixin activePage {
+    opacity: 1;
+    transition: $t-slow;
+    z-index: $content;
+}
+
+@mixin hidenPage {
+    opacity: 0;
+    z-index: $background;
+}
