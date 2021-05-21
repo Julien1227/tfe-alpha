@@ -142,7 +142,8 @@ var body = document.querySelector('body'),
     navBtn = document.querySelectorAll('.menu-btn'),
     pianoSvg = document.querySelector('.section-piano-svg'),
     infoSection = document.querySelector('.section-info'),
-    creditBtn = document.querySelectorAll('.section-header-creditBtn'); //////////////////////////////////////
+    creditBtn = document.querySelectorAll('.section-header-creditBtn'),
+    transition = document.querySelector('.transition'); //////////////////////////////////////
 //////// ECOUTE D'UNE COULEUR ////////
 ////////////////////////////////////// 
 
@@ -272,7 +273,19 @@ navBtn.forEach(function (element) {
     console.log(target.getAttribute('id'));
     var page = target.getAttribute('id'); // Change la page
 
-    body.setAttribute('data-page', page); // Refais apparaître le message du piano
+    body.classList.add('hiding');
+    var h = randomMinMax(randomTransitionStart, 360);
+    transition.style.backgroundColor = "hsl(" + h + ", 100%, 50%)";
+    body.addEventListener('animationend', function (e) {
+      if (e.animationName === 'sectionHide') {
+        body.classList.remove('hiding');
+        body.setAttribute('data-page', page);
+        body.classList.add('showing');
+      } else if (e.animationName === 'sectionShow') {
+        console.log('show done');
+        body.classList.remove('showing');
+      }
+    }); // Refais apparaître le message du piano
 
     if (page != "piano") {
       pianoSvg.style.opacity = "1";

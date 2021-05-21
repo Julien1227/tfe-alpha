@@ -8,7 +8,19 @@
     @include hidenPage;
 }
 
+
 body {
+    &.hiding {
+        .transition {
+            animation: sectionHide 0.3s;
+        }
+    }
+    
+    &.showing {
+        .transition {
+            animation: sectionShow 0.3s;
+        }
+    }
     &[data-page="color"] {.section-color {@include activePage;}}
     &[data-page="image"] {.section-image {@include activePage;}}
     &[data-page="pad"] {.section-pad {@include activePage;}}

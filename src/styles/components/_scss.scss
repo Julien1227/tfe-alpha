@@ -61,6 +61,15 @@ main {
     }
 }
 
+.transition {
+    position: absolute;
+    display: block;
+    z-index: $topOfAll;
+    width: 175vw;
+    height: 100vh;
+    transform: skew(45deg) translateX(-130%);
+}
+
 .played-color {
     @include absoluteTopLeft;
     width: 100%;

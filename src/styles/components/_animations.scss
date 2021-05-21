@@ -64,11 +64,11 @@
 
 // Section transitions
 @keyframes sectionHide {
-    from {clip-path: circle(110vw 110vw 50% 50%);}
-    to {clip-path: circle(0vw 0vw 50% 50%);}
+    from {transform: skew(45deg) translateX(-130%);}
+    to {transform: skew(45deg) translateX(-20%);}
 }
 
 @keyframes sectionShow {
-    from {clip-path: circle(0vw 0vw 50% 50%);}
-    to {clip-path: circle(110vw 110vw 50% 50%);}
+    from {transform: skew(45deg) translateX(-20%);}
+    to {transform: skew(45deg) translateX(130%);}
 }
