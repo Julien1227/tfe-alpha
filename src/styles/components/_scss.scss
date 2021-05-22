@@ -65,9 +65,10 @@ main {
     position: absolute;
     display: block;
     z-index: calc(#{$topOfAll} + 49);
-    width: 250vw;
-    height: 100vh;
-    transform: skew(45deg) translateX(-130%);
+    width: 360vw;
+    height: 150vh;
+    transform: skew(45deg) translateX(-150%);
+    animation-timing-function: none;
 }
 
 .played-color {
