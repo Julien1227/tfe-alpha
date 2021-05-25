@@ -12,13 +12,17 @@ body {
 
     &.hiding {
         .transition {
-            animation: sectionHide 0.3s;
+            animation: animationChangeListener 0.3s;
+            &::before {
+                animation-delay: 0.2s;
+                animation: sectionHide 0.5s;
+            }
         }
     }
     
     &.showing {
         .transition {
-            animation: sectionShow 0.5s;
+            animation: animationEndListener 0.5s;
         }
     }
 

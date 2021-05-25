@@ -194,13 +194,40 @@ main {
 }
 
 .transition {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
   position: absolute;
   display: block;
   z-index: calc(2000 + 49);
-  width: 360vw;
-  height: 150vh;
-  transform: skew(45deg) translateX(-150%);
-  animation-timing-function: none;
+  width: 200vw;
+  height: 200vh;
+  left: -25vw;
+  opacity: 0;
+  background-color: #fff;
+}
+.transition::after {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  background-size: 2rem;
+  background-repeat: repeat;
+  background-image: url("../assets/bgSvg.svg");
+}
+.transition::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 150vw;
+  height: 100vh;
+  background-color: var(--tr-c);
+  transform: translateX(-150%) skew(30deg);
+  filter: blur(150px);
 }
 
 .played-color {
@@ -230,12 +257,12 @@ main {
   right: -15%;
 }
 .played-color::after {
+  width: 100%;
+  height: 100%;
   position: absolute;
   content: "";
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   background-size: 2rem;
   background-repeat: repeat;
   background-image: url("../assets/bgSvg.svg");
@@ -517,10 +544,11 @@ main {
   opacity: 1;
 }
 .section-image .section-module .color-list-el-frq {
+  font-size: 14px;
   font-family: "Source Code Pro", monospace;
   font-weight: 600;
   color: #fff;
-  opacity: 0.8;
+  opacity: 0.5;
 }
 .section-image .section-module-image {
   width: 100%;
@@ -1140,10 +1168,14 @@ input[type=range]::-ms-track {
 }
 
 body.hiding .transition {
-  animation: sectionHide 0.3s;
+  animation: animationChangeListener 0.3s;
+}
+body.hiding .transition::before {
+  animation-delay: 0.2s;
+  animation: sectionHide 0.5s;
 }
 body.showing .transition {
-  animation: sectionShow 0.5s;
+  animation: animationEndListener 0.5s;
 }
 body[data-page=color] .section-color {
   display: flex;
@@ -1720,20 +1752,22 @@ body.show-credits .section-credits .section-header {
     transform: rotate(360deg);
   }
 }
-@keyframes sectionHide {
-  from {
-    transform: skew(45deg) translateX(-130%);
-  }
+@keyframes animationChangeListener {
   to {
-    transform: skew(45deg) translateX(-30%);
+    opacity: 1;
   }
 }
-@keyframes sectionShow {
+@keyframes animationEndListener {
   from {
-    transform: skew(45deg) translateX(-30%);
+    opacity: 1;
   }
   to {
-    transform: skew(45deg) translateX(130%);
+    opacity: 0;
+  }
+}
+@keyframes sectionHide {
+  to {
+    transform: translateX(120%) skew(30deg);
   }
 }
 .desktop {
@@ -1762,11 +1796,6 @@ body.show-credits .section-credits .section-header {
   }
 }
 @media (min-width: 900px) {
-  .transition {
-    width: 200vw;
-    transform: skew(45deg) translateX(-130%);
-  }
-
   *::-webkit-scrollbar {
     width: 5px;
     height: 5px;
@@ -1796,14 +1825,6 @@ body.show-credits .section-credits .section-header {
   }
 
   .section {
-    /*
-    &-color {clip-path: ellipse(0px 0px at $cpD-color $cp-y)};
-    &-image {clip-path: ellipse(0px 0px at $cpD-image $cp-y)};
-    &-pad {clip-path: ellipse(0px 0px at $cpD-pad $cp-y)};
-    &-piano {clip-path: ellipse(0px 0px at $cp-piano $cp-y)};
-    &-info {clip-path: ellipse(0px 0px at $cpD-info $cp-y)};
-    &.active {clip-path: ellipse(120vw 120vw)}
-    */
     height: calc(100vh - 2.5rem);
     align-items: center;
   }

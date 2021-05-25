@@ -63,12 +63,22 @@
 
 
 // Section transitions
-@keyframes sectionHide {
-    from {transform: skew(45deg) translateX(-130%);}
-    to {transform: skew(45deg) translateX(-30%);}
+@keyframes animationChangeListener {
+    to {
+        opacity: 1;
+    }
 }
-
-@keyframes sectionShow {
-    from {transform: skew(45deg) translateX(-30%);}
-    to {transform: skew(45deg) translateX(130%);}
+@keyframes animationEndListener {
+    from {
+        opacity: 1;
+    }
+    
+    to {
+        opacity: 0;
+    }
+}
+@keyframes sectionHide {
+    to {
+        transform: translateX(120%) skew($t-skew);
+    }
 }

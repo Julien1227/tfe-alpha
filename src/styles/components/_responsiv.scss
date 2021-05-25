@@ -28,18 +28,13 @@
 
 @media(min-width: 900px) {
 
-    .transition {
-        width: 200vw;
-        transform: skew(45deg) translateX(-130%);
-    }
-
     *::-webkit-scrollbar {
         @include squareSize(5px);
     
         &-track {
             background: #f1f1f1; 
         }
-        
+
         &-thumb {
             background: #888;
             border-radius: $round;
@@ -59,15 +54,6 @@
     .mobile {display: none;}
 
     .section {
-        
-        /*
-        &-color {clip-path: ellipse(0px 0px at $cpD-color $cp-y)};
-        &-image {clip-path: ellipse(0px 0px at $cpD-image $cp-y)};
-        &-pad {clip-path: ellipse(0px 0px at $cpD-pad $cp-y)};
-        &-piano {clip-path: ellipse(0px 0px at $cp-piano $cp-y)};
-        &-info {clip-path: ellipse(0px 0px at $cpD-info $cp-y)};
-        &.active {clip-path: ellipse(120vw 120vw)}
-        */
 
         height: $section-height;
         align-items: center;

@@ -62,13 +62,28 @@ main {
 }
 
 .transition {
+    @include flex-center;
+    pointer-events: none;
     position: absolute;
     display: block;
     z-index: calc(#{$topOfAll} + 49);
-    width: 360vw;
-    height: 150vh;
-    transform: skew(45deg) translateX(-150%);
-    animation-timing-function: none;
+    width: 200vw;
+    height: 200vh;
+    left: -25vw;
+    opacity: 0;
+    background-color: $white;
+    &::after {
+        @include pseudoGraphBackground;
+    }
+    
+    &::before {
+        @include pseudoElement;
+        width: 150vw;
+        height: 100vh;
+        background-color: var(--tr-c);
+        transform: translateX(-150%) skew($t-skew);
+        filter: blur(150px);
+    }
 }
 
 .played-color {
@@ -102,9 +117,7 @@ main {
     }
 
     &::after {
-        @include pseudoElement;
-        @include fullSize;
-        @include graphBackground;
+        @include pseudoGraphBackground;
     }
 }
 
@@ -371,10 +384,11 @@ main {
                     }
 
                     &-frq {
+                        font-size: 14px;
                         font-family: $type-number;
                         font-weight: 600;
                         color: $white;
-                        opacity: .8;
+                        opacity: .5;
                     }
                 }
             }

@@ -273,14 +273,15 @@ navBtn.forEach(function (element) {
     var page = target.getAttribute('id'); // Change la page
 
     body.classList.add('hiding');
-    var h = randomMinMax(0, 360);
-    transition.style.backgroundColor = "hsl(" + h + ", 100%, 50%)";
+    var h = randomMinMax(0, 360); ///transition.style.backgroundColor = "hsl("+h+", 100%, 50%)";
+
+    root.style.setProperty("--tr-c", "hsl(" + h + ", 100%, 50%)");
     body.addEventListener('animationend', function (e) {
-      if (e.animationName === 'sectionHide') {
+      if (e.animationName === 'animationChangeListener') {
         body.classList.remove('hiding');
         body.setAttribute('data-page', page);
         body.classList.add('showing');
-      } else if (e.animationName === 'sectionShow') {
+      } else if (e.animationName === 'animationEndListener') {
         body.classList.remove('showing');
       }
     }); // Refais apparaître le message du piano
@@ -550,7 +551,7 @@ randomBtn.addEventListener("click", function (e) {
 // Assiciation d'une fréquence à chaque touches
 
 var notes = {
-  "a": "210",
+  "a": "160",
   "z": "210",
   "e": "210",
   "r": "210",
@@ -601,7 +602,7 @@ document.addEventListener('keydown', function (e) {
       do {
         h = randomMinMax(0, 360);
         s = 100;
-        l = randomMinMax(50, 60);
+        l = randomMinMax(40, 60);
         _color = setFrequency(h, s, l);
       } while (_frq != _color); // Assignation de la couleur et d'un class de transition
 
