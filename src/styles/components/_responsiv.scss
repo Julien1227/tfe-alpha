@@ -65,7 +65,7 @@
         &-form {
             box-sizing: border-box;
             justify-content: flex-start;
-            @include squareSize(100%);
+            @include fullSize;
             .form-slider {
                 width: 500px;
             }

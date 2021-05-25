@@ -529,10 +529,8 @@ editInput.addEventListener('input', (e) => {
     confirmEdit.addEventListener('click', (e) => {
         sectionPad.classList.remove('edition');
         actualBtn.classList.remove('pad-btn-active');
-
-        actualBtn.removeAttribute('style');
-    
         actualisePadBtnColor(actualBtn, h);
+        actualBtn.removeAttribute('style');
     });
 });
 
@@ -570,36 +568,35 @@ randomBtn.addEventListener("click", (e) => {
 // Assiciation d'une fréquence à chaque touches
 var notes = {
     "a": "160",
-    "z": "210",
-    "e": "210",
-    "r": "210",
-    "t": "230",
-    "y": "250",
-    "u": "270",
-    "i": "290",
-    "o": "310",
-    "p": "330",
-    "q": "350",
-    "s": "370",
-    "d": "390",
-    "f": "410",
-    "g": "430",
-    "h": "450",
-    "j": "470",
-    "k": "490",
-    "l": "510",
-    "m": "530",
-    "w": "550",
-    "x": "570",
-    "c": "590",
-    "v": "610",
-    "b": "630",
-    "n": "650",
-    ",": "670",
-    ";": "690", 
-    // De plus hautes fréquences ne sont pas associable avec les paramètres de couleur actuels
-    ":": "690",
-    "=": "690"};
+    "z": "175",
+    "e": "190",
+    "r": "205",
+    "t": "220",
+    "y": "235",
+    "u": "250",
+    "i": "265",
+    "o": "280",
+    "p": "290",
+    "q": "305",
+    "s": "320",
+    "d": "335",
+    "f": "350",
+    "g": "365",
+    "h": "380",
+    "j": "390",
+    "k": "405",
+    "l": "420",
+    "m": "435",
+    "w": "450",
+    "x": "465",
+    "c": "480",
+    "v": "490",
+    "b": "505",
+    "n": "520",
+    ",": "535",
+    ";": "550", 
+    ":": "565",
+    "=": "580"};
 
 // Récupère la touche jouée et joue la fréquence qui lui est associée
 document.addEventListener('keydown', (e) => {
