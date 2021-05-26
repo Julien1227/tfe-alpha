@@ -16,6 +16,7 @@ body {
             &::before {
                 animation: sectionHide 0.5s;
                 animation-timing-function: linear;
+                -webkit-animation-timing-function: linear;
             }
         }
     }
@@ -26,6 +27,7 @@ body {
             &::before {
                 animation: sectionShow 0.5s;
                 animation-timing-function: linear;
+                -webkit-animation-timing-function: linear;
             }
         }
     }

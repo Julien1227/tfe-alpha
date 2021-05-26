@@ -246,13 +246,11 @@ navBtn.forEach(element => {
                 }
             });
     
-            // Refais apparaître le message du piano
             if (page == "piano") {
+                // Refais apparaître le message du piano
                 pianoSvg.style.opacity = "1";
-            }
-    
-            // Reset le scroll de la page malgré l'ancre
-            if (page == "info") {
+            }else if (page == "info") {
+                // Reset le scroll de la page malgré l'ancre
                 infoSection.scrollTop = 0;
             }
         }

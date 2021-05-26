@@ -59,7 +59,7 @@
     width: 150vw;
     height: 120%;
 
-    background-size: 2rem;
+    background-size: $graphSize;
     background-repeat: repeat;
     background-image: url('../assets/bgSvg.svg');
 }
@@ -72,7 +72,7 @@
 }
 
 @mixin graphBackground {
-    background-size: 2rem;
+    background-size: $graphSize;
     background-repeat: repeat;
     background-image: url('../assets/bgSvg.svg');
 }

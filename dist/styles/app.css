@@ -846,6 +846,7 @@ main {
   height: 100%;
   max-width: 500px;
   padding: 0 2rem;
+  height: auto;
   box-sizing: border-box;
 }
 .section-info .container:before {
@@ -1180,6 +1181,7 @@ body.hiding .transition {
 body.hiding .transition::before {
   animation: sectionHide 0.5s;
   animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
 }
 body.showing .transition {
   animation: animationEndListener 0.5s;
@@ -1187,6 +1189,7 @@ body.showing .transition {
 body.showing .transition::before {
   animation: sectionShow 0.5s;
   animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
 }
 body[data-page=color] .section-color {
   display: flex;
@@ -1879,8 +1882,8 @@ body.show-credits .section-credits .section-header {
     transform: scale(2);
   }
   .section-color .section-module-frequency {
-    font-size: 165px;
-    line-height: 115px;
+    font-size: 180px;
+    line-height: 130px;
     margin-bottom: inherit;
     -webkit-text-stroke: 5px #fff;
   }
