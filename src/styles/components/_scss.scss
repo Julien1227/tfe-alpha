@@ -61,6 +61,31 @@ main {
     }
 }
 
+.transition {
+    @include flex-center;
+    pointer-events: none;
+    position: absolute;
+    display: block;
+    z-index: calc(#{$topOfAll} + 49);
+    width: 200vw;
+    height: 200vh;
+    left: -25vw;
+    opacity: 0;
+    background-color: $white;
+    &::after {
+        @include pseudoGraphBackground;
+    }
+    
+    &::before {
+        @include pseudoElement;
+        width: 200vw;
+        height: 100vh;
+        background-color: var(--tr-c);
+        transform: translateX(-150%) skew($t-skew);
+        filter: blur(300px);
+    }
+}
+
 .played-color {
     @include absoluteTopLeft;
     width: 100%;
@@ -77,7 +102,6 @@ main {
         height: 25vh;
 
         border-radius: $round;
-        background-color: var(--played-color);
 
         filter: blur(125px);
 
@@ -93,9 +117,7 @@ main {
     }
 
     &::after {
-        @include pseudoElement;
-        @include fullSize;
-        @include graphBackground;
+        @include pseudoGraphBackground;
     }
 }
 
@@ -176,20 +198,20 @@ main {
 .svg-animate {
     @include squareSize(4rem);
     overflow: visible;
-    #action {
+    .action {
         animation: touchActionTraits 1.5s;
         animation-iteration-count: infinite;
         transform-origin: center;
     }
 
-    #keyboard {
+    .keyboard {
         animation: touchActionHand 1.5s;
         animation-delay: 0.05s;
         animation-iteration-count: infinite;
         transform-origin: center;
     }
 
-    #hand {
+    .hand {
         animation: touchActionHand 1.5s;
         animation-iteration-count: infinite;
         animation-timing-function: cubic-bezier(0.25, 1.32, 0.83, 1.25);
@@ -243,12 +265,14 @@ main {
 
         &-creditBtn {
             position: absolute;
-            right: 1rem;
-            padding: 0.25rem;
+            box-sizing: content-box;
+            right: 0;
+            padding: 0.75rem;
             cursor: pointer;
+            @include squareSize(1rem);
 
             & svg {
-                @include squareSize(0.75rem);
+                @include squareSize(1rem);
             }
         }
     }
@@ -289,13 +313,15 @@ main {
             &-frequency {
                 position: relative;
                 z-index: $content;
-                margin-bottom: -10.5vw;
-                font-size: 25vw;
+                margin-bottom: -11vw;
+                font-size: 27.5vw;
                 font-weight: 800;
                 letter-spacing: -0.3rem;
                 color: $white;
                 pointer-events: none;
-                //font-family: 'Source Code Pro', monospace;
+
+                font-family: $type-number;
+                -webkit-text-stroke: 0.5vw $white;
             }
 
             &-shadow {
@@ -335,14 +361,12 @@ main {
                 overflow: hidden;
                 height: calc(#{$imageColorSize} + 0.5rem);
 
-                width: calc(var(--colorNumber) * (#{$imageColorSize} + 0.5rem));
-
                 &.big {
-                    width: calc((#{$imageColorSize} + 0.5rem) * 5);
                     height: calc((#{$imageColorSize} * 2) + 1rem);
                 }
     
                 &-el {
+                    @include flex-center;
                     opacity: 0;
                     animation: fadeInTop 0.3s;
 
@@ -351,11 +375,25 @@ main {
                     width: $imageColorSize;
                     height: $imageColorSize;
 
+                    max-width: 70px;
+                    max-height: 70px;
+
                     @for $i from 1 through 10 {
                         &:nth-child(#{$i}) {
                             animation-delay: $i * 0.025s;
-                            background-color: var(--palette-color-#{$i});
                         }
+                    }
+
+                    &.animationend {
+                        opacity: 1;
+                    }
+
+                    &-frq {
+                        font-size: 14px;
+                        font-family: $type-number;
+                        font-weight: 600;
+                        color: $white;
+                        opacity: .5;
                     }
                 }
             }
@@ -496,15 +534,14 @@ main {
                     display: block;
                     z-index: $background;
                     filter: blur(30px);
-                    z-index: $background;
                 }
     
                 @for $i from 1 through 9 {
                     &[id="btn-#{$i}"] {
-                        background-color: var(--pad-btn-color-#{$i});
+                        background-color: hsl(var(--pb-#{$i}), 100%, 50%);
                     }
                     &[id="btn-#{$i}"]::after {
-                        background-color: var(--pad-btn-color-#{$i});
+                        background-color: hsl(var(--pb-#{$i}), 100%, 50%);
                     }
                 }
             }
@@ -605,12 +642,14 @@ main {
         }
         
         &-svg {    
-            z-index: calc(#{$topOfAll} + 150);
+            z-index: calc(#{$topOfAll} + 30);
         }
     }
 
     
     &-info {
+        position: fixed;
+        top: 0;
         display: flex;
         align-items: center;
         overflow-y: scroll;

@@ -135,17 +135,15 @@ var sectionIntro = document.querySelector('.section-intro'),
     letters = document.querySelectorAll('.h1-letter');
 var count = 1;
 var playedColors = document.querySelector('.played-color'); //////////////////////////////////////
-///////// GESTION DU SLIDER //////////
+//////////// NAVIGUATION /////////////
 //////////////////////////////////////
 
 var body = document.querySelector('body'),
     navBtn = document.querySelectorAll('.menu-btn'),
     pianoSvg = document.querySelector('.section-piano-svg'),
     infoSection = document.querySelector('.section-info'),
-    colorBtn = document.querySelector('.menu-btn[id="color"]'),
     creditBtn = document.querySelectorAll('.section-header-creditBtn'),
-    closeCreditBtn = document.getElementById('.closeCreditSection');
-var page = ""; //////////////////////////////////////
+    transition = document.querySelector('.transition'); //////////////////////////////////////
 //////// ECOUTE D'UNE COULEUR ////////
 ////////////////////////////////////// 
 
@@ -187,7 +185,6 @@ var padBtn = document.querySelectorAll('.pad-btn'),
     saveBtn = document.querySelector('.btn-save'),
     editInput = document.querySelector('.editor-slider'),
     sectionPad = document.querySelector('.section-pad');
-var btnColors = [];
 var h = 0; //////////////////////////////////////
 ////////////// PIANO /////////////////
 ////////////////////////////////////// 
@@ -220,7 +217,7 @@ sectionIntro.addEventListener('click', function (event) {
   var randomH = randomMinMax(0, 360);
   letters.forEach(function (element) {
     //Crée la couleur en HSL pour jouer la note plus tard
-    var h = randomH + randomMinMax(30, 40) * count % 360,
+    var h = (randomH + randomMinMax(30, 40) * count) % 360,
         s = randomMinMax(80, 100),
         l = randomMinMax(50, 60);
     var gain = setGain(l, s),
@@ -228,7 +225,7 @@ sectionIntro.addEventListener('click', function (event) {
     gains.push(gain);
     frqs.push(frq);
     hsls.push([h, s, l]);
-    root.style.setProperty('--h1letter-' + count, "hsl(" + h + ", " + s + "%, " + l + "%)");
+    root.style.setProperty('--h1l-' + count, "hsl(" + h + ", " + s + "%, " + l + "%)");
     element.addEventListener('animationend', function (e) {
       element.style.opacity = 1;
       element.classList.add('end');
@@ -252,6 +249,11 @@ sectionIntro.addEventListener('click', function (event) {
     sectionIntro.classList.add('hide');
     sectionIntro.addEventListener('animationend', function (e) {
       sectionIntro.style.display = "none";
+
+      for (var _i = 1; _i < letters.length + 1; _i++) {
+        root.style.removeProperty('--h1l-' + _i);
+        console.log(_i);
+      }
     });
   }, letters.length * 100 + 1500);
 }); ///////////////////////////////////////////////////////////////////
@@ -262,37 +264,42 @@ sectionIntro.addEventListener('click', function (event) {
 
 navBtn.forEach(function (element) {
   element.addEventListener('click', function (e) {
-    body.classList.remove('show-credits');
+    // Actualise le bouton du menu
     var target = e.currentTarget;
     var pastTarget = document.querySelector('.menu-btn.active');
     pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
     target.classList.add('active');
-    page = target.getAttribute('id');
-    var actualSection = document.querySelector('.section-' + page);
-    var pastSection = document.querySelector('.section.active');
+    var page = target.getAttribute('id');
 
-    if (pastSection != null) {
-      var pastPage = pastSection.getAttribute('id');
-
-      if (pastPage != page) {
-        actualSection.classList.add('active');
-        pastSection.classList.remove('active');
-      } else {
-        console.log('La page est déjà ouverte !');
-      }
+    if (pastTarget.getAttribute('id') == page) {
+      console.log('page déjà ouverte');
     } else {
-      actualSection.classList.add('active');
-    } // Refais apparaître le message du piano
+      body.classList.remove('show-credits'); // Change la page
+
+      body.classList.add('hiding');
+
+      var _h = randomMinMax(0, 360); ///transition.style.backgroundColor = "hsl("+h+", 100%, 50%)";
 
 
-    if (page != "piano") {
-      pianoSvg.style.opacity = "1";
-      pianoSvg.style.display = "inherit";
-    } // Reset le scroll de la page malgré l'ancre
+      root.style.setProperty("--tr-c", "hsl(" + _h + ", 100%, 50%)");
+      body.addEventListener('animationend', function (e) {
+        if (e.animationName === 'animationChangeListener') {
+          body.setAttribute('data-page', page);
+          body.classList.remove('hiding');
+          body.classList.add('showing');
+        } else if (e.animationName === 'animationEndListener') {
+          body.classList.remove('showing');
+        }
+      }); // Refais apparaître le message du piano
+
+      if (page == "piano") {
+        pianoSvg.style.opacity = "1";
+      } // Reset le scroll de la page malgré l'ancre
 
 
-    if (page == "info") {
-      infoSection.scrollTop = 0;
+      if (page == "info") {
+        infoSection.scrollTop = 0;
+      }
     }
   });
 });
@@ -321,7 +328,7 @@ var _loop2 = function _loop2(i) {
 
     playNote(h, s, l); // Affiche la fréquence jouée
 
-    actualNote.innerHTML = o.frequency.value + " Hz"; // Affiche la valeur du slider 
+    actualNote.innerHTML = setFrequency(h, s, l) + "Hz"; // Affiche la valeur du slider 
 
     colorSpans[i].innerHTML = colorInputs[i].value; // Affiche la couleur jouée
 
@@ -353,8 +360,7 @@ var deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "l'explora
 btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Présélectionne une image
 
 imageSelection[0].classList.add('selected');
-createPalette(imgToListen);
-root.style.setProperty('--colorNumber', colorNumber.value); // Réglage de la vitesse de lecture
+createPalette(imgToListen); // Réglage de la vitesse de lecture
 
 playRate.addEventListener('input', function (e) {
   speed = playRate.value * -1;
@@ -366,16 +372,19 @@ colorNumber.addEventListener(eventStart, function (e) {
 });
 colorNumber.addEventListener('input', function (e) {
   colorNumberSpan.innerHTML = colorNumber.value;
+  var width = 'calc((5rem + 0.5rem) * ' + colorNumber.value + ')';
 
   if (window.matchMedia("(min-width: 900px)").matches == false) {
     if (colorNumber.value > 5) {
+      width = 'calc((15vw + 0.5rem) * 5)';
       colorList.classList.add('big');
     } else {
+      width = 'calc(' + colorNumber.value + ' * (15vw + 0.5rem))';
       colorList.classList.remove('big');
     }
   }
 
-  root.style.setProperty('--colorNumber', colorNumber.value);
+  colorList.style.width = width;
 });
 colorNumber.addEventListener(eventEnd, function (e) {
   createPalette(imgToListen);
@@ -425,20 +434,22 @@ playImageBtn.addEventListener('click', function (e) {
       frqs = [],
       hsls = [];
 
-  var _loop3 = function _loop3(_i) {
-    var color = root.style.getPropertyValue('--palette-color-' + (_i + 1)).match(/\d+/g).map(Number);
-    hsls.push(color);
-    var gain = setGain(color[1], color[2]),
-        frq = setFrequency(color[0], color[1], color[2]);
+  var _loop3 = function _loop3(_i2) {
+    var htmlEl = colorList.childNodes[_i2],
+        rgbColor = htmlEl.getAttribute('style').match(/\d+/g).map(Number),
+        hslColor = RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
+    hsls.push(hslColor);
+    var gain = setGain(hslColor[1], hslColor[2]),
+        frq = setFrequency(hslColor[0], hslColor[1], hslColor[2]);
     gains.push(gain);
     frqs.push(frq);
     setTimeout(function () {
-      playArray(_i, speed, gains, frqs, hsls);
+      playArray(_i2, speed, gains, frqs, hsls);
     }, speed);
   };
 
-  for (var _i = 0; _i < colorList.childNodes.length; _i++) {
-    _loop3(_i);
+  for (var _i2 = 0; _i2 < colorList.childNodes.length; _i2++) {
+    _loop3(_i2);
   }
 
   setTimeout(function () {
@@ -449,43 +460,33 @@ playImageBtn.addEventListener('click', function (e) {
 ////////////////////////////// PAD ////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-// Assigne une couleur à chaque touche
-
-padBtn.forEach(function (btn) {
-  h = h + 39;
-  actualisePadBtnColor(btn, h);
-}); // Permets de rentreret sortir en mode "modification" des boutons 
+// Permets de rentreret sortir en mode "modification" des boutons 
 
 editBtn.addEventListener('click', function (e) {
   sectionPad.classList.add('pad-modify');
 });
 saveBtn.addEventListener('click', function (e) {
+  confirmEdit.click();
   sectionPad.classList.remove('pad-modify');
 }); // Pour chaque touches du piano
 
 padBtn.forEach(function (btn) {
+  // Assigne une couleur à chaque touche
+  h = h + 39;
+  actualisePadBtnColor(btn, h);
   btn.addEventListener(eventStart, function (e) {
     //Récupère la couleur appuyée
     var targetBtn = e.currentTarget; // Récupère la couleur de la touche
 
-    var hslColor = getHslFromAttribute(targetBtn),
-        h = hslColor[0],
-        s = hslColor[1],
-        l = hslColor[2]; // LE PAD EST EN MODE "MODIFICATION"
+    var h = getColorFromAttribute(targetBtn),
+        s = 100,
+        l = 50; // LE PAD EST EN MODE "MODIFICATION"
 
     if (sectionPad.classList.contains('pad-modify') == true) {
-      playNote(h, s, l);
-      stopGain(0.2); // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
-
+      // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
       sectionPad.classList.add('edition');
       editDiv.style.top = targetBtn.offsetTop + editDiv.offsetHeight + "px";
-      editDivIndicator.style.left = targetBtn.offsetLeft + "px";
-      console.log(targetBtn.offsetTop, targetBtn.offsetLeft); // Bouton permettant de masquer le slider
-
-      confirmEdit.addEventListener('click', function (e) {
-        sectionPad.classList.remove('edition');
-        targetBtn.classList.remove('pad-btn-active');
-      }); // Sélection d'une couleur
+      editDivIndicator.style.left = targetBtn.offsetLeft + "px"; // Sélection d'une couleur
 
       if (targetBtn.classList.contains('pad-btn-active') == false) {
         // Actualise le bouton actif
@@ -493,25 +494,40 @@ padBtn.forEach(function (btn) {
         targetBtn.classList.add('pad-btn-active');
         pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('No pastTarget'); // Actualise les valeurs du slider avec la couleur actuelle du bouton
 
-        hslColor = getHslFromAttribute(targetBtn);
-        editInput.value = hslColor[0];
+        h = getColorFromAttribute(targetBtn);
+        editInput.value = h;
       } // LE PAD N'EST PAS EN MODE "MODIFICATION"
 
     } else {
       playNote(h, s, l);
       btn.addEventListener(eventEnd, function (e) {
         stopGain(defaultEase);
-      });
+      }); // Vérifie que l'on soit sur desktop et ue le bouton appuyé soit bien une touche du pad
+
+      if (window.matchMedia("(min-width: 900px)").matches && btn.classList.contains('pad-btn')) {
+        body.addEventListener("mouseup", function (e) {
+          stopGain(defaultEase);
+        });
+      }
     }
   });
 }); // L'orsqu'un slider bouge - modifie la couleur active
 
 editInput.addEventListener('input', function (e) {
   var h = editInput.value;
-  var actualBtn = document.querySelector('.pad-btn-active'); // Actualise la couleur du bouton
-
-  actualisePadBtnColor(actualBtn, h);
+  var actualBtn = document.querySelector('.pad-btn-active');
+  actualBtn.style.backgroundColor = "hsl(" + h + ", 100%, 50%)";
   playNote(h, 100, 50);
+}); // Bouton permettant de masquer le slider et changer la variable de couleur
+
+confirmEdit.addEventListener('click', function (e) {
+  // Obligé de redéclarer les variables utilisées dans la boucle si dessus
+  var actualBtn = document.querySelector('.pad-btn-active');
+  var h = editInput.value;
+  sectionPad.classList.remove('edition');
+  actualBtn.classList.remove('pad-btn-active');
+  actualisePadBtnColor(actualBtn, h);
+  actualBtn.removeAttribute('style');
 });
 editInput.addEventListener(eventEnd, function (e) {
   stopGain(defaultEase);
@@ -544,43 +560,43 @@ randomBtn.addEventListener("click", function (e) {
 // Assiciation d'une fréquence à chaque touches
 
 var notes = {
-  "a": "150",
-  "z": "170",
+  "a": "160",
+  "z": "175",
   "e": "190",
-  "r": "210",
-  "t": "230",
-  "y": "250",
-  "u": "270",
-  "i": "290",
-  "o": "310",
-  "p": "330",
-  "q": "350",
-  "s": "370",
-  "d": "390",
-  "f": "410",
-  "g": "430",
-  "h": "450",
-  "j": "470",
-  "k": "490",
-  "l": "510",
-  "m": "530",
-  "w": "550",
-  "x": "570",
-  "c": "590",
-  "v": "610",
-  "b": "630",
-  "n": "650",
-  ",": "670",
-  ";": "690",
-  // De plus hautes fréquences ne sont pas associable avec les paramètres de couleur actuels
-  ":": "690",
-  "=": "690"
+  "r": "205",
+  "t": "220",
+  "y": "235",
+  "u": "250",
+  "i": "265",
+  "o": "280",
+  "p": "290",
+  "q": "305",
+  "s": "320",
+  "d": "335",
+  "f": "350",
+  "g": "365",
+  "h": "380",
+  "j": "390",
+  "k": "405",
+  "l": "420",
+  "m": "435",
+  "w": "450",
+  "x": "465",
+  "c": "480",
+  "v": "490",
+  "b": "505",
+  "n": "520",
+  ",": "535",
+  ";": "550",
+  ":": "565",
+  "=": "580",
+  "!": "595"
 }; // Récupère la touche jouée et joue la fréquence qui lui est associée
 
 document.addEventListener('keydown', function (e) {
   var key = e.key; // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
 
-  if (page == 'piano') {
+  if (body.getAttribute('data-page') == 'piano') {
     // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
     if (down) return;
     down = true; // Si une fréquence est assigné à la touche, on la joue
@@ -595,15 +611,15 @@ document.addEventListener('keydown', function (e) {
       do {
         h = randomMinMax(0, 360);
         s = 100;
-        l = randomMinMax(50, 60);
+        l = randomMinMax(45, 60);
         _color = setFrequency(h, s, l);
       } while (_frq != _color); // Assignation de la couleur et d'un class de transition
 
 
       var size = randomMinMax(25, 60),
           blur = size * 3,
-          top = randomMinMax(size / -2, 100) - size / 2,
-          left = randomMinMax(size / -2, 100) - size / 2;
+          top = randomMinMax(-(size / 2), 100 - size / 2),
+          left = randomMinMax(-(size / 2), 100 - size / 2);
       var colorDiv = document.createElement('div');
       colorDiv.style.backgroundColor = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
       colorDiv.style.filter = 'blur(' + blur + 'px)';
@@ -646,14 +662,14 @@ navElements.forEach(function (element) {
 }); // Actualise le menu en fonction du scroll
 
 infoSection.addEventListener('scroll', function () {
-  for (var _i2 = 0; _i2 < anchors.length; _i2++) {
-    if (infoSection.scrollTop >= anchors[_i2].offsetTop - window.innerHeight / 2) {
+  for (var _i3 = 0; _i3 < anchors.length; _i3++) {
+    if (infoSection.scrollTop >= anchors[_i3].offsetTop - window.innerHeight / 2) {
       navElements.forEach(function (element) {
         element.classList.remove('current');
       });
 
-      if (navElements[_i2].classList.contains('current') == false) {
-        navElements[_i2].classList.add('current');
+      if (navElements[_i3].classList.contains('current') == false) {
+        navElements[_i3].classList.add('current');
       }
     }
   }
@@ -671,6 +687,129 @@ infoSection.addEventListener('scroll', function () {
 ///////////////////////// MY FUNCTIONS ////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+// Permet de jouer un tableau de notes sans actualiser "played color"
+
+function playArrayWithoutColor(i, speed, gains, frqs) {
+  setTimeout(function () {
+    g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
+    o.frequency.setValueAtTime(frqs[i], context.currentTime);
+    g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
+  }, i * speed);
+} // Permet de jouer un tableau de notes
+
+
+function playArray(i, speed, gains, frqs, hsls) {
+  setTimeout(function () {
+    g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
+    o.frequency.setValueAtTime(frqs[i], context.currentTime);
+    actualisePlayedColor(hsls[i][0], hsls[i][1], hsls[i][2], gains[i]);
+    g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
+  }, i * speed);
+} // Permet de jouer une note
+
+
+function playNote(h, s, l) {
+  var frq = setFrequency(h, s, l),
+      gain = setGain(l, s);
+  g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
+  o.frequency.setValueAtTime(frq, context.currentTime);
+  actualisePlayedColor(h, s, l, gain);
+}
+
+function actualisePlayedColor(h, s, l, gain) {
+  if (window.matchMedia("(min-width: 900px)").matches) {
+    playedColors.classList.remove('hide');
+    playedColors.children[0].style.backgroundColor = 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + gain + ')';
+    playedColors.children[1].style.backgroundColor = 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + gain + ')';
+  }
+}
+
+function actualisePadBtnColor(btn, h) {
+  var id = btn.getAttribute('id').slice(-1);
+  root.style.setProperty('--pb-' + id, h);
+} // Stop le gain et cache "played color"
+
+
+function stopGain(ease) {
+  g.gain.setTargetAtTime(0, context.currentTime, ease);
+  playedColors.classList.add('hide');
+} // Récupère les valeurs h s et l depuis les attributs de l'élément
+
+
+function getColorFromAttribute(element) {
+  var id = element.getAttribute('id').slice(-1);
+  var h = root.style.getPropertyValue('--pb-' + id);
+  return h;
+} // Calcule le gain
+
+
+function setGain(lum, sat) {
+  if (lum >= 50) {
+    lum = 100 - lum;
+  }
+
+  var gainValue = sat / 100 * (lum / 100);
+  gainValue = Math.round(gainValue * 100) / 100 * 2;
+  return gainValue;
+} // Calcule la fréquence
+
+
+function setFrequency(h, s, l) {
+  h = Number(h);
+  s = Number(s);
+  l = Number(l); // Convertis la couleur HSL en RGB sans tenir compte de la saturation - celle-ci est gérée apprès
+
+  var rgbColor = HSLtoRGB(h, 75, l); // Donne une ordre d'importance au R G et B
+
+  frq = Math.round(rgbColor[0] * 0.9 + rgbColor[1] * 2 + rgbColor[2] * 0.3); // Prise en compte de la saturation - elle influe sur le gain et s'ajoute à la valeur de la fréquence
+
+  frq = frq * (s / 100);
+  frq = Math.round(frq); // Empêche de descendre dans des valeurs négatives
+
+  if (frq < 0 || s == 0 || l == 0) {
+    frq = 0;
+  }
+
+  return frq;
+} // Vérifie que l'image soit chargée avant de créer la pallette
+
+
+function createPalette(image) {
+  if (image.complete) {
+    createPaletteOnLoad(image);
+  } else {
+    image.addEventListener('load', function () {
+      createPaletteOnLoad(image);
+    });
+  }
+} // Crée une pallette avec une image
+
+
+function createPaletteOnLoad(image) {
+  colorList.innerHTML = "";
+  var palette = colorThief.getPalette(image, Number(colorNumber.value));
+
+  var _loop4 = function _loop4(_i4) {
+    var hslColor = RGBToHSL(palette[_i4][0], palette[_i4][1], palette[_i4][2]); // Création de la fréquence à l'interieur de la couleur
+
+    var frequency = document.createElement('p');
+    frequency.classList.add('color-list-el-frq');
+    frequency.innerHTML = setFrequency(hslColor[0], hslColor[1], hslColor[2]) + "Hz"; // Crée un élement HTML auquel il assigne la couleur
+
+    var color = document.createElement('li');
+    color.classList.add('color-list-el');
+    color.style.backgroundColor = 'hsl(' + hslColor[0] + ', ' + hslColor[1] + '%, ' + hslColor[2] + '%)';
+    color.addEventListener('animationend', function (e) {
+      color.classList.add('animationend');
+    });
+    color.appendChild(frequency);
+    colorList.appendChild(color);
+  };
+
+  for (var _i4 = 0; _i4 < colorNumber.value; _i4++) {
+    _loop4(_i4);
+  }
+}
 
 function changeImageToListen(imgLink, external) {
   // animations
@@ -678,8 +817,6 @@ function changeImageToListen(imgLink, external) {
   imgToListen.addEventListener('animationend', function (e) {
     // à la fin du fadeOut on change l'image
     if (e.animationName === 'fadeOut') {
-      console.log(imgLink);
-
       if (external == false) {
         backgroundImg.setAttribute('src', 'assets/images/toListen/' + imgLink + '.jpg');
         imgToListen.setAttribute('src', 'assets/images/toListen/' + imgLink + '.jpg');
@@ -715,118 +852,6 @@ function changeImageToListen(imgLink, external) {
       createPalette(imgToListen);
     }
   });
-} // Permet de jouer un tableau de notes sans actualiser "played color"
-
-
-function playArrayWithoutColor(i, speed, gains, frqs) {
-  setTimeout(function () {
-    g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
-    o.frequency.setValueAtTime(frqs[i], context.currentTime);
-    g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
-  }, i * speed);
-} // Permet de jouer un tableau de notes
-
-
-function playArray(i, speed, gains, frqs, hsls) {
-  setTimeout(function () {
-    g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
-    o.frequency.setValueAtTime(frqs[i], context.currentTime);
-    playedColors.classList.remove('hide');
-    root.style.setProperty('--played-color', 'hsla(' + hsls[i][0] + ', ' + hsls[i][1] + '%, ' + hsls[i][2] + '%, ' + gains[i] + ')');
-    g.gain.setTargetAtTime(0, context.currentTime + 0.002, speed / 1500);
-  }, i * speed);
-} // Permet de jouer une note
-
-
-function playNote(h, s, l) {
-  var frq = setFrequency(h, s, l),
-      gain = setGain(l, s);
-  g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
-  o.frequency.setValueAtTime(frq, context.currentTime);
-  playedColors.classList.remove('hide');
-  root.style.setProperty('--played-color', 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + gain + ')');
-}
-
-function actualisePadBtnColor(btn, h) {
-  var id = btn.getAttribute('id').slice(-1);
-  root.style.setProperty('--pad-btn-color-' + id, 'hsl(' + h + ', 100%, 50%)');
-} // Stop le gain et cache "played color"
-
-
-function stopGain(ease) {
-  g.gain.setTargetAtTime(0, context.currentTime, ease);
-  playedColors.classList.add('hide');
-} // Vérifie que l'image soit chargée avant de créer la pallette
-
-
-function createPalette(image) {
-  if (image.complete) {
-    createPaletteOnLoad(image);
-  } else {
-    image.addEventListener('load', function () {
-      createPaletteOnLoad(image);
-    });
-  }
-} // Crée une pallette avec une image
-
-
-function createPaletteOnLoad(image) {
-  colorList.innerHTML = "";
-  var palette = colorThief.getPalette(image, Number(colorNumber.value));
-
-  var _loop4 = function _loop4(_i3) {
-    var hslColor = RGBToHSL(palette[_i3][0], palette[_i3][1], palette[_i3][2]); // Crée un élement HTML auquel il assigne la couleur
-
-    var color = document.createElement('li');
-    color.classList.add('color-list-el');
-    root.style.setProperty('--palette-color-' + (_i3 + 1), 'hsl(' + hslColor[0] + ', ' + hslColor[1] + '%, ' + hslColor[2] + '%)');
-    color.addEventListener('animationend', function (e) {
-      color.style.opacity = 1;
-    });
-    colorList.appendChild(color);
-  };
-
-  for (var _i3 = 0; _i3 < palette.length; _i3++) {
-    _loop4(_i3);
-  }
-} // Récupère les valeurs h s et l depuis les attributs de l'élément
-
-
-function getHslFromAttribute(element) {
-  var id = element.getAttribute('id').slice(-1);
-  var hsls = root.style.getPropertyValue('--pad-btn-color-' + id).match(/\d+/g).map(Number);
-  return hsls;
-} // Calcule le gain
-
-
-function setGain(lum, sat) {
-  if (lum >= 50) {
-    lum = 100 - lum;
-  }
-
-  var gainValue = sat / 100 * (lum / 100);
-  gainValue = Math.round(gainValue * 100) / 100 * 2;
-  return gainValue;
-} // Calcule la fréquence
-
-
-function setFrequency(h, s, l) {
-  h = Number(h);
-  s = Number(s);
-  l = Number(l); // Convertis la couleur HSL en RGB sans tenir compte de la saturation - celle-ci est gérée apprès
-
-  var rgbColor = HSLtoRGB(h, 80, l); // Donne une ordre d'importance au R G et B
-
-  frq = Math.round(rgbColor[0] * 0.9 + rgbColor[1] * 2 + rgbColor[2] * 0.3); // Prise en compte de la saturation - elle influe sur le gain et s'ajoute à la valeur de la fréquence
-
-  frq = frq - 100 + s;
-  frq = Math.round(frq); // Empêche de descendre dans des valeurs négatives
-
-  if (frq < 0) {
-    frq = 0;
-  }
-
-  return frq;
 } ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////// OTHERS FUNCTIONS ////////////////////////////
@@ -951,8 +976,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

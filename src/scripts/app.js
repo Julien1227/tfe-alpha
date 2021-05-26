@@ -53,18 +53,15 @@ const playedColors = document.querySelector('.played-color');
 
 
 //////////////////////////////////////
-///////// GESTION DU SLIDER //////////
+//////////// NAVIGUATION /////////////
 //////////////////////////////////////
 
 const body = document.querySelector('body'),
       navBtn = document.querySelectorAll('.menu-btn'),
       pianoSvg = document.querySelector('.section-piano-svg'),
       infoSection = document.querySelector('.section-info'),
-      colorBtn = document.querySelector('.menu-btn[id="color"]'),
       creditBtn = document.querySelectorAll('.section-header-creditBtn'),
-      closeCreditBtn = document.getElementById('.closeCreditSection');
-
-var page = "";
+      transition = document.querySelector('.transition');
 
 
 //////////////////////////////////////
@@ -120,7 +117,6 @@ const padBtn = document.querySelectorAll('.pad-btn'),
       editInput = document.querySelector('.editor-slider'),
       sectionPad = document.querySelector('.section-pad');
       
-var btnColors = [];
 var h = 0;
 
 
@@ -168,10 +164,10 @@ sectionIntro.addEventListener('click', (event) => {
     letters.forEach(element => {
 
         //Crée la couleur en HSL pour jouer la note plus tard
-        let h = randomH + (randomMinMax(30, 40) * count) % 360,
+        let h = (randomH + (randomMinMax(30, 40) * count)) % 360,
             s = randomMinMax(80, 100),
             l = randomMinMax(50, 60);
-                
+                        
         let gain = setGain(l, s),
             frq = setFrequency( h, s, l);
 
@@ -179,7 +175,7 @@ sectionIntro.addEventListener('click', (event) => {
         frqs.push(frq);
         hsls.push([h, s, l]);
 
-        root.style.setProperty('--h1letter-'+count, "hsl("+ h +", "+ s +"%, "+ l +"%)");
+        root.style.setProperty('--h1l-'+count, "hsl("+ h +", "+ s +"%, "+ l +"%)");
         
         element.addEventListener('animationend', (e) => {
             element.style.opacity = 1;
@@ -201,6 +197,10 @@ sectionIntro.addEventListener('click', (event) => {
         sectionIntro.classList.add('hide');
         sectionIntro.addEventListener('animationend', (e) => {
             sectionIntro.style.display = "none";
+            for (let i = 1; i < letters.length+1; i++) {
+                root.style.removeProperty('--h1l-'+i);
+                console.log(i);
+            }
         });
     }, (letters.length * 100) + 1500);
 });
@@ -215,41 +215,48 @@ sectionIntro.addEventListener('click', (event) => {
 
 navBtn.forEach(element => {
     element.addEventListener('click', (e) => {
-        body.classList.remove('show-credits');
+        
+        // Actualise le bouton du menu
         let target = e.currentTarget;
-        
         var pastTarget = document.querySelector('.menu-btn.active');
-
         pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
-        
         target.classList.add('active');
         
-        page = target.getAttribute('id');
-        let actualSection = document.querySelector('.section-'+page);
-        let pastSection = document.querySelector('.section.active');
+        let page = target.getAttribute('id');
+        
+        if (pastTarget.getAttribute('id') == page) {
+            console.log('page déjà ouverte');
+        } else {
+            body.classList.remove('show-credits');
 
-        if(pastSection != null) {
-            let pastPage = pastSection.getAttribute('id');
-            if (pastPage != page) {
-                actualSection.classList.add('active');
-                pastSection.classList.remove('active');
-            }else{
-                console.log('La page est déjà ouverte !')
+            // Change la page
+            body.classList.add('hiding');
+            let h = randomMinMax(0, 360);
+            
+            ///transition.style.backgroundColor = "hsl("+h+", 100%, 50%)";
+            root.style.setProperty("--tr-c", "hsl("+h+", 100%, 50%)");
+    
+            body.addEventListener('animationend', (e) => {
+                if(e.animationName === 'animationChangeListener'){
+                    body.setAttribute('data-page', page);
+                    body.classList.remove('hiding');
+                    body.classList.add('showing');
+                } else if(e.animationName === 'animationEndListener'){
+                    body.classList.remove('showing');
+                }
+            });
+    
+            // Refais apparaître le message du piano
+            if (page == "piano") {
+                pianoSvg.style.opacity = "1";
             }
-        }else{
-            actualSection.classList.add('active');
+    
+            // Reset le scroll de la page malgré l'ancre
+            if (page == "info") {
+                infoSection.scrollTop = 0;
+            }
         }
 
-        // Refais apparaître le message du piano
-        if (page != "piano") {
-            pianoSvg.style.opacity = "1";
-            pianoSvg.style.display = "inherit";
-        }
-
-        // Reset le scroll de la page malgré l'ancre
-        if (page == "info") {
-            infoSection.scrollTop = 0;
-        }
     });
 });
 
@@ -287,7 +294,7 @@ for (let i = 0; i < colorInputs.length; i++) {
         playNote(h,s,l);
 
         // Affiche la fréquence jouée
-        actualNote.innerHTML = o.frequency.value + " Hz";
+        actualNote.innerHTML = setFrequency(h,s,l) + "Hz";
         
         // Affiche la valeur du slider 
         colorSpans[i].innerHTML = colorInputs[i].value;
@@ -326,10 +333,6 @@ btnUpload.innerHTML = "Ouvrir " + deviceAction2;
 imageSelection[0].classList.add('selected');
 createPalette(imgToListen);
 
-root.style.setProperty('--colorNumber', colorNumber.value);
-
-
-
 // Réglage de la vitesse de lecture
 playRate.addEventListener('input', (e) => {
     speed = playRate.value * -1;
@@ -345,16 +348,19 @@ colorNumber.addEventListener(eventStart, (e) => {
 
 colorNumber.addEventListener('input', (e) => {
     colorNumberSpan.innerHTML = colorNumber.value;
+    let width = 'calc((5rem + 0.5rem) * '+colorNumber.value+')';
 
     if (window.matchMedia("(min-width: 900px)").matches == false) {
         if (colorNumber.value > 5) {
+            width = 'calc((15vw + 0.5rem) * 5)';
             colorList.classList.add('big');
         }else {
+            width = 'calc('+colorNumber.value+' * (15vw + 0.5rem))';
             colorList.classList.remove('big');
         }
     }
 
-    root.style.setProperty('--colorNumber', colorNumber.value);
+    colorList.style.width = width;
 });
 
 colorNumber.addEventListener(eventEnd, (e) => {
@@ -422,11 +428,14 @@ playImageBtn.addEventListener('click', (e) => {
         hsls = [];
 
     for (let i = 0; i < colorList.childNodes.length; i++) {
-        let color = root.style.getPropertyValue('--palette-color-' + (i+1)).match(/\d+/g).map(Number);
-        hsls.push(color);
+        let htmlEl = colorList.childNodes[i],
+            rgbColor = htmlEl.getAttribute('style').match(/\d+/g).map(Number),
+            hslColor = RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
+
+        hsls.push(hslColor);
         
-        let gain = setGain(color[1],color[2]),
-            frq = setFrequency(color[0],color[1],color[2]);
+        let gain = setGain(hslColor[1],hslColor[2]),
+            frq = setFrequency(hslColor[0],hslColor[1],hslColor[2]);
 
         gains.push(gain);
         frqs.push(frq);
@@ -442,18 +451,11 @@ playImageBtn.addEventListener('click', (e) => {
 });
 
 
-
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ////////////////////////////// PAD ////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-
-// Assigne une couleur à chaque touche
-padBtn.forEach(btn => {
-    h = h + 39;
-    actualisePadBtnColor(btn, h);
-});
 
 // Permets de rentreret sortir en mode "modification" des boutons 
 editBtn.addEventListener('click', (e) => {
@@ -461,39 +463,33 @@ editBtn.addEventListener('click', (e) => {
 });
 
 saveBtn.addEventListener('click', (e) => {
-    sectionPad.classList.remove('pad-modify');   
+    confirmEdit.click();
+    sectionPad.classList.remove('pad-modify');
 });
 
 // Pour chaque touches du piano
 padBtn.forEach(btn => {
+    // Assigne une couleur à chaque touche
+    h = h + 39;
+    actualisePadBtnColor(btn, h);
+
     btn.addEventListener(eventStart, (e) => {
         
         //Récupère la couleur appuyée
         let targetBtn = e.currentTarget;
 
         // Récupère la couleur de la touche
-        let hslColor = getHslFromAttribute(targetBtn),
-            h = hslColor[0],
-            s = hslColor[1],
-            l = hslColor[2];
+        let h = getColorFromAttribute(targetBtn),
+            s = 100,
+            l = 50;
 
         // LE PAD EST EN MODE "MODIFICATION"
         if (sectionPad.classList.contains('pad-modify') == true) {
-            playNote(h,s,l);
-            stopGain(0.2);
             
             // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
             sectionPad.classList.add('edition');
             editDiv.style.top = (targetBtn.offsetTop + editDiv.offsetHeight) + "px";
             editDivIndicator.style.left = targetBtn.offsetLeft + "px";
-
-            console.log(targetBtn.offsetTop, targetBtn.offsetLeft);
-            
-            // Bouton permettant de masquer le slider
-            confirmEdit.addEventListener('click', (e) => {
-                sectionPad.classList.remove('edition');
-                targetBtn.classList.remove('pad-btn-active')
-            });
 
             // Sélection d'une couleur
             if (targetBtn.classList.contains('pad-btn-active') == false) {
@@ -503,8 +499,8 @@ padBtn.forEach(btn => {
                 pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('No pastTarget');
                 
                 // Actualise les valeurs du slider avec la couleur actuelle du bouton
-                hslColor = getHslFromAttribute(targetBtn);
-                editInput.value = hslColor[0];
+                h = getColorFromAttribute(targetBtn);
+                editInput.value = h;
             }
         // LE PAD N'EST PAS EN MODE "MODIFICATION"
         }else{
@@ -512,6 +508,13 @@ padBtn.forEach(btn => {
             btn.addEventListener(eventEnd, (e) => {
                 stopGain(defaultEase);
             });
+
+            // Vérifie que l'on soit sur desktop et ue le bouton appuyé soit bien une touche du pad
+            if (window.matchMedia("(min-width: 900px)").matches && btn.classList.contains('pad-btn')) {                    
+                body.addEventListener("mouseup", (e) => {
+                    stopGain(defaultEase);
+                });
+            }
         }
     });
     
@@ -522,9 +525,22 @@ editInput.addEventListener('input', (e) => {
     let h = editInput.value;
     let actualBtn = document.querySelector('.pad-btn-active');
     
-    // Actualise la couleur du bouton
+    actualBtn.style.backgroundColor = "hsl("+h+", 100%, 50%)";
+
+    playNote(h, 100, 50);
+    
+});
+
+// Bouton permettant de masquer le slider et changer la variable de couleur
+confirmEdit.addEventListener('click', (e) => {
+    // Obligé de redéclarer les variables utilisées dans la boucle si dessus
+    let actualBtn = document.querySelector('.pad-btn-active');
+    let h = editInput.value;
+
+    sectionPad.classList.remove('edition');
+    actualBtn.classList.remove('pad-btn-active');
     actualisePadBtnColor(actualBtn, h);
-    playNote(h,100,50);
+    actualBtn.removeAttribute('style');
 });
 
 editInput.addEventListener(eventEnd, (e) => {
@@ -560,44 +576,45 @@ randomBtn.addEventListener("click", (e) => {
 
 // Assiciation d'une fréquence à chaque touches
 var notes = {
-    "a": "150",
-    "z": "170",
+    "a": "160",
+    "z": "175",
     "e": "190",
-    "r": "210",
-    "t": "230",
-    "y": "250",
-    "u": "270",
-    "i": "290",
-    "o": "310",
-    "p": "330",
-    "q": "350",
-    "s": "370",
-    "d": "390",
-    "f": "410",
-    "g": "430",
-    "h": "450",
-    "j": "470",
-    "k": "490",
-    "l": "510",
-    "m": "530",
-    "w": "550",
-    "x": "570",
-    "c": "590",
-    "v": "610",
-    "b": "630",
-    "n": "650",
-    ",": "670",
-    ";": "690", 
-    // De plus hautes fréquences ne sont pas associable avec les paramètres de couleur actuels
-    ":": "690",
-    "=": "690"};
+    "r": "205",
+    "t": "220",
+    "y": "235",
+    "u": "250",
+    "i": "265",
+    "o": "280",
+    "p": "290",
+    "q": "305",
+    "s": "320",
+    "d": "335",
+    "f": "350",
+    "g": "365",
+    "h": "380",
+    "j": "390",
+    "k": "405",
+    "l": "420",
+    "m": "435",
+    "w": "450",
+    "x": "465",
+    "c": "480",
+    "v": "490",
+    "b": "505",
+    "n": "520",
+    ",": "535",
+    ";": "550", 
+    ":": "565",
+    "=": "580",
+    "!": "595"
+};
 
 // Récupère la touche jouée et joue la fréquence qui lui est associée
 document.addEventListener('keydown', (e) => {
     let key = e.key;
 
     // Si la page est celle du piano clavier, on prends en compte l'appuis clavier
-    if(page == 'piano') {
+    if(body.getAttribute('data-page') == 'piano') {
 
         // Permet de ne pas répéter l'événement 'keydown' lors d'un appuis enfoncé
         if(down) return;
@@ -617,15 +634,15 @@ document.addEventListener('keydown', (e) => {
             do {
                 h = randomMinMax(0, 360);
                 s = 100;
-                l = randomMinMax(50, 60);
+                l = randomMinMax(45, 60);
                 color = setFrequency(h, s, l);
             } while (frq != color);
 
             // Assignation de la couleur et d'un class de transition
             let size = randomMinMax(25, 60),
                 blur = size * 3,
-                top = randomMinMax((size/-2), 100) - (size/2),
-                left = randomMinMax((size/-2), 100) - (size/2);
+                top = randomMinMax(-(size/2), (100 - (size/2))),
+                left = randomMinMax(-(size/2), (100 - (size/2)));
 
             let colorDiv = document.createElement('div');
 
@@ -713,13 +730,151 @@ infoSection.addEventListener('scroll', () => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+// Permet de jouer un tableau de notes sans actualiser "played color"
+function playArrayWithoutColor(i, speed, gains, frqs) {
+    setTimeout(function() {
+        g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
+        o.frequency.setValueAtTime(frqs[i], context.currentTime);
+        
+        g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
+    }, i*speed);
+}
+
+// Permet de jouer un tableau de notes
+function playArray(i, speed, gains, frqs, hsls) {
+    setTimeout(function() {
+        g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
+        o.frequency.setValueAtTime(frqs[i], context.currentTime);
+
+        actualisePlayedColor(hsls[i][0], hsls[i][1], hsls[i][2], gains[i]);
+        
+        g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
+    }, i*speed);
+}
+
+// Permet de jouer une note
+function playNote(h,s,l) {
+    let frq = setFrequency(h,s,l),
+        gain = setGain(l,s);
+
+    g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
+    o.frequency.setValueAtTime(frq, context.currentTime);
+
+    actualisePlayedColor(h, s, l, gain);
+}
+
+function actualisePlayedColor(h, s, l, gain) {
+    if (window.matchMedia("(min-width: 900px)").matches) {        
+        playedColors.classList.remove('hide');
+        playedColors.children[0].style.backgroundColor = 'hsla('+ h +', '+ s +'%, '+ l +'%, '+gain+')';
+        playedColors.children[1].style.backgroundColor = 'hsla('+ h +', '+ s +'%, '+ l +'%, '+gain+')';
+    }
+}
+
+function actualisePadBtnColor(btn, h) {
+    let id = btn.getAttribute('id').slice(-1);
+    root.style.setProperty('--pb-'+id, h);
+}
+
+// Stop le gain et cache "played color"
+function stopGain(ease) {
+    g.gain.setTargetAtTime(0, context.currentTime, ease);
+    playedColors.classList.add('hide');
+}
+
+
+// Récupère les valeurs h s et l depuis les attributs de l'élément
+function getColorFromAttribute(element) {
+    let id = element.getAttribute('id').slice(-1);
+    let h = root.style.getPropertyValue('--pb-' + id);
+    return h;
+}
+
+// Calcule le gain
+function setGain(lum, sat) {
+    if(lum >= 50) {
+        lum = 100 - lum;
+    }
+
+    let gainValue = (sat/100)*(lum/100);
+    
+    gainValue = (Math.round(gainValue * 100) / 100)*2;
+
+    return gainValue;
+}
+
+// Calcule la fréquence
+function setFrequency(h, s, l) {
+    
+    h = Number(h);
+    s = Number(s);
+    l = Number(l);
+    
+    // Convertis la couleur HSL en RGB sans tenir compte de la saturation - celle-ci est gérée apprès
+    let rgbColor = HSLtoRGB(h, 75, l);
+    
+    // Donne une ordre d'importance au R G et B
+    frq = Math.round(rgbColor[0]*0.9 + rgbColor[1]*2 + rgbColor[2]*0.3);
+
+    // Prise en compte de la saturation - elle influe sur le gain et s'ajoute à la valeur de la fréquence
+    frq = (frq * (s/100));
+
+    frq = Math.round(frq);
+
+    // Empêche de descendre dans des valeurs négatives
+    if (frq < 0 || s == 0 || l == 0) {
+        frq = 0;
+    }
+
+    return frq;
+}
+
+// Vérifie que l'image soit chargée avant de créer la pallette
+function createPalette(image) {
+    if (image.complete) {
+        createPaletteOnLoad(image);
+    }else {
+        image.addEventListener('load', function() {
+            createPaletteOnLoad(image);
+        });
+    }
+}
+
+// Crée une pallette avec une image
+function createPaletteOnLoad(image) {
+    colorList.innerHTML = "";
+    
+    const palette = colorThief.getPalette(image, Number(colorNumber.value));
+    
+    for (let i = 0; i < colorNumber.value; i++) {
+
+        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);
+        
+        // Création de la fréquence à l'interieur de la couleur
+        let frequency = document.createElement('p');
+        frequency.classList.add('color-list-el-frq');
+        frequency.innerHTML = setFrequency(hslColor[0], hslColor[1], hslColor[2]) + "Hz";
+
+        // Crée un élement HTML auquel il assigne la couleur
+        let color = document.createElement('li');
+        color.classList.add('color-list-el');
+        color.style.backgroundColor = 'hsl('+ hslColor[0] +', '+ hslColor[1] +'%, '+ hslColor[2] +'%)';
+        
+        color.addEventListener('animationend', (e) => {
+            color.classList.add('animationend');
+        });
+
+        color.appendChild(frequency);
+        colorList.appendChild(color);
+    }
+}
+
 function changeImageToListen(imgLink, external) {
     // animations
     imageModule.classList.add('change');
     imgToListen.addEventListener('animationend', (e) => {
         // à la fin du fadeOut on change l'image
         if(e.animationName === 'fadeOut'){
-            console.log(imgLink);
             if (external == false) {  
                 backgroundImg.setAttribute('src', 'assets/images/toListen/'+ imgLink +'.jpg');
                 imgToListen.setAttribute('src', 'assets/images/toListen/'+ imgLink +'.jpg');
@@ -757,134 +912,6 @@ function changeImageToListen(imgLink, external) {
         }
     });
 }
-
-// Permet de jouer un tableau de notes sans actualiser "played color"
-function playArrayWithoutColor(i, speed, gains, frqs) {
-    setTimeout(function() {
-        g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
-        o.frequency.setValueAtTime(frqs[i], context.currentTime);
-        
-        g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
-    }, i*speed);
-}
-
-// Permet de jouer un tableau de notes
-function playArray(i, speed, gains, frqs, hsls) {
-    setTimeout(function() {
-        g.gain.setTargetAtTime(gains[i], context.currentTime, 0.002);
-        o.frequency.setValueAtTime(frqs[i], context.currentTime);
-
-        playedColors.classList.remove('hide');
-        root.style.setProperty('--played-color', 'hsla('+ hsls[i][0] +', '+ hsls[i][1] +'%, '+ hsls[i][2] +'%, '+gains[i]+')');
-        
-        g.gain.setTargetAtTime(0, context.currentTime+0.002, speed/1500);
-    }, i*speed);
-}
-
-// Permet de jouer une note
-function playNote(h,s,l) {
-    let frq = setFrequency(h,s,l),
-        gain = setGain(l,s);
-
-    g.gain.setTargetAtTime(gain, context.currentTime, 0.002);
-    o.frequency.setValueAtTime(frq, context.currentTime);
-
-    playedColors.classList.remove('hide');
-    root.style.setProperty('--played-color', 'hsla('+ h +', '+ s +'%, '+ l +'%, '+gain+')');
-}
-
-function actualisePadBtnColor(btn, h) {
-    let id = btn.getAttribute('id').slice(-1);
-    root.style.setProperty('--pad-btn-color-'+id, 'hsl('+ h +', 100%, 50%)');
-}
-
-// Stop le gain et cache "played color"
-function stopGain(ease) {
-    g.gain.setTargetAtTime(0, context.currentTime, ease);
-    playedColors.classList.add('hide');
-}
-
-// Vérifie que l'image soit chargée avant de créer la pallette
-function createPalette(image) {
-    if (image.complete) {
-        createPaletteOnLoad(image);
-    }else {
-        image.addEventListener('load', function() {
-            createPaletteOnLoad(image);
-        });
-    }
-}
-
-// Crée une pallette avec une image
-function createPaletteOnLoad(image) {
-    colorList.innerHTML = "";
-    
-    const palette = colorThief.getPalette(image, Number(colorNumber.value));
-    
-    for (let i = 0; i < palette.length; i++) {
-    
-        let hslColor = RGBToHSL(palette[i][0], palette[i][1], palette[i][2]);    
-        
-        // Crée un élement HTML auquel il assigne la couleur
-        let color = document.createElement('li');
-        color.classList.add('color-list-el');
-        root.style.setProperty('--palette-color-'+(i+1), 'hsl('+ hslColor[0] +', '+ hslColor[1] +'%, '+ hslColor[2] +'%)');
-        
-        color.addEventListener('animationend', (e) => {
-            color.style.opacity = 1;
-        });
-
-        colorList.appendChild(color);
-    }
-}
-
-// Récupère les valeurs h s et l depuis les attributs de l'élément
-function getHslFromAttribute(element) {
-    let id = element.getAttribute('id').slice(-1);
-    let hsls = root.style.getPropertyValue('--pad-btn-color-' + id).match(/\d+/g).map(Number);
-    return hsls;
-}
-
-// Calcule le gain
-function setGain(lum, sat) {
-    if(lum >= 50) {
-        lum = 100 - lum;
-    }
-
-    let gainValue = (sat/100)*(lum/100);
-    
-    gainValue = (Math.round(gainValue * 100) / 100)*2;
-
-    return gainValue;
-}
-
-// Calcule la fréquence
-function setFrequency(h, s, l) {
-    
-    h = Number(h);
-    s = Number(s);
-    l = Number(l);
-    
-    // Convertis la couleur HSL en RGB sans tenir compte de la saturation - celle-ci est gérée apprès
-    let rgbColor = HSLtoRGB(h, 80, l);
-    
-    // Donne une ordre d'importance au R G et B
-    frq = Math.round(rgbColor[0]*0.9 + rgbColor[1]*2 + rgbColor[2]*0.3);
-
-    // Prise en compte de la saturation - elle influe sur le gain et s'ajoute à la valeur de la fréquence
-    frq = frq - 100 + s;
-
-    frq = Math.round(frq);
-
-    // Empêche de descendre dans des valeurs négatives
-    if (frq < 0) {
-        frq = 0;
-    }
-
-    return frq;
-}
-
-
 
 
 ///////////////////////////////////////////////////////////////////
