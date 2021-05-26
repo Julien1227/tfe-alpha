@@ -223,11 +223,11 @@ main {
   content: "";
   top: 0;
   left: 0;
-  width: 150vw;
+  width: 200vw;
   height: 100vh;
   background-color: var(--tr-c);
-  transform: translateX(-150%) skew(30deg);
-  filter: blur(150px);
+  transform: translateX(-150%) skew(50deg);
+  filter: blur(300px);
 }
 
 .played-color {
@@ -411,13 +411,16 @@ main {
 }
 .section-header-creditBtn {
   position: absolute;
-  right: 1rem;
-  padding: 0.25rem;
+  box-sizing: content-box;
+  right: 0;
+  padding: 0.75rem;
   cursor: pointer;
+  width: 1rem;
+  height: 1rem;
 }
 .section-header-creditBtn svg {
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 1rem;
+  height: 1rem;
 }
 .section-module {
   display: flex;
@@ -509,6 +512,8 @@ main {
   margin: 0.25rem;
   width: 15vw;
   height: 15vw;
+  max-width: 70px;
+  max-height: 70px;
 }
 .section-image .section-module .color-list-el:nth-child(1) {
   animation-delay: 0.025s;
@@ -827,6 +832,8 @@ main {
   z-index: calc(2000 + 30);
 }
 .section-info {
+  position: fixed;
+  top: 0;
   display: flex;
   align-items: center;
   overflow-y: scroll;
@@ -1168,14 +1175,18 @@ input[type=range]::-ms-track {
 }
 
 body.hiding .transition {
-  animation: animationChangeListener 0.3s;
+  animation: animationChangeListener 0.5s;
 }
 body.hiding .transition::before {
-  animation-delay: 0.2s;
   animation: sectionHide 0.5s;
+  animation-timing-function: linear;
 }
 body.showing .transition {
   animation: animationEndListener 0.5s;
+}
+body.showing .transition::before {
+  animation: sectionShow 0.5s;
+  animation-timing-function: linear;
 }
 body[data-page=color] .section-color {
   display: flex;
@@ -1197,7 +1208,7 @@ body[data-page=info] .section-info {
   z-index: 2000 !important;
   transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
   pointer-events: none;
-  clip-path: ellipse(0px 0px at 99% -5%);
+  opacity: 0;
 }
 .section-credits .section-header {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
@@ -1218,10 +1229,9 @@ body .menu-btn.active:hover svg {
 body.show-credits .section-credits {
   opacity: 1;
   pointer-events: inherit;
-  clip-path: ellipse(2000px 2000px at 99% -5%);
 }
 body.show-credits .section-credits .section-header {
-  transition-delay: 0.3s;
+  transition-delay: 0.1s;
   transform: translateY(0%);
 }
 
@@ -1767,7 +1777,15 @@ body.show-credits .section-credits .section-header {
 }
 @keyframes sectionHide {
   to {
-    transform: translateX(120%) skew(30deg);
+    transform: translateX(10%) skew(50deg);
+  }
+}
+@keyframes sectionShow {
+  from {
+    transform: translateX(10%) skew(50deg);
+  }
+  to {
+    transform: translateX(150%) skew(50deg);
   }
 }
 .desktop {
@@ -1793,6 +1811,21 @@ body.show-credits .section-credits .section-header {
 @media (min-width: 480px) {
   .section-image .module .selection.selection-open {
     height: 15rem;
+  }
+}
+@media (min-width: 550px) and (max-width: 900px) {
+  .color-list {
+    max-height: calc(70px + 0.75rem);
+    max-width: calc((70px * 5) + 3rem);
+    min-width: calc((70px * 5) + 3rem);
+    border-radius: calc(70px / 1.6) !important;
+  }
+  .color-list.big {
+    max-height: calc((70px * 2) + 2rem);
+  }
+  .color-list-el {
+    max-width: 70px;
+    max-height: 70px;
   }
 }
 @media (min-width: 900px) {
@@ -1911,7 +1944,7 @@ body.show-credits .section-credits .section-header {
   }
   .section-info .container-code .gist {
     position: absolute;
-    margin-top: calc(-3.5rem - 1px);
+    margin-top: calc(-3.5rem - 2px);
     max-width: 500px;
     margin-left: calc(-500px - 1rem);
   }
@@ -1938,14 +1971,16 @@ body.show-credits .section-credits .section-header {
     left: -100%;
   }
   .section-info .navigation-container {
-    top: calc(81px + 36px);
+    top: calc(81px + 36px + 0.5rem);
     right: 50%;
     bottom: inherit;
     width: 285px;
     height: auto;
     overflow: visible;
-    padding: 2rem 3rem;
+    padding: 1.5rem 3rem;
     padding-left: 2rem;
+    margin: 2rem;
+    margin-right: calc(2rem + 3px);
     box-shadow: none;
     text-align: right;
     border-radius: inherit;

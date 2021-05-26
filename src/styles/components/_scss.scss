@@ -78,11 +78,11 @@ main {
     
     &::before {
         @include pseudoElement;
-        width: 150vw;
+        width: 200vw;
         height: 100vh;
         background-color: var(--tr-c);
         transform: translateX(-150%) skew($t-skew);
-        filter: blur(150px);
+        filter: blur(300px);
     }
 }
 
@@ -265,12 +265,14 @@ main {
 
         &-creditBtn {
             position: absolute;
-            right: 1rem;
-            padding: 0.25rem;
+            box-sizing: content-box;
+            right: 0;
+            padding: 0.75rem;
             cursor: pointer;
+            @include squareSize(1rem);
 
             & svg {
-                @include squareSize(0.75rem);
+                @include squareSize(1rem);
             }
         }
     }
@@ -372,6 +374,9 @@ main {
                     margin: 0.25rem;
                     width: $imageColorSize;
                     height: $imageColorSize;
+
+                    max-width: 70px;
+                    max-height: 70px;
 
                     @for $i from 1 through 10 {
                         &:nth-child(#{$i}) {
@@ -643,6 +648,8 @@ main {
 
     
     &-info {
+        position: fixed;
+        top: 0;
         display: flex;
         align-items: center;
         overflow-y: scroll;

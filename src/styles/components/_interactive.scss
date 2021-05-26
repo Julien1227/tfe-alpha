@@ -12,10 +12,10 @@ body {
 
     &.hiding {
         .transition {
-            animation: animationChangeListener 0.3s;
+            animation: animationChangeListener 0.5s;
             &::before {
-                animation-delay: 0.2s;
                 animation: sectionHide 0.5s;
+                animation-timing-function: linear;
             }
         }
     }
@@ -23,6 +23,10 @@ body {
     &.showing {
         .transition {
             animation: animationEndListener 0.5s;
+            &::before {
+                animation: sectionShow 0.5s;
+                animation-timing-function: linear;
+            }
         }
     }
 
@@ -37,7 +41,7 @@ body {
     z-index: $topOfAll!important;
     transition: $t-slow;
     pointer-events: none;
-    clip-path: ellipse(0px 0px at 99% -5%);
+    opacity: 0;
     .section-header {
         transition: $t-fast;
         transition-delay: 0s;
@@ -61,9 +65,8 @@ body {
         .section-credits {
             opacity: 1;
             pointer-events: inherit;
-            clip-path: ellipse(2000px 2000px at 99% -5%);
             .section-header {
-                transition-delay: 0.3s;
+                transition-delay: 0.1s;
                 transform: translateY(0%);
             }
         }

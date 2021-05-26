@@ -75,7 +75,7 @@
     <section class="section section-color">
       <header class="section-header">
         <h2 class="section-header-title">Color'sounds</h2>
-        <button class="section-header-creditBtn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
+        <button class="section-header-creditBtn"><svg><use xlink:href="#creditBtnSvg"/></svg></button>
       </header>
       <div class="section-module" id="module-color" style="background: linear-gradient(rgb(0, 255, 89), rgb(0, 230, 157));">
         <span class="section-module-frequency" id="playedColor">509Hz</span>
@@ -105,7 +105,7 @@
     <section class="section section-image">
       <header class="section-header">
         <h2 class="section-header-title">Image'sounds</h2>
-        <button class="section-header-creditBtn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
+        <button class="section-header-creditBtn"><svg><use xlink:href="#creditBtnSvg"/></svg></button>
       </header>
 
       <div class="section-module">
@@ -139,11 +139,11 @@
 
       <div class="section-form">
         <div class="form-slider">
-          <label class="form-slider-title">Vitesse de lecture : <span id="playRateSpan">150</span>ms</label>
+          <label class="form-slider-title">Tempo : <span id="playRateSpan">150</span>ms</label>
           <input id="playRate" type="range" value="-150" min="-500" max="-50">
         </div>
         <div class="form-slider">
-          <label class="form-slider-title">Nombre de couleurs : <span id="colorNumberSpan">5</span></label>
+          <label class="form-slider-title">Couleurs : <span id="colorNumberSpan">5</span></label>
           <input id="colorNumber" type="range" value="5" min="2" max="10">
         </div>
         <button id="getColors" class="btn">Jouer la mélodie</button>
@@ -155,7 +155,7 @@
     <section class="section section-pad">
       <header class="section-header">
         <h2 class="section-header-title">SoundBoard</h2>
-        <button class="section-header-creditBtn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
+        <button class="section-header-creditBtn"><svg><use xlink:href="#creditBtnSvg"/></svg></button>
       </header>
 
       <div class="pad-tuto">
@@ -196,7 +196,7 @@
     <section class="section section-piano">
       <header class="section-header">
         <h2 class="section-header-title">Piano</h2>
-        <button class="section-header-creditBtn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
+        <button class="section-header-creditBtn"><svg><use xlink:href="#creditBtnSvg"/></svg></button>
       </header>
 
       <div class="section-piano-color pretty-background"></div>
@@ -220,7 +220,7 @@
     <section class="section section-info">
       <header class="section-header">
         <h2 class="section-header-title">Fonctionnement de Color'sounds</h2>
-        <button class="section-header-creditBtn"><svg><use xlink:href="#paperClipSvg"/></svg></button>
+        <button class="section-header-creditBtn"><svg><use xlink:href="#creditBtnSvg"/></svg></button>
       </header>
 
       
@@ -247,7 +247,7 @@
 
         <img class="container-image" src="assets/images/info/colorfulSound.png" srcset="assets/images/info/colorfulSound@2x.png 2x" alt="Démontration de l'intensité du don provenant d'une couleur."/>
         
-        <p>Ces observations permettent déjà de comprendre que la luminosité et la saturation sont directement liées à l’intensité du son. Cela s’explique par le fait que le blanc et le noir ne sont pas reconnus comme étant des couleurs. Plus encore, dans le domaine musical, le blanc et le noir sont liés à un vide, ce qui est en accord avec mon raisonement mon raisonnement.</p>
+        <p>Ces observations permettent déjà de comprendre que la luminosité et la saturation sont directement liées à l’intensité du son. Cela s’explique par le fait que le blanc et le noir ne sont pas reconnus comme étant des couleurs. Plus encore, dans le domaine musical, le blanc et le noir sont liés à un vide, ce qui est en accord avec mon raisonement.</p>
 
         <div class="container-code container-code-1">
           <p class="container-code-name">Démonstration de la fonction qui calcule le gain</p>
@@ -255,7 +255,7 @@
         </div>
 
         <p>Avec ces paramètres, nous arrivons à <a target="_blank" href="https://julienscheen.be/projets/TFE-exp/exp-create-sound/">la première version de mon projet</a>. Elle est intéressante, mais semble incomplète, n’est-ce pas ?</p>
-        <p>C’est parce qu’elle joue les fréquences des couleurs telles qu’elles sont présentées dans le spectre visible (de 428 Thz à 750 Thz). Cela explique pourquoi un seul rouge joue deux sons différents aux deux extrémités du slider de teintes. Cela peut sembler étonnant car nous voyons la même couleur: pourquoi devrait-il s'agir de fréquences différentes ?</p>
+        <p>C’est parce qu’elle joue les fréquences des couleurs telles qu’elles sont présentées dans le spectre visible (de 428 Thz à 750 Thz). Cela explique pourquoi un seul rouge joue deux sons différents aux deux extrémités du slider de teintes. Cela peut sembler étonnant car nous voyons la même couleur : pourquoi devrait-il s'agir de fréquences différentes ?</p>
 
         <img class="container-image" src="assets/images/info/colorfulWave.png" srcset="assets/images/info/colorfulWave@2x.png 2x" alt="Répartition des fréquences à travers le spectre lumineux."/>
 
@@ -444,7 +444,7 @@
 
     <svg id="gridSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="border-all" class="svg-inline--fa fa-border-all fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H32A32 32 0 0 0 0 64v384a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32V64a32 32 0 0 0-32-32zm-32 64v128H256V96zm-192 0v128H64V96zM64 416V288h128v128zm192 0V288h128v128z"></path></svg>
 
-    <svg id="paperClipSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paperclip" class="svg-inline--fa fa-paperclip fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M43.246 466.142c-58.43-60.289-57.341-157.511 1.386-217.581L254.392 34c44.316-45.332 116.351-45.336 160.671 0 43.89 44.894 43.943 117.329 0 162.276L232.214 383.128c-29.855 30.537-78.633 30.111-107.982-.998-28.275-29.97-27.368-77.473 1.452-106.953l143.743-146.835c6.182-6.314 16.312-6.422 22.626-.241l22.861 22.379c6.315 6.182 6.422 16.312.241 22.626L171.427 319.927c-4.932 5.045-5.236 13.428-.648 18.292 4.372 4.634 11.245 4.711 15.688.165l182.849-186.851c19.613-20.062 19.613-52.725-.011-72.798-19.189-19.627-49.957-19.637-69.154 0L90.39 293.295c-34.763 35.56-35.299 93.12-1.191 128.313 34.01 35.093 88.985 35.137 123.058.286l172.06-175.999c6.177-6.319 16.307-6.433 22.626-.256l22.877 22.364c6.319 6.177 6.434 16.307.256 22.626l-172.06 175.998c-59.576 60.938-155.943 60.216-214.77-.485z"></path></svg>
+    <svg id="creditBtnSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user-tag" class="svg-inline--fa fa-user-tag fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M630.6 364.9l-90.3-90.2c-12-12-28.3-18.7-45.3-18.7h-79.3c-17.7 0-32 14.3-32 32v79.2c0 17 6.7 33.2 18.7 45.2l90.3 90.2c12.5 12.5 32.8 12.5 45.3 0l92.5-92.5c12.6-12.5 12.6-32.7.1-45.2zm-182.8-21c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24c0 13.2-10.7 24-24 24zm-223.8-88c70.7 0 128-57.3 128-128C352 57.3 294.7 0 224 0S96 57.3 96 128c0 70.6 57.3 127.9 128 127.9zm127.8 111.2V294c-12.2-3.6-24.9-6.2-38.2-6.2h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 287.9 0 348.1 0 422.3v41.6c0 26.5 21.5 48 48 48h352c15.5 0 29.1-7.5 37.9-18.9l-58-58c-18.1-18.1-28.1-42.2-28.1-67.9z"></path></svg>
     
     <svg id="smileySvg" aria-hidden="true" focusable="false" data-prefix="far" data-icon="smile-beam" class="svg-inline--fa fa-smile-beam fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 448c-110.3 0-200-89.7-200-200S137.7 56 248 56s200 89.7 200 200-89.7 200-200 200zm84-143.4c-20.8 25-51.5 39.4-84 39.4s-63.2-14.3-84-39.4c-8.5-10.2-23.6-11.5-33.8-3.1-10.2 8.5-11.5 23.6-3.1 33.8 30 36 74.1 56.6 120.9 56.6s90.9-20.6 120.9-56.6c8.5-10.2 7.1-25.3-3.1-33.8-10.2-8.4-25.3-7.1-33.8 3.1zM136.5 211c7.7-13.7 19.2-21.6 31.5-21.6s23.8 7.9 31.5 21.6l9.5 17c2.1 3.7 6.2 4.7 9.3 3.7 3.6-1.1 6-4.5 5.7-8.3-3.3-42.1-32.2-71.4-56-71.4s-52.7 29.3-56 71.4c-.3 3.7 2.1 7.2 5.7 8.3 3.4 1.1 7.4-.5 9.3-3.7l9.5-17zM328 152c-23.8 0-52.7 29.3-56 71.4-.3 3.7 2.1 7.2 5.7 8.3 3.5 1.1 7.4-.5 9.3-3.7l9.5-17c7.7-13.7 19.2-21.6 31.5-21.6s23.8 7.9 31.5 21.6l9.5 17c2.1 3.7 6.2 4.7 9.3 3.7 3.6-1.1 6-4.5 5.7-8.3-3.3-42.1-32.2-71.4-56-71.4z"></path></svg>
     

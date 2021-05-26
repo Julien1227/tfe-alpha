@@ -135,7 +135,7 @@ var sectionIntro = document.querySelector('.section-intro'),
     letters = document.querySelectorAll('.h1-letter');
 var count = 1;
 var playedColors = document.querySelector('.played-color'); //////////////////////////////////////
-///////// GESTION DU SLIDER //////////
+//////////// NAVIGUATION /////////////
 //////////////////////////////////////
 
 var body = document.querySelector('body'),
@@ -264,36 +264,42 @@ sectionIntro.addEventListener('click', function (event) {
 
 navBtn.forEach(function (element) {
   element.addEventListener('click', function (e) {
-    body.classList.remove('show-credits'); // Actualise le bouton du menu
-
+    // Actualise le bouton du menu
     var target = e.currentTarget;
     var pastTarget = document.querySelector('.menu-btn.active');
     pastTarget != null ? pastTarget.classList.remove('active') : pastTarget = pastTarget;
     target.classList.add('active');
-    var page = target.getAttribute('id'); // Change la page
+    var page = target.getAttribute('id');
 
-    body.classList.add('hiding');
-    var h = randomMinMax(0, 360); ///transition.style.backgroundColor = "hsl("+h+", 100%, 50%)";
+    if (pastTarget.getAttribute('id') == page) {
+      console.log('page déjà ouverte');
+    } else {
+      body.classList.remove('show-credits'); // Change la page
 
-    root.style.setProperty("--tr-c", "hsl(" + h + ", 100%, 50%)");
-    body.addEventListener('animationend', function (e) {
-      if (e.animationName === 'animationChangeListener') {
-        body.classList.remove('hiding');
-        body.setAttribute('data-page', page);
-        body.classList.add('showing');
-      } else if (e.animationName === 'animationEndListener') {
-        body.classList.remove('showing');
+      body.classList.add('hiding');
+
+      var _h = randomMinMax(0, 360); ///transition.style.backgroundColor = "hsl("+h+", 100%, 50%)";
+
+
+      root.style.setProperty("--tr-c", "hsl(" + _h + ", 100%, 50%)");
+      body.addEventListener('animationend', function (e) {
+        if (e.animationName === 'animationChangeListener') {
+          body.setAttribute('data-page', page);
+          body.classList.remove('hiding');
+          body.classList.add('showing');
+        } else if (e.animationName === 'animationEndListener') {
+          body.classList.remove('showing');
+        }
+      }); // Refais apparaître le message du piano
+
+      if (page == "piano") {
+        pianoSvg.style.opacity = "1";
+      } // Reset le scroll de la page malgré l'ancre
+
+
+      if (page == "info") {
+        infoSection.scrollTop = 0;
       }
-    }); // Refais apparaître le message du piano
-
-    if (page != "piano") {
-      pianoSvg.style.opacity = "1";
-      pianoSvg.style.display = "inherit";
-    } // Reset le scroll de la page malgré l'ancre
-
-
-    if (page == "info") {
-      infoSection.scrollTop = 0;
     }
   });
 });
@@ -511,14 +517,17 @@ editInput.addEventListener('input', function (e) {
   var h = editInput.value;
   var actualBtn = document.querySelector('.pad-btn-active');
   actualBtn.style.backgroundColor = "hsl(" + h + ", 100%, 50%)";
-  playNote(h, 100, 50); // Bouton permettant de masquer le slider et changer la variable de couleur
+  playNote(h, 100, 50);
+}); // Bouton permettant de masquer le slider et changer la variable de couleur
 
-  confirmEdit.addEventListener('click', function (e) {
-    sectionPad.classList.remove('edition');
-    actualBtn.classList.remove('pad-btn-active');
-    actualisePadBtnColor(actualBtn, h);
-    actualBtn.removeAttribute('style');
-  });
+confirmEdit.addEventListener('click', function (e) {
+  // Obligé de redéclarer les variables utilisées dans la boucle si dessus
+  var actualBtn = document.querySelector('.pad-btn-active');
+  var h = editInput.value;
+  sectionPad.classList.remove('edition');
+  actualBtn.classList.remove('pad-btn-active');
+  actualisePadBtnColor(actualBtn, h);
+  actualBtn.removeAttribute('style');
 });
 editInput.addEventListener(eventEnd, function (e) {
   stopGain(defaultEase);
@@ -580,7 +589,8 @@ var notes = {
   ",": "535",
   ";": "550",
   ":": "565",
-  "=": "580"
+  "=": "580",
+  "!": "595"
 }; // Récupère la touche jouée et joue la fréquence qui lui est associée
 
 document.addEventListener('keydown', function (e) {
@@ -601,7 +611,7 @@ document.addEventListener('keydown', function (e) {
       do {
         h = randomMinMax(0, 360);
         s = 100;
-        l = randomMinMax(40, 60);
+        l = randomMinMax(45, 60);
         _color = setFrequency(h, s, l);
       } while (_frq != _color); // Assignation de la couleur et d'un class de transition
 

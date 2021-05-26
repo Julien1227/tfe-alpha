@@ -26,6 +26,24 @@
     }
 }
 
+@media(min-width: 550px) and (max-width: 900px) {
+    .color-list {
+        max-height: calc(70px + 0.75rem);
+        max-width: calc((70px * 5) + 3rem);
+        min-width: calc((70px * 5) + 3rem);
+        border-radius: calc(70px / 1.6)!important;
+        &.big {
+            max-height: calc((70px * 2) + 2rem);
+        }
+
+        &-el {
+            max-width: 70px;
+            max-height: 70px;
+        }
+    }
+
+}
+
 @media(min-width: 900px) {
 
     *::-webkit-scrollbar {
@@ -174,7 +192,7 @@
     
                     & .gist {
                         position: absolute;
-                        margin-top: calc(-3.5rem - 1px);
+                        margin-top: calc(-3.5rem - 2px);
                         max-width: 500px;
                         margin-left: calc(-500px - 1rem);
                         
@@ -209,15 +227,19 @@
             }
 
             .navigation-container {
-                top: calc(#{$h1} + #{$h3});
+                top: calc(#{$h1} + #{$h3} + 0.5rem);
                 right: 50%;
                 bottom: inherit;
                 
                 width: 285px;
                 height: auto;
                 overflow: visible;
-                padding: 2rem 3rem;
+
+                padding: 1.5rem 3rem;
                 padding-left: 2rem;
+                margin: 2rem;
+                margin-right: calc(2rem + 3px);
+
                 box-shadow: none;
                 text-align: right;
                 border-radius: inherit;
