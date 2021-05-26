@@ -287,15 +287,19 @@ navBtn.forEach(function (element) {
           body.setAttribute('data-page', page);
           body.classList.remove('hiding');
           body.classList.add('showing');
+
+          if (page == "piano") {
+            // Refais apparaître le message du piano
+            pianoSvg.style.opacity = "1";
+          } else if (page == "info") {
+            // Reset le scroll de la page malgré l'ancre
+            infoSection.scrollTop = 0;
+          }
         } else if (e.animationName === 'animationEndListener') {
           body.classList.remove('showing');
+          document.querySelector(".section-info").scrollTop = 0;
         }
       });
-
-      if (page == "piano") {
-        // Refais apparaître le message du piano
-        pianoSvg.style.opacity = "1";
-      }
     }
   });
 });
