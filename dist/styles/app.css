@@ -284,6 +284,9 @@ main {
   display: block;
   margin: 1.5rem auto 0 auto;
 }
+.btn-white {
+  background-color: #fff !important;
+}
 
 .menu {
   position: fixed;
@@ -589,9 +592,6 @@ main {
 .section-image .section-module .selection:active {
   transform: scale(1);
 }
-.section-image .section-module .selection-btn-upload {
-  background-color: #fff !important;
-}
 .section-image .section-module .selection-btn-open {
   width: 150%;
   cursor: pointer;
@@ -603,6 +603,7 @@ main {
 }
 .section-image .section-module .selection-image {
   display: flex;
+  justify-content: space-between;
   width: 100%;
 }
 .section-image .section-module .selection-image-el {
@@ -847,11 +848,6 @@ main {
   padding: 0 2rem;
   height: auto;
   box-sizing: border-box;
-}
-.section-info .container:before {
-  content: "";
-  display: block;
-  height: 36px;
 }
 .section-info .container:after {
   content: "";
@@ -1175,18 +1171,18 @@ input[type=range]::-ms-track {
 }
 
 body.hiding .transition {
-  animation: animationChangeListener 0.5s;
+  animation: animationChangeListener 0.25s;
 }
 body.hiding .transition::before {
-  animation: sectionHide 0.5s;
+  animation: sectionHide 0.25s;
   animation-timing-function: linear;
   -webkit-animation-timing-function: linear;
 }
 body.showing .transition {
-  animation: animationEndListener 0.5s;
+  animation: animationEndListener 0.25s;
 }
 body.showing .transition::before {
-  animation: sectionShow 0.5s;
+  animation: sectionShow 0.25s;
   animation-timing-function: linear;
   -webkit-animation-timing-function: linear;
 }
