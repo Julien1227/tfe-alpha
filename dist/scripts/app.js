@@ -354,10 +354,7 @@ for (var i = 0; i < colorInputs.length; i++) {
 ///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-// Affiche le bon message en fonction du device
-
-var deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "l'explorateur de fichiers" : "ma galerie";
-btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Présélectionne une image
+// Présélectionne une image
 
 imageSelection[0].classList.add('selected');
 createPalette(imgToListen); // Réglage de la vitesse de lecture
@@ -392,7 +389,7 @@ colorNumber.addEventListener(eventEnd, function (e) {
 }); // Ouvre la sélection
 
 btnOpenSelection.addEventListener('click', function (e) {
-  btnOpenSelection.classList.toggle('selection-open');
+  btnOpenSelection.classList.toggle('open');
 }); // Change l'image avec l'image sélectionnée
 
 imageSelection.forEach(function (image) {

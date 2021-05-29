@@ -327,10 +327,6 @@ for (let i = 0; i < colorInputs.length; i++) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-// Affiche le bon message en fonction du device
-let deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "l'explorateur de fichiers" : "ma galerie";
-btnUpload.innerHTML = "Ouvrir " + deviceAction2;
-
 // Présélectionne une image
 imageSelection[0].classList.add('selected');
 createPalette(imgToListen);
@@ -374,7 +370,7 @@ colorNumber.addEventListener(eventEnd, (e) => {
 
 // Ouvre la sélection
 btnOpenSelection.addEventListener('click', (e) => {
-    btnOpenSelection.classList.toggle('selection-open');
+    btnOpenSelection.classList.toggle('open');
 });
 
 
