@@ -79,10 +79,9 @@ main {
     &::before {
         @include pseudoElement;
         width: 200vw;
-        height: 100vh;
-        background-color: var(--tr-c);
-        transform: translateX(-150%) skew($t-skew);
-        filter: blur(300px);
+        height: 250vh;
+        background:  linear-gradient(to right, white 0%,  var(--tr-c) 30%, var(--tr-c) 70%, white  100%);
+        transform: translateX(-110%) translateY(100%) rotate(-45deg);
     }
 }
 

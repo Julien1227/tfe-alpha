@@ -75,16 +75,6 @@
 
 @keyframes sectionHide {
     to {
-        transform: translateX(10%) skew($t-skew);
-    }
-}
-
-@keyframes sectionShow {
-    from {
-        transform: translateX(10%) skew($t-skew);
-    }
-
-    to {
-        transform: translateX(150%) skew($t-skew);
+        transform: translateX(110%) translateY(-140%) rotate(-45deg);
     }
 }

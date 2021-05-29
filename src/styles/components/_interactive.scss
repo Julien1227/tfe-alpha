@@ -12,9 +12,9 @@ body {
 
     &.hiding {
         .transition {
-            animation: animationChangeListener 0.25s;
+            animation: animationChangeListener 0.5s;
             &::before {
-                animation: sectionHide 0.25s;
+                animation: sectionHide 1s;
                 animation-timing-function: linear;
                 -webkit-animation-timing-function: linear;
             }
@@ -23,9 +23,8 @@ body {
     
     &.showing {
         .transition {
-            animation: animationEndListener 0.25s;
+            animation: animationEndListener 0.5s;
             &::before {
-                animation: sectionShow 0.25s;
                 animation-timing-function: linear;
                 -webkit-animation-timing-function: linear;
             }
