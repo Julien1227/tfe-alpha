@@ -307,11 +307,6 @@ body {
                 cursor: inherit;
             }
 
-            .selection-btn {
-                & .close {opacity: 1;}
-                & .open {opacity: 0;}
-            }
-
             .selection-btn-upload {
                 transform: translateY(0);
                 transition-delay: 0.2s;

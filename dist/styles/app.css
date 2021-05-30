@@ -1451,12 +1451,6 @@ body.show-credits .section-credits .section-header {
   opacity: 1;
   cursor: inherit;
 }
-.section-image .section-module .selection.open .selection-btn .close {
-  opacity: 1;
-}
-.section-image .section-module .selection.open .selection-btn .open {
-  opacity: 0;
-}
 .section-image .section-module .selection.open .selection-btn-upload {
   transform: translateY(0);
   transition-delay: 0.2s;
@@ -1939,6 +1933,13 @@ body.show-credits .section-credits .section-header {
   }
   .section-image .section-module .selection {
     max-width: 730px;
+  }
+  .section-image .section-module .selection-btn:hover {
+    opacity: 1;
+  }
+  .section-image .section-module .selection-btn:active {
+    opacity: 1;
+    transform: inherit;
   }
   .section-image .section-module-image {
     display: flex;

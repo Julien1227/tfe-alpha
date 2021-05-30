@@ -386,11 +386,22 @@ colorNumber.addEventListener('input', function (e) {
 colorNumber.addEventListener(eventEnd, function (e) {
   createPalette(imgToListen);
   colorList.classList.remove('edition');
-}); // Ouvre la sélection après un click
+});
 
-btnOpenSelection.addEventListener('click', function (e) {
-  btnOpenSelection.classList.toggle('open');
-}); // Change l'image avec l'image sélectionnée
+if (window.matchMedia("(min-width: 900px)").matches) {
+  // Ouvre la sélection après un click
+  btnOpenSelection.addEventListener('mouseover', function (e) {
+    btnOpenSelection.classList.add('open');
+  });
+  btnOpenSelection.addEventListener('mouseout', function (e) {
+    btnOpenSelection.classList.remove('open');
+  });
+} else {
+  btnOpenSelection.addEventListener('click', function (e) {
+    btnOpenSelection.classList.toggle('open');
+  });
+} // Change l'image avec l'image sélectionnée
+
 
 imageSelection.forEach(function (image) {
   image.addEventListener('click', function (e) {

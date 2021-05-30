@@ -369,11 +369,21 @@ colorNumber.addEventListener(eventEnd, (e) => {
 
 
 
+if (window.matchMedia("(min-width: 900px)").matches) {
+    // Ouvre la sélection après un click
+    btnOpenSelection.addEventListener('mouseover', (e) => {
+        btnOpenSelection.classList.add('open');
+    });
+    
+    btnOpenSelection.addEventListener('mouseout', (e) => {
+        btnOpenSelection.classList.remove('open');
+    });
+}else{
+    btnOpenSelection.addEventListener('click', (e) => {
+        btnOpenSelection.classList.toggle('open');
+    });
+}
 
-// Ouvre la sélection après un click
-btnOpenSelection.addEventListener('click', (e) => {
-    btnOpenSelection.classList.toggle('open');
-});
 
 
 // Change l'image avec l'image sélectionnée
