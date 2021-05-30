@@ -285,7 +285,6 @@ body {
 
 .section-image {
     .section-module {
-
         // Ouverture de la sélection d'images
         .selection.open {
             clip-path: circle(100%);
@@ -306,6 +305,11 @@ body {
             &:hover {
                 opacity: 1;
                 cursor: inherit;
+            }
+
+            .selection-btn {
+                & .close {opacity: 1;}
+                & .open {opacity: 0;}
             }
 
             .selection-btn-upload {
