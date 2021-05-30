@@ -238,9 +238,10 @@ navBtn.forEach(element => {
     
             body.addEventListener('animationend', (e) => {
                 if(e.animationName === 'animationChangeListener'){
-                    body.setAttribute('data-page', page);
+                    
                     body.classList.remove('hiding');
                     body.classList.add('showing');
+                    body.setAttribute('data-page', page);
                     
                     if (page == "piano") {
                         // Refais apparaître le message du piano
@@ -254,6 +255,8 @@ navBtn.forEach(element => {
                     body.classList.remove('showing');
                     document.querySelector(".section-info").scrollTop = 0;
                 }
+
+                
             });
     
             

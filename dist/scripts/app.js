@@ -284,9 +284,9 @@ navBtn.forEach(function (element) {
       root.style.setProperty("--tr-c", "hsl(" + _h + ", 100%, 50%)");
       body.addEventListener('animationend', function (e) {
         if (e.animationName === 'animationChangeListener') {
-          body.setAttribute('data-page', page);
           body.classList.remove('hiding');
           body.classList.add('showing');
+          body.setAttribute('data-page', page);
 
           if (page == "piano") {
             // Refais apparaître le message du piano
