@@ -73,9 +73,15 @@
     to {opacity: 0;}
 }
 
+@keyframes sectionHideDesktop {
+    to {
+        transform: translateX(100%) translateY(-100%) rotate(-45deg);
+    }
+}
+
 @keyframes sectionHide {
     to {
-        transform: translateX(110%) translateY(-140%) rotate(-45deg);
+        transform: translateX(200%) translateY(-200%) rotate(-45deg);
     }
 }
 

@@ -67,21 +67,31 @@ main {
     position: absolute;
     display: block;
     z-index: calc(#{$topOfAll} + 49);
-    width: 200vw;
-    height: 200vh;
-    left: -25vw;
+
+    @include squareSize(150vh);
+    top: -25vh;
+    left: -25vh;
+
     opacity: 0;
     background-color: $white;
     &::after {
         @include pseudoGraphBackground;
+        @include fullSize;
     }
     
     &::before {
         @include pseudoElement;
-        width: 200vw;
-        height: 250vh;
-        background:  linear-gradient(to right, white 0%,  var(--tr-c) 30%, var(--tr-c) 70%, white  100%);
-        transform: translateX(-110%) translateY(100%) rotate(-45deg);
+        @include fullSize;
+        background: linear-gradient(to right, #fff 0%, var(--tr-c) 40%, var(--tr-c) 60%, #fff 100%);
+        transform: translateX(-150%) translateY(150%) rotate(-45deg);
+    }
+}
+
+@media(min-width: 900px) {
+    .transition {
+        @include squareSize(150vw);
+        top: -25vw;
+        left: -25vw;
     }
 }
 

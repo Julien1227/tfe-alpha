@@ -201,9 +201,10 @@ main {
   position: absolute;
   display: block;
   z-index: calc(2000 + 49);
-  width: 200vw;
-  height: 200vh;
-  left: -25vw;
+  width: 150vh;
+  height: 150vh;
+  top: -25vh;
+  left: -25vh;
   opacity: 0;
   background-color: #fff;
 }
@@ -217,18 +218,28 @@ main {
   background-size: 2rem;
   background-repeat: repeat;
   background-image: url("../assets/bgSvg.svg");
+  width: 100%;
+  height: 100%;
 }
 .transition::before {
   position: absolute;
   content: "";
   top: 0;
   left: 0;
-  width: 200vw;
-  height: 250vh;
-  background: linear-gradient(to right, white 0%, var(--tr-c) 30%, var(--tr-c) 70%, white 100%);
-  transform: translateX(-110%) translateY(100%) rotate(-45deg);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #fff 0%, var(--tr-c) 40%, var(--tr-c) 60%, #fff 100%);
+  transform: translateX(-150%) translateY(150%) rotate(-45deg);
 }
 
+@media (min-width: 900px) {
+  .transition {
+    width: 150vw;
+    height: 150vw;
+    top: -25vw;
+    left: -25vw;
+  }
+}
 .played-color {
   position: absolute;
   top: 0;
@@ -1198,6 +1209,11 @@ body[data-page=info] .section-info {
   display: flex;
 }
 
+@media (min-width: 900px) {
+  body.hiding .transition::before {
+    animation: sectionHideDesktop 1s;
+  }
+}
 .section-credits {
   z-index: 2000 !important;
   transition: all 0.6s cubic-bezier(0.33, 1, 0.68, 1);
@@ -1768,9 +1784,14 @@ body.show-credits .section-credits .section-header {
     opacity: 0;
   }
 }
+@keyframes sectionHideDesktop {
+  to {
+    transform: translateX(100%) translateY(-100%) rotate(-45deg);
+  }
+}
 @keyframes sectionHide {
   to {
-    transform: translateX(110%) translateY(-140%) rotate(-45deg);
+    transform: translateX(200%) translateY(-200%) rotate(-45deg);
   }
 }
 @keyframes rainbowShadow {

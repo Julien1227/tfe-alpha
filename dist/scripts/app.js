@@ -262,6 +262,7 @@ sectionIntro.addEventListener('click', function (event) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+var transitionColor = 0;
 navBtn.forEach(function (element) {
   element.addEventListener('click', function (e) {
     // Actualise le bouton du menu
@@ -274,14 +275,13 @@ navBtn.forEach(function (element) {
     if (pastTarget.getAttribute('id') == page) {
       console.log('page déjà ouverte');
     } else {
-      body.classList.remove('show-credits'); // Change la page
+      // Ferme la page "crédits" si elle est ouverte
+      body.classList.remove('show-credits');
+      transitionColor = transitionColor + randomMinMax(20, 100); // Change la page
 
-      body.classList.add('hiding');
+      body.classList.add('hiding'); ///transition.style.backgroundColor = "hsl("+h+", 100%, 50%)";
 
-      var _h = randomMinMax(0, 360); ///transition.style.backgroundColor = "hsl("+h+", 100%, 50%)";
-
-
-      root.style.setProperty("--tr-c", "hsl(" + _h + ", 100%, 50%)");
+      root.style.setProperty("--tr-c", "hsl(" + transitionColor + ", 100%, 50%)");
       body.addEventListener('animationend', function (e) {
         if (e.animationName === 'animationChangeListener') {
           body.classList.remove('hiding');

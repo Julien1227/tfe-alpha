@@ -213,6 +213,8 @@ sectionIntro.addEventListener('click', (event) => {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
+var transitionColor = 0;
+
 navBtn.forEach(element => {
     element.addEventListener('click', (e) => {
         
@@ -227,14 +229,16 @@ navBtn.forEach(element => {
         if (pastTarget.getAttribute('id') == page) {
             console.log('page déjà ouverte');
         } else {
+            // Ferme la page "crédits" si elle est ouverte
             body.classList.remove('show-credits');
+
+            transitionColor = transitionColor + randomMinMax(20, 100);
 
             // Change la page
             body.classList.add('hiding');
-            let h = randomMinMax(0, 360);
             
             ///transition.style.backgroundColor = "hsl("+h+", 100%, 50%)";
-            root.style.setProperty("--tr-c", "hsl("+h+", 100%, 50%)");
+            root.style.setProperty("--tr-c", "hsl("+transitionColor+", 100%, 50%)");
     
             body.addEventListener('animationend', (e) => {
                 if(e.animationName === 'animationChangeListener'){

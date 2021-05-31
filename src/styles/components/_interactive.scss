@@ -38,6 +38,12 @@ body {
     &[data-page="info"] {.section-info {display: flex;}}
 }
 
+@media(min-width: 900px) {
+    body.hiding .transition::before {
+        animation: sectionHideDesktop 1s;
+    }
+}
+
 .section-credits {
     z-index: $topOfAll!important;
     transition: $t-slow;
