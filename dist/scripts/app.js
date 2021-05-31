@@ -354,10 +354,7 @@ for (var i = 0; i < colorInputs.length; i++) {
 ///////////////////// ECOUTE D'UNE IMAGE //////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-// Affiche le bon message en fonction du device
-
-var deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "l'explorateur de fichiers" : "ma galerie";
-btnUpload.innerHTML = "Ouvrir " + deviceAction2; // Présélectionne une image
+// Présélectionne une image
 
 imageSelection[0].classList.add('selected');
 createPalette(imgToListen); // Réglage de la vitesse de lecture
@@ -389,30 +386,50 @@ colorNumber.addEventListener('input', function (e) {
 colorNumber.addEventListener(eventEnd, function (e) {
   createPalette(imgToListen);
   colorList.classList.remove('edition');
-}); // Ouvre la sélection
+});
 
-btnOpenSelection.addEventListener('click', function (e) {
-  btnOpenSelection.classList.toggle('selection-open');
-}); // Change l'image avec l'image sélectionnée
+if (window.matchMedia("(min-width: 900px)").matches) {
+  // Ouvre la sélection après un click
+  btnOpenSelection.addEventListener('mouseover', function (e) {
+    btnOpenSelection.classList.add('open');
+  });
+  btnOpenSelection.addEventListener('mouseout', function (e) {
+    btnOpenSelection.classList.remove('open');
+  });
+} else {
+  btnOpenSelection.addEventListener('click', function (e) {
+    btnOpenSelection.classList.toggle('open');
+  });
+} // Change l'image avec l'image sélectionnée
+
 
 imageSelection.forEach(function (image) {
   image.addEventListener('click', function (e) {
     var currentTarget = e.currentTarget;
-    var pastTarget = document.querySelector('.selected');
-    currentTarget.classList.add('selected'); // Vérifie si ils sont null avant d'ajouter ou retirer la class
+    var pastTarget = document.querySelector('.selected'); // Vérifie que l'image n'est pas déjà sélectionnée
 
-    pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added'); // Children[0] car currentTarget est "li" et non "li > img"
-
-    var imgName = currentTarget.children[0].currentSrc.slice(-16);
-
-    if (imgName.includes("@2x") == true) {
-      imgName = imgName.slice(0, imgName.length - 7);
+    if (currentTarget.classList.contains('selected') == true) {
+      console.log('Image déjà sélectionnée.');
     } else {
-      imgName = imgName.slice(3, imgName.length - 4);
-    } // Change les liens et crée une palette - (nom de l'image, image externe)
+      // Ferme le menu de sélection
+      requestAnimationFrame(function () {
+        btnOpenSelection.classList.remove('open');
+      }); // Actualise l'image séléectionnée
+
+      currentTarget.classList.add('selected');
+      pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added'); // Children[0] car currentTarget est "li" et non "li > img"
+
+      var imgName = currentTarget.children[0].currentSrc.slice(-16);
+
+      if (imgName.includes("@2x") == true) {
+        imgName = imgName.slice(0, imgName.length - 7);
+      } else {
+        imgName = imgName.slice(3, imgName.length - 4);
+      } // Change les liens et crée une palette - (nom de l'image, image externe)
 
 
-    changeImageToListen(imgName, false);
+      changeImageToListen(imgName, false);
+    }
   });
 }); // Upload d'une image
 
@@ -976,8 +993,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

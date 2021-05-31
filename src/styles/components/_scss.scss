@@ -122,26 +122,35 @@ main {
 
 // Boutons
 .btn {
+    @include flex-center;
     cursor: pointer;
     color: $c-text;
     background-color: $white08;
     border-radius: $round;
-    box-shadow: $shadow;
+    box-shadow: $hard-shadow;
 
     margin: 1rem 0;
     padding: 1rem;
 
-    font-size: 20px;
-    font-weight: 700;
-    text-decoration: none;
+    animation: rainbowShadow 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    svg {
+        @include squareSize(1.5rem);
+    }
 
     &-bottom {
-        display: block;
-        margin: 1.5rem auto 0 auto;
+        margin: 1.5rem auto -3rem auto;
     }
 
     &-white {
         background-color: $white!important;
+        backdrop-filter: none!important;
+    }
+
+    &-noGlow {
+        animation: none;
     }
 }
 
@@ -422,32 +431,27 @@ main {
             
             .selection {
                 @include flex-column-center-y;
-                max-height: 15rem;
                 position: absolute;
                 top: 0;
-                overflow: hidden;
                 z-index: $front;
+
+                margin: 0 1rem;
+                margin-top: 1rem;
                 
-                padding-top: 0;
                 box-sizing: border-box;
-                border-radius: $rounded2;
-                
-                max-width: 450px;
+                border-radius: $rounded;
+                box-shadow: none;
 
                 &:active{
                     transform: scale(1);
                 }
                 
                 &-btn {
-                    &-open {
-                        width: 150%;
-                        cursor: pointer;
-                        font-weight: 700;
-                        margin: 0!important;
-                        background-color: transparent!important;
-                        backdrop-filter: none;
-                        box-shadow: none;
-                    }
+                    margin-top: -1rem;
+                    margin-bottom: 0;
+                    background-color: transparent;
+                    backdrop-filter: none;
+                    box-shadow: none;
                 }
 
                 &-image {
@@ -490,15 +494,10 @@ main {
         justify-content: center;
         
         .btn-random {
-            @include flex-center;
-            @include squareSize(4rem);
             align-self: flex-end;
             z-index: $front;
-            margin-right: -2rem;
+            margin-right: -1.5rem;
             margin-bottom: -5rem;
-            svg {
-                @include squareSize(1.5rem);
-            }
         }
 
         .pad {

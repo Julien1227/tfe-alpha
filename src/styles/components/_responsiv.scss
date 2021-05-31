@@ -135,6 +135,17 @@
 
                 .selection {
                     max-width: 730px;
+
+                    &-btn {
+                        &:hover {
+                            opacity: 1;
+                        }
+    
+                        &:active {
+                            opacity: 1;
+                            transform: inherit;
+                        }
+                    }
                 }
 
                 &-image {

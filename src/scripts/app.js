@@ -330,10 +330,6 @@ for (let i = 0; i < colorInputs.length; i++) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
-// Affiche le bon message en fonction du device
-let deviceAction2 = window.matchMedia("(min-width: 900px)").matches ? "l'explorateur de fichiers" : "ma galerie";
-btnUpload.innerHTML = "Ouvrir " + deviceAction2;
-
 // Présélectionne une image
 imageSelection[0].classList.add('selected');
 createPalette(imgToListen);
@@ -367,7 +363,7 @@ colorNumber.addEventListener('input', (e) => {
 
     colorList.style.width = width;
 });
-
+ 
 colorNumber.addEventListener(eventEnd, (e) => {
     createPalette(imgToListen);
     colorList.classList.remove('edition');
@@ -375,34 +371,58 @@ colorNumber.addEventListener(eventEnd, (e) => {
 
 
 
-// Ouvre la sélection
-btnOpenSelection.addEventListener('click', (e) => {
-    btnOpenSelection.classList.toggle('selection-open');
-});
+
+if (window.matchMedia("(min-width: 900px)").matches) {
+    // Ouvre la sélection après un click
+    btnOpenSelection.addEventListener('mouseover', (e) => {
+        btnOpenSelection.classList.add('open');
+    });
+    
+    btnOpenSelection.addEventListener('mouseout', (e) => {
+        btnOpenSelection.classList.remove('open');
+    });
+}else{
+    btnOpenSelection.addEventListener('click', (e) => {
+        btnOpenSelection.classList.toggle('open');
+    });
+}
 
 
 
 // Change l'image avec l'image sélectionnée
 imageSelection.forEach(image => {
     image.addEventListener('click', (e) => {
+        
         let currentTarget = e.currentTarget;
         let pastTarget = document.querySelector('.selected');
-        currentTarget.classList.add('selected');
         
-        // Vérifie si ils sont null avant d'ajouter ou retirer la class
-        pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added');
-        
-        // Children[0] car currentTarget est "li" et non "li > img"
-        let imgName = currentTarget.children[0].currentSrc.slice(-16);
-        
-        if (imgName.includes("@2x") == true) {
-            imgName = imgName.slice(0, imgName.length - 7);
-        }else {
-            imgName = imgName.slice(3, imgName.length - 4);
-        }
+        // Vérifie que l'image n'est pas déjà sélectionnée
+        if (currentTarget.classList.contains('selected') == true) {
+            console.log('Image déjà sélectionnée.');
+        }else{
 
-        // Change les liens et crée une palette - (nom de l'image, image externe)
-        changeImageToListen(imgName, false);
+            // Ferme le menu de sélection
+            requestAnimationFrame(function(){
+                btnOpenSelection.classList.remove('open');
+            });
+
+            // Actualise l'image séléectionnée
+            currentTarget.classList.add('selected');
+            pastTarget != null ? pastTarget.classList.remove('selected') : console.log('selection added');
+
+            // Children[0] car currentTarget est "li" et non "li > img"
+            let imgName = currentTarget.children[0].currentSrc.slice(-16);
+            
+            if (imgName.includes("@2x") == true) {
+                imgName = imgName.slice(0, imgName.length - 7);
+            }else {
+                imgName = imgName.slice(3, imgName.length - 4);
+            }
+    
+            // Change les liens et crée une palette - (nom de l'image, image externe)
+            changeImageToListen(imgName, false);
+        }
+        
     });
 });
 

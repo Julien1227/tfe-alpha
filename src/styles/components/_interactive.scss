@@ -259,8 +259,11 @@ body {
 
 // Bouton d'upload images
 .selection {
-    height: 3.5rem;
-    width: 18rem;
+    will-change: clip-path;
+    transition: $t-slow;
+    transition-property: clip-path;
+    clip-path: circle(1.75rem at 50% 1.75rem);
+
     &-image {
         transition: $t-superfast;
         transform: translateY(20px);
@@ -281,6 +284,34 @@ body {
 
 .section-image {
     .section-module {
+        // Ouverture de la sélection d'images
+        .selection.open {
+            clip-path: circle(100%);
+            
+            .selection-image {
+                transition: $t-fast;
+                transition-delay: 0.1s;
+                transform: translateY(0);
+                opacity: 1;
+                &-el {
+                    box-sizing: border-box;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            &:hover {
+                opacity: 1;
+                cursor: inherit;
+            }
+
+            .selection-btn-upload {
+                transform: translateY(0);
+                transition-delay: 0.2s;
+                opacity: 1;
+            }
+        }
 
         // Chagement effectué, on masque l'image
         &.change {
@@ -359,44 +390,6 @@ body {
 
             &::after {
                 @include loadingGradient;
-            }
-        }
-
-        // Ouverture de la sélection d'images
-        .selection.selection-open {
-            overflow: visible;
-            
-            height: calc(29vw + 6rem);
-            width: calc(100vw - 2rem);
-
-            // transition en étapes - (1) width (2) height
-            transition: 
-            width      0.3s,
-            height 0.3s 0.05s;
-            
-            
-            .selection-image {
-                transition: $t-fast;
-                transition-delay: 0.1s;
-                transform: translateY(0);
-                opacity: 1;
-                &-el {
-                    box-sizing: border-box;
-                    &:hover {
-                        cursor: pointer;
-                    }
-                }
-            }
-
-            &:hover {
-                opacity: 1;
-                cursor: inherit;
-            }
-
-            .selection-btn-upload {
-                transform: translateY(0);
-                transition-delay: 0.2s;
-                opacity: 1;
             }
         }
     }
