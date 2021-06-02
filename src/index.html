@@ -247,7 +247,7 @@
 
         <img class="container-image" src="assets/images/info/colorfulSound.png" srcset="assets/images/info/colorfulSound@2x.png 2x" alt="Démontration de l'intensité du don provenant d'une couleur."/>
         
-        <p>Ces observations permettent déjà de comprendre que la luminosité et la saturation sont directement liées à l’intensité du son. Cela s’explique par le fait que le blanc et le noir ne sont pas reconnus comme étant des couleurs. Plus encore, dans le domaine musical, le blanc et le noir sont liés à un vide, ce qui est en accord avec mon raisonement.</p>
+        <p>Ces observations permettent déjà de comprendre que la luminosité et la saturation sont directement liées à l’intensité du son. Cela s’explique par le fait que le blanc et le noir ne sont pas reconnus comme étant des couleurs. Plus encore, dans le domaine musical, le blanc et le noir sont liés à un vide, ce qui est en accord avec mon raisonnement.</p>
 
         <div class="container-code container-code-1">
           <p class="container-code-name">Démonstration de la fonction qui calcule le gain</p>
@@ -269,14 +269,14 @@
 
         <p>Grâce à ce code, je peux associer une gamme de fréquences à chaque valeur du schéma RVB pour créer non seulement un mélange de couleurs, mais également un mélange de ces gammes. Il en résulte un son plus représentatif de chaque couleur (un bleu grave, un jaune aigu, …).</p>
           
-        <h3 id="osc" class="anchor">Comment jouer les paramètres obtenu par ces méthodes ?</h3>
-        <p>Pour jouer une fréquence avec la Web audio API, il faut créer un oscillateur et le démarrer. Une fois démarré, l’oscillateur prend trois paramètres principaux en compte : le type d’oscillateur, la fréquence, et le gain. Une fois que j’ai récupéré mon gain et ma fréquence avec les fonctions citées ci-dessus, voir :</p>
+        <h3 id="osc" class="anchor">Comment jouer les paramètres obtenus par ces méthodes ?</h3>
+        <p>Pour jouer une fréquence avec la Web audio API, il faut créer un oscillateur et le démarrer. Une fois démarré, l’oscillateur prend trois paramètres principaux en compte : le type d’oscillateur, la fréquence, et le gain. D’abord, je récupéré mon gain et ma fréquence avec les fonctions citées ci-dessus.</p>
         <script src="https://gist.github.com/Julien1227/2b7b050aad5b6e48155ad2600a784914.js"></script>
         <p>Ensuite je dois les assigner à mon oscillateur. Pour ce faire, la Web audio API met à disposition “setValueAtTime” et “setTargetAtTime”. Le code “setTargetAtTime” est très utile pour le gain car il permet de gérer le son de manière plus fluide et d’ainsi éviter les grésillements. Avec ces deux outils, je formule la demande suivante :</p>
         <script src="https://gist.github.com/Julien1227/e189528791f43b05c6da77ed04d2d247.js"></script>
 
         <h3 id="pianoInfo" class="anchor">Le piano</h3>
-        <p>Si vous êtes sur la version ordinateur du site et que vous avez parcouru tous les onglets, vous aurez compris qu’il s’agit généralement du même principe pour chaque page : (1) récupérer une couleur, (2) créer sa fréquence et son gain, (3) jouer les paramètres.</p>
+        <p>Si vous êtes sur la version ordinateur du site et que vous avez parcouru tous les onglets, vous aurez compris qu’il s’agit généralement du même principe pour chaque page&nbsp;: (1) récupérer une couleur, (2) créer sa fréquence et son gain, (3) jouer les paramètres.</p>
         <p>Cependant le piano, lui, sort du lot. C’est le seul code auquel on donne d’abord une fréquence, et non une couleur. Toutefois, deux problèmes se posent : d’une part, plusieurs fréquences correspondent à plusieurs couleurs, d’autre part, il est impossible de calculer une couleur sur la base d’une fréquence.</p>
         <img class="container-image" src="assets/images/info/colorfulNote.png" srcset="assets/images/info/colorfulNote@2x.png 2x" alt="Image montrant le fonctionnement du piano."/>
         <p>La solution, c’est donc de demander au code de trouver une couleur correspondant à la fréquence déclenchée par le piano, et ensuite de l’afficher à l’écran.</p>
@@ -287,8 +287,8 @@
         </div>
 
         <h3 id="comingUp" class="anchor">Pour la suite</h3>
-        <p>Les prototypes pourraient être plus développés. Certaines personnes trouvent que ce système pourrait être utilisé par les personnes non voyantes, il serait même possible de créer un petit dispositif qui permettrait d'écouter une couleur par un simple contact avec une surface !</p>
-        <p>Il s’agit ici d’un bref aperçu du fonctionnement de mon code et des mes recherches. Pour en découvrir la totalité, vous pouvez consulter cet <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab">article Medium</a>.</p>   
+        <p>Les prototypes pourraient être développés davantage. Certaines personnes trouvent que ce système pourrait être utilisé par les personnes non voyantes : il serait même possible de créer un dispositif qui permettrait d'écouter une couleur par un simple contact avec une surface !</p>
+        <p>Il s’agit ici d’un bref aperçu du fonctionnement de mon code et des mes recherches. Pour en découvrir la totalité, vous pouvez consulter <a target="_blank" href="https://julien19991227.medium.com/tfe-d%C3%A9veloppement-918e648270ab"></a>cet article Medium</a>.</p>   
       </div>
     </section>
 
@@ -313,24 +313,24 @@
               <p><small>Pen de Dropinks - <span class="licence">Copyright (c) 2021 by Dropinks (https://codepen.io/dropinks/pen/MrzPXB) Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span></small></p>
             </li>
             <li class="credits-list-el">
-              <a href="https://css-tricks.com/converting-color-spaces-in-javascript/">Convertion des schémas de couleurs.</a>
+              <a href="https://css-tricks.com/converting-color-spaces-in-javascript/">Convertion des schémas de couleurs</a>
               <p><small>CSS TRICKS - <a href="https://css-tricks.com/license/">Voir la licence</a></small></p>
             </li>
             <li class="credits-list-el">
-              <a href="https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/">Réécriture complète du css d'un input range.</a>
+              <a href="https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/">Réécriture complète du css d'un input range</a>
               <p><small>CSS TRICKS - <a href="https://css-tricks.com/license/">Voir la licence</a></small></p>
             </li>
             <li class="credits-list-el">
-              <a target="_blank" href="https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d">Générer un nombre aléatoire entre deux valeurs.</a>
+              <a target="_blank" href="https://gist.github.com/brunomonteiro3/27af6d18c2b0926cdd124220f83c474d">Générer un nombre aléatoire entre deux valeurs</a>
               <p><small>Gist de brunomonteiro3 - Modifications effectuées</small></p>
             </li>
             <li class="credits-list-el">
-              <a target="_blank" href="https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link">"SmoothScroll" sur les ancres uniquement.</a>
+              <a target="_blank" href="https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link">"SmoothScroll" sur les ancres uniquement</a>
               <p><small>Réponse de Joseph Silber sur stackoverflow - Modifications effectuées - <a href="https://creativecommons.org/licenses/by-sa/4.0/">Voir la licence</a></small></p>
             </li>
             <li class="credits-list-el">
               <a target="_blank" href="https://stackoverflow.com/questions/17514798/how-to-disable-repetitive-keydown-in-javascript
-              ">Empêche la répétition de l'évenement "keyDown" lors d'un appui prolongé.</a>
+              ">Empêche la répétition de l'évènement "keyDown" lors d'un appui prolongé</a>
               <p><small>Réponse de yckart sur stackoverflow - Modifications effectuées - <a href="https://creativecommons.org/licenses/by-sa/4.0/">Voir la licence</a></small></p>
             </li>
             <li class="credits-list-el">
@@ -340,7 +340,7 @@
             </li>
             <li class="credits-list-el">
               <a target="_blank" href="https://stackoverflow.com/questions/54962962/addeventlistener-for-specific-animationname
-              ">Récupérer les chiffres/nombres d'une chaîne de caractère</a>
+              ">Récupérer les chiffres/nombres d'une chaîne de caractères</a>
               <p><small>Réponse de cssGEEK sur stackoverflow - Modifications effectuées - <a href="https://creativecommons.org/licenses/by-sa/4.0/">Voir la licence</a></small></p>
             </li>
           </ul>
@@ -359,7 +359,7 @@
           </ul>
         </div>
         <div class="credits-div">
-          <h3 class="credits-title">Pages wikipedia partagées</h3>
+          <h3 class="credits-title">Pages Wikipedia partagées</h3>
           <ul class="credits-list">
             <li class="credits-list-el">
               <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.fr">Contenu soumis à la licence CC-BY-SA</a>. Source : Article <em><a href="http://fr.wikipedia.org/wiki/Rouge_vert_bleu">Rouge vert bleu</a></em> de <a href="http://fr.wikipedia.org/">Wikipédia en français</a> (<a href="http://fr.wikipedia.org/w/index.php?title=Rouge_vert_bleu&action=history">auteurs</a>)
@@ -371,6 +371,9 @@
         </div>
         <div class="credits-div">
           <h3 class="credits-title">Aide au développement</h3>
+          <div class="credits-end">
+            <p>En raison de cette période un peu particulière, j'ai voulu mentionner ici les personnes qui m'ont soutenu au cours de ce projet. Chaque échange m'a beaucoup aidé et m'a fait avancer, merci à tous !</p>
+          </div>
           <ul class="credits-list">
             <li class="credits-list-el">
               <p><b>Mes chers professeurs</b></p>
@@ -379,15 +382,15 @@
 
             <li class="credits-list-el">
               <a target="_blank" href="https://trystanlothaire.be">Trystan Lothaire</a>
-              <p><small>Développement du concept initial.</small></p>
-            </li>
-            <li class="credits-list-el">
-              <a target="_blank" href="https://danieldepinholucas.be">Daniel Depinholucas</a>
-              <p><small>Aide au développement</small></p>
+              <p><small>Développement du concept initial</small></p>
             </li>
             <li class="credits-list-el">
               <p><b>Manon Hermann</b></p>
               <p><small>Aide au développement - Contenu</small></p>
+            </li>
+            <li class="credits-list-el">
+              <a target="_blank" href="https://danieldepinholucas.be">Daniel Depinholucas</a>
+              <p><small>Aide au développement</small></p>
             </li>
             <li class="credits-list-el">
               <a target="_blank" href="https://youneshanafi.be/">Hanafi Younes</a>
@@ -402,10 +405,6 @@
               <p><small>Aide au développement</small></p>
             </li>
           </ul>
-          <div class="credits-end">
-            <p>En raison de cette période un peu particulière, j'ai voulu mentionner les personnes qui m'ont soutenu au cours de ce projet. Chaque échange m'a beaucoup aidé et m'a fait avancer, merci à tous !</p>
-            <svg><use xlink:href="#smileySvg"/></svg>
-          </div>
         </div>
       </div>
     </section>
@@ -453,9 +452,7 @@
     <svg id="gridSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="border-all" class="svg-inline--fa fa-border-all fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H32A32 32 0 0 0 0 64v384a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32V64a32 32 0 0 0-32-32zm-32 64v128H256V96zm-192 0v128H64V96zM64 416V288h128v128zm192 0V288h128v128z"></path></svg>
 
     <svg id="creditBtnSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user-tag" class="svg-inline--fa fa-user-tag fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M630.6 364.9l-90.3-90.2c-12-12-28.3-18.7-45.3-18.7h-79.3c-17.7 0-32 14.3-32 32v79.2c0 17 6.7 33.2 18.7 45.2l90.3 90.2c12.5 12.5 32.8 12.5 45.3 0l92.5-92.5c12.6-12.5 12.6-32.7.1-45.2zm-182.8-21c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24c0 13.2-10.7 24-24 24zm-223.8-88c70.7 0 128-57.3 128-128C352 57.3 294.7 0 224 0S96 57.3 96 128c0 70.6 57.3 127.9 128 127.9zm127.8 111.2V294c-12.2-3.6-24.9-6.2-38.2-6.2h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 287.9 0 348.1 0 422.3v41.6c0 26.5 21.5 48 48 48h352c15.5 0 29.1-7.5 37.9-18.9l-58-58c-18.1-18.1-28.1-42.2-28.1-67.9z"></path></svg>
-    
-    <svg id="smileySvg" aria-hidden="true" focusable="false" data-prefix="far" data-icon="smile-beam" class="svg-inline--fa fa-smile-beam fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 448c-110.3 0-200-89.7-200-200S137.7 56 248 56s200 89.7 200 200-89.7 200-200 200zm84-143.4c-20.8 25-51.5 39.4-84 39.4s-63.2-14.3-84-39.4c-8.5-10.2-23.6-11.5-33.8-3.1-10.2 8.5-11.5 23.6-3.1 33.8 30 36 74.1 56.6 120.9 56.6s90.9-20.6 120.9-56.6c8.5-10.2 7.1-25.3-3.1-33.8-10.2-8.4-25.3-7.1-33.8 3.1zM136.5 211c7.7-13.7 19.2-21.6 31.5-21.6s23.8 7.9 31.5 21.6l9.5 17c2.1 3.7 6.2 4.7 9.3 3.7 3.6-1.1 6-4.5 5.7-8.3-3.3-42.1-32.2-71.4-56-71.4s-52.7 29.3-56 71.4c-.3 3.7 2.1 7.2 5.7 8.3 3.4 1.1 7.4-.5 9.3-3.7l9.5-17zM328 152c-23.8 0-52.7 29.3-56 71.4-.3 3.7 2.1 7.2 5.7 8.3 3.5 1.1 7.4-.5 9.3-3.7l9.5-17c7.7-13.7 19.2-21.6 31.5-21.6s23.8 7.9 31.5 21.6l9.5 17c2.1 3.7 6.2 4.7 9.3 3.7 3.6-1.1 6-4.5 5.7-8.3-3.3-42.1-32.2-71.4-56-71.4z"></path></svg>
-    
+        
     <svg id="pianoSvg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="keyboard" class="svg-inline--fa fa-keyboard fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM128 180v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm288 0v-40c0-6.627-5.373-12-12-12H172c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h232c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12z"></path></svg>
   </div>
 
