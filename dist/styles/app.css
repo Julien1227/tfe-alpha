@@ -2066,6 +2066,9 @@ body.show-credits .section-credits .section-header {
   .menu-li:nth-child(4) .menu-btn {
     border-radius: 0 10px 0 0;
   }
+  .menu-li .menu-btn:focus {
+    outline: none !important;
+  }
   .menu-li-info {
     box-shadow: none;
   }

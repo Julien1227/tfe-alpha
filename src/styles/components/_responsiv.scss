@@ -289,6 +289,10 @@
             &:first-child .menu-btn{border-radius: $rounded 0 0 0;}
             &:nth-child(4) .menu-btn{border-radius: 0 $rounded 0 0;}
 
+            & .menu-btn:focus {
+                outline: none!important;
+            }
+
             &-info {
                 box-shadow: none;
                 .menu-btn{border-radius: $rounded $rounded 0 0;}
