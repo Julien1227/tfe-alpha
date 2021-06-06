@@ -216,7 +216,7 @@ var transitionColor = 0;
 
 navBtn.forEach(element => {
     element.addEventListener('click', (e) => {
-        
+                
         // Actualise le bouton du menu
         let target = e.currentTarget;
         var pastTarget = document.querySelector('.menu-btn.active');
@@ -451,6 +451,7 @@ btnUpload.addEventListener('click', (e) => {
 
 //Récupère les couleurs de l'image et les joue
 playImageBtn.addEventListener('click', (e) => {
+    
     let gains = [],
         frqs = [],
         hsls = [];
@@ -523,12 +524,14 @@ padBtn.forEach(btn => {
                 let pastTarget = document.querySelector('.pad-btn-active');
                 targetBtn.classList.add('pad-btn-active');
 
+                // Si on sélectionne une autre touche, on applique les modifications de la touche actuellement sélectionnée avant de virer sur l'autre 
                 if (pastTarget != null) {
                     pastTarget.classList.remove('pad-btn-active');
                     
                     if (pastTarget.getAttribute('style') != null) {
                         let rgbColor = pastTarget.getAttribute('style').match(/\d+/g).map(Number),
                             hslColor = RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
+
                         actualisePadBtnColor(pastTarget, hslColor[0]);
                     }
                 }
@@ -539,7 +542,7 @@ padBtn.forEach(btn => {
             }
         // LE PAD N'EST PAS EN MODE "MODIFICATION"
         }else{
-            playNote(h,s,l);
+            playNote(h, 100, 50);
             btn.addEventListener(eventEnd, (e) => {
                 stopGain(defaultEase);
             });
