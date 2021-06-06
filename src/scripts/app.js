@@ -216,7 +216,7 @@ var transitionColor = 0;
 
 navBtn.forEach(element => {
     element.addEventListener('click', (e) => {
-                
+
         // Actualise le bouton du menu
         let target = e.currentTarget;
         var pastTarget = document.querySelector('.menu-btn.active');
@@ -708,7 +708,7 @@ document.addEventListener('keydown', (e) => {
                     colorDiv.remove();
                 });
 
-                stopGain(0.2);
+                stopGain(0.15);
             
                 down = false;
             }, false);
