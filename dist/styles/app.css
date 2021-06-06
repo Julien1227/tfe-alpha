@@ -774,13 +774,12 @@ main {
   color: #fff;
 }
 .section-pad .pad-editor .editor-div {
-  padding: 2rem;
-  border-radius: 30px;
-  background-color: #fff;
-  max-width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 2rem;
+  border-radius: 10px;
+  background-color: #fff;
   box-sizing: border-box;
   max-width: 400px;
   width: calc(100% - 2rem);
@@ -1346,10 +1345,11 @@ body.show-credits .section-credits .section-header {
   opacity: 1;
 }
 .section-pad .btn-random:hover {
-  opacity: inherit;
-}
-.section-pad .btn-random.hover {
+  transform: inherit;
   animation: spin 0.3s;
+}
+.section-pad .btn-random:active {
+  transform: inherit;
 }
 .section-pad .btn-random.spin {
   animation: spinFull 0.45s;
@@ -1613,10 +1613,9 @@ body.show-credits .section-credits .section-header {
 .btn {
   transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
+
 .btn:active {
   transform: scale(0.8);
-  opacity: 0.6;
-  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .menu-btn {
@@ -1638,8 +1637,11 @@ body.show-credits .section-credits .section-header {
 
 @media (min-width: 900px) {
   .btn:hover {
-    opacity: 0.6;
-    transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+    transform: scale(1.1);
+  }
+
+  .btn:active {
+    transform: scale(0.8);
   }
 
   .menu-btn:hover {

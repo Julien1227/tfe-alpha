@@ -157,12 +157,14 @@ body {
 
         &-random {
             opacity: 1;
+
             &:hover {
-                opacity: inherit;
+                transform: inherit;
+                animation: spin 0.3s;
             }
 
-            &.hover {
-                animation: spin 0.3s;
+            &:active {
+                transform: inherit;
             }
 
             &.spin {
@@ -457,11 +459,10 @@ body {
 
 .btn {
     transition: $t-fast;
-    &:active {
-        transform: scale(0.8);
-        opacity: .6;
-        transition: $t-fast;
-    }
+}
+
+.btn:active {
+    transform: scale(0.8);
 }
 
 .menu-btn {
@@ -485,8 +486,11 @@ body {
 
 @media(min-width: 900px) {
     .btn:hover {
-        opacity: .6;
-        transition: $t-fast;
+        transform: scale(1.1);
+    }
+
+    .btn:active {
+        transform: scale(0.8);
     }
 
     .menu-btn {

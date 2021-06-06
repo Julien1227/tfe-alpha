@@ -505,7 +505,7 @@ padBtn.forEach(function (btn) {
       if (targetBtn.classList.contains('pad-btn-active') == false) {
         // Actualise le bouton actif
         var pastTarget = document.querySelector('.pad-btn-active');
-        targetBtn.classList.add('pad-btn-active');
+        targetBtn.classList.add('pad-btn-active'); // Si on sélectionne une autre touche, on applique les modifications de la touche actuellement sélectionnée avant de virer sur l'autre 
 
         if (pastTarget != null) {
           pastTarget.classList.remove('pad-btn-active');
@@ -523,7 +523,7 @@ padBtn.forEach(function (btn) {
       } // LE PAD N'EST PAS EN MODE "MODIFICATION"
 
     } else {
-      playNote(h, s, l);
+      playNote(h, 100, 50);
       btn.addEventListener(eventEnd, function (e) {
         stopGain(defaultEase);
       }); // Vérifie que l'on soit sur desktop et ue le bouton appuyé soit bien une touche du pad
@@ -1005,8 +1005,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

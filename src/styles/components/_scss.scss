@@ -584,8 +584,10 @@ main {
                     }
                     
                     &-div {
-                        @include card($rounded2);
                         @include flex-column-center-y;
+                        padding: 2rem;
+                        border-radius: $rounded;
+                        background-color: $white;
                         box-sizing: border-box;
                         max-width: 400px;
                         width: calc(100% - 2rem);
