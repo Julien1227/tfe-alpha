@@ -199,7 +199,6 @@ sectionIntro.addEventListener('click', (event) => {
             sectionIntro.style.display = "none";
             for (let i = 1; i < letters.length+1; i++) {
                 root.style.removeProperty('--h1l-'+i);
-                console.log(i);
             }
         });
     }, (letters.length * 100) + 1500);
@@ -488,7 +487,7 @@ playImageBtn.addEventListener('click', (e) => {
 
 // Permets de rentreret sortir en mode "modification" des boutons 
 editBtn.addEventListener('click', (e) => {
-    sectionPad.classList.add('pad-modify');   
+    sectionPad.classList.add('pad-modify');
 });
 
 saveBtn.addEventListener('click', (e) => {
@@ -508,9 +507,7 @@ padBtn.forEach(btn => {
         let targetBtn = e.currentTarget;
 
         // Récupère la couleur de la touche
-        let h = getColorFromAttribute(targetBtn),
-            s = 100,
-            l = 50;
+        let h = getColorFromAttribute(targetBtn);
 
         // LE PAD EST EN MODE "MODIFICATION"
         if (sectionPad.classList.contains('pad-modify') == true) {
@@ -525,7 +522,16 @@ padBtn.forEach(btn => {
                 // Actualise le bouton actif
                 let pastTarget = document.querySelector('.pad-btn-active');
                 targetBtn.classList.add('pad-btn-active');
-                pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('No pastTarget');
+
+                if (pastTarget != null) {
+                    pastTarget.classList.remove('pad-btn-active');
+                    
+                    if (pastTarget.getAttribute('style') != null) {
+                        let rgbColor = pastTarget.getAttribute('style').match(/\d+/g).map(Number),
+                            hslColor = RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
+                        actualisePadBtnColor(pastTarget, hslColor[0]);
+                    }
+                }
                 
                 // Actualise les valeurs du slider avec la couleur actuelle du bouton
                 h = getColorFromAttribute(targetBtn);
@@ -567,9 +573,11 @@ confirmEdit.addEventListener('click', (e) => {
     let h = editInput.value;
 
     sectionPad.classList.remove('edition');
-    actualBtn.classList.remove('pad-btn-active');
-    actualisePadBtnColor(actualBtn, h);
-    actualBtn.removeAttribute('style');
+    if (actualBtn != null) {
+        actualBtn.classList.remove('pad-btn-active');
+        actualBtn.removeAttribute('style');
+        actualisePadBtnColor(actualBtn, h);
+    }
 });
 
 editInput.addEventListener(eventEnd, (e) => {
@@ -801,8 +809,10 @@ function actualisePlayedColor(h, s, l, gain) {
 }
 
 function actualisePadBtnColor(btn, h) {
-    let id = btn.getAttribute('id').slice(-1);
-    root.style.setProperty('--pb-'+id, h);
+    if (btn != null) {
+        let id = btn.getAttribute('id').slice(-1);
+        root.style.setProperty('--pb-'+id, h);
+    }
 }
 
 // Stop le gain et cache "played color"

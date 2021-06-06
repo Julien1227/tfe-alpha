@@ -252,7 +252,6 @@ sectionIntro.addEventListener('click', function (event) {
 
       for (var _i = 1; _i < letters.length + 1; _i++) {
         root.style.removeProperty('--h1l-' + _i);
-        console.log(_i);
       }
     });
   }, letters.length * 100 + 1500);
@@ -495,9 +494,7 @@ padBtn.forEach(function (btn) {
     //Récupère la couleur appuyée
     var targetBtn = e.currentTarget; // Récupère la couleur de la touche
 
-    var h = getColorFromAttribute(targetBtn),
-        s = 100,
-        l = 50; // LE PAD EST EN MODE "MODIFICATION"
+    var h = getColorFromAttribute(targetBtn); // LE PAD EST EN MODE "MODIFICATION"
 
     if (sectionPad.classList.contains('pad-modify') == true) {
       // Affiche et déplace le slider de modification en dessous de la touche sélectionnée
@@ -509,7 +506,17 @@ padBtn.forEach(function (btn) {
         // Actualise le bouton actif
         var pastTarget = document.querySelector('.pad-btn-active');
         targetBtn.classList.add('pad-btn-active');
-        pastTarget != null ? pastTarget.classList.remove('pad-btn-active') : console.log('No pastTarget'); // Actualise les valeurs du slider avec la couleur actuelle du bouton
+
+        if (pastTarget != null) {
+          pastTarget.classList.remove('pad-btn-active');
+
+          if (pastTarget.getAttribute('style') != null) {
+            var rgbColor = pastTarget.getAttribute('style').match(/\d+/g).map(Number),
+                hslColor = RGBToHSL(rgbColor[0], rgbColor[1], rgbColor[2]);
+            actualisePadBtnColor(pastTarget, hslColor[0]);
+          }
+        } // Actualise les valeurs du slider avec la couleur actuelle du bouton
+
 
         h = getColorFromAttribute(targetBtn);
         editInput.value = h;
@@ -542,9 +549,12 @@ confirmEdit.addEventListener('click', function (e) {
   var actualBtn = document.querySelector('.pad-btn-active');
   var h = editInput.value;
   sectionPad.classList.remove('edition');
-  actualBtn.classList.remove('pad-btn-active');
-  actualisePadBtnColor(actualBtn, h);
-  actualBtn.removeAttribute('style');
+
+  if (actualBtn != null) {
+    actualBtn.classList.remove('pad-btn-active');
+    actualBtn.removeAttribute('style');
+    actualisePadBtnColor(actualBtn, h);
+  }
 });
 editInput.addEventListener(eventEnd, function (e) {
   stopGain(defaultEase);
@@ -742,8 +752,10 @@ function actualisePlayedColor(h, s, l, gain) {
 }
 
 function actualisePadBtnColor(btn, h) {
-  var id = btn.getAttribute('id').slice(-1);
-  root.style.setProperty('--pb-' + id, h);
+  if (btn != null) {
+    var id = btn.getAttribute('id').slice(-1);
+    root.style.setProperty('--pb-' + id, h);
+  }
 } // Stop le gain et cache "played color"
 
 
@@ -993,8 +1005,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\scripts\app.js */"./src/scripts/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Julien\Documents\TFE\tfe-beta\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\scripts\app.js */"./src/scripts/app.js");
+module.exports = __webpack_require__(/*! C:\Users\julie\Documents\ECOLE\TFE\tfe-alpha\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })
