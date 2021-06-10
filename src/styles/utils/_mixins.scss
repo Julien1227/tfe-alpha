@@ -41,6 +41,9 @@
 }
 
 
+
+
+
 @mixin fullSize {
     width: 100%;
     height: 100%;
@@ -94,13 +97,6 @@
     position: absolute;
     top: 0;
     left: 0;
-}
-
-@mixin card($radius) {
-    padding: 2rem;
-    border-radius: $radius;
-    background-color: $white;
-    max-width: 500px;
 }
 
 @mixin loadingGradient {

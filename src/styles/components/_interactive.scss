@@ -288,6 +288,10 @@ body {
         transition: $t-fast;
         transition-delay: 0s;
     }
+
+    &:hover {
+        transform: inherit!important;
+    }
 }
 
 .section-image {
